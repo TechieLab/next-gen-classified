@@ -1,0 +1,28 @@
+{
+    "version": "1.5.3",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "noLib": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "emitError": false
+    },
+    "include": [
+        "./server/**/*.ts"
+    ],
+    "exclude": [
+        "./node_modules/**/*.ts",
+        "./typings/**/*.ts"
+    ],
+    "filesGlob": [      
+        "./server/**/*.ts",
+        "./typings/**/*.ts"
+    ],
+    "compileOnSave": false
+}

@@ -12,7 +12,7 @@
         "favicon.ico"
       ],
       "index": "index.html",
-      "main": "main.ts",
+      "main": "main.ts",    
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
       "prefix": "app",
@@ -30,14 +30,19 @@
   ],
   "addons": [],
   "packages": [],
+   "webpack": {
+    "development": {
+      "config": "./config/webpack.dev.js"
+    }
+   },
   "e2e": {
     "protractor": {
-      "config": "./protractor.conf.js"
+      "config": "./config/protractor.conf.js"
     }
   },
   "test": {
     "karma": {
-      "config": "./karma.conf.js"
+      "config": "./config/karma.conf.js"
     }
   },
   "defaults": {

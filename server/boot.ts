@@ -20,12 +20,7 @@ MongoDB.MongoClient.connect("mongodb://localhost:27017/classifeddb", function (e
 
     app.set('port', process.env.PORT || '3000');
 
-    // Register our templating engine
-    app.engine('html', swig.renderFile);
-
-    app.set('view engine', 'html');
-    app.set('views', __dirname + '/');
-    app.set('view cache', true);
+    
 
     swig.setDefaults({ cache: false });
 
@@ -35,7 +30,15 @@ MongoDB.MongoClient.connect("mongodb://localhost:27017/classifeddb", function (e
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
-    app.use(express.static(path.join(__dirname, '/app')));
+    app.use(express.static(path.join(__dirname, '../app')));
+
+
+    // Register our templating engine
+    app.engine('html', swig.renderFile);
+
+    app.set('view engine', 'html');
+    app.set('views', __dirname + './dist/app');
+    app.set('view cache', true);
     
     // create a write stream (in append mode) 
     logger.add(logger.transports.File, { filename: 'server.log' });

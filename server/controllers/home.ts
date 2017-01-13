@@ -1,6 +1,6 @@
 ﻿
 import {Express, Request, Response} from "express";
-import {Services} from 'services/movie';
+import {Services} from '../services/movie';
 
 export class HomeController
 {

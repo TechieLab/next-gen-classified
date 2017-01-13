@@ -1,7 +1,6 @@
 ﻿
-import {Review} from './Review';
 
-export class Movie
+export class User
 {
     public Id: number;
     public Name: string;

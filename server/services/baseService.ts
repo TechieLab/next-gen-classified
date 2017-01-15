@@ -1,10 +1,8 @@
-﻿
-import {Movie} from '../models/movie';
-import {BaseRepository, IBaseRepository} from '../repository/base';
+﻿import {BaseRepository, IBaseRepository} from '../repository/base';
 import logger = require('winston');
 
 
-export interface IEntityService<TEntity>
+export interface IBaseService<TEntity>
 {
     initData(sampleData: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
@@ -16,7 +14,7 @@ export interface IEntityService<TEntity>
     delete(id: string);
 }
 
-export class EntityService<TEntity> implements IEntityService<TEntity>
+export class BaseService<TEntity> implements IBaseService<TEntity>
 {
     repository: IBaseRepository<TEntity>;
 

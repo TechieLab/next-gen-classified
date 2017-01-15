@@ -1,14 +1,12 @@
-﻿
+﻿import {BaseEntity} from './baseEntity';
+import {ObjectID} from 'mongodb';
 
-export class User
+export class User extends BaseEntity
 {
-    public Id: number;
-    public Name: string;
-    public Description: string;
-    public Collection: number;
-    public Genre: string;
-    public Language: string;
-    public Reviews: Array<Review>;
-    public Year: string;
-    public Rating: number;
+    public UserName: string;
+    public Passward: string;
+    public EmailId: string;
+    public HintQues: string;
+    public HintAns: string;
+    public Status: boolean;
 }

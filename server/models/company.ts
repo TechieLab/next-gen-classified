@@ -1,7 +1,12 @@
-﻿
-export class Review
+﻿import {BaseEntity} from './baseEntity';
+import {ObjectID} from 'mongodb';
+
+export class Company extends BaseEntity
 {
-    public Title: string;
-    public Description: string;
-    public ReviewDate: string;
-} 
+    public Name: string;
+    public Designation: string;    
+    public AddressId: string;
+    public ContactId: ObjectID; 
+    public MediaId: ObjectID;
+    public UserId : ObjectID;
+}

@@ -24,19 +24,5 @@ export class IndexRoute
            return res.render('index.html');
        });
    }
-
-   public getMovies()
-   {
-       this.app.get('/movies', function (req, res)
-       {
-           return res.render('index.html');
-       });
-   }
-
-   public getMoviesDetails() {
-       this.app.get('/movies/details/:id', function (req, res) {
-           return res.render('index.html');
-       });
-   }
 }
 

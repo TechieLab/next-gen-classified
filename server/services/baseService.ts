@@ -1,4 +1,4 @@
-﻿import {BaseRepository, IBaseRepository} from '../repository/base';
+﻿import {BaseRepository, IBaseRepository} from '../repository/baseRepository';
 import logger = require('winston');
 
 

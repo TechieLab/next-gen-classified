@@ -11,9 +11,9 @@ export interface IUserRepository extends IBaseRepository<User> {
 }
 
 export class UserRepository extends BaseRepository<User> implements IUserRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+  
+    constructor() {
+        super();
     }
 }
 

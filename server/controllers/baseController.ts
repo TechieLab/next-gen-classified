@@ -1,7 +1,6 @@
-
 import { Express, Request, Response } from "express";
-import logger = require('winston');
 import {IBaseService} from '../services/baseService';
+import logger = require('winston');
 
  export interface IBaseController<TEntity> {
         createEntity();
@@ -11,12 +10,14 @@ import {IBaseService} from '../services/baseService';
         deleteEntity();
     }
 
+var self;
 export class BaseController<TEntity> {
 
     public baseService : IBaseService<TEntity>;
 
     public constructor(baseService :  IBaseService<TEntity>) {
-
+        self = this;
+        self.baseService = baseService;
     }
 
     public createEntity() {
@@ -28,8 +29,10 @@ export class BaseController<TEntity> {
         var sortKey = req.query.sortKey;
         var sortOrder = req.query.sortOrder;
 
-        this.baseService.getAll(sortKey, sortOrder, function (err, item) {
+        self.baseService.getAll(sortKey, sortOrder, function (err, item) {
             if (err) console.log(err);
+
+            logger.log('debug', 'getEntities')
 
             return res.json(item);
         });
@@ -39,7 +42,7 @@ export class BaseController<TEntity> {
 
         var query = { rating: { $gt: 4 } }
 
-       this.baseService.getByQuery(query, null, null, function (err, item) {
+       self.baseService.getByQuery(query, null, null, function (err, item) {
             if (err) console.log(err);
 
             return res.json(item);

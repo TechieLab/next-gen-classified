@@ -1,12 +1,12 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 
 @Component({
-    selector: 'dashboard',
-    template: require('./dashboard.html'),
+    selector: 'dashboard-page',
+    templateUrl: 'dashboard.html',
     entryComponents: []
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardPage implements OnInit {
 
     constructor() {
 

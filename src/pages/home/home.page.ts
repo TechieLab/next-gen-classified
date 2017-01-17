@@ -1,12 +1,11 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
-
 @Component({
-  selector: 'home',
-  template: require('./home.html'),
+  selector: 'home-page',
+  templateUrl: 'home.html',
   providers: []  
 })
 
-export class HomeComponent implements OnInit { 
+export class HomePage implements OnInit { 
 
   constructor() {
     

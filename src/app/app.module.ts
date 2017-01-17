@@ -1,26 +1,19 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ItemDetailsPage } from '../pages/item-details/item-details';
-import { ListPage } from '../pages/list/list';
-
+import {HomeModule} from '../pages/home/home.module';
+import {HomePage} from '../pages/home/home.page';
+import {SettingsPage} from '../pages/settings/settings.page';
 @NgModule({
   declarations: [
-    MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage
+    MyApp, HomePage, SettingsPage
   ],
-  imports: [
+  imports: [    
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage
+    MyApp
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

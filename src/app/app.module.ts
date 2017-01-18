@@ -3,10 +3,13 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import {HomeModule} from '../pages/home/home.module';
 import {HomePage} from '../pages/home/home.page';
+import {LoginPage} from '../pages/login/login.page';
+import {SignInPage} from '../pages/login/login.page';
+import {Welcome} from '../pages/welcome/welcome.page';
 import {SettingsPage} from '../pages/settings/settings.page';
 @NgModule({
   declarations: [
-    MyApp, HomePage, SettingsPage
+    MyApp, Welcome,HomePage,LoginPage,SignInPage,SettingsPage
   ],
   imports: [    
     IonicModule.forRoot(MyApp)

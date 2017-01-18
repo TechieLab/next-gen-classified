@@ -2,11 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import {HomePage} from '../pages/home/home.page';
+import {LoginPage} from '../pages/login/login.page';
+import {SignInPage} from '../pages/login/login.page';
 import {SettingsPage} from '../pages/settings/settings.page';
 
 @Component({
   templateUrl: 'app.html',
-   entryComponents: [HomePage, SettingsPage]
+   entryComponents: [HomePage, SignInPage, LoginPage,SettingsPage]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;

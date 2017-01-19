@@ -1,4 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import {HomeModule} from '../pages/home/home.module';
@@ -7,11 +9,12 @@ import {LoginPage} from '../pages/login/login.page';
 import {SignInPage} from '../pages/login/login.page';
 import {Welcome} from '../pages/welcome/welcome.page';
 import {SettingsPage} from '../pages/settings/settings.page';
+import {DashboardPage} from '../pages/dashboard/dashboard.page';
 @NgModule({
   declarations: [
-    MyApp, Welcome,HomePage,LoginPage,SignInPage,SettingsPage
+    MyApp, Welcome,HomePage,LoginPage,SignInPage,SettingsPage, DashboardPage
   ],
-  imports: [    
+  imports: [  FormsModule,  CommonModule ,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

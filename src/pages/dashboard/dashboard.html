@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-buttons end>
+            <button buttons-end ion-button menuToggle>
+                 <ion-icon name="notifications"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-searchbar padding (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-grid>
+        <ion-row responsive-xs wrap *ngIf="category">
+            <ion-col width-50 *ngFor="let cat of categories">
+                <button ion-button block color="light" large (click)="gotoAdsPage(cat)">
+               {{cat}}
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-list *ngIf="category">
+        <ion-item-divider color="light">Feature Ads</ion-item-divider>
+        <ion-item *ngFor="let ad of ads">           
+            <ion-thumbnail item-left>
+                <img src="img/thumbnail-totoro.png">
+            </ion-thumbnail>
+            <h2>My Neighbor Totoro</h2>
+            <p>Hayao Miyazaki • 1988</p>
+            <button ion-button default item-right>Buy</button>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="category">
+        <ion-item-divider color="light">Latest Postings</ion-item-divider>
+        <ion-item *ngFor="let ad of ads">           
+            <ion-thumbnail item-left>
+                <img src="img/thumbnail-totoro.png">
+            </ion-thumbnail>
+            <h2>My Neighbor Totoro</h2>
+            <p>Hayao Miyazaki • 1988</p>
+            <button ion-button default item-right>Buy</button>
+        </ion-item>
+    </ion-list>
+</ion-content>

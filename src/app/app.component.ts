@@ -5,16 +5,16 @@ import {HomePage} from '../pages/home/home.page';
 import {LoginPage} from '../pages/login/login.page';
 import {SignInPage} from '../pages/login/login.page';
 import {SettingsPage} from '../pages/settings/settings.page';
-
+import {DashboardPage} from '../pages/dashboard/dashboard.page';
 @Component({
   templateUrl: 'app.html',
-   entryComponents: [HomePage, SignInPage, LoginPage,SettingsPage]
+   entryComponents: [HomePage, SignInPage, LoginPage,SettingsPage, DashboardPage]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = HomePage;
+  rootPage: any = DashboardPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(

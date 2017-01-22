@@ -15,7 +15,7 @@
     <ion-grid>
         <ion-row responsive-xs wrap *ngIf="category">
             <ion-col width-50 *ngFor="let cat of categories">
-                <button ion-button block color="light" large (click)="gotoAdsPage(cat)">
+                <button ion-button block color="light" large (click)="gotoCatalogPage(cat)">
                {{cat}}
                 </button>
             </ion-col>

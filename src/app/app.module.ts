@@ -11,10 +11,18 @@ import {Welcome} from '../pages/welcome/welcome.page';
 import {SettingsPage} from '../pages/settings/settings.page';
 import {DashboardPage} from '../pages/dashboard/dashboard.page';
 import {NotificationPage} from '../pages/notification/notification.page';
+import {CatalogPage} from '../pages/catalog/catalog.page';
 
 @NgModule({
   declarations: [
-    MyApp, Welcome,HomePage,LoginPage,SignInPage,SettingsPage, DashboardPage, NotificationPage
+    MyApp, Welcome,
+    HomePage,
+    LoginPage,
+    SignInPage,
+    SettingsPage,
+     DashboardPage,
+      NotificationPage,
+      CatalogPage
   ],
   imports: [  FormsModule,  CommonModule ,
     IonicModule.forRoot(MyApp)

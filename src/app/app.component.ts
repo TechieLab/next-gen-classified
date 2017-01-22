@@ -7,9 +7,17 @@ import {SignInPage} from '../pages/login/login.page';
 import {SettingsPage} from '../pages/settings/settings.page';
 import {DashboardPage} from '../pages/dashboard/dashboard.page';
 import {NotificationPage} from '../pages/notification/notification.page';
+import {CatalogPage} from '../pages/catalog/catalog.page';
+
 @Component({
   templateUrl: 'app.html',
-   entryComponents: [HomePage, SignInPage, LoginPage,SettingsPage, DashboardPage, NotificationPage]
+   entryComponents: [HomePage, 
+   SignInPage, 
+   LoginPage,
+   SettingsPage,
+    DashboardPage,
+     NotificationPage,
+     CatalogPage]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;

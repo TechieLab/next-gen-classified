@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Catalog</ion-title>
+        <ion-buttons end>
+            <button buttons-end ion-button (click)="gotoNotificationPage()">
+                 <ion-icon name="notifications"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-row>
+        <ion-col width-10>
+            <ion-select [(ngModel)]="selectedCategory" placeholder="Select category">
+                <ion-option *ngFor="let cat of categories">{{cat}}</ion-option>              
+            </ion-select>
+        </ion-col>
+        <ion-col width-90>
+            <ion-searchbar padding [(ngModel)]="selectedCategory" (ionInput)="getItems($event)"></ion-searchbar>
+        </ion-col>
+    </ion-row>
+    <ion-grid>
+        <ion-row responsive-xs wrap *ngIf="category">
+            <ion-col width-50 *ngFor="let cat of categories">
+                <button ion-button block color="light" large (click)="gotoCatalogPage(cat)">
+               {{cat}}
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-list *ngIf="selectedCategory">
+        <ion-item-divider color="light">Search Results</ion-item-divider>
+        <ion-item *ngFor="let item of items">
+            <ion-thumbnail item-left>
+                <img src="img/thumbnail-totoro.png">
+            </ion-thumbnail>
+            <h2>My Neighbor Totoro</h2>
+            <p>Hayao Miyazaki • 1988</p>
+            <button ion-button default item-right>Buy</button>
+        </ion-item>
+    </ion-list>
+</ion-content>

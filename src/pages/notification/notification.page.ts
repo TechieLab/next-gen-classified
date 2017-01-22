@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
-  selector: 'product-page',
-  templateUrl: 'product.html'
+  selector: 'notification-page',
+  templateUrl: 'notification.html'
 })
-export class ProductPage {
+export class NotificationPage {
   selectedItem: any;
   notifications : Array<any>;
 

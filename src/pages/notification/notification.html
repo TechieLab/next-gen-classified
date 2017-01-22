@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-navbar>
+         <ion-title>Notification</ion-title>       
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list no-lines>
+        <button ion-item *ngFor="let item of notifications" (click)="itemSelected(item)">
+            {{ item.Title }}
+        </button> 
+    </ion-list>
+</ion-content>
+

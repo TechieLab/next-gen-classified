@@ -10,9 +10,11 @@ import {SignInPage} from '../pages/login/login.page';
 import {Welcome} from '../pages/welcome/welcome.page';
 import {SettingsPage} from '../pages/settings/settings.page';
 import {DashboardPage} from '../pages/dashboard/dashboard.page';
+import {NotificationPage} from '../pages/notification/notification.page';
+
 @NgModule({
   declarations: [
-    MyApp, Welcome,HomePage,LoginPage,SignInPage,SettingsPage, DashboardPage
+    MyApp, Welcome,HomePage,LoginPage,SignInPage,SettingsPage, DashboardPage, NotificationPage
   ],
   imports: [  FormsModule,  CommonModule ,
     IonicModule.forRoot(MyApp)

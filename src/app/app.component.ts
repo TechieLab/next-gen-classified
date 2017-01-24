@@ -2,17 +2,28 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import {HomePage} from '../pages/home/home.page';
+import {LoginPage} from '../pages/login/login.page';
+import {SignInPage} from '../pages/login/login.page';
 import {SettingsPage} from '../pages/settings/settings.page';
+import {DashboardPage} from '../pages/dashboard/dashboard.page';
+import {NotificationPage} from '../pages/notification/notification.page';
+import {CatalogPage} from '../pages/catalog/catalog.page';
 
 @Component({
   templateUrl: 'app.html',
-   entryComponents: [HomePage, SettingsPage]
+   entryComponents: [HomePage, 
+   SignInPage, 
+   LoginPage,
+   SettingsPage,
+    DashboardPage,
+     NotificationPage,
+     CatalogPage]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = HomePage;
+  rootPage: any = DashboardPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(

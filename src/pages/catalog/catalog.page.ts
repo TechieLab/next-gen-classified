@@ -6,10 +6,24 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'catalog.html'
 })
 export class CatalogPage {
-  selectedItem: any;
+  selectedCategory: string;
+  items: string[];
+  subCategories : string[];
+  isSubCategorySelected: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
+    this.isSubCategorySelected = false;
+    this.selectedCategory = navParams.get('category'); 
+    this.subCategories = ["SmartPhone", "Android", "Iphone", "Blackberry"];
+      
+    this.items = [
+      'Amsterdam',
+      'Bogota'
+    ];   
+  }
+
+  selectSubCategory(){
+    this.isSubCategorySelected = true;
   }
 }

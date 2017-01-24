@@ -14,12 +14,14 @@ import {ProductPage} from '../product/product.page';
 export class DashboardPage implements OnInit {
 
     private categories: Array<string>;
+    private selectedCategory: string;
     private ads: Array<any>;
     private category: boolean;
     private items: Array<any>;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.category = true;
+        this.selectedCategory = navParams.get('category'); 
         this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
         this.ads = [{
             MainImage: '',

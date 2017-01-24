@@ -23,7 +23,7 @@
     </ion-grid>
     <ion-list *ngIf="category">
         <ion-item-divider color="light">Feature Ads</ion-item-divider>
-        <ion-item *ngFor="let ad of ads">           
+        <ion-item *ngFor="let ad of ads" (click)="showProductDetails(ad)">           
             <ion-thumbnail item-left>
                 <img src="img/thumbnail-totoro.png">
             </ion-thumbnail>

@@ -8,6 +8,7 @@ import {SettingsPage} from '../pages/settings/settings.page';
 import {DashboardPage} from '../pages/dashboard/dashboard.page';
 import {NotificationPage} from '../pages/notification/notification.page';
 import {CatalogPage} from '../pages/catalog/catalog.page';
+import {ProductPage} from '../pages/product/product.page';
 
 @Component({
   templateUrl: 'app.html',
@@ -17,7 +18,7 @@ import {CatalogPage} from '../pages/catalog/catalog.page';
    SettingsPage,
     DashboardPage,
      NotificationPage,
-     CatalogPage]
+     CatalogPage, ProductPage]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;

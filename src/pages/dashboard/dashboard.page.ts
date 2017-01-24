@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import {NotificationPage} from '../notification/notification.page';
 import {CatalogPage} from '../catalog/catalog.page';
+import {ProductPage} from '../product/product.page';
 
 @Component({
     selector: 'dashboard-page',
@@ -59,5 +60,9 @@ export class DashboardPage implements OnInit {
 
     gotoCatalogPage(cat : string){
           this.navCtrl.push(CatalogPage, { category : cat });
+    }
+
+    showProductDetails(item : string){
+        this.navCtrl.push(ProductPage, { category : item });
     }
 }

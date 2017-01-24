@@ -5,19 +5,18 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import {HomeModule} from '../pages/home/home.module';
 import {HomePage} from '../pages/home/home.page';
-import {LoginPage} from '../pages/login/login.page';
 import {SignInPage} from '../pages/login/login.page';
 import {Welcome} from '../pages/welcome/welcome.page';
 import {SettingsPage} from '../pages/settings/settings.page';
 import {DashboardPage} from '../pages/dashboard/dashboard.page';
 import {NotificationPage} from '../pages/notification/notification.page';
 import {CatalogPage} from '../pages/catalog/catalog.page';
+import {Constants} from './common/constants';
 
 @NgModule({
   declarations: [
     MyApp, Welcome,
     HomePage,
-    LoginPage,
     SignInPage,
     SettingsPage,
      DashboardPage,

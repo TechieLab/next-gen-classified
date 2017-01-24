@@ -1,29 +1,7 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
-import {HomePage} from '../home/home.page';
-import {SettingsPage} from '../settings/settings.page';
-import {Welcome} from '../welcome/welcome.page';
+import { NavController, NavParams } from 'ionic-angular';
 
-@Component({
-  template: `
-    <ion-tabs class="tabs-basic">
-      <ion-tab tabTitle="Skip" [root]="rootPage"></ion-tab>
-      <ion-tab tabTitle="SignIn" [root]="SignInPage"></ion-tab>
-    </ion-tabs>
-`,
-  entryComponents: [Welcome]
-})
 
-export class LoginPage implements OnInit { 
-  rootPage = Welcome;
-  SignInPage = SignInPage;
-  constructor() {
-    
-  }  
-
-  ngOnInit(){
-
-  }
-}
 
 @Component({
   selector: 'login-page',
@@ -32,9 +10,9 @@ export class LoginPage implements OnInit {
 })
 
 export class SignInPage implements OnInit { 
-
-  constructor() {
-    
+  private selectedCategory: string;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+      this.selectedCategory = navParams.get('category'); 
   }  
 
   ngOnInit(){

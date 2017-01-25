@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import {DashboardPage} from '../dashboard/dashboard.page';
 import {SignInPage} from '../login/login.page';
-import {Constant} from '../'
+
 
 @Component({
   selector: 'welcome-page',

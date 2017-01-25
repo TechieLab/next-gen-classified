@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <b>{{selectedCategory}}</b>
+        <ion-buttons end>
+            <button buttons-end ion-button>
+                <ion-icon name="refresh" md="md-refresh"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding> 
+ <form (ngSubmit)="logForm()">
+      <ion-item>
+        <ion-label floating>Start with some photos</ion-label>
+        <ion-input type="file" [(ngModel)]="todo.title" name="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Add a title</ion-label>
+        <ion-input type="text" [(ngModel)]="todo.title" name="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Choose a category</ion-label>
+        <ion-input type="text" [(ngModel)]="todo.title" name="title"></ion-input>
+      </ion-item>
+       <ion-item>
+        <ion-label floating>Price</ion-label>
+        <ion-input type="text" [(ngModel)]="todo.title" name="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Description</ion-label>
+        <ion-textarea [(ngModel)]="todo.description" name="description"></ion-textarea>
+      </ion-item>
+      <button ion-button type="submit" block>POST</button>
+    </form>
+
+</ion-content>

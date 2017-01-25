@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import {NotificationPage} from '../notification/notification.page';
 import {CatalogPage} from '../catalog/catalog.page';
 import {ProductPage} from '../product/product.page';
+import {PostNewAd}   from '../postnewad/postnewad.page';
 
 @Component({
     selector: 'dashboard-page',
@@ -66,5 +67,9 @@ export class DashboardPage implements OnInit {
 
     showProductDetails(item : string){
         this.navCtrl.push(ProductPage, { category : item });
+    }
+
+    gotoPostAnAd(){
+        this.navCtrl.push(PostNewAd, { category : 'POST FOR FREE' });
     }
 }

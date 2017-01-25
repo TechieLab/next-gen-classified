@@ -9,9 +9,11 @@ import {NotificationPage} from '../pages/notification/notification.page';
 import {CatalogPage} from '../pages/catalog/catalog.page';
 import {ProductPage} from '../pages/product/product.page';
 import {Welcome} from '../pages/welcome/welcome.page';
+import {PostNewAd}   from '../pages/postnewad/postnewad.page';
+
 @Component({
   templateUrl: 'app.html',
-   entryComponents: [Welcome,
+   entryComponents: [Welcome,PostNewAd,
    HomePage, 
    SignInPage, 
    SettingsPage,

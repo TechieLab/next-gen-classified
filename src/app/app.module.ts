@@ -12,12 +12,14 @@ import {DashboardPage} from '../pages/dashboard/dashboard.page';
 import {NotificationPage} from '../pages/notification/notification.page';
 import {CatalogPage} from '../pages/catalog/catalog.page';
 import {ProductPage} from '../pages/product/product.page';
+import {PostNewAd}   from '../pages/postnewad/postnewad.page';
 import {Constants} from './common/constants';
 
 @NgModule({
   declarations: [
     MyApp, Welcome,
     HomePage,
+    PostNewAd,
     SignInPage,
     SettingsPage,
      DashboardPage,

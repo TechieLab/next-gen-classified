@@ -75,6 +75,6 @@ export class HomePage implements OnInit {
     }
 
     gotoSearchPage(){
-  this.navCtrl.push(SearchPage, { category : 'POST FOR FREE' });
+       this.navCtrl.push(SearchPage, { category : 'POST FOR FREE' });
     }
 }

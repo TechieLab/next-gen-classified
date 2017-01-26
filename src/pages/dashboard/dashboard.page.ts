@@ -5,6 +5,7 @@ import {NotificationPage} from '../notification/notification.page';
 import {CatalogPage} from '../catalog/catalog.page';
 import {ProductPage} from '../product/product.page';
 import {PostNewAd}   from '../postnewad/postnewad.page';
+import {SearchPage}   from '../search/search.page';
 
 @Component({
     selector: 'dashboard-page',
@@ -71,5 +72,9 @@ export class DashboardPage implements OnInit {
 
     gotoPostAnAd(){
         this.navCtrl.push(PostNewAd, { category : 'POST FOR FREE' });
+    }
+
+    gotoSearchPage(){
+  this.navCtrl.push(SearchPage, { category : 'POST FOR FREE' });
     }
 }

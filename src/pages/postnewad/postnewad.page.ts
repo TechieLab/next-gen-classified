@@ -10,7 +10,7 @@ import { NavController, NavParams } from 'ionic-angular';
 export class PostNewAd implements OnInit{
  
   private selectedCategory: string;
-  private todo = {}
+  private newPostForm = {}
 
   constructor(public navCtrl: NavController, public navParams: NavParams){
      this.selectedCategory = navParams.get('category');

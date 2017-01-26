@@ -22,10 +22,10 @@ export class Welcome implements OnInit {
   }
 
   gotoDashboardPage(){
-          this.navCtrl.push(DashboardPage, { category : 'Dashboard' });
+          this.navCtrl.setRoot(DashboardPage, { category : 'Dashboard' });
     }
 
    gotoLoginPage(){
-          this.navCtrl.push(SignInPage, { category : 'SignIn' });
+          this.navCtrl.setRoot(SignInPage, { category : 'SignIn' });
     } 
 }

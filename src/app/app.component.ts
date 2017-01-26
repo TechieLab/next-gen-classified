@@ -29,7 +29,7 @@ export class MyApp {
 
   // make HelloIonicPage the root (or first) page
   rootPage: any = Welcome;
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string, component: any,name : any }>;
 
   constructor(
     public platform: Platform,
@@ -39,15 +39,15 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Admin', component: AdminPage },
-      { title: 'Post Ad', component: PostNewAd },
-      { title: 'Favourites', component: SettingsPage },
-      { title: 'About', component: HomePage },
-      { title: 'Settings', component: SettingsPage },
-      { title: 'Feedback', component: SettingsPage },
-      { title: 'Support', component: HomePage },
-      { title: 'Help', component: SettingsPage }
+      { title: 'Home', component: HomePage, name:"home" },
+      { title: 'Admin', component: AdminPage,name:"home" },
+      { title: 'Post Ad', component: PostNewAd,name:"add-circle" },
+      { title: 'Favourites', component: SettingsPage,name:"star" },
+      { title: 'About', component: HomePage,name:"book" },
+      { title: 'Settings', component: SettingsPage,name:"settings" },
+      { title: 'Feedback', component: SettingsPage,name:"paper" },
+      { title: 'Support', component: HomePage,name:"call" },
+      { title: 'Help', component: SettingsPage,name:"help-circle" }
     ];
   }
 

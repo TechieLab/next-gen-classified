@@ -2,35 +2,25 @@
     <ion-navbar>
          <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
-        </button>
-        <b>{{selectedCategory}}</b>
+        </button>       
         <ion-buttons end>
-            <button buttons-end ion-button  (click)="gotoNotificationPage()">
-                 <ion-icon name="notifications"></ion-icon>
+            <button ion-button color="secondary" (click)="gotoPostingAdPage()">
+                 Post Ad
             </button>
-        </ion-buttons>
-          <ion-buttons end>
-            <button buttons-end ion-button  (click)="gotoSearchPage()">
+             <button buttons-end ion-button  (click)="gotoSearchPage()">
                  <ion-icon name="search"></ion-icon>
             </button>
-        </ion-buttons>
+            <button ion-button  (click)="gotoNotificationPage()">
+                 <ion-icon name="notifications"></ion-icon>
+            </button>            
+        </ion-buttons>      
     </ion-navbar>
 </ion-header>
-<ion-content padding>
-    <ion-searchbar padding (ionInput)="getItems($event)"></ion-searchbar>
-    <!--<ion-grid>
-        <ion-row responsive-xs wrap>
-            <ion-col width-60>
-                <button ion-button block color="blue" large (click)="gotoPostAnAd()">
-                  POST AN AD
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>-->
+<ion-content padding>   
     <ion-grid>
         <ion-row responsive-xs wrap *ngIf="category">
             <ion-col width-50 *ngFor="let cat of categories">
-                <button ion-button block color="light" large (click)="gotoCatalogPage(cat)">
+                <button ion-button block color="light" large (click)="gotoSearchPage(cat)">
                {{cat}}
                 </button>
             </ion-col>

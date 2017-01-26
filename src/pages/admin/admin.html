@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Catalog</ion-title>
+        <ion-buttons end>
+            <button buttons-end ion-button (click)="gotoNotificationPage()">
+                 <ion-icon name="notifications"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-row>
+        <ion-col width-10>
+            <button buttons-end ion-button (click)="selectSubCategory()">
+               {{selectedCategory}}
+            </button>
+        </ion-col>
+        <ion-col width-90>
+            <ion-searchbar padding [(ngModel)]="searchKeyword" (ionInput)="getItems($event)"></ion-searchbar>
+        </ion-col>
+    </ion-row>    
+    <ion-list *ngIf="isSubCategorySelected">        
+        <ion-item *ngFor="let item of subCategories">
+            <ion-thumbnail item-left>
+                <img src="img/thumbnail-totoro.png">
+            </ion-thumbnail>  
+            {{item}}    
+        </ion-item>
+    </ion-list>
+</ion-content>

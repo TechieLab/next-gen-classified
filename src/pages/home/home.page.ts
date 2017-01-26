@@ -70,7 +70,7 @@ export class HomePage implements OnInit {
         this.navCtrl.push(ProductPage, { category : item });
     }
 
-    gotoPostAnAd(){
+    gotoPostingAdPage(){
         this.navCtrl.push(PostNewAd, { category : 'POST FOR FREE' });
     }
 

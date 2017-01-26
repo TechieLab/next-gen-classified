@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { HomePage } from '../pages/home/home.page';
+import { AdminPage } from '../pages/admin/admin.page';
 import { LoginPage } from '../pages/account/login.page';
 import { RegisterPage } from '../pages/account/register.page';
 import { SettingsPage } from '../pages/settings/settings.page';
@@ -39,6 +40,7 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },
+      { title: 'Admin', component: AdminPage },
       { title: 'Post Ad', component: PostNewAd },
       { title: 'Favourites', component: SettingsPage },
       { title: 'About', component: HomePage },

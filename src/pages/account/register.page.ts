@@ -5,12 +5,12 @@ import {LoginModel} from '../../models/login';
 import {IUser} from '../../models/user';
 
 @Component({
-    selector: 'login-form',
+    selector: 'register-page',
     providers: [],
-    template: require('./login.html')
+    templateUrl: 'register.html'
 })
 
-export class LoginComponent {
+export class RegisterPage{
 
    
     public errorMsg = '';

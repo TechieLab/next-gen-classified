@@ -5,7 +5,8 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomeModule } from '../pages/home/home.module';
 import { HomePage } from '../pages/home/home.page';
-import { SignInPage } from '../pages/login/login.page';
+import { LoginPage } from '../pages/account/login.page';
+import { RegisterPage } from '../pages/account/register.page';
 import { Welcome } from '../pages/welcome/welcome.page';
 import { SettingsPage } from '../pages/settings/settings.page';
 import { NotificationPage } from '../pages/notification/notification.page';
@@ -21,7 +22,7 @@ import { FiltersPage } from '../pages/filters/filters.page';
     MyApp, Welcome,
     HomePage,
     PostNewAd,
-    SignInPage,
+    LoginPage,RegisterPage,
     SettingsPage,
     NotificationPage,
     CatalogPage, ProductPage,

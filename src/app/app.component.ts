@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { HomePage } from '../pages/home/home.page';
-import { SignInPage } from '../pages/login/login.page';
+import { LoginPage } from '../pages/account/login.page';
+import { RegisterPage } from '../pages/account/register.page';
 import { SettingsPage } from '../pages/settings/settings.page';
 import { NotificationPage } from '../pages/notification/notification.page';
 import { CatalogPage } from '../pages/catalog/catalog.page';
@@ -15,7 +16,7 @@ import {SearchPage}   from '../pages/search/search.page';
   templateUrl: 'app.html',
   entryComponents: [Welcome, PostNewAd,
     HomePage,
-    SignInPage,
+    LoginPage,RegisterPage,
     SettingsPage,
     NotificationPage,
     CatalogPage,

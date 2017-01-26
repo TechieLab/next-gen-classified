@@ -2,7 +2,7 @@ import {Component, OnInit, ElementRef} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import {HomePage} from '../home/home.page';
-import {SignInPage} from '../login/login.page';
+import {LoginPage} from '../account/login.page';
 
 
 @Component({
@@ -26,6 +26,6 @@ export class Welcome implements OnInit {
     }
 
    gotoLoginPage(){
-          this.navCtrl.setRoot(SignInPage, { category : 'SignIn' });
+          this.navCtrl.setRoot(LoginPage, { category : 'SignIn' });
     } 
 }

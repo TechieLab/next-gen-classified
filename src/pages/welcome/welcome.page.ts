@@ -1,7 +1,7 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import {DashboardPage} from '../dashboard/dashboard.page';
+import {HomePage} from '../home/home.page';
 import {SignInPage} from '../login/login.page';
 
 
@@ -22,7 +22,7 @@ export class Welcome implements OnInit {
   }
 
   gotoDashboardPage(){
-          this.navCtrl.setRoot(DashboardPage, { category : 'Dashboard' });
+          this.navCtrl.setRoot(HomePage, { category : 'Dashboard' });
     }
 
    gotoLoginPage(){

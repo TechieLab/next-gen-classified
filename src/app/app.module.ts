@@ -8,7 +8,6 @@ import { HomePage } from '../pages/home/home.page';
 import { SignInPage } from '../pages/login/login.page';
 import { Welcome } from '../pages/welcome/welcome.page';
 import { SettingsPage } from '../pages/settings/settings.page';
-import { DashboardPage } from '../pages/dashboard/dashboard.page';
 import { NotificationPage } from '../pages/notification/notification.page';
 import { CatalogPage } from '../pages/catalog/catalog.page';
 import { ProductPage } from '../pages/product/product.page';
@@ -24,7 +23,6 @@ import { FiltersPage } from '../pages/filters/filters.page';
     PostNewAd,
     SignInPage,
     SettingsPage,
-    DashboardPage,
     NotificationPage,
     CatalogPage, ProductPage,
     SearchPage, FiltersPage

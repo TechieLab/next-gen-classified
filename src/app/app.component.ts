@@ -4,7 +4,6 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { HomePage } from '../pages/home/home.page';
 import { SignInPage } from '../pages/login/login.page';
 import { SettingsPage } from '../pages/settings/settings.page';
-import { DashboardPage } from '../pages/dashboard/dashboard.page';
 import { NotificationPage } from '../pages/notification/notification.page';
 import { CatalogPage } from '../pages/catalog/catalog.page';
 import { ProductPage } from '../pages/product/product.page';
@@ -18,7 +17,6 @@ import {SearchPage}   from '../pages/search/search.page';
     HomePage,
     SignInPage,
     SettingsPage,
-    DashboardPage,
     NotificationPage,
     CatalogPage,
     ProductPage,

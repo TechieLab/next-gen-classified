@@ -12,6 +12,9 @@ import { ProductPage } from '../pages/product/product.page';
 import { Welcome } from '../pages/welcome/welcome.page';
 import { PostNewAd } from '../pages/postnewad/postnewad.page';
 import {SearchPage}   from '../pages/search/search.page';
+import {FeedbackPage}   from '../pages/feedback/feedback.page';
+import {HelpPage}   from '../pages/help/help.page';
+import {Rating} from './components/rating';
 
 @Component({
   templateUrl: 'app.html',
@@ -22,7 +25,7 @@ import {SearchPage}   from '../pages/search/search.page';
     NotificationPage,
     CatalogPage,
     ProductPage,
-    SearchPage]
+    SearchPage,FeedbackPage, HelpPage, Rating]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -45,9 +48,8 @@ export class MyApp {
       { title: 'Favourites', component: SettingsPage,name:"star" },
       { title: 'About', component: HomePage,name:"book" },
       { title: 'Settings', component: SettingsPage,name:"settings" },
-      { title: 'Feedback', component: SettingsPage,name:"paper" },
-      { title: 'Support', component: HomePage,name:"call" },
-      { title: 'Help', component: SettingsPage,name:"help-circle" }
+      { title: 'Feedback', component: FeedbackPage,name:"paper" },
+      { title: 'Help', component: HelpPage,name:"help-circle" }
     ];
   }
 

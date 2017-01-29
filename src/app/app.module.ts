@@ -16,6 +16,10 @@ import { PostNewAd } from '../pages/postnewad/postnewad.page';
 import { Constants } from './common/constants';
 import { SearchPage } from '../pages/search/search.page';
 import { FiltersPage } from '../pages/filters/filters.page';
+import {FeedbackPage}   from '../pages/feedback/feedback.page';
+import {HelpPage}   from '../pages/help/help.page';
+import {Rating} from './components/rating';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +30,7 @@ import { FiltersPage } from '../pages/filters/filters.page';
     SettingsPage,
     NotificationPage,
     CatalogPage, ProductPage,
-    SearchPage, FiltersPage
+    SearchPage, FiltersPage, FeedbackPage,HelpPage,Rating
   ],
   imports: [FormsModule, CommonModule,
     IonicModule.forRoot(MyApp,{     
@@ -39,7 +43,7 @@ import { FiltersPage } from '../pages/filters/filters.page';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, FiltersPage
+    MyApp, FiltersPage, FeedbackPage,HelpPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

@@ -14,7 +14,6 @@ import {SearchPage}   from '../search/search.page';
 })
 
 export class HomePage implements OnInit {
-
     private categories: Array<string>;
     private selectedCategory: string;
     private ads: Array<any>;

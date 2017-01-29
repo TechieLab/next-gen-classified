@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-navbar>       
+        <ion-title class="text-center">Feedback</ion-title>        
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <form (ngSubmit)="feedbackForm()">
+        <ion-item>
+            <ion-label floating>What do you think about our App</ion-label>
+            <ion-input type="file" [(ngModel)]="feedback.title" name="title"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>What would you like to share with us?</ion-label>
+            <ion-input type="text" [(ngModel)]="feedback.comments" name="comments"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label >How Likely would you recommend to your friends and colleagues</ion-label>
+            <rating [(rate)]="feedback.rate"></rating>
+        </ion-item>
+        <button ion-button type="submit" >Submit</button>
+    </form>
+</ion-content>

@@ -12,30 +12,92 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <ion-list>
-        <ion-list-header>
-            Action
-        </ion-list-header>
-        <ion-item>
-            <ion-avatar item-left>
-                <img src="img/avatar-finn.png">
-            </ion-avatar>
-            <h2>Finn</h2>
-            <h3>Don't Know What To Do!</h3>
-            <p>I've had a pretty messed up day. If we just...</p>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-list-header>
-            Action
-        </ion-list-header>
-        <ion-item>
-            <ion-avatar item-left>
-                <img src="img/avatar-finn.png">
-            </ion-avatar>
-            <h2>Finn</h2>
-            <h3>Don't Know What To Do!</h3>
-            <p>I've had a pretty messed up day. If we just...</p>
-        </ion-item>
-    </ion-list>
+   <ion-card>
+    <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png"/>
+  </ion-card>
+   <ion-card-content>
+      <p>Phone !!!</p>
+        <ion-col>
+            <ion-note>
+                11h ago
+            </ion-note>
+        </ion-col>
+     <div>5000</div>
+      <p>Additional</p>
+  </ion-card-content>
+   <ion-card-content>
+       <ion-grid>
+           <ion-row>
+               <ion-col width-50>
+                     <p>
+                       <ion-icon name="people" item-left></ion-icon> Offers Made :31
+                   </p>
+               </ion-col>
+                <ion-col width-50 text-right>
+                      <p>
+                            <ion-icon name="time" item-left></ion-icon>Last Offer: 1 hour ago
+                    </p>  
+               </ion-col>
+           </ion-row>
+       </ion-grid>
+    
+      <div padding>
+        <ion-segment [(ngModel)]="pet">
+            <ion-segment-button value="specifications">
+            SPECIFICATIONS
+            </ion-segment-button>
+            <ion-segment-button value="description">
+            DESCRIPTIONS
+            </ion-segment-button>
+        </ion-segment>
+        </div>
+
+        <div [ngSwitch]="pet">
+        <ion-list *ngSwitchCase="'description'">
+             <ion-item>
+               <ion-card-content>
+                    <p wrap>Wait a minute. Wait a minute, Doc. Uhhh...<br> 
+                        Are you telling me that you built a time machine... out of
+                        a DeLorean?! Whoa. This is heavy.</p>
+                </ion-card-content>
+            </ion-item>
+            
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'specifications'">
+            <ion-item>
+                 Located In
+             <p item-right>Hyderabad</p>
+            </ion-item>
+             <ion-item>
+                 Located In
+             <p item-right>Hyderabad</p>
+            </ion-item>
+             <ion-item>
+                 Located In
+             <p item-right>Hyderabad</p>
+            </ion-item>
+             <ion-item>
+                 Located In
+             <p item-right>Hyderabad</p>
+            </ion-item>
+             <ion-item>
+                 Located In
+             <p item-right>Hyderabad</p>
+            </ion-item>
+             <ion-item>
+                 Located In
+             <p item-right>Hyderabad</p>
+            </ion-item>
+             <ion-item>
+                 Located In
+             <p item-right>Hyderabad</p>
+            </ion-item>
+             <ion-item>
+                 Located In
+             <p item-right>Hyderabad</p>
+            </ion-item>
+        </ion-list>
+    </div>
+  </ion-card-content>
 </ion-content>

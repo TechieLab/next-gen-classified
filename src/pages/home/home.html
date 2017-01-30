@@ -1,23 +1,23 @@
 <ion-header>
     <ion-navbar>
-         <button ion-button menuToggle>
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
-        </button> 
-        <ion-icon name="pin" item-left></ion-icon> {{city}}      
+        </button>
+        <ion-icon name="pin" item-left></ion-icon> {{city}}
         <ion-buttons end>
             <button ion-button color="secondary" (click)="gotoPostingAdPage()">
                  Post Ad
             </button>
-             <button buttons-end ion-button  (click)="gotoSearchPage()">
+            <button buttons-end ion-button (click)="gotoSearchPage()">
                  <ion-icon name="search"></ion-icon>
             </button>
-            <button ion-button  (click)="gotoNotificationPage()">
+            <button ion-button (click)="gotoNotificationPage()">
                  <ion-icon name="notifications"></ion-icon>
-            </button>            
-        </ion-buttons>      
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding>   
+<ion-content padding>
     <ion-grid>
         <ion-row responsive-xs wrap *ngIf="category">
             <ion-col width-50 *ngFor="let cat of categories">
@@ -27,26 +27,74 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-list *ngIf="category">
-        <ion-item-divider color="light">Feature Ads</ion-item-divider>
-        <ion-item *ngFor="let ad of ads" (click)="showProductDetails(ad)">           
-            <ion-thumbnail item-left>
-                <img src="img/thumbnail-totoro.png">
-            </ion-thumbnail>
-            <h2>My Neighbor Totoro</h2>
-            <p>Hayao Miyazaki • 1988</p>
-            <button ion-button default item-right>Buy</button>
-        </ion-item>
-    </ion-list>
+   
+    <ion-card *ngIf="category">
+        <ion-grid>
+            <ion-row wrap>
+            <ion-col *ngFor="let ad of ads" >
+                <ion-item>
+                    <ion-avatar item-left>
+                        <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+                    </ion-avatar>
+                    <h2>Marty McFly</h2>
+                    <p>November 5, 1955</p>
+                     
+                </ion-item>
+
+                <img (click)="showProductDetails()" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+
+                <ion-card-content>
+                    <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of
+                        a DeLorean?! Whoa. This is heavy.</p>
+                </ion-card-content>
+
+                <ion-row>
+                    <ion-col>
+                        <button ion-button icon-left clear small>
+                            <ion-icon name="thumbs-up"></ion-icon>
+                            <div>12 Likes</div>
+                        </button>
+                    </ion-col>
+                    <ion-col>
+                        <button ion-button icon-left clear small>
+                            <ion-icon name="text"></ion-icon>
+                            <div>4 Comments</div>
+                        </button>
+                    </ion-col>
+                    <ion-col center text-center>
+                        <ion-note>
+                            11h ago
+                        </ion-note>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                         <button ion-button default item-right>Contact</button>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+            </ion-row>
+            </ion-grid>
+    </ion-card>
+
+
+
     <ion-list *ngIf="category">
         <ion-item-divider color="light">Latest Postings</ion-item-divider>
-        <ion-item *ngFor="let ad of ads">           
+        <ion-item *ngFor="let ad of ads">
             <ion-thumbnail item-left>
-                <img src="img/thumbnail-totoro.png">
+                <img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-puppy-4.jpg">
             </ion-thumbnail>
             <h2>My Neighbor Totoro</h2>
             <p>Hayao Miyazaki • 1988</p>
             <button ion-button default item-right>Buy</button>
         </ion-item>
     </ion-list>
+    <ion-fab right bottom>
+      <button ion-fab color="danger" (click)="gotoPostingAdPage()">
+            <span class="button-inner">
+              Post Ad
+          </span>
+     </button>
+   </ion-fab> 
 </ion-content>

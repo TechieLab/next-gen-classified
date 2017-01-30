@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
+
 import { HomePage } from '../pages/home/home.page';
 import { AdminPage } from '../pages/admin/admin.page';
 import { LoginPage } from '../pages/account/login.page';
@@ -37,6 +39,7 @@ export class MyApp {
   constructor(
     public platform: Platform,
     public menu: MenuController
+  
   ) {
     this.initializeApp();
 
@@ -61,6 +64,10 @@ export class MyApp {
       Splashscreen.hide();
     });
   }
+
+   gotoLoginPage(){
+         // this.navCtrl.setRoot(LoginPage, { category : 'SignIn' });
+    } 
 
   openPage(page) {
     // close the menu when clicking a link from the menu

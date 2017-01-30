@@ -21,6 +21,10 @@ export class BaseService<TEntity> {
         return this.http.get(this.url).map(this.extractData).catch(this.handleError);
     }
 
+    getCity(){
+        this.http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=52.154184,6.199592&sensor=true');
+    }
+
     getById(id: string): Observable<TEntity> {
         this.url = this.url + '/get/' + id;
         return this.http.get(this.url).map(this.extractData).catch(this.handleError);

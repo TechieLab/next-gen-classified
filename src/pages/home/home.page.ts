@@ -1,15 +1,19 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Geolocation } from 'ionic-native';
 
 import {NotificationPage} from '../notification/notification.page';
 import {CatalogPage} from '../catalog/catalog.page';
 import {ProductPage} from '../product/product.page';
 import {PostNewAd}   from '../postnewad/postnewad.page';
-import {SearchPage}   from '../search/search.page';
+import {SearchPage}  from '../search/search.page';
+import {VendorService} from '../../app/services/vendor.service';
+
 
 @Component({
     selector: 'home-page',
     templateUrl: 'home.html',
+    providers:[VendorService],
     entryComponents: []
 })
 
@@ -19,8 +23,10 @@ export class HomePage implements OnInit {
     private ads: Array<any>;
     private category: boolean;
     private items: Array<any>;
+    private city:String;
+   
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    constructor(public navCtrl: NavController, public navParams: NavParams,public service:VendorService) {
         this.category = true;
         this.selectedCategory = navParams.get('category'); 
         this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
@@ -46,11 +52,17 @@ export class HomePage implements OnInit {
     }
 
     ngOnInit() {
-
+       Geolocation.getCurrentPosition().then((resp) => {
+          this.service.getCity(resp).subscribe((res:any) =>{
+              this.city = JSON.parse(res._body)['results']['0']['address_components']['4']['long_name'];
+          });
+       }).catch((error) => {
+           console.log('Error getting Location',error)
+       })    
     }
 
     getItems() {
-
+          
     }
 
     gotoNotificationPage() {

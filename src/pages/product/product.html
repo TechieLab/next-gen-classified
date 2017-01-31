@@ -27,7 +27,7 @@
             </ion-note>
         </ion-col>
         <div>5000</div>
-        <p>Additional</p>
+        <p>Additional Details</p>
     </ion-card-content>
     <ion-card-content>
         <ion-grid>
@@ -105,13 +105,30 @@
                 </ion-item>
             </ion-list>
 
-             <ion-list *ngSwitchCase="'reviews'">
+            <ion-list *ngSwitchCase="'reviews'">
                 <ion-item>
                     <ion-card-content>
                         <p wrap>Top Reviews</p>
+
+                        <button ion-button (click)="gotoNotificationPage()">
+                            Write Review
+                        </button>
                     </ion-card-content>
                 </ion-item>
             </ion-list>
         </div>
+    </ion-card-content>
+    <ion-card-content>  
+        <ion-list-header>
+            Similar Products
+        </ion-list-header>     
+        <ion-row responsive-xs wrap>
+            <ion-col width-50 *ngFor="let item of similarItems">
+                <img ng-src="" />
+                <button ion-button block color="light" large (click)="getItems(item)">
+                    {{item.name}}
+                </button>
+            </ion-col>
+        </ion-row>
     </ion-card-content>
 </ion-content>

@@ -8,10 +8,12 @@ import {NotificationPage} from '../notification/notification.page';
 })
 export class ProductPage {
   selectedItem: any;
+  similarItems : any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+    this.similarItems = [{}, {}, {}];
   }
 
    gotoNotificationPage() {
@@ -19,6 +21,9 @@ export class ProductPage {
             id: "123",
             name: "Carl"
         });
+    }
+
+    getItems(){
 
     }
 }

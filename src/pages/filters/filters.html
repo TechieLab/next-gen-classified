@@ -34,7 +34,12 @@
             <ion-label floating>Location</ion-label>
             <ion-input type="file" [(ngModel)]="criteria.Location" name="location"></ion-input>
         </ion-item>
-        <button ion-button type="submit">Apply</button>
-        <button ion-button type="submit">Cancel</button>
+        
     </form>
 </ion-content>
+<ion-footer no-shadow>
+	<ion-toolbar position="bottom">
+        <button ion-button dark type="submit">clear</button>
+		<button ion-button type="submit">Apply</button>        
+	</ion-toolbar>
+</ion-footer>

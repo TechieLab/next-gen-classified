@@ -1,6 +1,11 @@
 <ion-header>
     <ion-navbar>
         <ion-title>Refine Search</ion-title>
+        <ion-buttons end>
+            <button buttons-end ion-button (click)="close()">
+                  <ion-icon name="ios-close-circle"></ion-icon>
+            </button>
+        </ion-buttons>       
     </ion-navbar>
 </ion-header>
 <ion-content padding>
@@ -25,11 +30,11 @@
             <ion-label floating>Max Price</ion-label>
             <ion-input type="text" [(ngModel)]="criteria.MaxPrice" name="maxPrice"></ion-input>
         </ion-item>
-         <ion-item>
+        <ion-item>
             <ion-label floating>Location</ion-label>
             <ion-input type="file" [(ngModel)]="criteria.Location" name="location"></ion-input>
         </ion-item>
-        <button ion-button type="submit" >Apply</button>
-        <button ion-button type="submit" >Cancel</button>
+        <button ion-button type="submit">Apply</button>
+        <button ion-button type="submit">Cancel</button>
     </form>
 </ion-content>

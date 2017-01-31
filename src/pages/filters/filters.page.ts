@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { NavController, ViewController, NavParams } from 'ionic-angular';
+import { NavController, MenuController, ViewController, NavParams } from 'ionic-angular';
 
 @Component({
     selector: 'filters-page',
@@ -10,7 +10,11 @@ import { NavController, ViewController, NavParams } from 'ionic-angular';
 export class FiltersPage implements OnInit {
     private selectedCategory: string;
     private criteria : any;
-    constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams) {
+    private rootPage : this;
+    
+    constructor(public viewCtrl: ViewController,
+     public navCtrl: NavController,   public menu: MenuController,
+     public navParams: NavParams) {
         this.selectedCategory = navParams.get('category');
         this.criteria = {};
     }
@@ -19,9 +23,6 @@ export class FiltersPage implements OnInit {
 
     }
 
-    dismiss() {
-        let data = { 'foo': 'bar' };
-        this.viewCtrl.dismiss(data);
-    }
-
+    close() {
+       this.navCtrl.pop();    }
 }

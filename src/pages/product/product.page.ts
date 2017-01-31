@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {NotificationPage} from '../notification/notification.page';
 
 @Component({
   selector: 'product-page',
@@ -12,4 +13,12 @@ export class ProductPage {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
   }
+
+   gotoNotificationPage() {
+        this.navCtrl.push(NotificationPage, {
+            id: "123",
+            name: "Carl"
+        });
+
+    }
 }

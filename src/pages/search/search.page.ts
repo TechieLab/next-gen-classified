@@ -7,12 +7,14 @@ import {FiltersPage}   from '../filters/filters.page';
   templateUrl: 'search.html',
   entryComponents: [FiltersPage]
 })
+
 export class SearchPage {
   selectedCategory: string;
   results: any[];
   categories: string[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, 
+  public navParams: NavParams, public modalCtrl: ModalController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedCategory = navParams.get('category');
     this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
@@ -25,7 +27,11 @@ export class SearchPage {
 
   gotoFiltersPage() {
     //this.navCtrl.push(FiltersPage, {});
-    let profileModal = this.modalCtrl.create(FiltersPage, { userId: 8675309 });
-   profileModal.present();
+    let profileModal = this.navCtrl.push(FiltersPage, { userId: 8675309 });
+  }
+
+  getItems(){
+
+
   }
 }

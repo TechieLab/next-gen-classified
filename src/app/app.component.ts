@@ -46,8 +46,7 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage, name:"home" },
-      { title: 'Admin', component: AdminPage,name:"home" },
-      { title: 'Post Ad', component: PostNewAd,name:"add-circle" },
+      { title: 'Admin', component: AdminPage,name:"home" },    
       { title: 'Favourites', component: SettingsPage,name:"star" },
       { title: 'About', component: HomePage,name:"book" },
       { title: 'Settings', component: SettingsPage,name:"settings" },

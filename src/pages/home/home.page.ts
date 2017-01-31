@@ -78,7 +78,7 @@ export class HomePage implements OnInit {
     }
 
     showProductDetails(item : string){
-        this.navCtrl.push(ProductPage, { category : item });
+        this.navCtrl.setRoot(ProductPage, { category : item });
     }
 
     gotoPostingAdPage(){

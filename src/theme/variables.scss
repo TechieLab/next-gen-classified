@@ -69,3 +69,21 @@ $font-path: "../assets/fonts";
 
 @import "roboto";
 @import "noto-sans";
+
+
+// Custom Realpage themes
+
+$colors: (
+  primary:    #008CFB,
+  secondary:  #5F2FFF,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+  favorite:   #69BB7B,
+  twitter:    #1da1f4,
+  google:     #dc4a38,
+  vimeo:      #23b6ea,
+  facebook:   #3b5998
+);
+
+$toolbar-background : #37474f;

@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import {Router} from '@angular/router';
 import {RegisterPage} from './register.page';
 
+import {HomePage} from '../home/home.page';
+
 import {LoginModel} from '../../models/login';
 import {IUser} from '../../models/user';
 
@@ -31,6 +33,10 @@ export class LoginPage{
 
     isLoggedIn() {
       
+    }
+
+     gotoDashboardPage(){
+          this.navCtrl.setRoot(HomePage, { category : 'Dashboard' });
     }
 
     userRegistration(){

@@ -5,8 +5,8 @@ import {RegisterPage} from './register.page';
 
 import {HomePage} from '../home/home.page';
 
-import {LoginModel} from '../../models/login';
-import {IUser} from '../../models/user';
+import {LoginModel} from '../../app/models/login';
+import {IUser} from '../../app/models/user';
 
 @Component({
     selector: 'login-page',

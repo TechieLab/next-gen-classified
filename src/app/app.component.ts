@@ -3,6 +3,7 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
+import { HeaderComponent } from './components/layout/header.component';
 import { HomePage } from '../pages/home/home.page';
 import { AdminPage } from '../pages/admin/admin.page';
 import { LoginPage } from '../pages/account/login.page';
@@ -17,6 +18,7 @@ import {SearchPage}   from '../pages/search/search.page';
 import {FeedbackPage}   from '../pages/feedback/feedback.page';
 import {HelpPage}   from '../pages/help/help.page';
 import {Rating} from './components/rating';
+import { CategoryComponent } from './components/category';
 
 @Component({
   templateUrl: 'app.html',
@@ -27,7 +29,7 @@ import {Rating} from './components/rating';
     NotificationPage,
     CatalogPage,
     ProductPage,
-    SearchPage,FeedbackPage, HelpPage, Rating]
+    SearchPage,FeedbackPage, HelpPage, Rating, HeaderComponent, CategoryComponent]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -73,6 +75,11 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-    this.nav.push(page.component);
+
+    if(page.title == 'Home'){
+      this.nav.setRoot(page.component);
+    }else{
+      this.nav.push(page.component);
+    }    
   }  
 }

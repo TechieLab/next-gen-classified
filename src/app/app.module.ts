@@ -3,7 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HomeModule } from '../pages/home/home.module';
+
+import { HeaderComponent } from './components/layout/header.component';
 import { HomePage } from '../pages/home/home.page';
 import { LoginPage } from '../pages/account/login.page';
 import { RegisterPage } from '../pages/account/register.page';
@@ -19,8 +20,7 @@ import { FiltersPage } from '../pages/filters/filters.page';
 import {FeedbackPage}   from '../pages/feedback/feedback.page';
 import {HelpPage}   from '../pages/help/help.page';
 import {Rating} from './components/rating';
-
-
+import {CategoryComponent} from './components/category';
 @NgModule({
   declarations: [
     MyApp, Welcome,
@@ -30,7 +30,7 @@ import {Rating} from './components/rating';
     SettingsPage,
     NotificationPage,
     CatalogPage, ProductPage,
-    SearchPage, FiltersPage, FeedbackPage,HelpPage,Rating
+    SearchPage, FiltersPage, FeedbackPage,HelpPage,Rating, HeaderComponent, CategoryComponent
   ],
   imports: [FormsModule, CommonModule,
     IonicModule.forRoot(MyApp,{     
@@ -43,7 +43,7 @@ import {Rating} from './components/rating';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, FiltersPage, FeedbackPage,HelpPage
+    MyApp, FiltersPage, FeedbackPage,HelpPage,CategoryComponent
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

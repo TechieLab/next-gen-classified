@@ -11,27 +11,7 @@
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content no-padding>
     <ion-searchbar padding [(ngModel)]="selectedCategory" (ionInput)="getItems($event)"></ion-searchbar>
-   
-    <ion-grid>
-        <ion-row responsive-xs wrap *ngIf="category">
-            <ion-col width-50 *ngFor="let cat of categories">
-                <button ion-button block color="light" large (click)="gotoCatalogPage(cat)">
-               {{cat}}
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-    <ion-list *ngIf="selectedCategory">
-        <ion-item-divider color="light">Search Results</ion-item-divider>
-        <ion-item *ngFor="let item of items">
-            <ion-thumbnail item-left>
-                <img src="img/thumbnail-totoro.png">
-            </ion-thumbnail>
-            <h2>My Neighbor Totoro</h2>
-            <p>Hayao Miyazaki • 1988</p>
-            <button ion-button default item-right>Buy</button>
-        </ion-item>
-    </ion-list>
+    <catalog-page></catalog-page>   
 </ion-content>

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
 import {FiltersPage}   from '../filters/filters.page';
+import {CatalogPage} from '../catalog/catalog.page';
 
 @Component({
   selector: 'search-page',
   templateUrl: 'search.html',
-  entryComponents: [FiltersPage]
+  entryComponents: [FiltersPage, CatalogPage]
 })
 
 export class SearchPage {

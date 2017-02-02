@@ -48,6 +48,6 @@ export class CatalogPage {
   }
 
   showProductDetails(item: string) {
-    this.navCtrl.setRoot(ProductPage, { category: item });
+    this.navCtrl.push(ProductPage, { category: item });
   }
 }

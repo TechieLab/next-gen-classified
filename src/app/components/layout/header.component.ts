@@ -20,7 +20,7 @@ export class HeaderComponent {
     private ads: Array<any>;
     private items: Array<any>;
     private city: String; 
-    
+
     constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public service: VendorService) {
         this.selectedCategory = 'Select Category';
         //this.category = new CategoryComponent();
@@ -45,7 +45,7 @@ export class HeaderComponent {
     }
 
     gotoSearchPage() {
-        this.navCtrl.push(SearchPage, { category: 'POST FOR FREE' });
+        this.navCtrl.setRoot(SearchPage, { category: 'POST FOR FREE' });
     }
 
     onSelectCategory() {

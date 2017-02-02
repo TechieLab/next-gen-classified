@@ -11,7 +11,7 @@
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content no-padding>
     <ion-card>
         <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png" />
     </ion-card>
@@ -44,7 +44,6 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-
         <div>
             <ion-segment [(ngModel)]="pet">
                 <ion-segment-button value="specifications">
@@ -58,7 +57,6 @@
                 </ion-segment-button>
             </ion-segment>
         </div>
-
         <div [ngSwitch]="pet">
             <ion-list *ngSwitchCase="'description'">
                 <ion-item>
@@ -109,7 +107,6 @@
                 <ion-item>
                     <ion-card-content>
                         <p wrap>Top Reviews</p>
-
                         <button ion-button (click)="gotoNotificationPage()">
                             Write Review
                         </button>
@@ -118,17 +115,18 @@
             </ion-list>
         </div>
     </ion-card-content>
-    <ion-card-content>  
+    <ion-card-content no-padding>
         <ion-list-header>
             Similar Products
-        </ion-list-header>     
-        <ion-row responsive-xs wrap>
-            <ion-col width-50 *ngFor="let item of similarItems">
-                <img ng-src="" />
-                <button ion-button block color="light" large (click)="getItems(item)">
-                    {{item.name}}
-                </button>
-            </ion-col>
-        </ion-row>
+        </ion-list-header>
+        <ion-scroll scrollX="true">
+            <ion-card *ngFor="let item of similarItems">
+                <ion-item no-padding>
+                    <img (click)="showProductDetails()" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+                    <h2 text-center>My Neighbor</h2>
+                    <p text-center>$300</p>
+                </ion-item>
+            </ion-card>
+        </ion-scroll>
     </ion-card-content>
 </ion-content>

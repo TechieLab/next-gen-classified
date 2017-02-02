@@ -65,7 +65,8 @@ export class MyApp {
   }
 
    gotoLoginPage(){
-         // this.navCtrl.setRoot(LoginPage, { category : 'SignIn' });
+        this.menu.close();
+        this.nav.push(LoginPage);
     } 
 
   openPage(page) {
@@ -73,5 +74,5 @@ export class MyApp {
     this.menu.close();
     // navigate to the new page if it is not the current page
     this.nav.push(page.component);
-  }
+  }  
 }

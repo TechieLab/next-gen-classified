@@ -29,24 +29,7 @@ export class HomePage implements OnInit {
     constructor(public navCtrl: NavController, public navParams: NavParams,public service:VendorService) {
         this.category = true;
         this.selectedCategory = navParams.get('category'); 
-        this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
-        this.ads = [{
-            MainImage: '',
-            Title: 'Sample',
-            Price: '200'
-        }, {
-            MainImage: '',
-            Title: 'Sample 2',
-            Price: '200'
-        }, {
-            MainImage: '',
-            Title: 'Sample 345',
-            Price: '200'
-        }, {
-            MainImage: '',
-            Title: 'Sample 453',
-            Price: '200'
-        }];
+        this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];        
 
         this.items = [{}, {}];
     }
@@ -70,16 +53,11 @@ export class HomePage implements OnInit {
             id: "123",
             name: "Carl"
         });
-
     }
 
     gotoCatalogPage(cat : string){
-          this.navCtrl.push(CatalogPage, { category : cat });
-    }
-
-    showProductDetails(item : string){
-        this.navCtrl.setRoot(ProductPage, { category : item });
-    }
+        this.navCtrl.push(CatalogPage, { category : cat });
+    }  
 
     gotoPostingAdPage(){
         this.navCtrl.push(PostNewAd, { category : 'POST FOR FREE' });

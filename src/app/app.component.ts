@@ -93,6 +93,6 @@ export class MyApp {
   }
 
   getUserContext() {
-    this.isUserAuthenticated = true;
+    this.isUserAuthenticated = false;
   }
 }

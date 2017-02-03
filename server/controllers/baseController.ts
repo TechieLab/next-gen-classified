@@ -11,7 +11,7 @@ import logger = require('winston');
     }
 
 var self;
-export class BaseController<TEntity> {
+export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public baseService : IBaseService<TEntity>;
 

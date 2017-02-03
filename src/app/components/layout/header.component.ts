@@ -53,6 +53,7 @@ export class HeaderComponent {
     }
 
     onUpdateCategory(item) {
+        debugger;
         this.selectedCategory = item;
         this.navCtrl.pop();
     }

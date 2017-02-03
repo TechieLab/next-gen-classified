@@ -3,9 +3,10 @@
         <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
+
         <button clear ion-button (click)="onSelectCategory()">
          {{selectedCategory}} &nbsp; <ion-icon name="arrow-down" item-right></ion-icon> 
-         <category-components (change-category)="onUpdateCategory($event)" style="display: none;"></category-components>
+         <category-components (changecategory)="onUpdateCategory($event)" style="display: none;"></category-components>
         </button>       
         <ion-buttons end>
             <button buttons-end ion-button (click)="gotoSearchPage()">

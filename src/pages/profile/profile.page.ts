@@ -6,6 +6,7 @@ import {Profile} from '../../app/models/profile';
   selector: 'profile-page',
   templateUrl: 'profile.html'
 })
+
 export class ProfilePage {
   selectedItem: any;
   editMode : boolean = false;

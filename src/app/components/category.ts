@@ -17,19 +17,21 @@ import { Component,Output, EventEmitter } from '@angular/core';
             </button>  
         </ion-list>
     </ion-content>
-  `,outputs:['updateCategory : changeCategory']
+  `
 })
 
 export class CategoryComponent {
     private categories: Array<string>;
-    updateCategory: EventEmitter<any> = new EventEmitter();
+    @Output() changecategory = new EventEmitter();
 
     constructor() {
         this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
 
     }
 
-    itemSelected(value) {
-        this.updateCategory.emit(value);
+    itemSelected(value:any) {
+        this.changecategory.subscribe((value) => {
+                 debugger;
+        })
     }
 }

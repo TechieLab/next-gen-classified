@@ -13,7 +13,7 @@ export interface IUserRepository extends IBaseRepository<User> {
 export class UserRepository extends BaseRepository<User> implements IUserRepository {
   
     constructor() {
-        super();
+        super('users');
     }
 }
 

@@ -9,7 +9,7 @@ export module Controllers {
     }
 
     export class ActivityController extends BaseController<Activity> implements IActivityController
-    {        
-        
+    {
+
     }
 }

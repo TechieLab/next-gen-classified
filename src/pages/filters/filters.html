@@ -2,52 +2,58 @@
     <ion-navbar>
         <ion-title>Refine Search</ion-title>
         <ion-buttons end>
-            <button buttons-end ion-button (click)="close()">
-                  <ion-icon name="ios-close-circle"></ion-icon>
+            <button buttons-end ion-button clear color="primary" (click)="clearFilters()">
+                 Clear Filters
             </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <form (ngSubmit)="filterForm()">
+    <form (ngSubmit)="filterForm()" #filterForm="ngForm">
         <ion-item>
             <ion-label floating>Keyword</ion-label>
-            <ion-input type="file" [(ngModel)]="criteria.Keyword" name="keyword"></ion-input>
+            <ion-input type="file" [(ngModel)]="filters.Keyword" name="keyword"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Choose a category</ion-label>
-            <ion-input type="text" [(ngModel)]="criteria.Category" name="category"></ion-input>
+            <ion-input type="text" [(ngModel)]="filters.Category" name="category"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Choose a Sub Category</ion-label>
-            <ion-input type="text" [(ngModel)]="criteria.SubCategory" name="subCategory"></ion-input>
+            <ion-input type="text" [(ngModel)]="filters.SubCategory" name="subCategory"></ion-input>
         </ion-item>
-        <ion-item>
-            <ion-label floating>Min Price</ion-label>
-            <ion-input type="text" [(ngModel)]="criteria.MinPrice" name="minPrice"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Max Price</ion-label>
-            <ion-input type="text" [(ngModel)]="criteria.MaxPrice" name="maxPrice"></ion-input>
-        </ion-item>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label floating>Min Price</ion-label>
+                        <ion-input type="text" [(ngModel)]="filters.MinPrice" name="minPrice"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label floating>Max Price</ion-label>
+                        <ion-input type="text" [(ngModel)]="filters.MaxPrice" name="maxPrice"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <!--<ion-item>          
+            <ion-range name="priceRange" dualKnobs="true" [(ngModel)]="filters.PriceRange" min="0" max="10000" step="1000" pin="true"
+                snaps="true">
+                <ion-label range-left>0</ion-label>
+                <ion-label range-right>10000</ion-label>
+            </ion-range>
+        </ion-item>-->
         <ion-item>
             <ion-label floating>Location</ion-label>
-            <ion-input type="file" [(ngModel)]="criteria.Location" name="location"></ion-input>
+            <ion-input type="file" [(ngModel)]="filters.Location" name="location"></ion-input>
         </ion-item>
 
     </form>
 </ion-content>
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">
-        <ion-grid>
-            <ion-row>
-                <ion-col width-50>
-                    <button ion-button block dark>clear</button>
-                </ion-col>
-                <ion-col width-50>
-                    <button ion-button block type="submit">Apply</button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <button ion-button block type="submit">Apply</button>
     </ion-toolbar>
 </ion-footer>

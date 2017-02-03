@@ -12,6 +12,6 @@
     </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-    <ion-searchbar padding [(ngModel)]="selectedCategory" (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar padding [(ngModel)]="selectedCategory" (ionInput)="getItems($event)" (click)="onClick()"></ion-searchbar>
     <catalog-page></catalog-page>   
 </ion-content>

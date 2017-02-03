@@ -4,12 +4,16 @@
       <ion-avatar item-left>
         <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
       </ion-avatar>
-       <h2>Login/SignUp
+       <h2 *ngIf="!isUserAuthenticated">Login/SignUp
          <span (click)="gotoLoginPage()">
                 <ion-icon name="arrow-forward" item-right></ion-icon>
        </span>
       </h2>
-
+       <h2 *ngIf="isUserAuthenticated">Ramesh Kumar
+         <span (click)="gotoProfilePage()">
+                <ion-icon name="arrow-forward" item-right></ion-icon>
+       </span>
+      </h2>
     </ion-item>
   </ion-header>
 

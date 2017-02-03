@@ -35,4 +35,8 @@ export class SearchPage {
 
 
   }
+
+  onClick(){
+    this.selectedCategory = '';
+  }
 }

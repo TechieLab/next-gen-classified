@@ -8,6 +8,7 @@ import { HeaderComponent } from './components/layout/header.component';
 import { HomePage } from '../pages/home/home.page';
 import { LoginPage } from '../pages/account/login.page';
 import { RegisterPage } from '../pages/account/register.page';
+import { ProfilePage } from '../pages/profile/profile.page';
 import { Welcome } from '../pages/welcome/welcome.page';
 import { SettingsPage } from '../pages/settings/settings.page';
 import { NotificationPage } from '../pages/notification/notification.page';
@@ -26,7 +27,7 @@ import {CategoryComponent} from './components/category';
     MyApp, Welcome,
     HomePage,
     PostNewAd,
-    LoginPage,RegisterPage,
+    LoginPage,RegisterPage,ProfilePage,
     SettingsPage,
     NotificationPage,
     CatalogPage, ProductPage,

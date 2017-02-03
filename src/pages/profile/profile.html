@@ -1,0 +1,96 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Profile</ion-title>
+        <ion-buttons end>
+            <button buttons-end ion-button (click)="editProfile()">
+                 <ion-icon name="build"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content class="home">
+    <div *ngIf="!editMode">
+        <ion-card>
+            <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png" />
+            <ion-card-content>
+                <ion-card-title>
+                    Muhammad Kamran
+                </ion-card-title>
+                <p>
+                    Web and Mobile application developer with passion for coding and business analyst to provide problem solving approach.
+                </p>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+            <ion-card-header>
+                Contact Detail
+            </ion-card-header>
+            <ion-card-content>
+                <!-- Hello World -->
+            </ion-card-content>
+            <ion-list>
+                <button ion-item>
+                <ion-icon name="mail" item-left></ion-icon>
+                <a class="plainText" href="mailto:smkamranqadri@yahoo.com">smkamranqadri@yahoo.com</a>
+            </button>
+
+                <button ion-item>
+                <ion-icon name="skype" ios="logo-skype" md="logo-skype" item-left></ion-icon>
+                <a class="plainText" href="skype:smkamranqadri">smkamranqadri</a>
+            </button>
+
+                <button ion-item>
+                <ion-icon name="call" item-left></ion-icon>
+                <a class="plainText" href="tel:+923008203588">+923008203588</a>
+            </button>
+
+                <button ion-item>
+                <ion-icon name="linkedin" ios="logo-linkedin" md="logo-linkedin" item-left></ion-icon>
+                <a class="plainText" href="linkedin:smkamranqadri">LinkedIn</a>
+            </button>
+
+            </ion-list>
+        </ion-card>
+    </div>
+    <div *ngIf="!editMode">
+        <ion-card>
+            <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png" />
+            <ion-card-content>
+                <ion-card-title>
+                   Basic Information
+                </ion-card-title>
+                 <ion-item>
+                        <ion-label floating>Full Name</ion-label>
+                        <ion-input type="file" [(ngModel)]="profile.FullName" name="fullName"></ion-input>
+                 </ion-item>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+            <ion-card-header>
+                Contact Detail
+            </ion-card-header>
+            <ion-card-content>
+                <!-- Hello World -->
+            </ion-card-content>
+            <ion-list>
+                <ion-item>
+                        <ion-label floating>Email</ion-label>
+                        <ion-input type="email" [(ngModel)]="profile.EmailId" name="emailId"></ion-input>
+                 </ion-item>
+                  <ion-item>
+                        <ion-label floating>Skype</ion-label>
+                        <ion-input type="email" [(ngModel)]="profile.SkypeId" name="skypeId"></ion-input>
+                 </ion-item>
+                  <ion-item>
+                        <ion-label floating>Phone</ion-label>
+                        <ion-input type="tel" [(ngModel)]="profile.PhoneNo" name="phoneNo"></ion-input>
+                 </ion-item>
+            </ion-list>
+        </ion-card>
+    </div>
+</ion-content>

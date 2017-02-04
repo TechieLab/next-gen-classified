@@ -1,28 +1,34 @@
 import '../../rxjs-operators';
 import 'rxjs/add/operator/map';
 
-import {Injectable, Optional} from '@angular/core';
-import {Http, Headers, Response, RequestOptions, URLSearchParams} from '@angular/http';
-import { Observable }  from 'rxjs/Observable';
-import {IResult} from '../models/result';
+import { Injectable, Optional } from '@angular/core';
+import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { IResult } from '../models/result';
+
+export interface IBaseService<TEntity> {
+    get(): Observable<Array<TEntity>>;
+    getById(id: string): Observable<TEntity>;
+    getByUserId(id: string): Observable<TEntity>;
+    getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
+    post(entity: TEntity): Observable<IResult>;
+    put(entity: TEntity): Observable<IResult>;
+    del(id: string): Observable<IResult>
+}
 
 @Injectable()
-export class BaseService<TEntity> {
+export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     url: string;
     entity: TEntity;
 
-    constructor( @Optional() public http: Http, entityName : string) {
+    constructor( @Optional() public http: Http, entityName: string) {
         this.url = '/api/' + entityName;
     }
 
     get(): Observable<Array<TEntity>> {
         this.url = this.url + '/get';
         return this.http.get(this.url).map(this.extractData).catch(this.handleError);
-    }
-
-    getCity(){
-        this.http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=52.154184,6.199592&sensor=true');
     }
 
     getById(id: string): Observable<TEntity> {
@@ -33,6 +39,11 @@ export class BaseService<TEntity> {
     getByUserId(id: string): Observable<TEntity> {
         this.url = this.url + '/getByUser/' + id;
         return this.http.get(this.url).map(this.extractData).catch(this.handleError);
+    }
+
+    getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
+        this.url = this.url + '/getBy/';
+        return this.http.get(this.url, params).map(this.extractData).catch(this.handleError);
     }
 
     post(entity: TEntity): Observable<IResult> {
@@ -58,7 +69,7 @@ export class BaseService<TEntity> {
     del(id: string): Observable<IResult> {
         return this.http.delete(this.url).map(this.extractData).catch(this.handleError);
     }
-    
+
     private extractData(res: Response) {
         let body = res.json();
         return body.data || {};

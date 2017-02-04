@@ -1,9 +1,9 @@
-export class Filters {
-    public keyword: string;
-    public Category: string;
-    public SubCategory: string;
-    public PriceRange: any;
-    public MinPrice: number;
-    public MaxPrice: number;
-    public Location: string;
+export interface IFilters {
+     keyword: string;
+     Category: string;
+     SubCategory: string;
+     PriceRange: any;
+     MinPrice: number;
+     MaxPrice: number;
+     Location: string;
 }

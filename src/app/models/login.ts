@@ -1,9 +1,9 @@
 
-export interface LoginModel {
+export interface ILoginModel {
     userName: string;
     password: string;
 }
 
-export interface RegisterModel {
+export interface IRegisterModel {
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { NavController, MenuController, ViewController, NavParams } from 'ionic-angular';
-import {Filters} from '../../app/models/filters';
+import {IFilters} from '../../app/models/filters';
 
 @Component({
     selector: 'filters-page',
@@ -10,7 +10,7 @@ import {Filters} from '../../app/models/filters';
 
 export class FiltersPage implements OnInit {
     private selectedCategory: string;
-    private filters : Filters;
+    private filters : IFilters;
     private rootPage : this;
     
     constructor(public viewCtrl: ViewController,
@@ -21,10 +21,10 @@ export class FiltersPage implements OnInit {
     }
 
     ngOnInit() {
-        this.filters = new Filters();
+        this.filters = <IFilters>{};
     }
 
     clearFilters() {
-        this.filters = new Filters();
+        this.filters = <IFilters>{};
     }
 }

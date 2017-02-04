@@ -1,6 +1,6 @@
-export class Profile{
-    public FullName : string;
-    public EmailId : string;
-    public PhoneNo : string;
-    public SkypeId : string;
+export interface IProfile{
+     FullName : string;
+     EmailId : string;
+     PhoneNo : string;
+     SkypeId : string;
 }

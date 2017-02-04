@@ -1,14 +1,14 @@
 ﻿import {Express, Request, Response} from "express";
 import {IBaseController, BaseController} from './baseController';
-import {Employee} from '../models/employee';
+import {IEmployee} from '../models/employee';
 
 export module Controllers {
 
-    export interface IEmployeeController extends IBaseController<Employee> {
+    export interface IEmployeeController extends IBaseController<IEmployee> {
         
     }
 
-    export class EmployeeController extends BaseController<Employee> implements IEmployeeController
+    export class EmployeeController extends BaseController<IEmployee> implements IEmployeeController
     {        
         
     }

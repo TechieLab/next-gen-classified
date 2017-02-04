@@ -3,11 +3,11 @@ import {IBaseService} from '../services/baseService';
 import logger = require('winston');
 
  export interface IBaseController<TEntity> {
-        createEntity();
+        createEntity(req: Request, res: Response);
         getEntities(req: Request, res: Response);
         getEntity(req: Request, res: Response);
-        updateEntity();
-        deleteEntity();
+        updateEntity(req: Request, res: Response);
+        deleteEntity(req: Request, res: Response);
     }
 
 var self;
@@ -20,8 +20,14 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         self.baseService = baseService;
     }
 
-    public createEntity() {
-        //return (this.movieService.create());
+    public createEntity(req: Request, res: Response) {
+       var data = <TEntity>{};
+
+       return this.baseService.create(data, function (err, item) {
+            if (err) console.log(err);
+
+            return res.json(item);
+        });
     }
 
     public getEntities(req: Request, res: Response) {
@@ -29,7 +35,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         var sortKey = req.query.sortKey;
         var sortOrder = req.query.sortOrder;
 
-        self.baseService.getAll(sortKey, sortOrder, function (err, item) {
+        self.baseService.get(function (err, item) {
             if (err) console.log(err);
 
             logger.log('debug', 'getEntities')
@@ -40,22 +46,32 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public getEntity(req: Request, res: Response) {
 
-        var query = { rating: { $gt: 4 } }
+        var id = req.query.id;
 
-       self.baseService.getByQuery(query, null, null, function (err, item) {
+       self.baseService.getById(id, null, null, function (err, item) {
             if (err) console.log(err);
 
             return res.json(item);
         });
     }  
 
-    public updateEntity() {
+    public updateEntity(req: Request, res: Response) {
         var id = "";
-        return this.baseService.update(id);
+        var data = <TEntity>{};
+
+        return this.baseService.update(id, data, function (err, item) {
+            if (err) console.log(err);
+
+            return res.json(item);
+        });
     }
 
-    public deleteEntity() {
+    public deleteEntity(req: Request, res: Response) {
         var id = "";
-        return this.baseService.delete(id);
+        return this.baseService.delete(id, function (err, item) {
+            if (err) console.log(err);
+
+            return res.json(item);
+        });
     }
 }  

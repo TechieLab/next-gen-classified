@@ -7,16 +7,15 @@ import path = require('path');
 import {Express, Request, Response} from "express";
 import logger = require('winston');
 import {Db} from 'mongodb';
-import {BaseRepository} from '../repository/impl/base'
-import {IEmail} from '../models/Email';
+import {IBaseRepository, BaseRepository} from '../repository/baseRepository'
 import {IProfile} from '../models/Profile';
 import {IUser} from '../models/User';
 import {ICategory} from '../models/Category';
+import {ILookup} from '../models/lookup';
 
 var self;
 export class InitializeDb
-{  
-    sampleEmailData: Array<IEmail>;
+{      
     sampleCategoryData: Array<ICategory>;
     sampleProfileData: Array<IProfile>;
     sampleUserData: Array<IUser>;
@@ -30,49 +29,19 @@ export class InitializeDb
         this.getData();
     }
 
-    public verifyData(){
-        this.verifyEmailData(this.sampleEmailData);
+    public verifyData(){      
         this.verifyProfileData(this.sampleProfileData);
         this.verifyCategoryData(this.sampleCategoryData);
         this.verifyUserData(this.sampleUserData);
-    }
-
-    private verifyEmailData(data : any)
-    {
-        var repository = new BaseRepository<IEmail>(this.db, "emails");
-        logger.log('debug', 'verifying emails from database..');
-        //this.getSampleData();
-
-        repository.GetByQuery({}, null, null, function (err, items)
-        {           
-
-            if (items && (items.length > 0))
-            {
-                logger.log('debug', 'Initial data - Emails OK');
-            } else
-            {
-                
-                repository.BulkCreate(data, function(err, result)
-                {
-                    if (!err)
-                    {
-                        logger.log('debug', 'Initial data - Emails Inserting..');
-                    } else
-                    {
-                        logger.log('debug', err.toString());
-                    }
-                });
-            }
-        });
-    }
+    }    
 
     private verifyCategoryData(data : any)
     {
-        var repository = new BaseRepository<ICategory>(this.db, "categories");
+        var repository = new BaseRepository<ILookup>("looups");
         logger.log('debug', 'verifying emails from database..');
         //this.getSampleData();
 
-        repository.GetByQuery({}, null, null, function (err, items)
+        repository.get({}, null, null, function (err, items)
         {           
 
             if (items && (items.length > 0))

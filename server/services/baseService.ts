@@ -4,14 +4,16 @@ import logger = require('winston');
 
 export interface IBaseService<TEntity>
 {
-    initData(sampleData: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
-    create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    initData(sampleData: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);   
     bulk(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
-    getAll(sortKey: string, sortOrder: string, callback: (errr: Error, item: Array<TEntity>) => any);
+    get(callback: (errr: Error, item: Array<TEntity>) => any);
+    getCount(callback: (errr: Error, item: number) => any);
     getByQuery(query: Object, sortKey: string, sortOrder: string, callback: (errr: Error, item: Array<TEntity>) => any);
+    getByPage(query: Object, sortKey: string, sortOrder: string, pageSize: number, pageNumber:number, callback: (errr: Error, item: Array<TEntity>) => any);
     getById(id: number, callback: (errr: Error, item: TEntity) => any);
-    update(id: string);
-    delete(id: string);
+    create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    delete(id: string, callback: (errr: Error, item: TEntity) => any);
 }
 
 export class BaseService<TEntity> implements IBaseService<TEntity>
@@ -38,29 +40,41 @@ export class BaseService<TEntity> implements IBaseService<TEntity>
         this.repository.bulk(data, callback);
     }
 
-    public getAll(sortKey: string, sortOrder: string, callback: (errr: Error, item: Array<TEntity>) => any)
+    public get(callback: (errr: Error, item: Array<TEntity>) => any)
     {
-        this.repository.readMany({}, sortKey, sortOrder, callback);
+        this.repository.get(callback);
+    }    
+
+    public getCount(callback: (errr: Error, item: number) => any)
+    {
+        this.repository.getCount(callback);
+    }
+
+     public getById(id: number, callback: (errr: Error, item: TEntity) => any)
+    {
+        this.repository.getById(id, callback);
     }
 
     public getByQuery(query: Object, sortKey: string, sortOrder: string, callback: (errr: Error, item: Array<TEntity>) => any)
     {
-        this.repository.readMany(query, sortKey, sortOrder, callback);
+        this.repository.getByQuery(query,callback);
     }
 
-    public getById(id: number, callback: (errr: Error, item: TEntity) => any)
+    public getByPage(query: Object, sortKey: string, sortOrder: string, pageSize : number, pageNbr : number, callback: (errr: Error, item: Array<TEntity>) => any)
     {
-        this.repository.get(id, callback);
+        this.repository.getByPage(query,sortKey,sortOrder, pageSize, pageNbr, callback);
     }
 
-    public update(id: string)
+   
+
+    public update(id: string, data : TEntity, callback: (errr: Error, item: TEntity) => any)
     {
-        return this.repository.update(id);
+        return this.repository.update(id, data, callback);
     }
 
-    public delete(id: string)
+    public delete(id: string, callback: (errr: Error, item: TEntity) => any)
     {
-        return this.repository.delete(id);
+        return this.repository.delete(id, callback);
     }
 }
 

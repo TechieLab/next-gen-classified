@@ -6,6 +6,7 @@ import logger = require('winston');
         createEntity(req: Request, res: Response);
         getEntities(req: Request, res: Response);
         getEntity(req: Request, res: Response);
+        getEntityByQuery(query: Object, callback: (errr: Error, item: Array<TEntity>) => any);
         updateEntity(req: Request, res: Response);
         deleteEntity(req: Request, res: Response);
     }
@@ -42,6 +43,10 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
             return res.json(item);
         });
+    }
+
+     public getEntityByQuery(query, callback: (errr: Error, item: Array<TEntity>) => any) {  
+        this.baseService.getByQuery(query, callback);
     }
 
     public getEntity(req: Request, res: Response) {

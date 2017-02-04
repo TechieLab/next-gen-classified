@@ -9,8 +9,13 @@ import bodyParser = require('body-parser');
 import http = require('http');
 import swig = require('swig');
 
+var fs = require('fs-extra');
+
 import { IndexRoute } from './routes/index';
 import { UserRoute } from './routes/user';
+import { LookupRoute } from './routes/lookup';
+
+import { InitializeSampleDb } from './data/initializeDb';
 
 var app = express();
 
@@ -44,9 +49,6 @@ logger.log('info', 'Application Started....');
 
 logger.level = 'debug';
 
-// database verification.
-//new InitialData(db).verifyData();
-
 // Application routes
 var indexRoute = new IndexRoute(app);
 indexRoute.getBase();
@@ -54,9 +56,31 @@ indexRoute.getBase();
 //indexRoute.getHome();
 //indexRoute.getMoviesDetails();
 
- var movieRoute = new UserRoute(app);
- movieRoute.getRoutes();
+var movieRoute = new UserRoute(app);
+movieRoute.getRoutes();
+
+var lookup = new LookupRoute(app);
+lookup.getRoutes();
 
 http.createServer(app).listen(app.get('port'), function () {
+
+    fs.mkdirs(path.join(__dirname, '/config'));
+    fs.mkdirs(path.join(__dirname, '/views'));
+
+    console.log(path.join(__dirname + '/../../server/data/sample'));
+
+    fs.copy(path.join(__dirname + '/../../server/data/sample'), path.join(__dirname, '/data/sample'), function (err) {
+        if (err) return console.error(err);
+
+        // database verification.
+        new InitializeSampleDb().verifyData();
+    });
+
+    fs.copy(path.join(__dirname + '/../../server/views'), path.join(__dirname, '/views'), function (err) {
+        if (err) return console.error(err);
+
+        console.log("views copied!")
+    });
+
     console.log("Express server listening on port " + app.get('port'));
 });

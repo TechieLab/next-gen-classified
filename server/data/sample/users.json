@@ -1,0 +1,34 @@
+[
+    {
+        "id":"232",
+        "key":"category",
+        "value": "mobile",
+        "name": "Mobile",
+        "description" : ""
+    },
+    {
+        "id":"1232",
+        "key":"category",
+        "value": "pet",
+        "name": "Pet",
+        "description" : ""
+    },{
+        "id":"2322",
+        "key":"category",
+        "value": "home",
+        "name": "HOme",
+        "description" : ""
+    },{
+        "id":"2312",
+        "key":"category",
+        "value": "automobile",
+        "name": "AutoMobile",
+        "description" : ""
+    },{
+        "id":"2321",
+        "key":"category",
+        "value": "electronics",
+        "name": "Electronics",
+        "description" : ""
+    }
+]

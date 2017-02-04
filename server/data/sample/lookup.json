@@ -1,0 +1,34 @@
+[
+    {
+        "_id":"507f191e910c19729de860ea",
+        "key":"category",
+        "value": "mobile",
+        "name": "Mobile",
+        "description" : ""
+    },
+    {
+        "_id":"507f191f810c19729de860ea",
+        "key":"category",
+        "value": "pet",
+        "name": "Pet",
+        "description" : ""
+    },{
+        "_id":"507c191e810c19729de860ea",
+        "key":"category",
+        "value": "home",
+        "name": "HOme",
+        "description" : ""
+    },{
+        "_id":"507f191d810c19729de860ea",
+        "key":"category",
+        "value": "automobile",
+        "name": "AutoMobile",
+        "description" : ""
+    },{
+        "_id":"501f191e810c19729de860ea",
+        "key":"category",
+        "value": "electronics",
+        "name": "Electronics",
+        "description" : ""
+    }
+]

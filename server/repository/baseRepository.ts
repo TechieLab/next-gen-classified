@@ -9,7 +9,7 @@ export interface IBaseRepository<TEntity> {
     getByPage(query: Object, sortKey: string, sortOrder: string, pageSize : number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any);
     getCount(callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    bulk(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
+    bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
     update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
     delete(id: string, callback: (errr: Error, item: TEntity) => any);
 }
@@ -29,35 +29,34 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public getCount(callback: (err: Error, item: number) => number) {
+    public getCount(callback: (err: Error, item: number) => any) {
         var collection = this.db.collection(this.collectionName);
         collection.count(function (err, item) {
-            logger.log('debug', 'Gettng Count');
+            logger.log('debug', 'Gettng Count...' + item);
             callback(err, item);
         });
     }
 
     public get(callback: (err: Error, item: Array<TEntity>) => any) {
         var collection = this.db.collection(this.collectionName);
-        collection.find({}, function (err, item) {
+        collection.find({}).toArray(function (err, item) {
             logger.log('debug', 'reading all data..');
             callback(err, item);
         });
     }
     public getById(id: number, callback: (err: Error, item: TEntity) => any) {
         var collection = this.db.collection(this.collectionName);
-        collection.findOne({ "id": +id }, function (err, item) {
+        collection.findOne({ "_id": id }, function (err, results) {
             logger.log('debug', 'reading get data..with id..' + id);
-            callback(err, item);
+            callback(err, results);
         });
     }
 
-    public getByQuery(query: Object, callback: (err: Error, item: Array<TEntity>) => any) {
-
+    public getByQuery(query: Object, callback: (err: Error, items: Array<TEntity>) => any) { 
         var collection = this.db.collection(this.collectionName);
-        collection.findOne(query, function (err, item) {
-            logger.log('debug', 'reading single data..with query');
-            callback(err, item);
+        collection.find(query).toArray(function (err, results) {           
+            console.log(query);
+            callback(err, results);
         });
     }
 
@@ -107,18 +106,19 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public bulk(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {
+    public bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {
         logger.log('debug', 'called bulk data..');
+        console.log(data);
 
-        if (data) {
+        if (!data) {
             callback(new Error("Empty data.."), null);
         }
 
         var collection = this.db.collection(this.collectionName);
-        collection.insert(data, function (err, res) {
-            logger.log('debug', 'inserting bulk data..');
+        collection.insertMany(data, function (err, res) {
+            logger.log('debug', 'inserting bulk data..');            
 
-            callback(err, res.ops);
+            callback(err,null);
         });
     }
 

@@ -1,4 +1,3 @@
-
 'use strict';
 
 var fs = require('fs-extra');
@@ -14,47 +13,44 @@ import {ICategory} from '../models/Category';
 import {ILookup} from '../models/lookup';
 
 var self;
-export class InitializeDb
+export class InitializeSampleDb
 {      
-    sampleCategoryData: Array<ICategory>;
+    sampleLookupData: Array<ILookup>;
     sampleProfileData: Array<IProfile>;
     sampleUserData: Array<IUser>;
-    db: Db;
 
-    constructor(db: Db)
+    constructor()
     {
-        self = this;      
-        this.db = db; 
-
+        self = this; 
         this.getData();
     }
 
     public verifyData(){      
-        this.verifyProfileData(this.sampleProfileData);
-        this.verifyCategoryData(this.sampleCategoryData);
-        this.verifyUserData(this.sampleUserData);
+        //this.verifyProfileData(this.sampleProfileData);
+        this.verifyLookupData(this.sampleLookupData);
+        //this.verifyUserData(this.sampleUserData);
     }    
 
-    private verifyCategoryData(data : any)
+    private verifyLookupData(data : any)
     {
-        var repository = new BaseRepository<ILookup>("looups");
-        logger.log('debug', 'verifying emails from database..');
+        var repository = new BaseRepository<ILookup>("lookups");
+        logger.log('debug', 'verifying lookups from database..');
         //this.getSampleData();
 
-        repository.get({}, null, null, function (err, items)
+        repository.getCount(function (err, items)
         {           
 
-            if (items && (items.length > 0))
+            if (items> 0)
             {
-                logger.log('debug', 'Initial data - categories OK');
+                logger.log('debug', 'Initial data - lookups OK');
             } else
             {
                 
-                repository.BulkCreate(data, function(err, result)
+                repository.bulkCreate(data, function(err, result)
                 {
                     if (!err)
                     {
-                        logger.log('debug', 'Initial data - categories Inserting..');
+                        logger.log('debug', 'Initial data - lookups Inserting..');
                     } else
                     {
                         logger.log('debug', err.toString());
@@ -67,20 +63,20 @@ export class InitializeDb
    
    private verifyUserData(data : any)
     {
-        var repository = new BaseRepository<IUser>(this.db, "users");
-        logger.log('debug', 'verifying emails from database..');
+        var repository = new BaseRepository<IUser>("users");
+        logger.log('debug', 'verifying Users from database..');
         //this.getSampleData();
 
-        repository.GetByQuery({}, null, null, function (err, items)
+        repository.getCount(function (err, item)
         {           
 
-            if (items && (items.length > 0))
+            if (item > 0)
             {
                 logger.log('debug', 'Initial data - Users OK');
             } else
             {
                 
-                repository.BulkCreate(data, function(err, result)
+                repository.bulkCreate(data, function(err, result)
                 {
                     if (!err)
                     {
@@ -96,20 +92,20 @@ export class InitializeDb
 
     private verifyProfileData(data : any)
     {
-        var repository = new BaseRepository<IProfile>(this.db, "profiles");
-        logger.log('debug', 'verifying emails from database..');
+        var repository = new BaseRepository<IProfile>("profiles");
+        logger.log('debug', 'verifying profiles from database..');
         //this.getSampleData();
 
-        repository.GetByQuery({}, null, null, function (err, items)
+        repository.getCount(function (err, items)
         {           
 
-            if (items && (items.length > 0))
+            if (items> 0)
             {
                 logger.log('debug', 'Initial data - profiles OK');
             } else
             {
                 
-                repository.BulkCreate(data, function(err, result)
+                repository.bulkCreate(data, function(err, result)
                 {
                     if (!err)
                     {
@@ -123,11 +119,9 @@ export class InitializeDb
         });
     }
 
-   private getData(){
-         this.sampleEmailData = JSON.parse(fs.readFileSync(path.join(__dirname, '../config/emails.json'), 'utf8'));
-         this.sampleProfileData = JSON.parse(fs.readFileSync(path.join(__dirname, '../config/profile.json'), 'utf8'));
-         this.sampleCategoryData = JSON.parse(fs.readFileSync(path.join(__dirname, '../config/category.json'), 'utf8'));
-         this.sampleUserData = JSON.parse(fs.readFileSync(path.join(__dirname, '../config/users.json'), 'utf8'));
-
+   private getData(){         
+         //this.sampleProfileData = JSON.parse(fs.readFileSync(path.join(__dirname, './sample/profile.json'), 'utf8'));
+         this.sampleLookupData = JSON.parse(fs.readFileSync(path.join(__dirname, './sample/lookup.json'), 'utf8'));
+         //this.sampleUserData = JSON.parse(fs.readFileSync(path.join(__dirname, './sample/users.json'), 'utf8'));
     }
 } 

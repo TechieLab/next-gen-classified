@@ -10,9 +10,9 @@ export interface IProfileRepository extends IBaseRepository<Profile> {
 }
 
 export class ProfileRepository extends BaseRepository<Profile> implements IProfileRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+ 
+    constructor( ) {
+        super('profiles');
     }
 }
 

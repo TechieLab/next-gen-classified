@@ -1,8 +1,8 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Preferences extends BaseEntity
+export interface IPreferences extends IBaseEntity
 {
     
-    public UserId: ObjectID;
+     UserId: ObjectID;
 }

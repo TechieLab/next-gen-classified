@@ -1,16 +1,16 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Profile extends BaseEntity
+export interface IProfile extends IBaseEntity
 {
-    public EmailId: string;
-    public FullName: string;
-    public DisplayName: string;   
-    public Signature : string;
-    public AddressId : ObjectID;
-    public ContactId: ObjectID;
-    public ThemeId: ObjectID;
-    public Language: string;   
-    public MediaId : ObjectID;
-    public UserId: ObjectID;
+     EmailId: string;
+     FullName: string;
+     DisplayName: string;   
+     Signature : string;
+     AddressId : ObjectID;
+     ContactId: ObjectID;
+     ThemeId: ObjectID;
+     Language: string;   
+     MediaId : ObjectID;
+     UserId: ObjectID;
 }

@@ -1,10 +1,10 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Category
+export interface ICategory
 {
-    public Id : ObjectID
-    public Value: string;
-    public Name: string;
-    public Description: string;
+     Id : ObjectID
+     Value: string;
+     Name: string;
+     Description: string;
 }

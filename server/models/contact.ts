@@ -1,12 +1,12 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Contact extends BaseEntity
+export interface IContact extends IBaseEntity
 {
-    public PhoneNumber: string;
-    public LandLineNumber: string;
-    public AltPhoneNumber: string;
-    public EmailId: string;
-    public AltEmailId: string;
-    public UserId: ObjectID;
+     PhoneNumber: string;
+     LandLineNumber: string;
+     AltPhoneNumber: string;
+     EmailId: string;
+     AltEmailId: string;
+     UserId: ObjectID;
 }

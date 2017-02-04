@@ -1,7 +1,7 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Visit extends BaseEntity
+export interface IVisit extends IBaseEntity
 {    
-    public UserId: ObjectID;
+     UserId: ObjectID;
 }

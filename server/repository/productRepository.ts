@@ -11,9 +11,9 @@ export interface IProductRepository extends IBaseRepository<Product> {
 }
 
 export class ProductRepository extends BaseRepository<Product> implements IProductRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+  
+    constructor() {
+        super('products');
     }
 }
 

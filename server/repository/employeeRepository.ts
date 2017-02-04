@@ -10,9 +10,9 @@ export interface IEmployeeRepository extends IBaseRepository<Employee> {
 }
 
 export class EmployeeRepository extends BaseRepository<Employee> implements IEmployeeRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+   
+    constructor() {
+        super('employees');
     }
 }
 

@@ -1,12 +1,12 @@
-﻿import {BaseEntity} from './baseEntity';
+﻿import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class User extends BaseEntity
+export interface IUser extends IBaseEntity
 {
-    public UserName: string;
-    public Passward: string;
-    public EmailId: string;
-    public HintQues: string;
-    public HintAns: string;
-    public Status: boolean;
+     UserName: string;
+     Passward: string;
+     EmailId: string;
+     HintQues: string;
+     HintAns: string;
+     Status: boolean;
 }

@@ -11,9 +11,9 @@ export interface IPreferencesRepository extends IBaseRepository<Preferences> {
 }
 
 export class PreferencesRepository extends BaseRepository<Preferences> implements IPreferencesRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+   
+    constructor() {
+        super('preferences');
     }
 }
 

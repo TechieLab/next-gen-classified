@@ -1,13 +1,11 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 
-export class Description extends BaseEntity
-{
-   
-    public Title: string;
-    public Price: number;
-    public IsNew : boolean;
-    public IsRepaired : boolean;
-    public IsUsed : boolean;
-    public Features : Array<String>;
-    
+export interface IDescription extends IBaseEntity
+{   
+     Title: string;
+     Price: number;
+     IsNew : boolean;
+     IsRepaired : boolean;
+     IsUsed : boolean;
+     Features : Array<String>;    
 }

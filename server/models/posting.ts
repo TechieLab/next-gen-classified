@@ -1,8 +1,7 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Posting extends BaseEntity
-{
-    
-    public UserId: ObjectID;
+export interface IPosting extends IBaseEntity
+{    
+    UserId: ObjectID;
 }

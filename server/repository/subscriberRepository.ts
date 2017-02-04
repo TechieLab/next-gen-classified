@@ -10,8 +10,8 @@ export interface ISubscriberRepository extends IBaseRepository<Subscriber> {
 }
 
 export class SubscriberRepository extends BaseRepository<Subscriber> implements ISubscriberRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+    
+    constructor() {
+        super('subscribers');
     }
 } 

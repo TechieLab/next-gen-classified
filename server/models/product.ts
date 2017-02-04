@@ -1,12 +1,12 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Product extends BaseEntity
+export interface IProduct extends IBaseEntity
 {
-    public CategoryId: ObjectID;
-    public Name: string;
-    public DescriptionId: ObjectID;   
-    public PurchasedOn : string;
-    public IsBillAvaialbe : boolean;
-    public UserId: ObjectID;
+     CategoryId: ObjectID;
+     Name: string;
+     DescriptionId: ObjectID;   
+     PurchasedOn : string;
+     IsBillAvaialbe : boolean;
+     UserId: ObjectID;
 }

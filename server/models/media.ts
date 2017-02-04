@@ -1,16 +1,16 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Media extends BaseEntity
+export interface IMedia extends IBaseEntity
 {
-    public DisplaySequence: number;
-    public Caption: string;
-    public Description: string;
-    public ImageType: string;
-    public ImageUrl: string;
-    public Name: boolean;
-    public SizeInBytes: boolean;
-    public Height: string;
-    public Width: number; 
-    public UserId: ObjectID;
+     DisplaySequence: number;
+     Caption: string;
+     Description: string;
+     ImageType: string;
+     ImageUrl: string;
+     Name: boolean;
+     SizeInBytes: boolean;
+     Height: string;
+     Width: number; 
+     UserId: ObjectID;
 }

@@ -11,9 +11,9 @@ export interface ILookupRepository extends IBaseRepository<Lookup> {
 }
 
 export class LookupRepository extends BaseRepository<Lookup> implements ILookupRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+   
+    constructor() {
+        super('lookups');
     }
 }
 

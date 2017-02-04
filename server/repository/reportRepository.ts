@@ -11,8 +11,8 @@ export interface IReportRepository extends IBaseRepository<Report> {
 }
 
 export class ReportRepository extends BaseRepository<Report> implements IReportRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+    
+    constructor() {
+        super('reports');
     }
 } 

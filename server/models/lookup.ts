@@ -1,10 +1,10 @@
-import {BaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Lookup
+export interface ILookup
 {
-    public Id : ObjectID
-    public Value: string;
-    public Name: string;
-    public Description: string;
+     Id : ObjectID
+     Key : string;
+     Value: string;
+     Name: string;
+     Description: string;
 }

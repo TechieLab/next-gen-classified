@@ -1,8 +1,8 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Catalog extends BaseEntity
+export interface ICatalog extends IBaseEntity
 {
-    public ProductId: ObjectID;
-    public UserId: ObjectID;
+     ProductId: ObjectID;
+     UserId: ObjectID;
 }

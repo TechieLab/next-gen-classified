@@ -1,9 +1,9 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
-export class Location extends BaseEntity
+export interface ILocation extends IBaseEntity
 {
-    public Long: string;
-    public Lat: string;
-    public Name: string;
-    public AddressId: ObjectID;
+     Long: string;
+     Lat: string;
+     Name: string;
+     AddressId: ObjectID;
 }

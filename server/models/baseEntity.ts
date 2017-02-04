@@ -1,11 +1,11 @@
 import {ObjectID} from 'mongodb';
-export abstract class BaseEntity
+export interface IBaseEntity
 {
-    public Id: ObjectID;
-    public Status: boolean;
+     Id: ObjectID;
+     Status: boolean;
 
-    public CreatedBy: string;
-    public CreatedOn: string;
-    public ModifiedBy : string;
-    public ModifiedOn : string;
+     CreatedBy: string;
+     CreatedOn: string;
+     ModifiedBy : string;
+     ModifiedOn : string;
 }

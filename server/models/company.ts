@@ -1,12 +1,12 @@
-﻿import {BaseEntity} from './baseEntity';
+﻿import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Company extends BaseEntity
+export interface ICompany extends IBaseEntity
 {
-    public Name: string;
-    public Designation: string;    
-    public AddressId: string;
-    public ContactId: ObjectID; 
-    public MediaId: ObjectID;
-    public UserId : ObjectID;
+     Name: string;
+     Designation: string;    
+     AddressId: string;
+     ContactId: ObjectID; 
+     MediaId: ObjectID;
+     UserId : ObjectID;
 }

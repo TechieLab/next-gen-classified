@@ -1,11 +1,12 @@
-import {BaseEntity} from './baseEntity';
+import {IBaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
-export class Order extends BaseEntity
+
+export interface IOrder extends IBaseEntity
 {   
-    public TransactionId: ObjectID;
-    public Description: boolean;
-    public Status: boolean;
-    public ProductId: ObjectID;
-    public postId: ObjectID; 
-    public UserId: ObjectID;
+     TransactionId: ObjectID;
+     Description: boolean;
+     Status: boolean;
+     ProductId: ObjectID;
+     postId: ObjectID; 
+     UserId: ObjectID;
 }

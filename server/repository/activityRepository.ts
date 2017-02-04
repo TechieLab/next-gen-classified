@@ -9,8 +9,8 @@ export interface IActivityRepository extends IBaseRepository<Activity> {
 }
 
 export class ActivityRepository extends BaseRepository<Activity> implements IActivityRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+   
+    constructor() {
+        super('activities');
     }
 } 

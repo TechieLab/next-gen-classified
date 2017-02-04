@@ -10,9 +10,9 @@ export interface ICompanyRepository extends IBaseRepository<Company> {
 }
 
 export class CompanyRepository extends BaseRepository<Company> implements ICompanyRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+   
+    constructor( ) {
+        super('companies');
     }
 }
 

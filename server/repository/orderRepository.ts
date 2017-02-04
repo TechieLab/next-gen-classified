@@ -11,9 +11,9 @@ export interface IOrderRepository extends IBaseRepository<Order> {
 }
 
 export class OrderRepository extends BaseRepository<Order> implements IOrderRepository {
-    db: Db;
-    constructor(database: Db) {
-        super(database);
+   
+    constructor() {
+        super("orders");
     }
 }
 

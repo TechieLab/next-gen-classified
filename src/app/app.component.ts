@@ -13,6 +13,7 @@ import { SettingsPage } from '../pages/settings/settings.page';
 import { NotificationPage } from '../pages/notification/notification.page';
 import { CatalogPage } from '../pages/catalog/catalog.page';
 import { ProductPage } from '../pages/product/product.page';
+import { MyPostingsPage } from '../pages/myPostings/myPostings.page';
 import { Welcome } from '../pages/welcome/welcome.page';
 import { PostNewAd } from '../pages/postnewad/postnewad.page';
 import { SearchPage } from '../pages/search/search.page';
@@ -29,7 +30,7 @@ import { CategoryComponent } from './components/category';
     SettingsPage,
     NotificationPage,
     CatalogPage,
-    ProductPage,
+    ProductPage,MyPostingsPage,
     SearchPage, FeedbackPage, HelpPage, Rating, HeaderComponent, CategoryComponent]
 })
 export class MyApp {

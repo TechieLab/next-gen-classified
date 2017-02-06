@@ -10,10 +10,11 @@ import http = require('http');
 import swig = require('swig');
 
 var fs = require('fs-extra');
-
+var cors = require('cors')
 import { IndexRoute } from './routes/index';
 import { UserRoute } from './routes/user';
 import { LookupRoute } from './routes/lookup';
+import { PostRoute } from './routes/post';
 
 import { InitializeSampleDb } from './data/initializeDb';
 
@@ -33,6 +34,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../app')));
 
+app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // Register our templating engine
 app.engine('html', swig.renderFile);
@@ -61,6 +69,9 @@ movieRoute.getRoutes();
 
 var lookup = new LookupRoute(app);
 lookup.getRoutes();
+
+var post = new PostRoute(app);
+post.getRoutes();
 
 http.createServer(app).listen(app.get('port'), function () {
 

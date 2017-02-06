@@ -16,7 +16,9 @@
         </ion-item>
         <ion-item>
             <ion-label floating>Choose a category</ion-label>
-            <ion-input type="text" [(ngModel)]="filters.Category" name="category"></ion-input>
+            <ion-select [(ngModel)]="gaming" name="category" [(ngModel)]="filters.Category" >
+                <ion-option value="{{cat.value}}" *ngFor="let cat of categories">{{cat.name}}</ion-option>
+            </ion-select>
         </ion-item>
         <ion-item>
             <ion-label floating>Choose a Sub Category</ion-label>

@@ -1,6 +1,7 @@
 import { Express, Request, Response } from "express";
 import {IBaseService} from '../services/baseService';
 import logger = require('winston');
+import {IResult} from '../models/result';
 
  export interface IBaseController<TEntity> {
         createEntity(req: Request, res: Response);
@@ -18,16 +19,24 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public constructor(baseService :  IBaseService<TEntity>) {
         self = this;
+        self.result = <IResult>{};
         self.baseService = baseService;
     }
 
     public createEntity(req: Request, res: Response) {
-       var data = <TEntity>{};
+       var data = <TEntity>req.body;
+       console.log(data);
 
-       return this.baseService.create(data, function (err, item) {
+       return self.baseService.create(data, function (err, item) {
             if (err) console.log(err);
 
-            return res.json(item);
+            self.result = {
+                Meesage : 'Entity created',
+                Success : true,
+                Content: item
+            }; 
+
+            return res.json(self.result);
         });
     }
 

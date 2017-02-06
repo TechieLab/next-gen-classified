@@ -1,10 +1,11 @@
-import '../../rxjs-operators';
+import '../rxjs-operators';
 import 'rxjs/add/operator/map';
 
 import { Injectable, Optional } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IResult } from '../models/result';
+import {Constants} from '../common/constants';
 
 export interface IBaseService<TEntity> {
     get(): Observable<Array<TEntity>>;
@@ -21,18 +22,22 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     url: string;
     entity: TEntity;
+    options : RequestOptions;
 
     constructor( @Optional() public http: Http, entityName: string) {
-        this.url = '/api/' + entityName;
+        this.url = Constants.baseApi + '/api/' + entityName;
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        this.options = new RequestOptions({
+            headers: headers
+        });
     }
 
-    get(): Observable<Array<TEntity>> {
-        this.url = this.url + '/get';
+    get(): Observable<Array<TEntity>> {        
         return this.http.get(this.url).map(this.extractData).catch(this.handleError);
     }
 
     getById(id: string): Observable<TEntity> {
-        this.url = this.url + '/get/' + id;
+        this.url = this.url + '/' + id;
         return this.http.get(this.url).map(this.extractData).catch(this.handleError);
     }
 
@@ -41,38 +46,36 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         return this.http.get(this.url).map(this.extractData).catch(this.handleError);
     }
 
-    getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
-        this.url = this.url + '/getBy/';
-        return this.http.get(this.url, params).map(this.extractData).catch(this.handleError);
+    getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {    
+         this.options.search = params;
+
+        return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     post(entity: TEntity): Observable<IResult> {
-        let body = JSON.stringify({ name });
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
+        let body = JSON.stringify({ name });      
 
-        return this.http.post(this.url, body, options)
+        return this.http.post(this.url, body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     put(entity: TEntity): Observable<IResult> {
-        let body = JSON.stringify({ name });
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
+        let body = JSON.stringify({ name });     
 
-        return this.http.put(this.url, body, options)
+        return this.http.put(this.url, body,  this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     del(id: string): Observable<IResult> {
+        this.url = this.url + '/' + id;
         return this.http.delete(this.url).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {
         let body = res.json();
-        return body.data || {};
+        return body.data || body;
     }
 
     private handleError(error: any) {

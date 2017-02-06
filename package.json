@@ -44,6 +44,7 @@
     "body-parser": "^1.15.2",
     "codelyzer": "~2.0.0-beta.1",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.1",
     "express": "^4.14.0",
     "fs-extra": "^2.0.0",
     "jasmine-core": "2.5.2",

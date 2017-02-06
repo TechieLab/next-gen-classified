@@ -14,27 +14,32 @@ import { SettingsPage } from '../pages/settings/settings.page';
 import { NotificationPage } from '../pages/notification/notification.page';
 import { CatalogPage } from '../pages/catalog/catalog.page';
 import { ProductPage } from '../pages/product/product.page';
+import { MyPostingsPage } from '../pages/myPostings/myPostings.page';
 import { PostNewAd } from '../pages/postnewad/postnewad.page';
 import { Constants } from './common/constants';
 import { SearchPage } from '../pages/search/search.page';
 import { FiltersPage } from '../pages/filters/filters.page';
-import {FeedbackPage}   from '../pages/feedback/feedback.page';
-import {HelpPage}   from '../pages/help/help.page';
-import {Rating} from './components/rating';
-import {CategoryComponent} from './components/category';
+import { FeedbackPage } from '../pages/feedback/feedback.page';
+import { HelpPage } from '../pages/help/help.page';
+import { Rating } from './components/rating';
+import { CategoryComponent } from './components/category';
+
+import { ILookupService, LookupService } from './services/lookup.service';
+import { IPostService, PostService } from './services/post.service';
+
 @NgModule({
   declarations: [
     MyApp, Welcome,
     HomePage,
     PostNewAd,
-    LoginPage,RegisterPage,ProfilePage,
+    LoginPage, RegisterPage, ProfilePage,
     SettingsPage,
     NotificationPage,
-    CatalogPage, ProductPage,
-    SearchPage, FiltersPage, FeedbackPage,HelpPage,Rating, HeaderComponent, CategoryComponent
+    CatalogPage, ProductPage,MyPostingsPage,
+    SearchPage, FiltersPage, FeedbackPage, HelpPage, Rating, HeaderComponent, CategoryComponent
   ],
   imports: [FormsModule, CommonModule,
-    IonicModule.forRoot(MyApp,{     
+    IonicModule.forRoot(MyApp, {
       iconMode: 'ios',
       modalEnter: 'modal-slide-in',
       modalLeave: 'modal-slide-out',
@@ -44,8 +49,12 @@ import {CategoryComponent} from './components/category';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, FiltersPage, FeedbackPage,HelpPage,CategoryComponent
+    MyApp, FiltersPage, FeedbackPage, HelpPage, CategoryComponent
   ],
-  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [
+    { provide: LookupService, useClass: LookupService },
+    { provide: PostService, useClass: PostService },
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
+  ]
 })
 export class AppModule { }

@@ -1,15 +1,12 @@
-import {Express, Request, Response} from "express";
-import {IBaseController, BaseController} from './baseController';
-import {IPost} from '../models/post';
+import { Express, Request, Response } from "express";
+import { IBaseController, BaseController } from './baseController';
+import { IPost } from '../models/post';
 
-export module Controllers {
 
-    export interface IOrderController extends IBaseController<Order> {
-        
-    }
+export interface IPostingController extends IBaseController<IPost> {
 
-    export class OrderController extends BaseController<Order> implements IOrderController
-    {        
-        
-    }
+}
+
+export class PostingController extends BaseController<IPost> implements IPostingController {
+
 }

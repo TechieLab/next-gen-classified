@@ -1,6 +1,6 @@
 
 export interface IResult {
-    success: boolean;
-    message: string;
-    content: any;
+    Success: boolean;
+    Message: string;
+    Content: any;
 }

@@ -24,8 +24,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         this.collectionName = collectionName;
 
         MongoDBConnection.getConnection((connection) => {
-            this.db = connection;
-            console.log('Mongo connected.......');
+            this.db = connection;           
         });
     }
 

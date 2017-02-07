@@ -1,15 +1,12 @@
-﻿import {Express, Request, Response} from "express";
-import {IBaseController, BaseController} from './baseController';
-import {ICompany} from '../models/company';
+﻿import { Express, Request, Response } from "express";
+import { IBaseController, BaseController } from './baseController';
+import { ICompany } from '../models/company';
 
-export module Controllers {
 
-    export interface ICompanyController extends IBaseController<ICompany> {
-        
-    }
+export interface ICompanyController extends IBaseController<ICompany> {
 
-    export class CompanyController extends BaseController<ICompany> implements ICompanyController
-    {        
-        
-    }
+}
+
+export class CompanyController extends BaseController<ICompany> implements ICompanyController {
+
 }

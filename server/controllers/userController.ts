@@ -2,7 +2,6 @@
 import { IBaseController, BaseController } from './baseController';
 import { IUser } from '../models/user';
 
-
 export interface IUserController extends IBaseController<IUser> {
 
 }

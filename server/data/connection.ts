@@ -7,10 +7,10 @@ export class MongoDBConnection {
     private static db: Db;
 
     public static getConnection(result: (connection) => void) {
-        if (this.isConnected) {
+        if (this.isConnected) {            
             return result(this.db);
         } else {
-            this.connect((error, db: Db) => {
+            this.connect((error : Error, db: Db) => {
                  if (error) throw error;               
 
                 return result(this.db);
@@ -18,10 +18,12 @@ export class MongoDBConnection {
         }
     }
 
-    private static connect(result: (error, db: Db) => void) {
-        MongoClient.connect(url, (error, db: Db) => { 
+    private static connect(result: (error: Error, db: Db) => void) {
+        MongoClient.connect(url, (error : Error, db: Db) => { 
             this.db = db;
-            this.isConnected = true;         
+            this.isConnected = true;   
+
+             console.log('Mongo connected.......');    
 
             return result(error, db);
         });

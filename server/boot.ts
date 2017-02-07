@@ -11,17 +11,14 @@ import swig = require('swig');
 
 var fs = require('fs-extra');
 var cors = require('cors')
+
 import { IndexRoute } from './routes/index';
 import { IndexApiRoute } from './routes/indexApi';
-
 import { InitializeSampleDb } from './data/initializeDb';
 
 var app = express();
 
 app.set('port', process.env.PORT || '3000');
-
-
-
 swig.setDefaults({ cache: false });
 
 // uncomment after placing your favicon in /public
@@ -58,10 +55,6 @@ logger.level = 'debug';
 // Application routes
 new IndexRoute(app);
 new IndexApiRoute(app);
-
-// indexRoute.getMovies();
-//indexRoute.getHome();
-//indexRoute.getMoviesDetails();
 
 http.createServer(app).listen(app.get('port'), function () {
 

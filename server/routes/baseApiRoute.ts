@@ -46,16 +46,16 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
 
      post()
     {   
-        this.app.post('/api/' + this.apiName + '/', this.baseController.getEntities)
+        this.app.post('/api/' + this.apiName + '/', this.baseController.createEntity)
     }
 
      put()
     {   
-        this.app.put('/api/' + this.apiName + '/', this.baseController.getEntities)
+        this.app.put('/api/' + this.apiName + '/', this.baseController.updateEntity)
     }
 
      del()
     {   
-        this.app.delete('/api/' + this.apiName + '/', this.baseController.getEntities)
+        this.app.delete('/api/' + this.apiName + '/', this.baseController.deleteEntity)
     }
 }

@@ -2,9 +2,7 @@
 import {ILookupService,LookupService} from '../services/lookupService';
 import {ILookupRepository,LookupRepository} from '../repository/lookupRepository';
 import {LookupController,ILookupController} from '../controllers/lookupController';
-import logger = require('winston');
 
-var self;
 export class LookupRoute
 {
     lookupController: ILookupController;  
@@ -13,21 +11,18 @@ export class LookupRoute
 
     constructor(app: Express)
     {
-        this.app = app;
-        self = this;
+        this.app = app;      
 
         var repository = new LookupRepository()
         this.service = new LookupService(repository);
         this.lookupController = new LookupController(this.service);
 
-        this.app.get('/api/lookups/:key', function(req: Request, res: Response){
-             var key = req.params.key;
+        this.app.get('/api/lookups', (req: Request, res: Response) => {
+             var key = req.query.key;
 
-            self.lookupController.getEntityByQuery({key :key}, function(err, items){
+            this.lookupController.getEntityByQuery({key :key}, function(err, items){
                 return res.json(items);
             });
         });
-
-        this.app.get('/api/lookups', this.lookupController.getEntities);
     }
 }

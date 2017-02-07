@@ -13,11 +13,9 @@ import {IResult} from '../models/result';
     }
 
 var self;
-export class BaseController<TEntity> implements IBaseController<TEntity> {
-
-    public baseService : IBaseService<TEntity>;
-
-    public constructor(baseService :  IBaseService<TEntity>) {
+export class BaseController<TEntity> implements IBaseController<TEntity> {  
+    public result : IResult; 
+    public constructor(public baseService :  IBaseService<TEntity>) {
         self = this;
         self.result = <IResult>{};
         self.baseService = baseService;

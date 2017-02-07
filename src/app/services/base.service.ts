@@ -53,7 +53,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     }
 
     post(entity: TEntity): Observable<IResult> {
-        let body = JSON.stringify({ name });      
+        let body = JSON.stringify(entity);      
 
         return this.http.post(this.url, body, this.options)
             .map(this.extractData)
@@ -61,7 +61,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     }
 
     put(entity: TEntity): Observable<IResult> {
-        let body = JSON.stringify({ name });     
+        let body = JSON.stringify(entity);     
 
         return this.http.put(this.url, body,  this.options)
             .map(this.extractData)

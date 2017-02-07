@@ -1,4 +1,6 @@
 import { Component, OnInit, ElementRef, Inject } from '@angular/core';
+import { NgForm, FormBuilder, FormControl, FormGroup , Validators} from '@angular/forms';
+
 import { NavController, NavParams } from 'ionic-angular';
 import { ILookupService, LookupService } from '../../app/services/lookup.service';
 import { ILookup } from '../../app/models/lookup';
@@ -14,21 +16,24 @@ import { MyPostingsPage } from '../myPostings/myPostings.page';
   providers: [PostService]
 })
 
-export class PostNewAd implements OnInit {
+export class PostNewAdPage implements OnInit {
 
-  private selectedCategory: string;
-  private newPostForm: IPost;
-  private categories: Array<ILookup>
+  private selectedCategory: string; 
+  private categories: Array<ILookup>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  public newPostForm = this.builder.group({
+    Title: ["", Validators.required],
+    Price: ["", Validators.required],
+    Location: ["", Validators.required],
+    Description : ["", Validators.required],
+    Category : ["", Validators.required]
+  });  
+
+  constructor(public builder: FormBuilder, public navCtrl: NavController, public navParams: NavParams,
     @Inject(LookupService) public lookupService: ILookupService,
     @Inject(PostService) public postService: IPostService) {
-    this.selectedCategory = navParams.get('category');
-    this.newPostForm = <IPost>{};
-  }
 
-  logForm() {
-
+    this.selectedCategory = navParams.get('category');    
   }
 
   ngOnInit() {
@@ -42,7 +47,7 @@ export class PostNewAd implements OnInit {
   }
 
   onSubmitForm() {
-    this.postService.post(this.newPostForm).subscribe((result) => {
+    this.postService.post(this.newPostForm.value).subscribe((result) => {
       if (result.Success) {
         this.navCtrl.setRoot(MyPostingsPage);
       }
@@ -50,7 +55,7 @@ export class PostNewAd implements OnInit {
   }
 
   resetForm() {
-    this.newPostForm = <IPost>{};
+    this.newPostForm.value = <IPost>{};
   }
 
 }

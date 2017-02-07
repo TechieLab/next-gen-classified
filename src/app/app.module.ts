@@ -15,7 +15,7 @@ import { NotificationPage } from '../pages/notification/notification.page';
 import { CatalogPage } from '../pages/catalog/catalog.page';
 import { ProductPage } from '../pages/product/product.page';
 import { MyPostingsPage } from '../pages/myPostings/myPostings.page';
-import { PostNewAd } from '../pages/postnewad/postnewad.page';
+import { PostNewAdPage } from '../pages/postnewad/postnewad.page';
 import { Constants } from './common/constants';
 import { SearchPage } from '../pages/search/search.page';
 import { FiltersPage } from '../pages/filters/filters.page';
@@ -31,7 +31,7 @@ import { IPostService, PostService } from './services/post.service';
   declarations: [
     MyApp, Welcome,
     HomePage,
-    PostNewAd,
+    PostNewAdPage,
     LoginPage, RegisterPage, ProfilePage,
     SettingsPage,
     NotificationPage,

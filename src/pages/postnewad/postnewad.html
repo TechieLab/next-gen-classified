@@ -12,31 +12,30 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <form (ngSubmit)="onSubmitForm()" #newPostForm="ngForm">
+  <form [formGroup]="newPostForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
     <ion-item>
       <ion-label floating>Add a title</ion-label>
-      <ion-input type="text" [(ngModel)]="newPostForm.title" name="title" required></ion-input>
+      <ion-input type="text" formControlName="Title" name="title" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Choose a category</ion-label>
-      <ion-select name="category" [(ngModel)]="newPostForm.Category" required>
+      <ion-select name="category" required formControlName="Category">
         <ion-option value="{{cat.value}}" *ngFor="let cat of categories">{{cat.name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label floating>Price</ion-label>
-      <ion-input type="text" [(ngModel)]="newPostForm.Price" name="price" required></ion-input>
+      <ion-input type="text" name="price" formControlName="Price" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Location</ion-label>
-      <ion-textarea [(ngModel)]="newPostForm.Location" name="location" required></ion-textarea>
+      <ion-textarea name="location" formControlName="Location" required></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label floating>Description</ion-label>
-      <ion-textarea [(ngModel)]="newPostForm.Description" name="description" required></ion-textarea>
+      <ion-textarea name="description" formControlName="Description" required></ion-textarea>
     </ion-item>
 
-    <button ion-button type="submit" block [disabled]="!newPostForm.form.valid">POST</button>
+    <button ion-button type="submit" block [disabled]="!newform.form.valid">POST</button>
   </form>
-
 </ion-content>

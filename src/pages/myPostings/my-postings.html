@@ -3,23 +3,24 @@
         <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>My Postings</ion-title>       
+        <ion-title>My Postings</ion-title>
+        <ion-buttons end>
+            <button buttons-end ion-button clear (click)="gotoAddPostingsPage()">
+                 Post Ad
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-    <ion-grid>
-        <ion-row wrap>
-            <ion-col *ngFor="let ad of ads">
-                <ion-item no-padding>
-                    <ion-thumbnail item-left>
-                        <img (click)="showProductDetails()" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
-                    </ion-thumbnail>
-                    <h2>My Neighbor Totoro</h2>
-                    <p>Hayao Miyazaki • 1988</p>
-                    <button ion-button clear item-right>
-                        Rs 3000</button>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+    <ion-list>
+        <ion-item no-padding *ngFor="let post of myPostingsData">
+            <ion-thumbnail item-left>
+                <img (click)="showProductDetails()" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+            </ion-thumbnail>
+            <h2>{{post.Title}}</h2>
+            <p>{{post.Description}}</p>
+            <p>{{post.Price}}</p>
+            <p>{{post.Location}}</p>
+        </ion-item>
+    </ion-list>
 </ion-content>

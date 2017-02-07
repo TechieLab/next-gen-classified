@@ -4,7 +4,7 @@ import { Geolocation } from 'ionic-native';
 
 import {CatalogPage} from '../catalog/catalog.page';
 import {ProductPage} from '../product/product.page';
-import {PostNewAd}   from '../postnewad/postnewad.page';
+import {PostNewAdPage}   from '../postnewad/postnewad.page';
 
 
 
@@ -44,6 +44,6 @@ export class HomePage implements OnInit {
     }  
 
     gotoPostingAdPage(){
-        this.navCtrl.push(PostNewAd, { category : 'POST FOR FREE' });
+        this.navCtrl.push(PostNewAdPage, { category : 'POST FOR FREE' });
     }  
 }

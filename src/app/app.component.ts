@@ -15,7 +15,7 @@ import { CatalogPage } from '../pages/catalog/catalog.page';
 import { ProductPage } from '../pages/product/product.page';
 import { MyPostingsPage } from '../pages/myPostings/myPostings.page';
 import { Welcome } from '../pages/welcome/welcome.page';
-import { PostNewAd } from '../pages/postnewad/postnewad.page';
+import { PostNewAdPage } from '../pages/postnewad/postnewad.page';
 import { SearchPage } from '../pages/search/search.page';
 import { FeedbackPage } from '../pages/feedback/feedback.page';
 import { HelpPage } from '../pages/help/help.page';
@@ -24,7 +24,7 @@ import { CategoryComponent } from './components/category';
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [Welcome, PostNewAd,
+  entryComponents: [Welcome, PostNewAdPage,
     HomePage,
     LoginPage, RegisterPage,ProfilePage,
     SettingsPage,
@@ -51,7 +51,8 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage, name: "home" },
-      { title: 'Admin', component: AdminPage, name: "home" },
+      { title: 'Admin', component: AdminPage, name: "person" },
+      { title: 'My Postings', component: MyPostingsPage, name: "paper" },
       { title: 'Favourites', component: SettingsPage, name: "star" },
       { title: 'About', component: HomePage, name: "book" },
       { title: 'Settings', component: SettingsPage, name: "settings" },

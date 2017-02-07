@@ -1,28 +1,19 @@
 ﻿
-import {Express, Router, Request, Response} from 'express';
+import { Express, Router, Request, Response } from 'express';
 import logger = require('winston');
 
-export class IndexRoute
-{   
-    app: any;
+export class IndexRoute {    
 
-    constructor(app)
-    {   
+    constructor(public app: Express) {
         this.app = app;
-    }
 
-   public getBase()
-    {
-       this.app.get('/', function (req, res)
-       {
-           return res.render('index.html');
-       });
-    }
+        this.app.get('/', function (req, res) {
+            return res.render('index.html');
+        });
 
-   public getHome() {
-       this.app.get('/home', function (req, res) {
-           return res.render('index.html');
-       });
-   }
+        this.app.get('/home', function (req, res) {
+            return res.render('index.html');
+        });
+    }
 }
 

@@ -19,16 +19,15 @@ export class LookupRoute
         var repository = new LookupRepository()
         this.service = new LookupService(repository);
         this.lookupController = new LookupController(this.service);
-    }
 
-    getRoutes()
-    {   
-        this.app.get('/api/lookups', function(req: Request, res: Response){ 
-            self.lookupController.getEntityByQuery(req.query, function(err, items){
-                return res.json({data : items});
+        this.app.get('/api/lookups/:key', function(req: Request, res: Response){
+             var key = req.params.key;
+
+            self.lookupController.getEntityByQuery({key :key}, function(err, items){
+                return res.json(items);
             });
         });
 
-        //this.app.get('/api/lookups', this.lookupController.getEntities);
+        this.app.get('/api/lookups', this.lookupController.getEntities);
     }
 }

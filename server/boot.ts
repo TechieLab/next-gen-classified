@@ -12,9 +12,7 @@ import swig = require('swig');
 var fs = require('fs-extra');
 var cors = require('cors')
 import { IndexRoute } from './routes/index';
-import { UserRoute } from './routes/user';
-import { LookupRoute } from './routes/lookup';
-import { PostRoute } from './routes/post';
+import { IndexApiRoute } from './routes/indexApi';
 
 import { InitializeSampleDb } from './data/initializeDb';
 
@@ -58,20 +56,12 @@ logger.log('info', 'Application Started....');
 logger.level = 'debug';
 
 // Application routes
-var indexRoute = new IndexRoute(app);
-indexRoute.getBase();
+new IndexRoute(app);
+new IndexApiRoute(app);
+
 // indexRoute.getMovies();
 //indexRoute.getHome();
 //indexRoute.getMoviesDetails();
-
-var movieRoute = new UserRoute(app);
-movieRoute.getRoutes();
-
-var lookup = new LookupRoute(app);
-lookup.getRoutes();
-
-var post = new PostRoute(app);
-post.getRoutes();
 
 http.createServer(app).listen(app.get('port'), function () {
 

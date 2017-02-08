@@ -1,14 +1,14 @@
 <ion-grid>
     <ion-row wrap>
-        <ion-col *ngFor="let ad of ads">
+        <ion-col *ngFor="let product of products">
             <ion-item no-padding>
                 <ion-thumbnail item-left>
                     <img (click)="showProductDetails()" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
                 </ion-thumbnail>
-                <h2>My Neighbor Totoro</h2>
-                <p>Hayao Miyazaki • 1988</p>
+                <h2>{{product.Name}}</h2>
+                <p>{{product.Description}}</p>
                 <button ion-button clear item-right>
-                        Rs 3000</button>
+                        {{product.Price}}</button>
             </ion-item>
         </ion-col>
     </ion-row>

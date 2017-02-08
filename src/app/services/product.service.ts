@@ -10,6 +10,6 @@ export interface IProductService extends IBaseService<IProduct> { }
 export class ProductService extends BaseService<IProduct> implements IProductService {  
 
     constructor(public http: Http){
-        super(http, "posts");
+        super(http, "products");
     }    
 }

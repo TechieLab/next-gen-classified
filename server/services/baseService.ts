@@ -1,7 +1,6 @@
 ﻿import {BaseRepository, IBaseRepository} from '../repository/baseRepository';
 import logger = require('winston');
 
-
 export interface IBaseService<TEntity>
 {
     initData(sampleData: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);   

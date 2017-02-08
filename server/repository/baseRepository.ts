@@ -22,9 +22,12 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     constructor(collectionName: string) {
         this.collectionName = collectionName;
+        console.log("Collection name-----" + collectionName);
 
         MongoDBConnection.getConnection((connection) => {
-            this.db = connection;           
+            this.db = connection; 
+
+                     
         });
     }
 
@@ -38,6 +41,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public get(callback: (err: Error, item: Array<TEntity>) => any) {
         var collection = this.db.collection(this.collectionName);
+        console.log("Collection name-----" + this.collectionName);
         collection.find({}).toArray(function (err, item) {
             logger.log('debug', 'reading all data..');
             callback(err, item);
@@ -92,6 +96,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public create(data: TEntity, callback: (errr: Error, item: TEntity) => any) {
         logger.log('debug', 'called create data..');
+        console.log("Collection name-----" + this.collectionName);
 
         if (!data) {
             callback(new Error('Empty'), null);

@@ -4,7 +4,7 @@ import logger = require('winston');
 
 export class IndexRoute {    
 
-    constructor(public app: Express) {
+    constructor(private app: Express) {
         this.app = app;
 
         this.app.get('/', function (req, res) {

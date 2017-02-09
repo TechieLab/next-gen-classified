@@ -1,7 +1,7 @@
-import {IBaseEntity} from './baseEntity';
+import {BaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export interface IReport extends IBaseEntity
+export class Report extends BaseEntity
 {
      Name: string;   
      Type : string

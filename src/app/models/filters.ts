@@ -1,4 +1,4 @@
-export interface IFilters {
+export class Filters {
      keyword: string;
      Category: string;
      SubCategory: string;

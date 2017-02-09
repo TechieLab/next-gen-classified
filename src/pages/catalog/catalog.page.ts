@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ProductPage } from '../product/product.page';
-import { IProduct } from '../../app/models/product';
+import { Product } from '../../app/models/product';
 import { IProductService, ProductService } from '../../app/services/product.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { IProductService, ProductService } from '../../app/services/product.serv
 })
 export class CatalogPage implements OnInit {
   selectedCategory: string;
-  products: Array<IProduct>;
+  products: Array<Product>;
   subCategories: string[];
   isSubCategorySelected: boolean;
   ads: any[];

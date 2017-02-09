@@ -1,4 +1,4 @@
-export interface IResult{
+export interface Result{
     Message : string;
     Success : boolean;
     Content : any;

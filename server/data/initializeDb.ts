@@ -7,17 +7,17 @@ import {Express, Request, Response} from "express";
 import logger = require('winston');
 import {Db} from 'mongodb';
 import {IBaseRepository, BaseRepository} from '../repository/baseRepository'
-import {IProfile} from '../models/Profile';
-import {IUser} from '../models/User';
-import {ICategory} from '../models/Category';
-import {ILookup} from '../models/lookup';
+import {Profile} from '../models/Profile';
+import {User} from '../models/User';
+import {Category} from '../models/Category';
+import {Lookup} from '../models/lookup';
 
 var self;
 export class InitializeSampleDb
 {      
-    sampleLookupData: Array<ILookup>;
-    sampleProfileData: Array<IProfile>;
-    sampleUserData: Array<IUser>;
+    sampleLookupData: Array<Lookup>;
+    sampleProfileData: Array<Profile>;
+    sampleUserData: Array<User>;
 
     constructor()
     {
@@ -33,7 +33,7 @@ export class InitializeSampleDb
 
     private verifyLookupData(data : any)
     {
-        var repository = new BaseRepository<ILookup>("lookups");
+        var repository = new BaseRepository<Lookup>("lookups");
         logger.log('debug', 'verifying lookups from database..');
         //this.getSampleData();
 
@@ -63,7 +63,7 @@ export class InitializeSampleDb
    
    private verifyUserData(data : any)
     {
-        var repository = new BaseRepository<IUser>("users");
+        var repository = new BaseRepository<User>("users");
         logger.log('debug', 'verifying Users from database..');
         //this.getSampleData();
 
@@ -92,7 +92,7 @@ export class InitializeSampleDb
 
     private verifyProfileData(data : any)
     {
-        var repository = new BaseRepository<IProfile>("profiles");
+        var repository = new BaseRepository<Profile>("profiles");
         logger.log('debug', 'verifying profiles from database..');
         //this.getSampleData();
 

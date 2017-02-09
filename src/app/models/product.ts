@@ -1,4 +1,4 @@
-export interface IProduct {
+export class Product {
     Name: string;
     IsNew: boolean;
     IsUsed: boolean;

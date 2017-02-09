@@ -3,7 +3,7 @@
 import express = require('express');
 import MongoDB = require('mongodb');
 import path = require('path');
-import logger = require('winston');
+
 import cookieParser = require('cookie-parser');
 import bodyParser = require('body-parser');
 import http = require('http');
@@ -12,9 +12,13 @@ import swig = require('swig');
 var fs = require('fs-extra');
 var cors = require('cors')
 
+
 import { IndexRoute } from './routes/index';
 import { IndexApiRoute } from './routes/indexApi';
 import { InitializeSampleDb } from './data/initializeDb';
+
+import Logger from './Logger'; 
+const logger = Logger('server');
 
 var app = express();
 
@@ -44,13 +48,7 @@ app.set('view engine', 'html');
 app.set('views', __dirname + './dist/app');
 app.set('view cache', true);
 
-// create a write stream (in append mode) 
-logger.add(logger.transports.File, { filename: 'server.log' });
-//logger.remove(logger.transports.Console);
-
-logger.log('info', 'Application Started....');
-
-logger.level = 'debug';
+logger.info('Application Started....');
 
 // Application routes
 new IndexRoute(app);
@@ -73,7 +71,7 @@ http.createServer(app).listen(app.get('port'), function () {
     fs.copy(path.join(__dirname + '/../../server/views'), path.join(__dirname, '/views'), function (err) {
         if (err) return console.error(err);
 
-        console.log("views copied!")
+        logger.info("views copied!")
     });
 
     console.log("Express server listening on port " + app.get('port'));

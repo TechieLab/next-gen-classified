@@ -1,7 +1,7 @@
-import {IBaseEntity} from './baseEntity';
+import {BaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export interface ISubscriber extends IBaseEntity
+export class Subscriber extends BaseEntity
 {
   
     UserId: ObjectID;

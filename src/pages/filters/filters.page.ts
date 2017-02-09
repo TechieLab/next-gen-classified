@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef , Inject} from '@angular/core';
 import { NavController, MenuController, ViewController, NavParams } from 'ionic-angular';
-import { IFilters } from '../../app/models/filters';
-import { ILookup } from '../../app/models/lookup';
+import { Filters } from '../../app/models/filters';
+import { Lookup } from '../../app/models/lookup';
 import { ILookupService, LookupService } from '../../app/services/lookup.service';
 
 @Component({
@@ -12,9 +12,9 @@ import { ILookupService, LookupService } from '../../app/services/lookup.service
 
 export class FiltersPage implements OnInit {
     private selectedCategory: string;
-    private filters: IFilters;
+    private filters: Filters;
     private rootPage: this;
-    private categories : Array<ILookup>
+    private categories : Array<Lookup>
 
     constructor(public viewCtrl: ViewController,
         public navCtrl: NavController,
@@ -26,7 +26,7 @@ export class FiltersPage implements OnInit {
     }
 
     ngOnInit() {
-        this.filters = <IFilters>{};
+        this.filters = <Filters>{};
 
         this.getCategoryData();
     }
@@ -39,6 +39,6 @@ export class FiltersPage implements OnInit {
     }
 
     clearFilters() {
-        this.filters = <IFilters>{};
+        this.filters = <Filters>{};
     }
 }

@@ -7,7 +7,7 @@ import logger = require('winston');
 export interface IBaseApiRoute<TEntity> {
     get();
     getById();
-    post();
+   // post();
     put();
     del();
 }
@@ -24,7 +24,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
 
         this.get();
         this.getById();
-        this.post();
+        //this.post();
         this.put();
         this.del();
     }
@@ -50,12 +50,12 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         });
     }
 
-    post() {
-        this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
-            self.setCollection(this.apiName);
-            self.baseController.createEntity(req, res);
-        });
-    }
+    // post() {
+    //     this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+    //         self.setCollection(this.apiName);
+    //         self.baseController.createEntity(req, res);
+    //     });
+    // }
 
     put() {
         this.app.put('/api/' + this.apiName + '/', (req: Request, res: Response) => {

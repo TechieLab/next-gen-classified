@@ -1,6 +1,7 @@
 ﻿import { MongoDBConnection } from '../data/connection';
 import { Db, Collection } from 'mongodb';
-import logger = require('winston');
+import Logger from '../Logger'; 
+const logger = Logger('server');
 
 export interface IBaseRepository<TEntity> {
     get(callback: (err: Error, item: Array<TEntity>) => any);
@@ -26,39 +27,35 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
         MongoDBConnection.getConnection((connection) => {
             this.db = connection; 
-
-                     
         });
     }
 
     public getCount(callback: (err: Error, item: number) => any) {
         var collection = this.db.collection(this.collectionName);
         collection.count(function (err, item) {
-            logger.log('debug', 'Gettng Count...' + item);
+            logger.debug('Gettng Count...' + item);
             callback(err, item);
         });
     }
 
     public get(callback: (err: Error, item: Array<TEntity>) => any) {
-        var collection = this.db.collection(this.collectionName);
-        console.log("Collection name-----" + this.collectionName);
+        var collection = this.db.collection(this.collectionName);       
         collection.find({}).toArray(function (err, item) {
-            logger.log('debug', 'reading all data..');
+            logger.debug('debug', 'reading all data..');
             callback(err, item);
         });
     }
     public getById(id: number, callback: (err: Error, item: TEntity) => any) {
         var collection = this.db.collection(this.collectionName);
         collection.findOne({ "_id": id }, function (err, results) {
-            logger.log('debug', 'reading get data..with id..' + id);
+            logger.debug('debug', 'reading get data..with id..' + id);
             callback(err, results);
         });
     }
 
     public getByQuery(query: Object, callback: (err: Error, items: Array<TEntity>) => any) { 
         var collection = this.db.collection(this.collectionName);
-        collection.find(query).toArray(function (err, results) {           
-            console.log(query);
+        collection.find(query).toArray(function (err, results) {                       
             callback(err, results);
         });
     }
@@ -70,7 +67,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         var options;
 
         if (sortKey && sortOrder) {
-            logger.log('debug', 'reading many data..with query and sortkey, sortorder');
+            logger.debug('debug', 'reading many data..with query and sortkey, sortorder');
             options = {
                 // "limit": 20,
                 // "skip": 10,
@@ -81,7 +78,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
                 callback(err, results);
             });
         } else if (sortKey) {
-            logger.log('debug', 'reading many data..with query and sortkey');
+            logger.debug('debug', 'reading many data..with query and sortkey');
             options = {
                 //  "limit": 20,
                 //  "skip": 10,
@@ -89,13 +86,13 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             };
             collection.find(query, options).toArray(callback);
         } else {
-            logger.log('debug', 'reading many data..with query');
+            logger.debug('debug', 'reading many data..with query');
             collection.find(query).toArray(callback);
         }
     }
 
     public create(data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.log('debug', 'called create data..');
+        logger.debug('debug', 'called create data..');
         console.log("Collection name-----" + this.collectionName);
 
         if (!data) {
@@ -104,14 +101,14 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
         var collection = this.db.collection(this.collectionName);
         collection.insert(data, function (err, res) {
-            logger.log('debug', 'inserting data..');
+            logger.debug('debug', 'inserting data..');
 
             callback(err, res.ops[0]);
         });
     }
 
     public bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {
-        logger.log('debug', 'called bulk data..');
+        logger.debug('debug', 'called bulk data..');
         console.log(data);
 
         if (!data) {
@@ -120,7 +117,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
         var collection = this.db.collection(this.collectionName);
         collection.insertMany(data, function (err, res) {
-            logger.log('debug', 'inserting bulk data..');            
+            logger.debug('debug', 'inserting bulk data..');            
 
             callback(err,null);
         });

@@ -1,11 +1,11 @@
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
-import { IPreferences } from '../models/Preferences';
+import { Preferences } from '../models/Preferences';
 
-export interface IPreferencesController extends IBaseController<IPreferences> {
+export interface IPreferencesController extends IBaseController<Preferences> {
 
 }
 
-export class PreferencesController extends BaseController<IPreferences> implements IPreferencesController {
+export class PreferencesController extends BaseController<Preferences> implements IPreferencesController {
 
 }

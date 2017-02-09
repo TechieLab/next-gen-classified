@@ -1,4 +1,4 @@
-export interface IPost{
+export class Post{
     Title : string;
     ProductName : string;
     Desciption:string;

@@ -1,12 +1,12 @@
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
-import { IMedia } from '../models/media';
+import { Media } from '../models/media';
 
 
-export interface IMediaController extends IBaseController<IMedia> {
+export interface IMediaController extends IBaseController<Media> {
 
 }
 
-export class MediaController extends BaseController<IMedia> implements IMediaController {
+export class MediaController extends BaseController<Media> implements IMediaController {
 
 }

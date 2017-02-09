@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ProductPage } from '../product/product.page';
 import { PostNewAdPage } from '../postnewad/postnewad.page';
-import { IPost } from '../../app/models/post';
+import { Post } from '../../app/models/post';
 import { IPostService, PostService } from '../../app/services/post.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class MyPostingsPage implements OnInit {
     items: string[];
     subCategories: string[];
     isSubCategorySelected: boolean;
-    myPostingsData: Array<IPost>;
+    myPostingsData: Array<Post>;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, @Inject(PostService) public postService: IPostService) {
         // If we navigated to this page, we will have an item available as a nav param

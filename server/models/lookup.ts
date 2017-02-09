@@ -1,6 +1,6 @@
 import {ObjectID} from 'mongodb';
 
-export interface ILookup
+export class Lookup
 {
      Id : ObjectID
      Key : string;

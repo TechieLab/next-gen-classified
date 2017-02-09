@@ -1,8 +1,8 @@
 import {Component, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {ILoginModel} from '../../app/models/login';
-import {IUser} from '../../app/models/user';
+import {LoginModel} from '../../app/models/login';
+import {User} from '../../app/models/user';
 
 @Component({
     selector: 'register-page',

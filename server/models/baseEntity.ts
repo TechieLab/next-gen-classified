@@ -1,5 +1,5 @@
 import {ObjectID} from 'mongodb';
-export interface IBaseEntity
+export class BaseEntity
 {
      Id: ObjectID;
      Status: boolean;

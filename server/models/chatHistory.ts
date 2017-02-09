@@ -1,7 +1,7 @@
-import {IBaseEntity} from './baseEntity';
+import {BaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export interface IChatHistory extends IBaseEntity
+export class ChatHistory extends BaseEntity
 {
    
      UserId: ObjectID;

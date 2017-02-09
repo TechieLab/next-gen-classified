@@ -2,15 +2,15 @@
 import { Db, Collection } from 'mongodb';
 import logger = require('winston');
 import { BaseRepository, IBaseRepository } from '../repository/baseRepository';
-import { IOrder } from '../models/Order';
+import { Order } from '../models/Order';
 
 
 
-export interface IOrderRepository extends IBaseRepository<IOrder> {
+export interface IOrderRepository extends IBaseRepository<Order> {
 
 }
 
-export class OrderRepository extends BaseRepository<IOrder> implements IOrderRepository {
+export class OrderRepository extends BaseRepository<Order> implements IOrderRepository {
    
     constructor() {
         super("orders");

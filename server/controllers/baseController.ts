@@ -1,7 +1,7 @@
 import { Express, Request, Response } from "express";
 import {IBaseService} from '../services/baseService';
 import logger = require('winston');
-import {IResult} from '../models/result';
+import {Result} from '../models/result';
 
  export interface IBaseController<TEntity> {
         createEntity(req: Request, res: Response);
@@ -14,10 +14,10 @@ import {IResult} from '../models/result';
 
 var self;
 export class BaseController<TEntity> implements IBaseController<TEntity> {  
-    public result : IResult; 
+    public result : Result; 
     public constructor(public baseService :  IBaseService<TEntity>) {
         self = this;
-        self.result = <IResult>{};
+        self.result = <Result>{};
         self.baseService = baseService;
     }
 

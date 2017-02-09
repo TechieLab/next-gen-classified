@@ -1,13 +1,13 @@
 ﻿
-import { IProduct } from '../models/Product';
+import { Product } from '../models/Product';
 import { IProductRepository } from '../repository/ProductRepository';
 import logger = require('winston');
 import { IBaseService, BaseService } from '../services/baseService';
 
-export interface IProductService extends IBaseService<IProduct> {
+export interface IProductService extends IBaseService<Product> {
 
 }
-export class ProductService extends BaseService<IProduct> implements IProductService {
+export class ProductService extends BaseService<Product> implements IProductService {
     repository: IProductRepository;
 
     public constructor(repository: IProductRepository) {

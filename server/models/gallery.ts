@@ -1,6 +1,6 @@
-import {IBaseEntity} from './baseEntity';
+import {BaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
-export interface IGallery extends IBaseEntity
+export class Gallery extends BaseEntity
 {
      Name: string;
      UserId: ObjectID;

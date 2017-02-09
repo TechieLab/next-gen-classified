@@ -1,11 +1,11 @@
 ﻿import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
-import { IUser } from '../models/user';
+import { User } from '../models/user';
 
-export interface IUserController extends IBaseController<IUser> {
+export interface IUserController extends IBaseController<User> {
 
 }
 
-export class UserController extends BaseController<IUser> implements IUserController {
+export class UserController extends BaseController<User> implements IUserController {
 
 }

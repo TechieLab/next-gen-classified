@@ -1,4 +1,4 @@
-export interface IProfile{
+export class Profile{
      FullName : string;
      EmailId : string;
      PhoneNo : string;

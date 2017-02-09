@@ -1,7 +1,7 @@
-import {IBaseEntity} from './baseEntity';
+import {BaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export interface IMedia extends IBaseEntity
+export class Media extends BaseEntity
 {
      DisplaySequence: number;
      Caption: string;

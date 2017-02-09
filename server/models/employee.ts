@@ -1,7 +1,7 @@
-import {IBaseEntity} from './baseEntity';
+import {BaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export interface IEmployee extends IBaseEntity
+export class Employee extends BaseEntity
 {
      EmpId: string;
      Name: string;

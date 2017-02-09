@@ -1,6 +1,6 @@
-import {IBaseEntity} from './baseEntity';
+import {BaseEntity} from './baseEntity';
 
-export interface IDescription extends IBaseEntity
+export class Description extends BaseEntity
 {   
      Title: string;
      Price: number;

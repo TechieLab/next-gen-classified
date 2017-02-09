@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { NotificationPage } from '../notification/notification.page';
 import { ProductService, IProductService } from '../../app/services/product.service';
-import { IProduct } from '../../app/models/product';
+import { Product } from '../../app/models/product';
 
 @Component({
   selector: 'product-page',
@@ -11,7 +11,7 @@ import { IProduct } from '../../app/models/product';
 })
 export class ProductPage implements OnInit {
   productId: string;
-  product: IProduct;
+  product: Product;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     @Inject(ProductService) public productService: IProductService

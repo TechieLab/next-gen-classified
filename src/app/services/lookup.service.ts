@@ -1,14 +1,14 @@
 import { Injectable, Optional } from '@angular/core';
-import { ILookup } from '../models/lookup';
+import { Lookup } from '../models/lookup';
 import { IBaseService, BaseService } from './base.service'
 import { Http, URLSearchParams } from '@angular/http';
 
-export interface ILookupService extends IBaseService<ILookup> {
+export interface ILookupService extends IBaseService<Lookup> {
     getCategories();
 }
 
 @Injectable()
-export class LookupService extends BaseService<ILookup> implements ILookupService {
+export class LookupService extends BaseService<Lookup> implements ILookupService {
 
     private params: URLSearchParams;
 

@@ -1,5 +1,5 @@
 
-export class ISearchResult
+export class SearchResult
 {
   
     

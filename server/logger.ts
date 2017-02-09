@@ -1,21 +1,32 @@
-var logger = require('winston');
+var winston = require('winston');
+winston.level = 'debug';
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.File, { filename: 'server.log' });
 
-logger.setLevels({
-    debug:0,
-    info: 1,
-    silly:2,
-    warn: 3,
-    error:4,
-});
-logger.addColors({
-    debug: 'green',
-    info:  'cyan',
-    silly: 'magenta',
-    warn:  'yellow',
-    error: 'red'
-});
+class Logger {
+  private name: string;
 
-logger.remove(logger.transports.Console);
-logger.add(logger.transports.File, { filename: 'server.log' });
+  constructor(name: string) {
+    this.name = name;
+  }
 
-module.exports = logger;
+  debug(format: string, ...params: any[]) {
+    winston.log.apply(this, ['debug', this.name + ' - ' + format].concat(params));
+  }
+
+  info(format: string, ...params: any[]) {
+    winston.log.apply(this, ['info', this.name + ' - ' + format].concat(params));
+  }
+
+  warn(format: string, ...params: any[]) {
+    winston.log.apply(this, ['warn', this.name + ' - ' + format].concat(params));
+  }
+
+  error(format: string, ...params: any[]) {
+    winston.log.apply(this, ['error', this.name + ' - ' + format].concat(params));
+  }
+}
+
+export default function(name: string) {
+  return new Logger(name);
+}

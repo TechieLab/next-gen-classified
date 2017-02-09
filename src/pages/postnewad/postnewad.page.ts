@@ -3,8 +3,8 @@ import { NgForm, FormBuilder, FormControl, FormGroup , Validators} from '@angula
 
 import { NavController, NavParams } from 'ionic-angular';
 import { ILookupService, LookupService } from '../../app/services/lookup.service';
-import { ILookup } from '../../app/models/lookup';
-import { IPost } from '../../app/models/post';
+import { Lookup } from '../../app/models/lookup';
+import { Post } from '../../app/models/post';
 import { IPostService, PostService } from '../../app/services/post.service';
 
 import { MyPostingsPage } from '../myPostings/myPostings.page';
@@ -19,7 +19,7 @@ import { MyPostingsPage } from '../myPostings/myPostings.page';
 export class PostNewAdPage implements OnInit {
 
   private selectedCategory: string; 
-  private categories: Array<ILookup>;
+  private categories: Array<Lookup>;
 
   public newPostForm = this.builder.group({
     Title: ["", Validators.required],
@@ -55,7 +55,7 @@ export class PostNewAdPage implements OnInit {
   }
 
   resetForm() {
-    this.newPostForm.value = <IPost>{};
+    this.newPostForm.value = new Post();
   }
 
 }

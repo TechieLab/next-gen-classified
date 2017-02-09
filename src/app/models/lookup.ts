@@ -1,4 +1,4 @@
-export interface ILookup{
+export class Lookup{
     Id : string;
     Key: string;
     Value : string;

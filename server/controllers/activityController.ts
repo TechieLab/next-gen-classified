@@ -1,15 +1,13 @@
 import {Express, Request, Response} from "express";
 import {IBaseController, BaseController} from './baseController';
-import {IActivity} from '../models/Activity';
+import {Activity} from '../models/Activity';
 
-export module Controllers {
 
-    export interface IActivityController extends IBaseController<IActivity> {
+    export interface IActivityController extends IBaseController<Activity> {
         
     }
 
-    export class ActivityController extends BaseController<IActivity> implements IActivityController
+    export class ActivityController extends BaseController<Activity> implements IActivityController
     {
 
     }
-}

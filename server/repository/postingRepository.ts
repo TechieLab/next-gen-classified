@@ -1,23 +1,23 @@
-﻿
-import logger = require('logger');
+﻿import Logger from '../Logger'; 
+const logger = Logger('server');
 
 import { BaseRepository, IBaseRepository } from '../repository/baseRepository';
 import { ProductRepository, IProductRepository } from '../repository/productRepository';
 
-import { IProduct } from '../models/product';
-import { IPost } from '../models/post';
+import { Product } from '../models/product';
+import { Post } from '../models/post';
 
-export interface IPostingRepository extends IBaseRepository<IPost> { }
+export interface IPostingRepository extends IBaseRepository<Post> { }
 
-export class PostingRepository extends BaseRepository<IPost> implements IPostingRepository {
+export class PostingRepository extends BaseRepository<Post> implements IPostingRepository {
     productRepository: IProductRepository;
 
     constructor() {
         super("posts");
     }
 
-    public create(data: IPost, callback: (errr: Error, item: IPost) => any) {
-        logger.log('debug', 'called create data..');
+    public create(data: Post, callback: (errr: Error, item: Post) => any) {
+        logger.debug('debug', 'called create data..');
 
         if (!data) {
             callback(new Error('Empty'), null);
@@ -25,10 +25,10 @@ export class PostingRepository extends BaseRepository<IPost> implements IPosting
 
         var collection = this.db.collection(this.collectionName);
         collection.insert(data, (err, res) => {
-            logger.log('debug', 'inserted post..');
+            logger.debug('debug', 'inserted post..');
 
             if (res) {
-                var product = <IProduct>{};
+                var product = new Product();
                 product.Name = data.ProductName;
                 product.Category = data.Category;
                 product.Price = data.Price;
@@ -36,7 +36,7 @@ export class PostingRepository extends BaseRepository<IPost> implements IPosting
 
                 this.productRepository = new ProductRepository();
                 this.productRepository.create(product, (err1, res1) => {
-                    logger.log('debug', 'inserted product..');
+                    logger.debug('debug', 'inserted product..');
                     callback(err, res.ops[0]);
                 });
             }

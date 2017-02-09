@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import { Injectable, Optional } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { IResult } from '../models/result';
+import { Result } from '../models/result';
 import {Constants} from '../common/constants';
 
 export interface IBaseService<TEntity> {
@@ -12,9 +12,9 @@ export interface IBaseService<TEntity> {
     getById(id: string): Observable<TEntity>;
     getByUserId(id: string): Observable<TEntity>;
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
-    post(entity: TEntity): Observable<IResult>;
-    put(entity: TEntity): Observable<IResult>;
-    del(id: string): Observable<IResult>
+    post(entity: TEntity): Observable<Result>;
+    put(entity: TEntity): Observable<Result>;
+    del(id: string): Observable<Result>
 }
 
 @Injectable()
@@ -52,7 +52,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
-    post(entity: TEntity): Observable<IResult> {
+    post(entity: TEntity): Observable<Result> {
         let body = JSON.stringify(entity);      
 
         return this.http.post(this.url, body, this.options)
@@ -60,7 +60,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
             .catch(this.handleError);
     }
 
-    put(entity: TEntity): Observable<IResult> {
+    put(entity: TEntity): Observable<Result> {
         let body = JSON.stringify(entity);     
 
         return this.http.put(this.url, body,  this.options)
@@ -68,7 +68,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
             .catch(this.handleError);
     }
 
-    del(id: string): Observable<IResult> {
+    del(id: string): Observable<Result> {
         this.url = this.url + '/' + id;
         return this.http.delete(this.url).map(this.extractData).catch(this.handleError);
     }

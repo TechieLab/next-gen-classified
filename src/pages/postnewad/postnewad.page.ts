@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, Inject } from '@angular/core';
-import { NgForm, FormBuilder, FormControl, FormGroup , Validators} from '@angular/forms';
+import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { NavController, NavParams } from 'ionic-angular';
 import { ILookupService, LookupService } from '../../app/services/lookup.service';
@@ -18,22 +18,29 @@ import { MyPostingsPage } from '../myPostings/myPostings.page';
 
 export class PostNewAdPage implements OnInit {
 
-  private selectedCategory: string; 
+  private selectedCategory: string;
   private categories: Array<Lookup>;
+  private defacts : Array<Lookup>;
+  private brands : Array<Lookup>;
 
   public newPostForm = this.builder.group({
     Title: ["", Validators.required],
     Price: ["", Validators.required],
     Location: ["", Validators.required],
-    Description : ["", Validators.required],
-    Category : ["", Validators.required]
-  });  
+    Description: ["", Validators.required],
+    Category: ["", Validators.required],
+    Brand: ["", Validators.nullValidator],
+    Model: ["", Validators.nullValidator],
+    PurchasedOn: ["", Validators.nullValidator],
+    Defacts: ["", Validators.nullValidator],
+    Condition: ["", Validators.required]
+  });
 
   constructor(public builder: FormBuilder, public navCtrl: NavController, public navParams: NavParams,
     @Inject(LookupService) public lookupService: ILookupService,
     @Inject(PostService) public postService: IPostService) {
 
-    this.selectedCategory = navParams.get('category');    
+    this.selectedCategory = navParams.get('category');
   }
 
   ngOnInit() {
@@ -41,6 +48,12 @@ export class PostNewAdPage implements OnInit {
   }
 
   getCategoryData() {
+    this.lookupService.getCategories().subscribe((response) => {
+      this.categories = response
+    });
+  }
+
+  getDefactsData() {
     this.lookupService.getCategories().subscribe((response) => {
       this.categories = response
     });

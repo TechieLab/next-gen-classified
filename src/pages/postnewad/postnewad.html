@@ -24,18 +24,51 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label floating>Brand</ion-label>
+      <ion-select name="brand" required formControlName="Brand">
+        <ion-option value="{{brand.value}}" *ngFor="let brand of brands">{{cat.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Model</ion-label>
+      <ion-input type="text" formControlName="Model" name="model" required></ion-input>
+    </ion-item>
+    <ion-list radio-group>
+      <ion-list-header>
+        Condition
+      </ion-list-header>
+      <ion-item>
+        <ion-label>New</ion-label>
+        <ion-radio checked="true" value="new"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Used</ion-label>
+        <ion-radio value="used"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-item>
       <ion-label floating>Price</ion-label>
       <ion-input type="text" name="price" formControlName="Price" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Location</ion-label>
-      <ion-textarea name="location" formControlName="Location" required></ion-textarea>
+      <ion-label floating>Year of Purchased</ion-label>
+      <ion-input type="text" name="purchasedOn" formControlName="PurchasedOn"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Defacts</ion-label>
+      <ion-select name="defacts" formControlName="Defacts">
+        <ion-option value="{{defact.value}}" *ngFor="let defact of defacts">{{defact.name}}</ion-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label floating>Description</ion-label>
       <ion-textarea name="description" formControlName="Description" required></ion-textarea>
     </ion-item>
-
+    <ion-item>
+      <ion-label floating>Location</ion-label>
+      <ion-textarea name="location" formControlName="Location" required></ion-textarea>
+    </ion-item>
     <button ion-button type="submit" block [disabled]="!newform.form.valid">POST</button>
   </form>
 </ion-content>

@@ -1,30 +1,22 @@
 import { BaseEntity } from './baseEntity';
 import { ObjectID } from 'mongodb';
+import {Description} from './description';
 
-export class Product extends BaseEntity {   
+
+export class Product extends BaseEntity {
     public Name: string;
-    public IsNew: boolean;
-    public IsUsed: boolean;
-    public IsRepaired: boolean
-    public Feature: string;
-    public IsBillAvaialbe: boolean;
-    public PurchasedOn: Date;
+    public Location: string;
     public Category: string;
-    public Price: string;
-    public Location : string;
     public UserId: ObjectID;
+    public Description : Description;
 
-    constructor(){
+    constructor() {
         super();
 
         this.Name = '';
-        this.IsNew = false;
-        this.IsUsed = false;
-        this.Feature = '';
-        this.IsBillAvaialbe = false;
-        this.PurchasedOn = new Date();
-        this.Category = '';
-        this.Price = '';
         this.Location = '';
+        this.Category = '';
+        this.UserId = new ObjectID();
+        this.Description = new Description();
     }
 }

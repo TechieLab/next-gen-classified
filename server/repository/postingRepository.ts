@@ -1,4 +1,4 @@
-﻿import Logger from '../Logger'; 
+﻿import Logger from '../Logger';
 const logger = Logger('server');
 
 import { BaseRepository, IBaseRepository } from '../repository/baseRepository';
@@ -31,8 +31,8 @@ export class PostingRepository extends BaseRepository<Post> implements IPostingR
                 var product = new Product();
                 product.Name = data.ProductName;
                 product.Category = data.Category;
-                product.Price = data.Price;
                 product.Location = data.Location;
+                product.Description.Price = data.Price;
 
                 this.productRepository = new ProductRepository();
                 this.productRepository.create(product, (err1, res1) => {

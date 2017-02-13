@@ -8,7 +8,8 @@ export class Post extends BaseEntity
    public AdType : string;
    public UserId: ObjectID;
    public Title : string;
-   public ProductId : ObjectID;
+   public Location : string;
+   public Product : Product;
 
    constructor(){
        super();
@@ -17,6 +18,6 @@ export class Post extends BaseEntity
        this.AdType = '';
        this.UserId = new ObjectID();     
        this.Title = '';
-       this.ProductId = new ObjectID();
+       this.Product = new Product();
    }
 }

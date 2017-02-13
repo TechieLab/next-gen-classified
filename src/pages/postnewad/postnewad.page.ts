@@ -33,15 +33,15 @@ export class PostNewAdPage implements OnInit {
     Model: [""],
     PurchasedOn: [""],
     Defects: [""],
-    Condition: ["", Validators.required]
+    Condition: [""]
   });
 
   constructor(public builder: FormBuilder, public navCtrl: NavController, public navParams: NavParams,
     @Inject(LookupService) public lookupService: ILookupService,
     @Inject(PostService) public postService: IPostService) {
 
-    this.defects = [];
-    this.brands  = [];
+    this.defects = new Array<Lookup>();
+    this.brands = new Array<Lookup>();
 
     this.selectedCategory = navParams.get('category');
   }
@@ -54,7 +54,9 @@ export class PostNewAdPage implements OnInit {
 
   getCategoryData() {
     this.lookupService.getCategories().subscribe((response) => {
-      this.categories = response
+      if (response) {
+        this.categories = response
+      }
     });
   }
 

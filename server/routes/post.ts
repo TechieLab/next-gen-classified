@@ -18,7 +18,7 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
     }
 
      post() {
-        this.app.post('/api/new-post', (req: Request, res: Response) => {
+        this.app.post('/api/posts', (req: Request, res: Response) => {
             self.setCollection();
             self.postingController.createEntity(req, res);
         });

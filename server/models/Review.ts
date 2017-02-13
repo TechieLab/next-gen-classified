@@ -6,6 +6,12 @@ export class Review extends BaseEntity
      Title: string;
      Description: string;
      Rating: number;
-     ProductId : ObjectID;   
-     UserId: ObjectID;
+
+     constructor(){
+         super();
+         
+         this.Title = '';
+         this.Description = '';
+         this.Rating = 0
+     }
 }

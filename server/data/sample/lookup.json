@@ -38,7 +38,7 @@
         "description" : ""
     },{
         "_id":"501f191e814c19729de860ea",
-        "key":"defact",
+        "key":"defect",
         "value": "brokenScreen",
         "name": "Broken Screen",
         "description" : ""

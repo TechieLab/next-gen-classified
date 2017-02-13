@@ -1,20 +1,18 @@
-<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
+<ion-navbar>
+    <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
 
-        <button clear ion-button (click)="onSelectCategory()">
+    <button clear ion-button (click)="onSelectCategory()">
          {{selectedCategory}} &nbsp; <ion-icon name="arrow-down" item-right></ion-icon> 
          <category-components (changecategory)="onUpdateCategory($event)" style="display: none;"></category-components>
-        </button>       
-        <ion-buttons end>
-            <button buttons-end ion-button (click)="gotoSearchPage()">
+</button>
+<ion-buttons end>
+    <button buttons-end ion-button (click)="gotoSearchPage()">
                  <ion-icon name="search"></ion-icon>
             </button>
-            <button ion-button (click)="gotoNotificationPage()">
+    <button ion-button (click)="gotoNotificationPage()">
                  <ion-icon name="notifications"></ion-icon>
             </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
+</ion-buttons>
+</ion-navbar>

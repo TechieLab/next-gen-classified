@@ -57,18 +57,16 @@ new IndexApiRoute(app);
 http.createServer(app).listen(app.get('port'), function () {
 
     fs.mkdirs(path.join(__dirname, '/config'));
-    fs.mkdirs(path.join(__dirname, '/views'));
+    fs.mkdirs(path.join(__dirname, '/views'));   
 
-    console.log(path.join(__dirname + '/../../server/data/sample'));
-
-    fs.copy(path.join(__dirname + '/../../server/data/sample'), path.join(__dirname, '/data/sample'), function (err) {
+    fs.copy(path.join(__dirname + '/../../server/data/sample'), path.join(__dirname, '/data/sample'), (err) => {
         if (err) return console.error(err);
 
         // database verification.
-        new InitializeSampleDb().verifyData();
+       new InitializeSampleDb().verifyData();
     });
 
-    fs.copy(path.join(__dirname + '/../../server/views'), path.join(__dirname, '/views'), function (err) {
+    fs.copy(path.join(__dirname + '/../../server/views'), path.join(__dirname, '/views'), (err) => {
         if (err) return console.error(err);
 
         logger.info("views copied!")

@@ -5,6 +5,8 @@ import { Http, URLSearchParams } from '@angular/http';
 
 export interface ILookupService extends IBaseService<Lookup> {
     getCategories();
+    getBrands();
+    getDefects();
 }
 
 @Injectable()
@@ -19,6 +21,16 @@ export class LookupService extends BaseService<Lookup> implements ILookupService
 
     getCategories() {       
         this.params.set('key', 'category');
+        return this.getByQuery(this.params);
+    }
+
+    getDefects() {       
+        this.params.set('key', 'defect');
+        return this.getByQuery(this.params);
+    }
+
+    getBrands() {       
+        this.params.set('key', 'brand');
         return this.getByQuery(this.params);
     }
 }

@@ -29,10 +29,10 @@ export class PostNewAdPage implements OnInit {
     Location: ["", Validators.required],
     Description: ["", Validators.required],
     Category: ["", Validators.required],
-    Brand: ["", Validators.nullValidator],
-    Model: ["", Validators.nullValidator],
-    PurchasedOn: ["", Validators.nullValidator],
-    Defacts: ["", Validators.nullValidator],
+    Brand: [""],
+    Model: [""],
+    PurchasedOn: [""],
+    Defacts: [""],
     Condition: ["", Validators.required]
   });
 
@@ -45,6 +45,8 @@ export class PostNewAdPage implements OnInit {
 
   ngOnInit() {
     this.getCategoryData();
+    this.getBrandsData();
+    this.getDefectsData();
   }
 
   getCategoryData() {
@@ -53,9 +55,15 @@ export class PostNewAdPage implements OnInit {
     });
   }
 
-  getDefactsData() {
-    this.lookupService.getCategories().subscribe((response) => {
-      this.categories = response
+  getDefectsData() {
+    this.lookupService.getDefects().subscribe((response) => {
+      this.defacts = response
+    });
+  }
+
+   getBrandsData() {
+    this.lookupService.getBrands().subscribe((response) => {
+      this.brands = response
     });
   }
 

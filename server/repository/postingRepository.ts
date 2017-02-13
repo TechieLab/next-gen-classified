@@ -29,10 +29,10 @@ export class PostingRepository extends BaseRepository<Post> implements IPostingR
 
             if (res) {
                 var product = new Product();
-                product.Name = data.ProductName;
-                product.Category = data.Category;
-                product.Location = data.Location;
-                product.Description.Price = data.Price;
+                //product.Name = data.ProductName;
+                //product.Category = data.Category;
+                //product.Location = data.Location;
+                //product.Description.Price = data.Price;
 
                 this.productRepository = new ProductRepository();
                 this.productRepository.create(product, (err1, res1) => {

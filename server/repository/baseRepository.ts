@@ -23,6 +23,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     constructor(collectionName: string) {
         this.collectionName = collectionName;
+        this.db = null;
+
         console.log("Collection name-----" + collectionName);
 
         MongoDBConnection.getConnection((connection) => {

@@ -50,12 +50,12 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         });
     }
 
-    // post() {
-    //     this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
-    //         self.setCollection(this.apiName);
-    //         self.baseController.createEntity(req, res);
-    //     });
-    // }
+    post() {
+        this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+            self.setCollection(this.apiName);
+            self.baseController.createEntity(req, res);
+        });
+    }
 
     put() {
         this.app.put('/api/' + this.apiName + '/', (req: Request, res: Response) => {

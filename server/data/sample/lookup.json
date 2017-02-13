@@ -25,10 +25,22 @@
         "name": "AutoMobile",
         "description" : ""
     },{
-        "_id":"501f191e810c19729de860ea",
+        "_id":"501f191e812c19729de860ea",
         "key":"category",
         "value": "electronics",
         "name": "Electronics",
+        "description" : ""
+    },{
+        "_id":"501f191e310c19729de860ea",
+        "key":"brand",
+        "value": "apple",
+        "name": "Apple",
+        "description" : ""
+    },{
+        "_id":"501f191e814c19729de860ea",
+        "key":"defact",
+        "value": "brokenScreen",
+        "name": "Broken Screen",
         "description" : ""
     }
 ]

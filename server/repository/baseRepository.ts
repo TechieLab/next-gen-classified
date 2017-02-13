@@ -1,7 +1,9 @@
 ﻿import { MongoDBConnection } from '../data/connection';
 import { Db, Collection } from 'mongodb';
-import Logger from '../Logger'; 
-const logger = Logger('server');
+var logger = require('winston');
+
+//import Logger from '../Logger'; 
+//const logger = Logger('server');
 
 export interface IBaseRepository<TEntity> {
     get(callback: (err: Error, item: Array<TEntity>) => any);

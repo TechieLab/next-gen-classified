@@ -1,4 +1,4 @@
-import { Db, MongoClient, Server } from 'mongodb';
+import { Db, MongoClient} from 'mongodb';
 
 const url: string = 'mongodb://localhost:27017/classifieddb';
 

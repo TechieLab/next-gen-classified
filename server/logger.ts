@@ -1,7 +1,7 @@
 var winston = require('winston');
 winston.level = 'debug';
-winston.remove(winston.transports.Console);
-winston.add(winston.transports.File, { filename: 'server.log' });
+//winston.remove(winston.transports.Console);
+//winston.add(winston.transports.File, { filename: 'server.log' });
 
 class Logger {
   private name: string;

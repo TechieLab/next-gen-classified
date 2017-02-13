@@ -20,8 +20,8 @@ export class PostNewAdPage implements OnInit {
 
   private selectedCategory: string;
   private categories: Array<Lookup>;
-  private defacts : Array<Lookup>;
-  private brands : Array<Lookup>;
+  private defects: Array<Lookup>;
+  private brands: Array<Lookup>;
 
   public newPostForm = this.builder.group({
     Title: ["", Validators.required],
@@ -32,13 +32,16 @@ export class PostNewAdPage implements OnInit {
     Brand: [""],
     Model: [""],
     PurchasedOn: [""],
-    Defacts: [""],
+    Defects: [""],
     Condition: ["", Validators.required]
   });
 
   constructor(public builder: FormBuilder, public navCtrl: NavController, public navParams: NavParams,
     @Inject(LookupService) public lookupService: ILookupService,
     @Inject(PostService) public postService: IPostService) {
+
+    this.defects = [];
+    this.brands  = [];
 
     this.selectedCategory = navParams.get('category');
   }
@@ -57,13 +60,17 @@ export class PostNewAdPage implements OnInit {
 
   getDefectsData() {
     this.lookupService.getDefects().subscribe((response) => {
-      this.defacts = response
+      if (response) {
+        this.defects = response;
+      }
     });
   }
 
-   getBrandsData() {
+  getBrandsData() {
     this.lookupService.getBrands().subscribe((response) => {
-      this.brands = response
+      if (response) {
+        this.brands = response;
+      }
     });
   }
 

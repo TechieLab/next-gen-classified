@@ -12,65 +12,77 @@ import swig = require('swig');
 var fs = require('fs-extra');
 var cors = require('cors')
 
+import { MongoDBConnection } from './data/connection';
 
 import { IndexRoute } from './routes/index';
 import { IndexApiRoute } from './routes/indexApi';
 import { InitializeSampleDb } from './data/initializeDb';
 
-import Logger from './Logger'; 
+import Logger from './Logger';
 const logger = Logger('server');
 
 var app = express();
 
-app.set('port', process.env.PORT || '3000');
-swig.setDefaults({ cache: false });
+//MongoDB.MongoClient.connect("mongodb://localhost:27017/classfieddb", function (err, db) {
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+    app.set('port', process.env.PORT || '3000');
+    swig.setDefaults({ cache: false });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../app')));
+    // uncomment after placing your favicon in /public
+    //app.use(favicon(__dirname + '/public/favicon.ico'));
 
-app.use(cors());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cookieParser());
+    app.use(express.static(path.join(__dirname, '../app')));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+    app.use(cors());
 
-// Register our templating engine
-app.engine('html', swig.renderFile);
-
-app.set('view engine', 'html');
-app.set('views', __dirname + './dist/app');
-app.set('view cache', true);
-
-logger.info('Application Started....');
-
-// Application routes
-new IndexRoute(app);
-new IndexApiRoute(app);
-
-http.createServer(app).listen(app.get('port'), function () {
-
-    fs.mkdirs(path.join(__dirname, '/config'));
-    fs.mkdirs(path.join(__dirname, '/views'));   
-
-    fs.copy(path.join(__dirname + '/../../server/data/sample'), path.join(__dirname, '/data/sample'), (err) => {
-        if (err) return console.error(err);
-
-        // database verification.
-       new InitializeSampleDb().verifyData();
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
     });
 
-    fs.copy(path.join(__dirname + '/../../server/views'), path.join(__dirname, '/views'), (err) => {
-        if (err) return console.error(err);
+    // Register our templating engine
+    app.engine('html', swig.renderFile);
 
-        logger.info("views copied!")
+    app.set('view engine', 'html');
+    app.set('views', __dirname + './dist/app');
+    app.set('view cache', true);
+
+    logger.info('Application Started....');
+
+    // Application routes
+    new IndexRoute(app);
+    new IndexApiRoute(app);
+
+    http.createServer(app).listen(app.get('port'), function () {
+
+        MongoDBConnection.getConnection((connection) => {
+            this.db = connection; 
+
+            new InitializeSampleDb().verifyData();
+
+            console.log("db connected......");
+        });
+
+        fs.mkdirs(path.join(__dirname, '/config'));
+        fs.mkdirs(path.join(__dirname, '/views'));
+
+        fs.copy(path.join(__dirname + '/../../server/data/sample'), path.join(__dirname, '/data/sample'), (err) => {
+            if (err) return console.error(err);
+
+            // database verification.
+           
+        });
+
+        fs.copy(path.join(__dirname + '/../../server/views'), path.join(__dirname, '/views'), (err) => {
+            if (err) return console.error(err);
+
+            logger.info("views copied!")
+        });
+
+        console.log("Express server listening on port " + app.get('port'));
     });
-
-    console.log("Express server listening on port " + app.get('port'));
-});
+//});

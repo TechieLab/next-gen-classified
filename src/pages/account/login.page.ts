@@ -5,7 +5,7 @@ import {RegisterPage} from './register.page';
 
 import {HomePage} from '../home/home.page';
 
-import {LoginModel} from '../../app/models/login';
+import {Login} from '../../app/models/login';
 import {User} from '../../app/models/user';
 
 @Component({

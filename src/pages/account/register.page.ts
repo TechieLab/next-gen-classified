@@ -1,7 +1,8 @@
 import {Component, ElementRef} from '@angular/core';
-import {Router} from '@angular/router';
+import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import {LoginModel} from '../../app/models/login';
+
+import {SignUp} from '../../app/models/login';
 import {User} from '../../app/models/user';
 
 @Component({
@@ -11,13 +12,18 @@ import {User} from '../../app/models/user';
 })
 
 export class RegisterPage{
+ 
+     public errorMsg = '';
+     public SignUpForm = this.builder.group({
+        Username: [""],
+        Password: [""],
+        ConfirmPassword: [""],
+        Email: [""]
+  });
 
+  constructor(public builder: FormBuilder){
    
-    public errorMsg = '';
-
-    constructor() {
-      
-    }
+  }
 
     login() {
         
@@ -27,7 +33,15 @@ export class RegisterPage{
        
     }
 
+    onSubmitForm() {
+           console.log(this.SignUpForm.value);
+   }
+
     isLoggedIn() {
       
+    }
+    
+    resetForm() {
+       this.SignUpForm.value = new SignUp();
     }
 }

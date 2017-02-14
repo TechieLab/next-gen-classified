@@ -3,12 +3,12 @@ import { Post } from '../models/post';
 import { IBaseService, BaseService } from './base.service'
 import { Http, URLSearchParams } from '@angular/http';
 
-export interface IPostService extends IBaseService<Post> { }
+export interface ILoginService extends IBaseService<Post> { }
 
 @Injectable()
-export class PostService extends BaseService<Post> implements IPostService {  
+export class LoginService extends BaseService<Post> implements ILoginService {  
  
     constructor(public http: Http){
-        super(http, 'posts');
+        super(http, 'register');
     }    
 }

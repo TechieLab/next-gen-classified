@@ -23,8 +23,9 @@
             <ion-input type="password"  formControlName="ConfirmPassword" name="confirmpassword" required></ion-input>
         </ion-item> 
         </ion-list>
-    </form>    
-    <div padding>
-        <button ion-button color="primary" block [disabled]="!SignUpForm.form.valid">Register</button>
+      <div padding>
+        <button ion-button color="primary" block [disabled]="!newform.form.valid">Register</button>
     </div>
+    </form>    
+    
 </ion-content>

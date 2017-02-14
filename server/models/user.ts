@@ -6,7 +6,6 @@ export class User extends BaseEntity
      UserName: string;
      Passward: string;
      EmailId: string;
-     HintQues: string;
-     HintAns: string;
+     ConfirmPassword:string;
      Status: boolean;
 }

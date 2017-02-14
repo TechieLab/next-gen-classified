@@ -1,14 +1,14 @@
 <ion-grid>
     <ion-row wrap>
-        <ion-col *ngFor="let product of products">
+        <ion-col *ngFor="let item of posts">
             <ion-item no-padding>
                 <ion-thumbnail item-left>
                     <img (click)="showProductDetails()" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
                 </ion-thumbnail>
-                <h2>{{product.Name}}</h2>
-                <p>{{product.Description}}</p>
+                <h2>{{item.Name}}</h2>
+                <p>{{item.Description}}</p>
                 <button ion-button clear item-right>
-                        {{product.Price}}</button>
+                        {{item.Price}}</button>
             </ion-item>
         </ion-col>
     </ion-row>

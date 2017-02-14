@@ -21,9 +21,7 @@ export class LookupRoute {
             var service = new LookupService(repository);
             var lookupController = new LookupController(service);
 
-            lookupController.getEntityByQuery({ key: key }, (err, items) => {
-                return res.json(items);
-            });
+            lookupController.getEntities(req, res);
         });
     }
 

@@ -1,6 +1,8 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { JsonpModule } from '@angular/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
@@ -39,7 +41,7 @@ import { IProductService, ProductService } from './services/product.service';
     CatalogPage, ProductPage,MyPostingsPage,
     SearchPage, FiltersPage, FeedbackPage, HelpPage, Rating, HeaderComponent, CategoryComponent
   ],
-  imports: [FormsModule, CommonModule,
+  imports: [FormsModule, CommonModule,JsonpModule,ReactiveFormsModule,
     IonicModule.forRoot(MyApp, {
       iconMode: 'ios',
       modalEnter: 'modal-slide-in',

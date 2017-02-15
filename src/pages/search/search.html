@@ -12,6 +12,9 @@
     </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-    <ion-searchbar padding [(ngModel)]="selectedCategory" (ionInput)="getItems($event)" (click)="onClick()"></ion-searchbar>
+    <ion-searchbar padding  [formControl]="search" ></ion-searchbar>
+    <ul>
+        <li *ngFor="let item of items | async">{{item}}</li>
+      </ul>
     <catalog-page></catalog-page>   
 </ion-content>

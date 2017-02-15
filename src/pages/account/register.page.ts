@@ -1,14 +1,14 @@
 import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ILoginService, LoginService } from '../../app/services/login.service';
+import { AuthService } from '../../app/services/auth.service';
 import {SignUp} from '../../app/models/login';
 import {User} from '../../app/models/user';
 
 @Component({
     selector: 'register-page',
     templateUrl: 'register.html',
-    providers: [LoginService]
+    providers: [AuthService]
 })
 
 export class RegisterPage{
@@ -21,7 +21,7 @@ export class RegisterPage{
         Email: [""]
   });
 
-  constructor(public builder: FormBuilder, @Inject(LoginService) public LoginService: ILoginService){
+  constructor(public builder: FormBuilder, public authService: AuthService){
    
   }
 
@@ -34,9 +34,9 @@ export class RegisterPage{
     }
 
     onSubmitForm() {
-        this.LoginService.post(this.SignUpForm.value).subscribe((result) => {
-        if (result.Success) {
-           debugger;
+        this.authService.register(this.SignUpForm.value).subscribe((result) => {
+         if (result.Success) {
+             debugger;
         }
         });
    }

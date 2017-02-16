@@ -3,29 +3,32 @@
         <ion-title>New User</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content>    
-     <form [formGroup]="SignUpForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
-     <ion-list>
-        <ion-item>
-            <ion-label floating>Username</ion-label>
-            <ion-input type="text"  formControlName="Username" name="username" required></ion-input>
-        </ion-item>
-         <ion-item>
-            <ion-label floating>Email</ion-label>
-            <ion-input type="email"  formControlName="Email" name="email" required></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Password</ion-label>
-            <ion-input type="password"  formControlName="Password" name="password" required></ion-input>
-        </ion-item>  
-        <ion-item>
-            <ion-label floating>Confirm Password</ion-label>
-            <ion-input type="password"  formControlName="ConfirmPassword" name="confirmpassword" required></ion-input>
-        </ion-item> 
+<ion-content>
+    <form [formGroup]="SignUpForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
+        <ion-list>
+            <ion-item>
+                <ion-label floating>Username</ion-label>
+                <ion-input type="text" formControlName="Username" name="username" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input type="email" formControlName="Email" name="email" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input type="password" formControlName="Password" name="password" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Confirm Password</ion-label>
+                <ion-input type="password" formControlName="ConfirmPassword" name="confirmpassword" required></ion-input>
+            </ion-item>
         </ion-list>
-      <div padding>
-        <button ion-button color="primary" block [disabled]="!newform.form.valid">Register</button>
+        <div padding>
+            <button ion-button color="primary" block [disabled]="!newform.form.valid">Register</button>
+        </div>
+    </form>
+    <div *ngIf="isAccountCreated"> 
+        <div>Your account created succesfully</div>
     </div>
-    </form>    
-    
+
 </ion-content>

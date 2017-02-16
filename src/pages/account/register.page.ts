@@ -1,51 +1,40 @@
 import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { AuthService } from '../../app/services/auth.service';
-import {SignUp} from '../../app/models/login';
-import {User} from '../../app/models/user';
+import { AccountService, IAccountService } from '../../app/services/account.service';
+import { SignUp } from '../../app/models/login';
+import { User } from '../../app/models/user';
 
 @Component({
     selector: 'register-page',
     templateUrl: 'register.html',
-    providers: [AuthService]
+    providers: [AccountService]
 })
 
-export class RegisterPage{
- 
-     public errorMsg = '';
-     public SignUpForm = this.builder.group({
+export class RegisterPage {
+
+    private errorMsg = '';
+    private isAccountCreated: boolean;
+
+    public SignUpForm = this.builder.group({
         Username: [""],
         Password: [""],
         ConfirmPassword: [""],
         Email: [""]
-  });
+    });
 
-  constructor(public builder: FormBuilder, public authService: AuthService){
-   
-  }
-
-    login() {
-        
-    }
-
-    logout() {
-       
-    }
+    constructor(public builder: FormBuilder,@Inject(AccountService)  public accountService: IAccountService) {
+    }   
 
     onSubmitForm() {
-        this.authService.register(this.SignUpForm.value).subscribe((result) => {
-         if (result.Success) {
-             debugger;
-        }
+        this.accountService.register(this.SignUpForm.value).subscribe((result) => {
+            if (result.Success) {
+                this.isAccountCreated = true;
+            }
         });
-   }
+    } 
 
-    isLoggedIn() {
-      
-    }
-    
     resetForm() {
-       this.SignUpForm.value = new SignUp();
+        this.SignUpForm.value = new SignUp();
     }
 }

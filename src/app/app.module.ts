@@ -29,6 +29,7 @@ import { CategoryComponent } from './components/category';
 import { ILookupService, LookupService } from './services/lookup.service';
 import { IPostService, PostService } from './services/post.service';
 import { IProductService, ProductService } from './services/product.service';
+import { IAccountService, AccountService } from './services/account.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { IProductService, ProductService } from './services/product.service';
   ],
   providers: [
     { provide: LookupService, useClass: LookupService },
+    { provide: AccountService, useClass: AccountService },
     { provide: PostService, useClass: PostService },
     { provide: ProductService, useClass: ProductService },
     { provide: ErrorHandler, useClass: IonicErrorHandler }

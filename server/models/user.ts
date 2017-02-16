@@ -5,7 +5,7 @@ export class User extends BaseEntity
 {
      UserName: string;
      Passward: string;
-     EmailId: string;
-     ConfirmPassword:string;
+     EmailId: string;     
      Status: boolean;
+     Token : string;     
 }

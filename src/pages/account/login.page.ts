@@ -1,12 +1,15 @@
-import {Component, ElementRef} from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import {Router} from '@angular/router';
-import {RegisterPage} from './register.page';
+import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import {HomePage} from '../home/home.page';
+import { AccountService } from '../../app/services/account.service';
+import { Router } from '@angular/router';
+import { RegisterPage } from './register.page';
 
-import {Login} from '../../app/models/login';
-import {User} from '../../app/models/user';
+import { HomePage } from '../home/home.page';
+
+import { Login } from '../../app/models/login';
+import { User } from '../../app/models/user';
 
 @Component({
     selector: 'login-page',
@@ -14,32 +17,43 @@ import {User} from '../../app/models/user';
     templateUrl: 'login.html'
 })
 
-export class LoginPage{
+export class LoginPage {
 
-   
+    public LoginForm = this.builder.group({
+        Username: [""],
+        Password: [""]
+    });
+
     public errorMsg = '';
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-      
+    constructor(public navCtrl: NavController,
+        public navParams: NavParams,
+        public builder: FormBuilder,
+        public accountService: AccountService) {
+
     }
 
     login() {
-        
+        this.accountService.register(this.LoginForm.value).subscribe((result) => {
+            if (result.Success) {
+                debugger;
+            }
+        });
     }
 
     logout() {
-       
+
     }
 
     isLoggedIn() {
-      
+
     }
 
-     gotoDashboardPage(){
-          this.navCtrl.setRoot(HomePage, { category : 'Dashboard' });
+    gotoDashboardPage() {
+        this.navCtrl.setRoot(HomePage, { category: 'Dashboard' });
     }
 
-    userRegistration(){
+    userRegistration() {
         this.navCtrl.push(RegisterPage);
     }
 }

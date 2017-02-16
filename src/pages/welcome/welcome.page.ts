@@ -7,7 +7,8 @@ import {LoginPage} from '../account/login.page';
 
 @Component({
   selector: 'welcome-page',
-  templateUrl: 'welcome.html',
+  templateUrl: 'welcome.html', 
+  entryComponents:[LoginPage],
   providers: []  
 })
 

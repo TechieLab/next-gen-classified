@@ -6,43 +6,27 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { HeaderComponent } from './components/layout/header.component';
-import { HomePage } from '../pages/home/home.page';
-import { LoginPage } from '../pages/account/login.page';
-import { RegisterPage } from '../pages/account/register.page';
-import { ProfilePage } from '../pages/profile/profile.page';
-import { Welcome } from '../pages/welcome/welcome.page';
-import { SettingsPage } from '../pages/settings/settings.page';
-import { NotificationPage } from '../pages/notification/notification.page';
-import { CatalogPage } from '../pages/catalog/catalog.page';
-import { ProductPage } from '../pages/product/product.page';
-import { MyPostingsPage } from '../pages/myPostings/myPostings.page';
-import { PostNewAdPage } from '../pages/postnewad/postnewad.page';
 import { Constants } from './common/constants';
-import { SearchPage } from '../pages/search/search.page';
-import { FiltersPage } from '../pages/filters/filters.page';
-import { FeedbackPage } from '../pages/feedback/feedback.page';
-import { HelpPage } from '../pages/help/help.page';
-import { Rating } from './components/rating';
-import { CategoryComponent } from './components/category';
+import { myModules} from './common/moduleConstants';
+import { myComponents, featuredComponents} from './common/componentConstants';
+
 
 import { ILookupService, LookupService } from './services/lookup.service';
 import { IPostService, PostService } from './services/post.service';
 import { IProductService, ProductService } from './services/product.service';
-import { IAccountService, AccountService } from './services/account.service';
 
 @NgModule({
   declarations: [
-    MyApp, Welcome,
-    HomePage,
-    PostNewAdPage,
-    LoginPage, RegisterPage, ProfilePage,
-    SettingsPage,
-    NotificationPage,
-    CatalogPage, ProductPage,MyPostingsPage,
-    SearchPage, FiltersPage, FeedbackPage, HelpPage, Rating, HeaderComponent, CategoryComponent
+       MyApp, 
+    ...myComponents
   ],
-  imports: [FormsModule, CommonModule,JsonpModule,ReactiveFormsModule,
+  imports: [
+       FormsModule, 
+       CommonModule,
+       JsonpModule,
+       ReactiveFormsModule,
+    ...myModules,
+    
     IonicModule.forRoot(MyApp, {
       iconMode: 'ios',
       modalEnter: 'modal-slide-in',
@@ -53,11 +37,12 @@ import { IAccountService, AccountService } from './services/account.service';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, FiltersPage, FeedbackPage, HelpPage, CategoryComponent
+       MyApp,
+    ...featuredComponents
   ],
   providers: [
     { provide: LookupService, useClass: LookupService },
-    { provide: AccountService, useClass: AccountService },
+   // { provide: AccountService, useClass: AccountService },
     { provide: PostService, useClass: PostService },
     { provide: ProductService, useClass: ProductService },
     { provide: ErrorHandler, useClass: IonicErrorHandler }

@@ -1,14 +1,15 @@
 import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
-import { AccountService, IAccountService } from '../../app/services/account.service';
+//import { AccountService, IAccountService } from '../../app/services/account.service';
 import { SignUp } from '../../app/models/login';
 import { User } from '../../app/models/user';
 
 @Component({
     selector: 'register-page',
     templateUrl: 'register.html',
-    providers: [AccountService]
+    providers: []
 })
 
 export class RegisterPage {
@@ -23,15 +24,15 @@ export class RegisterPage {
         Email: [""]
     });
 
-    constructor(public builder: FormBuilder,@Inject(AccountService)  public accountService: IAccountService) {
+    constructor(public builder: FormBuilder /*,@Inject(AccountService)  public accountService: IAccountService*/) {
     }   
 
     onSubmitForm() {
-        this.accountService.register(this.SignUpForm.value).subscribe((result) => {
+      /*  this.accountService.register(this.SignUpForm.value).subscribe((result) => {
             if (result.Success) {
                 this.isAccountCreated = true;
             }
-        });
+        });*/
     } 
 
     resetForm() {

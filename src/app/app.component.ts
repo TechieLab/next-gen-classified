@@ -25,8 +25,7 @@ import { CategoryComponent } from './components/category';
 @Component({
   templateUrl: 'app.html',
   entryComponents: [Welcome, PostNewAdPage,
-    HomePage,
-    LoginPage, RegisterPage,ProfilePage,
+    HomePage,ProfilePage,LoginPage,RegisterPage,
     SettingsPage,
     NotificationPage,
     CatalogPage,

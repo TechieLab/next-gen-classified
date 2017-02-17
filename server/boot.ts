@@ -48,7 +48,7 @@ app.use(function (req, res, next) {
 app.engine('html', swig.renderFile);
 
 app.set('view engine', 'html');
-app.set('views', __dirname + './dist/app');
+app.set('views', __dirname + './dist/server');
 app.set('view cache', true);
 
 logger.info('Application Started....');

@@ -43,7 +43,7 @@ export class AccountRoute {
     }
 
     verify(){
-        this.app.post('/account/verify/:token', (req: Request, res: Response) => {
+        this.app.get('/account/verify/:token', (req: Request, res: Response) => {
             self.setCollection();
             self.accountController.verify(req, res);
         });

@@ -1,5 +1,6 @@
 ﻿import {BaseRepository, IBaseRepository} from '../repository/baseRepository';
 import logger = require('winston');
+import {ObjectID} from 'mongodb';
 
 export interface IBaseService<TEntity>
 {
@@ -7,10 +8,10 @@ export interface IBaseService<TEntity>
     bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
     get(query : Object, callback: (errr: Error, item: Array<TEntity>) => any);
     getCount(callback: (errr: Error, item: number) => any);
-    getById(id: number, callback: (errr: Error, item: TEntity) => any);
+    getById(id: ObjectID, callback: (errr: Error, item: TEntity) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    delete(id: string, callback: (errr: Error, item: TEntity) => any);
+    update(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    delete(id: ObjectID, callback: (errr: Error, item: TEntity) => any);
 }
 
 export class BaseService<TEntity> implements IBaseService<TEntity>
@@ -47,17 +48,17 @@ export class BaseService<TEntity> implements IBaseService<TEntity>
         this.repository.getCount(callback);
     }
 
-     public getById(id: number, callback: (errr: Error, item: TEntity) => any)
+     public getById(id: ObjectID, callback: (errr: Error, item: TEntity) => any)
     {
         this.repository.getById(id, callback);
     }    
 
-    public update(id: string, data : TEntity, callback: (errr: Error, item: TEntity) => any)
+    public update(id: ObjectID, data : TEntity, callback: (errr: Error, item: TEntity) => any)
     {
         return this.repository.update(id, data, callback);
     }
 
-    public delete(id: string, callback: (errr: Error, item: TEntity) => any)
+    public delete(id: ObjectID, callback: (errr: Error, item: TEntity) => any)
     {
         return this.repository.delete(id, callback);
     }

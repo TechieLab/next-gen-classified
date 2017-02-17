@@ -1,6 +1,7 @@
 import { Express, Request, Response } from "express";
 import { IBaseService } from '../services/baseService';
 import logger = require('winston');
+import {ObjectID} from 'mongodb';
 import { Result } from '../models/result';
 
 export interface IBaseController<TEntity> {
@@ -58,7 +59,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public updateEntity(req: Request, res: Response) {
-        var id = "";
+        var id = new ObjectID();
         var data = <TEntity>{};
 
         return this.baseService.update(id, data, (err, item) => {
@@ -69,7 +70,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public deleteEntity(req: Request, res: Response) {
-        var id = "";
+        var id = new ObjectID();
         return this.baseService.delete(id, (err, item) => {
             if (err) console.log(err);
 

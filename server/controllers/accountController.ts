@@ -1,3 +1,5 @@
+import path = require('path');
+
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IAccountService, AccountService } from '../services/accountService';
@@ -34,7 +36,11 @@ export class AccountController implements IAccountController {
         var token = req.params.token;
 
          this.accountService.verify(token, (result) => {
-            return res.json(result);
+             if(result && result.Success){
+                 return res.sendFile(path.join(__dirname + '/../views/confirmation.html'));
+             }else{
+                 return res.sendFile(path.join(__dirname + '/../views/failure.html'));
+             }
         });
     }
 

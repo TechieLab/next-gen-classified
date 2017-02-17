@@ -30,7 +30,8 @@ export class AccountService implements IAccountService {
         user.UserName = data.UserName;
         user.Passward = data.Password;
         user.EmailId = data.EmailId;
-        user.Token = this.generateToken();
+        user.Token = this.generateToken().token;
+        user.TokenValidity = this.generateToken().expries;
 
         this.repository.create(user, (err, item) => {
             var result = new Result();
@@ -39,7 +40,7 @@ export class AccountService implements IAccountService {
                 result.Message = "Account Created Succesfully";
                 result.Success = true;
 
-                var url = "http://localhost:3000/account/verify/" + user.Token.value;
+                var url = "http://localhost:3000/account/verify/" + user.Token;
 
                 var message = "Thank you for create an account on classifed.realpage.com. Your Username is " + item.UserName + "<br />";
                 message += "You may now activate you account by clicking this link or copying and pasting it into your browser <br />";
@@ -56,27 +57,41 @@ export class AccountService implements IAccountService {
     }
 
     verify(token: string, callback: (item: Result) => any) {
-        this.repository.get({ token: { value: token }}, (err, user) => {
+        this.repository.get({ "Token": token }, (err, user) => {
+            if (err) throw err;
+
             var result = new Result();
 
-            if (user) {
-                if (user[0].Token && user[0].Token.value == token) {
-                    if (new Date(user[0].Token.expires).getHours() == new Date().getHours()) {
+            if (user && user.length) {
+                if (user[0].Token && user[0].Token == token) {
+                    if (new Date(user[0].TokenValidity).getHours() == new Date().getHours()) {
                         result.Message = "Token Expired";
                         result.Success = true;
                     } else {
-                        result.Message = "Account Verified Succesfully";
-                        result.Success = true;
+                        var tempUser = user[0];
+                        tempUser.Status = 'active';
+
+                        this.repository.update(tempUser._id, tempUser, (error, res) => {
+                            if (error) throw err;
+
+                            result.Message = "Account Verified Succesfully";
+                            result.Success = true;
+
+                            callback(result);
+                        });
                     }
                 } else {
                     result.Message = "Unable to verify account";
                     result.Success = false;
+
+                    callback(result);
                 }
             } else {
                 result.Message = "User doesnot exists";
                 result.Success = false;
+
+                callback(result);
             }
-            callback(result);
         });
     }
 
@@ -98,7 +113,7 @@ export class AccountService implements IAccountService {
         expires.setHours(expires.getHours() + 24);
 
         return {
-            value: token,
+            token: token,
             expires: expires
         };
     }

@@ -1,5 +1,5 @@
 ﻿import { MongoDBConnection } from '../data/connection';
-import { Db, Collection } from 'mongodb';
+import { Db, Collection, ObjectID } from 'mongodb';
 var logger = require('winston');
 
 //import Logger from '../Logger'; 
@@ -7,12 +7,13 @@ var logger = require('winston');
 
 export interface IBaseRepository<TEntity> {
     get(query: Object, callback: (err: Error, item: Array<TEntity>) => any);
-    getById(id: number, callback: (err: Error, item: TEntity) => any);
+    getById(id: ObjectID, callback: (err: Error, item: TEntity) => any);
     getCount(callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
     bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
-    update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    delete(id: string, callback: (errr: Error, item: TEntity) => any);
+    update(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    replace(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    delete(id: ObjectID, callback: (errr: Error, item: TEntity) => any);
 }
 
 export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
@@ -44,8 +45,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         }
     }
 
-    public getById(id: number, callback: (err: Error, item: TEntity) => any) {
-        this.collection.findOne({ "_id": id }, function (err, results) {
+    public getById(id: ObjectID, callback: (err: Error, item: TEntity) => any) {
+        this.collection.findOne({ _id: id }, function (err, results) {
             logger.debug('debug', 'reading get data..with id..' + id);
             callback(err, results);
         });
@@ -79,6 +80,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             this.collection.find(query, options).toArray(callback);
         } else {
             logger.debug('debug', 'reading many data..with query');
+            console.log(query);
+            console.log(this.collectionName);
             this.collection.find(query).toArray(callback);
         }
     }
@@ -113,16 +116,34 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        this.db.open(function (err, db) {
+    public update(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
+        logger.debug('debug', 'called update data..');
+        console.log(data);
+        this.collection.findOneAndUpdate({ _id: id }, data, (err, res) => {
+            logger.debug('debug', 'updated data with id------' + id);
 
-
+            callback(err, res.value);
         });
     }
 
-    public delete(id: string, callback: (errr: Error, item: TEntity) => any) {
-        this.db.open(function (err, db) {
+    public replace(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
+        logger.debug('debug', 'called update data..');
+        console.log(data);
+        this.collection.findOneAndReplace({ _id: id }, data, (err, res) => {
+            logger.debug('debug', 'replaced data with id------' + id);
 
+            callback(err, res.value);
+        });
+    }
+
+
+    public delete(id: ObjectID, callback: (errr: Error, item: TEntity) => any) {
+        logger.debug('debug', 'called delele data..');
+
+        this.collection.findOneAndDelete({ _id: id }, (err, res) => {
+            logger.debug('debug', 'deleleed data..');
+
+            callback(err, res.value);
         });
     }
 }

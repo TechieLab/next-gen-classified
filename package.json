@@ -55,6 +55,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
     "mongodb": "^2.2.20",
+    "nodemailer": "^3.1.2",
     "protractor": "~4.0.13",
     "socket.io": "^1.7.2",
     "swig": "^1.4.2",

@@ -21,7 +21,7 @@ export class RegisterPage {
     private isAccountCreated: boolean;
 
     public signUpForm = this.builder.group({
-        Username: ['', Validators.compose([Validators.minLength(6)
+        UserName: ['', Validators.compose([Validators.minLength(6)
             , Validators.required
             , Validators.pattern('[a-zA-Z]*')])
             , this.checkUsername.bind(this)
@@ -29,7 +29,7 @@ export class RegisterPage {
         Password: ['', Validators.compose([Validators.minLength(6)
             , Validators.required
         ])],
-        Email : [""],
+        EmailId : [""],
         ConfirmPassword : [""]
     });
 

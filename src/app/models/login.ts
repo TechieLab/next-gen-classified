@@ -1,12 +1,12 @@
 
 export class Login {
-    userName: string;
-    password: string;
+    UserName: string;
+    Password: string;
 }
 
 export class SignUp {
-   userName: string;
-   password: string;
-   confirmpassword:string;
-   email:string;
+   UserName: string;
+   Password: string;
+   ConfirmPassword:string;
+   EmailId:string;
 }

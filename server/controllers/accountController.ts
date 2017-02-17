@@ -6,6 +6,7 @@ import { Result } from '../models/result';
 import { Register } from '../models/account';
 
 export interface IAccountController {
+    verify(req: Request, res: Response)
     register(req: Request, res: Response);
     getUserInfo(req: Request, res: Response);
     changePassword(req: Request, res: Response);
@@ -22,9 +23,17 @@ export class AccountController implements IAccountController {
     }
 
     register(req: Request, res: Response) {
-        var registerModel = <Register> req.body;
+        var registerModel = <Register>req.body;
 
         this.accountService.register(registerModel, (result) => {
+            return res.json(result);
+        });
+    }
+
+    verify(req: Request, res: Response) {
+        var token = req.params.token;
+
+         this.accountService.verify(token, (result) => {
             return res.json(result);
         });
     }

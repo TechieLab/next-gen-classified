@@ -7,5 +7,5 @@ export class User extends BaseEntity
      Passward: string;
      EmailId: string;     
      Status: boolean;
-     Token : string;     
+     Token : any;     
 }

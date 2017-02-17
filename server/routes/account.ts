@@ -26,6 +26,7 @@ export class AccountRoute {
 
     initializeRoutes() {
         this.register();
+        this.verify();
         this.getUserInfo();
         this.changePassword();
         this.forgotPassword();
@@ -38,6 +39,13 @@ export class AccountRoute {
         this.app.post('/api/account/signup', (req: Request, res: Response) => {
             self.setCollection();
             self.accountController.register(req, res);
+        });
+    }
+
+    verify(){
+        this.app.post('/account/verify/:token', (req: Request, res: Response) => {
+            self.setCollection();
+            self.accountController.verify(req, res);
         });
     }
 

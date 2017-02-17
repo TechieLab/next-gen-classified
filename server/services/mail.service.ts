@@ -17,7 +17,7 @@ export class MailService implements IMailService {
     send(toAddress: string, message: string) {
 
         var mailOptions = {
-            from: 'ramesh.sharma1209@gmail.com', // sender address
+            from: 'donot_reply@realpage.com', // sender address
             to: toAddress, // list of receivers
             subject: 'Welcome to Realpage Classifed', // Subject line
             text: message //, // plaintext body
@@ -37,8 +37,8 @@ export class MailService implements IMailService {
            // secure: true, // TLS requires secureConnection to be false
             //port: 465, // port for secure SMTP           
             auth: {
-                user: 'ramesh.sharma1209@gmail.com',
-                pass: 'ramesh4184'
+                user: '',
+                pass: ''
             }
         });
 

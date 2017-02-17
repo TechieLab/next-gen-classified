@@ -29,19 +29,21 @@
             </ion-slide>
 
         </ion-slides> 
-    
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
     <ion-list padding-horizontal>
         <ion-item>
-            <ion-label floating>Username or Email</ion-label>
-            <ion-input type="text" value=""></ion-input>
+            <ion-label floating>Username</ion-label>
+            <ion-input type="text" formControlName="UserName" name="username" required></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Password</ion-label>
-            <ion-input type="password" value=""></ion-input>
+            <ion-input type="password" formControlName="Password" name="password" required></ion-input>
         </ion-item>
+         <button ion-button color="primary" block [disabled]="!newform.form.valid">Continue</button>
     </ion-list>
+    </form>
     <div padding>
-        <button ion-button color="primary" block>Continue</button>
+       
         <p text-center> OR</p>
         <ion-row>
             <ion-col text-center>
@@ -57,6 +59,7 @@
         </ion-row>
         
     </div>
+
     
      <ion-list padding-horizontal>
         <ion-item>

@@ -6,6 +6,7 @@ import { IAccountService, AccountService } from '../services/accountService';
 import { Post } from '../models/post';
 import { Result } from '../models/result';
 import { Register } from '../models/account';
+import { Login } from '../models/account';
 
 export interface IAccountController {
     verify(req: Request, res: Response)
@@ -47,7 +48,14 @@ export class AccountController implements IAccountController {
     getUserInfo(req: Request, res: Response) { }
     changePassword(req: Request, res: Response) { }
     forgotPassword(req: Request, res: Response) { }
-    login(req: Request, res: Response) { }
+
+    login(req: Request, res: Response) { 
+        var loginModel = <Login>req.body;
+
+        this.accountService.authenticate(loginModel , (result) => {
+            return res.json(result);
+        });
+    }
     logout(req: Request, res: Response) { }
 
 }

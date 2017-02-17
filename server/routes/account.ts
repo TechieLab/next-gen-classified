@@ -76,6 +76,7 @@ export class AccountRoute {
     login() {
         this.app.post('/api/account/login', (req: Request, res: Response) => {
             self.setCollection();
+            self.accountController.login(req,res);
         });
     }
 } 

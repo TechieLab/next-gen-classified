@@ -3,7 +3,7 @@ import { Result } from '../models/result';
 import { UserInfo } from '../models/userInfo';
 import { User } from '../models/user';
 import { IMailService, MailService } from './mail.service';
-
+import { IBaseService, BaseService } from '../services/baseService';
 import { IUserRepository } from '../repository/userRepository';
 import logger = require('winston');
 import { Login, Register } from '../models/account';
@@ -15,13 +15,14 @@ export interface IAccountService {
     getUserInfo(id: string, callback: (errr: Error, item: UserInfo) => any);
     changePassword(id: string, data: any, callback: (errr: Error, item: Result) => any);
     forgotPassword(id: string, callback: (errr: Error, item: Result) => any);
-    authenticate(login: Login, callback: (errr: Error, item: Result) => any);
+    authenticate(login: Login, callback: (item: Result) => any);
     logout(id: string, callback: (errr: Error, item: Result) => any);
 }
-export class AccountService implements IAccountService {
+export class AccountService  implements IAccountService {
     public mailService: IMailService;
 
     public constructor(public repository: IUserRepository) {
+    
         this.mailService = new MailService();
     }
 
@@ -98,7 +99,23 @@ export class AccountService implements IAccountService {
     public getUserInfo(id: string, callback: (errr: Error, item: UserInfo) => any) { }
     public changePassword(id: string, data: any, callback: (errr: Error, item: Result) => any) { }
     public forgotPassword(id: string, callback: (errr: Error, item: Result) => any) { }
-    public authenticate(login: Login, callback: (errr: Error, item: Result) => any) { }
+    public authenticate(login: Login,  callback: (item: Result) => any) { 
+       
+        this.repository.authenticate(login,(err,user) => {
+            if(err) throw err;
+               
+            var result = new Result();
+           if (user) {
+                result.Message = "Authenticate Succesfully";
+                result.Success = true;
+            } else {
+                 result.Message = "Account doesnot Exists";
+                result.Success = false;
+            }
+
+            callback(result);
+        }) 
+    }
     public logout(id: string, callback: (errr: Error, item: Result) => any) { }
 
     private generateToken(): any {

@@ -2,7 +2,7 @@ import { HeaderComponent } from '../components/layout/header.component';
 import { HomePage } from '../../pages/home/home.page';
 import { ProfilePage } from '../../pages/profile/profile.page';
 import { Welcome } from '../../pages/welcome/welcome.page';
-import { ConfirmationPage } from '../../pages/account/confirmation.page';
+
 import { SettingsPage } from '../../pages/settings/settings.page';
 import { NotificationPage } from '../../pages/notification/notification.page';
 import { CatalogPage } from '../../pages/catalog/catalog.page';
@@ -21,7 +21,6 @@ export const AppComponents = [
     HeaderComponent,
     HomePage,
     ProfilePage,
-    ConfirmationPage,
     Welcome,
     SettingsPage,
     NotificationPage,

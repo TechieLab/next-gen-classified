@@ -10,7 +10,7 @@ import { LoginPage } from '../pages/account/login.page';
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [AppComponents, featuredComponents]
+  entryComponents: [AppComponents, featuredComponents,LoginPage]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;

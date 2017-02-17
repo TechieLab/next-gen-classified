@@ -12,6 +12,7 @@ import {ConfirmationPage} from './confirmation.page';
 @Component({
     selector: 'register-page',
     templateUrl: 'register.html',
+   
     providers: [AccountService, UserService]
 })
 

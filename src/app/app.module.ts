@@ -7,26 +7,24 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { Constants } from './common/constants';
-import { myModules} from './common/moduleConstants';
-import { myComponents, featuredComponents} from './common/componentConstants';
+import { AppModules } from './common/moduleConstants';
+import { AppProviders } from './common/providerConstants';
 
-
-import { ILookupService, LookupService } from './services/lookup.service';
-import { IPostService, PostService } from './services/post.service';
-import { IProductService, ProductService } from './services/product.service';
+import { AppComponents, featuredComponents } from './common/componentConstants';
 
 @NgModule({
   declarations: [
-       MyApp, 
-    ...myComponents
+    MyApp,
+    AppComponents
   ],
   imports: [
-       FormsModule, 
-       CommonModule,
-       JsonpModule,
-       ReactiveFormsModule,
-    ...myModules,
-    
+    FormsModule,
+    CommonModule,
+    JsonpModule,
+    ReactiveFormsModule,
+
+    AppModules,
+
     IonicModule.forRoot(MyApp, {
       iconMode: 'ios',
       modalEnter: 'modal-slide-in',
@@ -37,14 +35,11 @@ import { IProductService, ProductService } from './services/product.service';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-       MyApp,
-    ...featuredComponents
+    MyApp,
+    featuredComponents
   ],
   providers: [
-    { provide: LookupService, useClass: LookupService },
-   // { provide: AccountService, useClass: AccountService },
-    { provide: PostService, useClass: PostService },
-    { provide: ProductService, useClass: ProductService },
+    AppProviders,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

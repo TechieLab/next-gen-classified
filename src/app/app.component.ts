@@ -3,34 +3,14 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { HeaderComponent } from './components/layout/header.component';
-import { HomePage } from '../pages/home/home.page';
-import { AdminPage } from '../pages/admin/admin.page';
-import { LoginPage } from '../pages/account/login.page';
-import { RegisterPage } from '../pages/account/register.page';
-import { ProfilePage } from '../pages/profile/profile.page';
-import { SettingsPage } from '../pages/settings/settings.page';
-import { NotificationPage } from '../pages/notification/notification.page';
-import { CatalogPage } from '../pages/catalog/catalog.page';
-import { ProductPage } from '../pages/product/product.page';
-import { MyPostingsPage } from '../pages/myPostings/myPostings.page';
+import { AppComponents, featuredComponents, pages } from './common/componentConstants';
 import { Welcome } from '../pages/welcome/welcome.page';
-import { PostNewAdPage } from '../pages/postnewad/postnewad.page';
-import { SearchPage } from '../pages/search/search.page';
-import { FeedbackPage } from '../pages/feedback/feedback.page';
-import { HelpPage } from '../pages/help/help.page';
-import { Rating } from './components/rating';
-import { CategoryComponent } from './components/category';
+import { ProfilePage } from '../pages/profile/profile.page';
+import { LoginPage } from '../pages/account/login.page';
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [Welcome, PostNewAdPage,
-    HomePage,ProfilePage,LoginPage,RegisterPage,
-    SettingsPage,
-    NotificationPage,
-    CatalogPage,
-    ProductPage,MyPostingsPage,
-    SearchPage, FeedbackPage, HelpPage, Rating, HeaderComponent, CategoryComponent]
+  entryComponents: [AppComponents, featuredComponents]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -48,16 +28,7 @@ export class MyApp {
     this.initializeApp();
 
     // set our app's pages
-    this.pages = [
-      { title: 'Home', component: HomePage, name: "home" },
-      { title: 'Admin', component: AdminPage, name: "person" },
-      { title: 'My Postings', component: MyPostingsPage, name: "paper" },
-      { title: 'Favourites', component: SettingsPage, name: "star" },
-      { title: 'About', component: HomePage, name: "book" },
-      { title: 'Settings', component: SettingsPage, name: "settings" },
-      { title: 'Feedback', component: FeedbackPage, name: "paper" },
-      { title: 'Help', component: HelpPage, name: "help-circle" }
-    ];
+   this.pages = pages;
 
     this.getUserContext();
   }

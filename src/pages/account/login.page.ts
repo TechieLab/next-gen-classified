@@ -7,6 +7,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Router } from '@angular/router';
 
 import { HomePage } from '../home/home.page';
+import { RegisterPage } from '../account/register.page';
 
 import { Login } from '../../app/models/login';
 import { User } from '../../app/models/user';
@@ -55,6 +56,6 @@ export class LoginPage {
     }
 
     userRegistration() {
-       // this.navCtrl.push(RegisterPage);
+       this.navCtrl.push(RegisterPage);
     }
 }

@@ -8,7 +8,7 @@ import { Login } from '../models/Account';
 
 
 export interface IUserRepository extends IBaseRepository<User> {
-  authenticate(data:Login ,callback: (errr: Error, item) => any);
+ 
 }
 
 export class UserRepository extends BaseRepository<User> implements IUserRepository {
@@ -16,18 +16,5 @@ export class UserRepository extends BaseRepository<User> implements IUserReposit
     constructor() {
         super('users');
     }
-    
-     public authenticate(data:Login ,callback: (errr: Error, item) => any){
-        var user = new Login();
-       
-        user.UserName =  data.UserName;
-        user.Password = data.Password;
-
-       this.collection.find({$and:[{ "UserName":user.UserName},{"Password":user.Password }]}, function (err, results) {
-            logger.debug('debug', 'reading get data..with id..');
-            callback(err, results);
-        });
-    }
-   
 }
 

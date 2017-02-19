@@ -52,7 +52,8 @@ export class LoginPage implements OnInit {
               if (result.Success) {
                   this.navCtrl.push(HomePage);
               }else{
-                 this.isLogged = true;
+                  this.errorMsg = result.Message;
+
               }
           });
     }

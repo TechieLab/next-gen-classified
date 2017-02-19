@@ -21,7 +21,7 @@ import { User } from '../../app/models/user';
 })
 
 export class LoginPage implements OnInit {
-
+    public isLogged:boolean = false;
     public signInForm = this.builder.group({
         UserName: ['', Validators.compose([Validators.minLength(6)
                      , Validators.required
@@ -50,7 +50,9 @@ export class LoginPage implements OnInit {
     onSubmitForm() {
           this.accountService.login(this.signInForm.value).subscribe((result) => {
               if (result.Success) {
-                  debugger;
+                  this.navCtrl.push(HomePage);
+              }else{
+                 this.isLogged = true;
               }
           });
     }

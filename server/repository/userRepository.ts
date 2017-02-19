@@ -23,9 +23,8 @@ export class UserRepository extends BaseRepository<User> implements IUserReposit
         user.UserName =  data.UserName;
         user.Password = data.Password;
 
-       this.collection.findOne({ "UserName":user.UserName,"Password":user.Password }, function (err, results) {
+       this.collection.find({$and:[{ "UserName":user.UserName},{"Password":user.Password }]}, function (err, results) {
             logger.debug('debug', 'reading get data..with id..');
-            console.log('sourabh datatat',results);
             callback(err, results);
         });
     }

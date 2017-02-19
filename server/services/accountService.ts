@@ -29,7 +29,7 @@ export class AccountService  implements IAccountService {
     public register(data: Register, callback: (item: Result) => any) {
         var user = new User();
         user.UserName = data.UserName;
-        user.Passward = data.Password;
+        user.Password = data.Password;
         user.EmailId = data.EmailId;
         user.Token = this.generateToken().token;
         user.TokenValidity = this.generateToken().expries;
@@ -104,13 +104,14 @@ export class AccountService  implements IAccountService {
         this.repository.authenticate(login,(err,user) => {
             if(err) throw err;
                
-            var result = new Result();
-           if (user) {
+            var result = new Result();  
+           if (user != null) {
                 result.Message = "Authenticate Succesfully";
                 result.Success = true;
+                result.Content = {'Token':user.token}
             } else {
-                 result.Message = "Account doesnot Exists";
-                result.Success = false;
+                result.Message = "Account doesnot Exists";
+                result.Success = false;   
             }
 
             callback(result);

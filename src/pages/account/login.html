@@ -40,6 +40,7 @@
             <ion-input type="password" formControlName="Password" name="password" required></ion-input>
         </ion-item>
          <button ion-button color="primary" block [disabled]="!newform.form.valid">Continue</button>
+         <p *ngIf="isLogged">your account is not exist, please signUp.</p>
     </ion-list>
     </form>
     <div padding>

@@ -50,7 +50,9 @@ export class LoginPage implements OnInit {
     onSubmitForm() {
           this.accountService.login(this.signInForm.value).subscribe((result) => {
               if (result.Success) {
-                  debugger;
+                 this.navCtrl.setRoot(HomePage);
+              }else{
+                  this.errorMsg = result.Message;
               }
           });
     }

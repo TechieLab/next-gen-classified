@@ -8,28 +8,31 @@
 </ion-header>
 
 <ion-content no-padding>
-        <ion-slides pager>
-            
-            <ion-slide class="swiper-slide swiper-slide-active">
-                <div class="slide-zoom">
+    <ion-slides pager>
+
+        <ion-slide class="swiper-slide swiper-slide-active">
+            <div class="slide-zoom">
                 <img class="slide-image" style="margin:0 auto;" src="https://ionicframework.com/dist/preview-app/www/assets/img/ica-slidebox-img-2.png">
-               </div>
-            </ion-slide>
+</div>
+</ion-slide>
 
-            <ion-slide class="swiper-slide swiper-slide-active">
-                <div class="slide-zoom">
-                <img class="slide-image" style="margin:0 auto;" src="https://ionicframework.com/dist/preview-app/www/assets/img/ica-slidebox-img-1.png">
-                </div>
-            </ion-slide>
+<ion-slide class="swiper-slide swiper-slide-active">
+    <div class="slide-zoom">
+        <img class="slide-image" style="margin:0 auto;" src="https://ionicframework.com/dist/preview-app/www/assets/img/ica-slidebox-img-1.png">
+</div>
+</ion-slide>
 
-            <ion-slide class="swiper-slide swiper-slide-active">
-                <div class="slide-zoom">
-                <img class="slide-image" style="margin:0 auto;" src="https://ionicframework.com/dist/preview-app/www/assets/img/ica-slidebox-img-3.png">
-                </div>
-            </ion-slide>
+<ion-slide class="swiper-slide swiper-slide-active">
+    <div class="slide-zoom">
+        <img class="slide-image" style="margin:0 auto;" src="https://ionicframework.com/dist/preview-app/www/assets/img/ica-slidebox-img-3.png">
+</div>
+</ion-slide>
 
-        </ion-slides> 
-    <form [formGroup]="signInForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
+</ion-slides>
+<form [formGroup]="signInForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
+    <div padding text-center *ngIf="errorMsg.length">
+        {{errorMsg}}
+    </div>
     <ion-list padding-horizontal>
         <ion-item>
             <ion-label floating>Username</ion-label>
@@ -39,50 +42,51 @@
             <ion-label floating>Password</ion-label>
             <ion-input type="password" formControlName="Password" name="password" required></ion-input>
         </ion-item>
-         <button ion-button color="primary" block [disabled]="!newform.form.valid">Continue</button>
+        <button ion-button color="primary" block [disabled]="!newform.form.valid">Continue</button>
     </ion-list>
-    </form>
-    <div padding>
-       
-        <p text-center> OR</p>
-        <ion-row>
-            <ion-col text-center>
-               <button ion-button color="primary"  (click)="userRegistration()">
+
+</form>
+<div padding>
+
+    <p text-center> OR</p>
+    <ion-row>
+        <ion-col text-center>
+            <button ion-button color="primary" (click)="userRegistration()">
                     <ion-icon name="star"></ion-icon>
                     REGISTER
             </button>
-            <button ion-button color="primary" >
+            <button ion-button color="primary">
                 <ion-icon name="star"></ion-icon>
                 FORGOT
             </button>
-            </ion-col>
-        </ion-row>
-        
-    </div>
+        </ion-col>
+    </ion-row>
 
-    
-     <ion-list padding-horizontal>
-        <ion-item>
-            <ion-label floating></ion-label>
-        </ion-item>
-        <ion-item>
-            <ion-label floating></ion-label>
-        </ion-item>
-    </ion-list>
-     <h4 text-center>LOGIN</h4>
-      <ion-row padding>  
-          <ion-col width-50 text-center>
-                <button style="width:100%;" color="light" ion-button  (click)="gotoDashboardPage()" >
-                    <ion-icon name="logo-facebook" icon-left></ion-icon>
-                    FACEBOOK
-                </button> 
-          </ion-col>
-          <ion-col width-50 text-center>
-                <button style="width:100%;" color="light" ion-button  (click)="gotoLoginPage()">
-                     <ion-icon name="logo-googleplus" icon-left></ion-icon>
-                     GOOGLE
-                </button>
-          </ion-col>
+</div>
 
-      </ion-row>
+
+<ion-list padding-horizontal>
+    <ion-item>
+        <ion-label floating></ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label floating></ion-label>
+    </ion-item>
+</ion-list>
+<h4 text-center>LOGIN</h4>
+<ion-row padding>
+    <ion-col width-50 text-center>
+        <button style="width:100%;" color="light" ion-button (click)="gotoDashboardPage()" >
+<ion-icon name="logo-facebook" icon-left></ion-icon>
+FACEBOOK
+</button>
+</ion-col>
+<ion-col width-50 text-center>
+    <button style="width:100%;" color="light" ion-button (click)="gotoLoginPage()">
+<ion-icon name="logo-googleplus" icon-left></ion-icon>
+GOOGLE
+</button>
+</ion-col>
+
+</ion-row>
 </ion-content>

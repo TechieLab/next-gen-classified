@@ -110,7 +110,7 @@ export class AccountService implements IAccountService {
 
             var result = new Result();
             if (user && user.length) {
-                if (user[0].Passward == login.Password) {
+                if (user[0].Password == login.Password) {
                     result.Message = "Authenticated Succesfully";
                     result.Content = {
                         FullName: user[0].Profile.FullName

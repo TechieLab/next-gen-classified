@@ -6,7 +6,7 @@ import {ObjectID} from 'mongodb';
 export class User extends BaseEntity
 {
      UserName: string;
-     Passward: string;
+     Password: string;
      EmailId: string;     
      Question : string;
      Answer : string;

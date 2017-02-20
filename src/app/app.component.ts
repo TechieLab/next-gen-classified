@@ -7,15 +7,16 @@ import { AppComponents, featuredComponents, pages } from './common/componentCons
 import { Welcome } from '../pages/welcome/welcome.page';
 import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
+//import { AuthGuard } from '../app/services/guard.service';
 
 @Component({
   templateUrl: 'app.html',
   entryComponents: [AppComponents, featuredComponents,LoginPage]
+  //providers:[AuthGuard]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // make HelloIonicPage the root (or first) page
   rootPage: any = Welcome;
   pages: Array<{ title: string, component: any, name: any }>;
   private isUserAuthenticated: boolean = false;
@@ -67,4 +68,14 @@ export class MyApp {
   getUserContext() {
     this.isUserAuthenticated = false;
   }
+
+  ionViewWillEnter() { // THERE IT IS!!!
+     //   var isLoggedin =  this.authGuard.canActivate();
+    //    if(isLoggedin){
+          // make HelloIonicPage the root (or first) page
+     //     this.rootPage = Welcome;
+     //   }else{
+     //     this.rootPage = Welcome;
+     //   }
+    }
 }

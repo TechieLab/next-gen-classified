@@ -22,6 +22,7 @@ export class AccountService implements IAccountService {
 
     url: string;
     options: RequestOptions;
+    token: string;
 
     constructor(public http: Http) {
         this.url = Constants.baseApi + '/' + Constants.accountApi;
@@ -38,14 +39,38 @@ export class AccountService implements IAccountService {
 
     login(data: Login) {
         return this.http.post(this.url + '/login', data, this.options)
-            .map(this.extractData).catch(this.handleError);
+            .map(this.setTokenData).catch(this.handleError);
     }
 
-    logout() { }
+    logout() {
+        // clear token remove user from local storage to log user out
+        this.token = null;
+        localStorage.removeItem('currentUser');
+     }
 
     forgotPassword() { }
 
     changePassword() { }
+
+    setTokenData(res:Response){
+        
+        let body = res.json();
+        // login successful if there's a jwt token in the response
+        let token = 'sdfdggdg66gdg';
+        if (token) {
+            // set token property
+            this.token = token;
+
+            // store username and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify({token: token }));
+
+            // retur-n true to indicate successful login
+            return body.data || body;
+        } else {
+            // return false to indicate failed login
+            return false;
+        }      
+    }
 
     private extractData(res: Response) {
         let body = res.json();

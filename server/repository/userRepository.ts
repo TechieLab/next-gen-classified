@@ -15,6 +15,6 @@ export class UserRepository extends BaseRepository<User> implements IUserReposit
   
     constructor() {
         super('users');
-    }
+    }   
 }
 

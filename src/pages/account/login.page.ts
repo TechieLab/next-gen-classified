@@ -10,13 +10,13 @@ import { HomePage } from '../home/home.page';
 import { RegisterPage } from '../account/register.page';
 import { AccountService, IAccountService } from '../../app/services/account.service';
 import { UserService, IUserService } from '../../app/services/user.service';
-
+import { StorageService } from '../../app/services/storage.service';
 import { Login } from '../../app/models/login';
 import { User } from '../../app/models/user';
 
 @Component({
     selector: 'login-page',
-    providers: [AccountService, UserService],
+    providers: [AccountService, UserService, StorageService],
     templateUrl: 'login.html'
 })
 
@@ -43,19 +43,21 @@ export class LoginPage implements OnInit {
 
     }
 
-    ngOnInit(){
-
+    ngOnInit() {
+        StorageService.removeToken();
+        StorageService.removeContext();
     }
 
     onSubmitForm() {
-          this.accountService.login(this.signInForm.value).subscribe((result) => {
-              if (result.Success) {
-                  this.navCtrl.push(HomePage);
-              }else{
-                  this.errorMsg = result.Message;
-
-              }
-          });
+        this.accountService.login(this.signInForm.value).subscribe((result) => {
+            if (result.Success) {
+                StorageService.setContext(result.Content.Context);
+                StorageService.setToken(result.Content.Token);
+                this.navCtrl.setRoot(HomePage);
+            } else {
+                this.errorMsg = result.Message;
+            }
+        });
     }
 
     gotoDashboardPage() {
@@ -63,6 +65,6 @@ export class LoginPage implements OnInit {
     }
 
     userRegistration() {
-       this.navCtrl.push(RegisterPage);
+        this.navCtrl.push(RegisterPage);
     }
 }

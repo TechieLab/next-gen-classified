@@ -47,6 +47,10 @@ export class AccountService implements IAccountService {
 
     changePassword() { }
 
+    generateAuthToken(){
+        
+    }
+
     private extractData(res: Response) {
         let body = res.json();
         return body.data || body;

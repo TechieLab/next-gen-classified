@@ -7,6 +7,7 @@ export class Login {
 export class SignUp {
    UserName: string;
    Password: string;
+   FullName : string;
    ConfirmPassword:string;
    EmailId:string;
 }

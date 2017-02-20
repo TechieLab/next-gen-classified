@@ -11,6 +11,5 @@ export class IAddress extends BaseEntity
     IsOfficeAddress: boolean;
     IsPermanetAddress: boolean;
     StateId: string;
-    CounntryId: number; 
-    UserId: ObjectID;
+    CounntryId: number;
 }

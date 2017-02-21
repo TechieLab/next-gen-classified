@@ -1,4 +1,4 @@
-import { Express, Router, Request, Response} from 'express';
+import { Express, Router, Request, Response } from 'express';
 import { IBaseService, BaseService } from '../services/baseService';
 import { IBaseRepository, BaseRepository } from '../repository/baseRepository';
 import { BaseController, IBaseController } from '../controllers/baseController';
@@ -55,13 +55,23 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             }
         });
 
-        app.use('/api', apiRoutes);
+        app.use(this.except(apiRoutes));
 
         this.get();
         this.getById();
         this.post();
         this.put();
         this.del();
+    }
+
+    except(middleware) {
+        return function (req, res, next) {
+            if (req.path.indexOf('users') === -1 && req.path.indexOf('account') === -1) {
+                return middleware(req, res, next);
+            } else {
+                return next();
+            }
+        };
     }
 
     setCollection(apiName) {

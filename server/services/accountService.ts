@@ -1,4 +1,4 @@
-
+import {ObjectID} from 'mongodb'
 import { Result } from '../models/result';
 import { UserInfo } from '../models/userInfo';
 import { User } from '../models/user';
@@ -18,7 +18,7 @@ export interface IAccountService {
     changePassword(id: string, data: any, callback: (errr: Error, item: Result) => any);
     forgotPassword(id: string, callback: (errr: Error, item: Result) => any);
     authenticate(login: Login, callback: (item: Result) => any);
-    logout(id: string, callback: (errr: Error, item: Result) => any);
+    logout(id: ObjectID, callback: (item: Result) => any);
 }
 export class AccountService implements IAccountService {
     public mailService: IMailService;
@@ -123,7 +123,7 @@ export class AccountService implements IAccountService {
                         if (err) throw err;
 
                         result.Message = "Authenticated Succesfully";
-                        result.Content = { UserName:currentUser.UserName ,Token: currentUser.Session.AuthToken }
+                        result.Content = { UserName: currentUser.UserName, Token: currentUser.Session.AuthToken }
                         result.Success = true;
 
                         callback(result);
@@ -137,13 +137,37 @@ export class AccountService implements IAccountService {
             } else {
                 result.Message = "Account doesnot Exists";
                 result.Success = false;
-                
+
                 callback(result);
             }
-        })
+        });
     }
 
-    public logout(id: string, callback: (errr: Error, item: Result) => any) { }
+    public logout(id: ObjectID, callback: (item: Result) => any) {
+
+        this.repository.getById(id, (err, user) => {
+            if (err) throw err;
+
+            var result = new Result();
+            if (user) { 
+                user.Session.AuthToken = null;
+                this.repository.update(user._id, user, function (err, res) {
+                    if (err) throw err;
+
+                    result.Message = "Logged off Succesfully";
+                    result.Content = null
+                    result.Success = true;
+
+                    callback(result);
+                });               
+            } else {
+                result.Message = "User not found.";
+                result.Success = false;
+
+                callback(result);
+            }
+        });
+    }
 
     private generateToken(): any {
         var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

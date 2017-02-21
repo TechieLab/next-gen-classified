@@ -7,16 +7,17 @@ import { AppComponents, featuredComponents, pages } from './common/componentCons
 import { Welcome } from '../pages/welcome/welcome.page';
 import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
-import {HomePage} from '../pages/home/home.page';
-import { AuthGuard,IAuthGuard } from '../app/services/guard.service';
-
+import { HomePage } from '../pages/home/home.page';
+import { AuthGuard, IAuthGuard } from '../app/services/guard.service';
+import { AccountService, IAccountService } from '../app/services/account.service';
+import { StorageService } from '../app/services/storage.service';
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [AppComponents, featuredComponents,LoginPage,HomePage],
-  providers:[AuthGuard]
+  entryComponents: [AppComponents, featuredComponents, LoginPage, HomePage],
+  providers: [AuthGuard]
 })
-export class MyApp implements OnInit{
+export class MyApp implements OnInit {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
@@ -27,13 +28,14 @@ export class MyApp implements OnInit{
   constructor(
     public platform: Platform,
     public menu: MenuController,
-     @Inject(AuthGuard) public authGuard: IAuthGuard
+    @Inject(AuthGuard) public authGuard: IAuthGuard,
+    @Inject(AccountService) public accountService: IAccountService
 
   ) {
     this.initializeApp();
 
     // set our app's pages
-   this.pages = pages;
+    this.pages = pages;
 
     this.getUserContext();
   }
@@ -54,7 +56,7 @@ export class MyApp implements OnInit{
 
   gotoProfilePage() {
     this.menu.close();
-      this.nav.push(ProfilePage);
+    this.nav.push(ProfilePage);
   }
 
   openPage(page) {
@@ -73,14 +75,20 @@ export class MyApp implements OnInit{
     this.isUserAuthenticated = false;
   }
 
+  logoff() {
+    this.accountService.logout().subscribe((res) => {
+      StorageService.removeToken();
+    });
+  }
+
   ngOnInit() { // THERE IT IS!!!
-        this.isUserAuthenticated =  this.authGuard.canActivate();
-        this.currentUserName = this.authGuard.getCurrentUserName(); 
-        if(this.isUserAuthenticated){
-          // make HelloIonicPage the root (or first) page
-          this.rootPage = HomePage;
-        }else{
-          this.rootPage = Welcome;
-       }
+    this.isUserAuthenticated = this.authGuard.canActivate();
+    this.currentUserName = this.authGuard.getCurrentUserName();
+    if (this.isUserAuthenticated) {
+      // make HelloIonicPage the root (or first) page
+      this.rootPage = HomePage;
+    } else {
+      this.rootPage = Welcome;
     }
+  }
 }

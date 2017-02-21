@@ -1,5 +1,5 @@
 import path = require('path');
-
+var jwt = require('jsonwebtoken');
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IAccountService, AccountService } from '../services/accountService';
@@ -36,12 +36,12 @@ export class AccountController implements IAccountController {
     verify(req: Request, res: Response) {
         var token = req.params.token;
 
-         this.accountService.verify(token, (result) => {
-             if(result && result.Success){
-                 return res.sendFile(path.join(__dirname + '/../views/confirmation.html'));
-             }else{
-                 return res.sendFile(path.join(__dirname + '/../views/failure.html'));
-             }
+        this.accountService.verify(token, (result) => {
+            if (result && result.Success) {
+                return res.sendFile(path.join(__dirname + '/../views/confirmation.html'));
+            } else {
+                return res.sendFile(path.join(__dirname + '/../views/failure.html'));
+            }
         });
     }
 
@@ -49,13 +49,24 @@ export class AccountController implements IAccountController {
     changePassword(req: Request, res: Response) { }
     forgotPassword(req: Request, res: Response) { }
 
-    login(req: Request, res: Response) { 
+    login(req: Request, res: Response) {
         var loginModel = <Login>req.body;
 
-        this.accountService.authenticate(loginModel , (result) => {
+        this.accountService.authenticate(loginModel, (result) => {
             return res.json(result);
         });
     }
-    logout(req: Request, res: Response) { }
+
+    logout(req: Request, res: Response) {
+        console.log(req.signedCookies);
+        var token = req.signedCookies.token;
+        var user = jwt.verify(token, 'classified-application');
+
+        console.log(user);
+       
+        this.accountService.logout(user.userId, (result) => {
+            return res.json(result);
+        });
+    }
 
 }

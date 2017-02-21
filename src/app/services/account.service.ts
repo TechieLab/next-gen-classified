@@ -1,6 +1,6 @@
 import '../rxjs-operators';
 import 'rxjs/add/operator/map';
-
+import { StorageService } from './storage.service';
 import { Injectable, Optional } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -8,7 +8,6 @@ import { User } from '../models/user';
 import { IBaseService, BaseService } from './base.service'
 import { Constants } from '../common/constants';
 import { Login, SignUp } from '../models/login';
-import {StorageService} from './storage.service';
 
 export interface IAccountService {
     register(data: SignUp);
@@ -45,14 +44,20 @@ export class AccountService implements IAccountService {
 
     logout() {
         // clear token remove user from local storage to log user out
-        StorageService.removeToken();
-     }
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': StorageService.getToken() });
+        this.options = new RequestOptions({
+            headers: headers
+        });
+        return this.http.get(this.url + '/logout', this.options)
+            .map(this.extractData).catch(this.handleError);
+
+    }
 
     forgotPassword() { }
 
     changePassword() { }
 
-    generateAuthToken(){ }  
+    generateAuthToken() { }
 
     private extractData(res: Response) {
         let body = res.json();

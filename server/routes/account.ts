@@ -67,16 +67,19 @@ export class AccountRoute {
         });
     }
 
-    logout() {
-        this.app.post('/api/account/logout', (req: Request, res: Response) => {
-            self.setCollection();
-        });
-    }
+    
 
     login() {
         this.app.post('/api/account/login', (req: Request, res: Response) => {
             self.setCollection();
             self.accountController.login(req,res);
+        });
+    }
+
+    logout() {
+        this.app.post('/api/account/logout', (req: Request, res: Response) => {
+            self.setCollection();
+            self.accountController.logout(req,res);
         });
     }
 } 

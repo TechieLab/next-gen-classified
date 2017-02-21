@@ -25,13 +25,11 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         this.app = app;
         self = this;
 
-        apiRoutes.use(function (req: Request, res: Response, next) {
-            console.log(req.headers);
+        apiRoutes.use(function (req: Request, res: Response, next) {            
             var token = req.body.token || req.query.token || req.headers['authorization'];
 
             // decode token
             if (token) {
-
                 // verifies secret and checks exp
                 jwt.verify(token, 'classified-application', function (err, decoded) {
                     if (err) {
@@ -51,11 +49,14 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
                     success: false,
                     message: 'No token provided.'
                 });
-
             }
         });
 
         app.use(this.except(apiRoutes));
+
+        app.use(function (req, res, next) {
+           
+        })
 
         this.get();
         this.getById();
@@ -66,7 +67,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
 
     except(middleware) {
         return function (req, res, next) {
-            if (req.path.indexOf('users') === -1 && req.path.indexOf('account') === -1) {
+            if (req.path.indexOf('users') === -1 && req.path.indexOf('account/register') === -1) {
                 return middleware(req, res, next);
             } else {
                 return next();

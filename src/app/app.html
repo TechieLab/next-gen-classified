@@ -6,17 +6,19 @@
       </ion-avatar>
        <h2 *ngIf="!isUserAuthenticated">Login/SignUp
          <span (click)="gotoLoginPage()" style="float:right;margin:0">
-                <ion-icon name="arrow-forward" no-margin></ion-icon>
-       </span>
+                <ion-icon name="arrow-forward" no-margin></ion-icon>               
+       </span>         
       </h2>
        <h2 *ngIf="isUserAuthenticated">{{currentUserName}}
          <span (click)="gotoProfilePage()" style="float:right;margin:0">
                 <ion-icon name="arrow-forward"  no-margin></ion-icon>
        </span>
       </h2>
-    </ion-item>
+        <button clear button-end (click)="logoff()">
+        Logoff
+      </button>
+    </ion-item>   
   </ion-header>
-
   <ion-content>
     <ion-list>
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">

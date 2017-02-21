@@ -26,7 +26,8 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         self = this;
 
         apiRoutes.use(function (req: Request, res: Response, next) {
-            var token = req.body.token || req.query.token || req.headers['x-access-token'];
+            console.log(req.headers);
+            var token = req.body.token || req.query.token || req.headers['authorization'];
 
             // decode token
             if (token) {
@@ -38,7 +39,6 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
                     } else {
                         // if everything is good, save to request for use in other routes
                         req['decoded'] = decoded;
-
                         next();
                     }
                 });

@@ -6,6 +6,7 @@ import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angul
 import { Observable } from 'rxjs/Observable';
 import { Result } from '../models/result';
 import {Constants} from '../common/constants';
+import {StorageService} from './storage.service';
 
 export interface IBaseService<TEntity> {
     get(): Observable<Array<TEntity>>;
@@ -26,7 +27,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     constructor( @Optional() public http: Http, entityName: string) {
         this.url = Constants.baseApi + '/api/' + entityName;
-        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let headers = new Headers({ 'Content-Type': 'application/json','Authorization':  StorageService.getToken() });
         this.options = new RequestOptions({
             headers: headers
         });

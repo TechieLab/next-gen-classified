@@ -22,6 +22,7 @@ export class MyApp implements OnInit{
   rootPage: any;
   pages: Array<{ title: string, component: any, name: any }>;
   private isUserAuthenticated: boolean = false;
+  private currentUserName: string;
 
   constructor(
     public platform: Platform,
@@ -73,8 +74,9 @@ export class MyApp implements OnInit{
   }
 
   ngOnInit() { // THERE IT IS!!!
-        var isLoggedin =  this.authGuard.canActivate();
-        if(isLoggedin){
+        this.isUserAuthenticated =  this.authGuard.canActivate();
+        this.currentUserName = this.authGuard.getCurrentUserName(); 
+        if(this.isUserAuthenticated){
           // make HelloIonicPage the root (or first) page
           this.rootPage = HomePage;
         }else{

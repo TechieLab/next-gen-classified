@@ -4,6 +4,7 @@ import {LoginPage} from './../../pages/account/login.page';
 
 export interface IAuthGuard{
     canActivate();
+    getCurrentUserName();
 }
 
 @Injectable()
@@ -12,7 +13,7 @@ export class AuthGuard implements IAuthGuard{
   constructor(){}
 
   canActivate() {
-        if (localStorage.getItem('currentUser')) {
+        if (localStorage.getItem('Auth_Token')) {
             // logged in so return true
             return true;
         }else{
@@ -20,5 +21,10 @@ export class AuthGuard implements IAuthGuard{
         }
     }
 
+    getCurrentUserName(){
+        if(localStorage.getItem('User_Name')){
+            return localStorage.getItem('User_Name');
+        }
+    }
 }
 

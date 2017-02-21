@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
         @Inject(AccountService) public accountService: IAccountService, @Inject(UserService) public userService: IUserService
     ) {
 
-        this.errorMsg = '';
+        this.errorMsg = ''; 
     }
 
     ngOnInit() {
@@ -52,7 +52,7 @@ export class LoginPage implements OnInit {
     onSubmitForm() {
         this.accountService.login(this.signInForm.value).subscribe((result) => {
             if (result.Success) {
-                StorageService.setToken(result.Content.Token);
+                StorageService.setToken(result.Content);
                 this.navCtrl.setRoot(HomePage);
             } else {
                 this.errorMsg = result.Message;
@@ -66,5 +66,9 @@ export class LoginPage implements OnInit {
 
     userRegistration() {
         this.navCtrl.push(RegisterPage);
+    }
+
+    logOut(){
+          this.accountService.logout();
     }
 }

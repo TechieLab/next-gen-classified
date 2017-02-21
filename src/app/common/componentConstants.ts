@@ -51,5 +51,6 @@ export const pages = [
     { title: 'About', component: HomePage, name: "book" },
     { title: 'Settings', component: SettingsPage, name: "settings" },
     { title: 'Feedback', component: FeedbackPage, name: "paper" },
-    { title: 'Help', component: HelpPage, name: "help-circle" }
+    { title: 'Help', component: HelpPage, name: "help-circle" },
+    { title: 'Logout', component: Welcome, name: "logout" }
 ];

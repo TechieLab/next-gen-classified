@@ -8,6 +8,7 @@ import { User } from '../models/user';
 import { IBaseService, BaseService } from './base.service'
 import { Constants } from '../common/constants';
 import { Login, SignUp } from '../models/login';
+import {StorageService} from './storage.service';
 
 export interface IAccountService {
     register(data: SignUp);
@@ -44,8 +45,7 @@ export class AccountService implements IAccountService {
 
     logout() {
         // clear token remove user from local storage to log user out
-        this.token = null;
-        localStorage.removeItem('currentUser');
+        StorageService.removeToken();
      }
 
     forgotPassword() { }

@@ -123,7 +123,7 @@ export class AccountService implements IAccountService {
                         if (err) throw err;
 
                         result.Message = "Authenticated Succesfully";
-                        result.Content = { Token: currentUser.Session.AuthToken }
+                        result.Content = { UserName:currentUser.UserName ,Token: currentUser.Session.AuthToken }
                         result.Success = true;
 
                         callback(result);

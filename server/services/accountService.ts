@@ -7,7 +7,9 @@ import { IBaseService, BaseService } from '../services/baseService';
 import { IUserRepository } from '../repository/userRepository';
 import logger = require('winston');
 import { Login, Register } from '../models/account';
+import { Session } from '../models/session';
 
+var jwt = require('jsonwebtoken');
 
 export interface IAccountService {
     register(data: Register, callback: (item: Result) => any);
@@ -33,6 +35,7 @@ export class AccountService implements IAccountService {
         user.EmailId = data.EmailId;
         user.Token = this.generateToken().token;
         user.TokenValidity = this.generateToken().expries;
+
         if (user.Profile) {
             user.Profile.FullName = data.FullName;
         }
@@ -105,27 +108,38 @@ export class AccountService implements IAccountService {
 
     public authenticate(login: Login, callback: (item: Result) => any) {
 
-        this.repository.get({ UserName: login.UserName }, (err, user) => {
+        this.repository.get({ UserName: login.UserName }, (err, users) => {
             if (err) throw err;
 
             var result = new Result();
-            if (user && user.length) {
-                if (user[0].Password == login.Password) {
-                    result.Message = "Authenticated Succesfully";
-                    result.Content = {
-                        FullName: user[0].Profile.FullName
-                    };
-                    result.Success = true;
+            if (users && users.length) {
+                var currentUser = users[0];
+                if (currentUser.Password == login.Password) {
+                    if (!currentUser.Session) {
+                        currentUser.Session = new Session();
+                    }
+                    currentUser.Session.AuthToken = this.generateAuthToken(currentUser);
+                    this.repository.update(currentUser._id, currentUser, function (err, res) {
+                        if (err) throw err;
+
+                        result.Message = "Authenticated Succesfully";
+                        result.Content = { Token: currentUser.Session.AuthToken }
+                        result.Success = true;
+
+                        callback(result);
+                    });
                 } else {
-                    result.Message = "Invalid Passward";
+                    result.Message = "Invalid Password";
                     result.Success = false;
+
+                    callback(result);
                 }
             } else {
                 result.Message = "Account doesnot Exists";
                 result.Success = false;
+                
+                callback(result);
             }
-
-            callback(result);
         })
     }
 
@@ -134,7 +148,8 @@ export class AccountService implements IAccountService {
     private generateToken(): any {
         var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var token = '';
-        for (var i = 16; i > 0; --i) {
+
+        for (var i = 32; i > 0; --i) {
             token += chars[Math.round(Math.random() * (chars.length - 1))];
         }
 
@@ -147,4 +162,12 @@ export class AccountService implements IAccountService {
             expires: expires
         };
     }
+
+    private generateAuthToken(user: User): any {
+        var token = jwt.sign({ userName: user.UserName, FullName: user.Profile.FullName, userId: user._id }, 'classified-application');
+
+        return token;
+    }
+
+
 }

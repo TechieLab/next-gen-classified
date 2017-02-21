@@ -1,13 +1,16 @@
-import { Express, Router, Request, Response } from 'express';
+import { Express, Router, Request, Response} from 'express';
 import { IBaseService, BaseService } from '../services/baseService';
 import { IBaseRepository, BaseRepository } from '../repository/baseRepository';
 import { BaseController, IBaseController } from '../controllers/baseController';
 import logger = require('winston');
+var jwt = require('jsonwebtoken');
+
+var apiRoutes = Router();
 
 export interface IBaseApiRoute<TEntity> {
     get();
     getById();
-   // post();
+    // post();
     put();
     del();
 }
@@ -22,9 +25,41 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         this.app = app;
         self = this;
 
+        apiRoutes.use(function (req: Request, res: Response, next) {
+            var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+            // decode token
+            if (token) {
+
+                // verifies secret and checks exp
+                jwt.verify(token, 'classified-application', function (err, decoded) {
+                    if (err) {
+                        return res.json({ success: false, message: 'Failed to authenticate token.' });
+                    } else {
+                        // if everything is good, save to request for use in other routes
+                        req['decoded'] = decoded;
+
+                        next();
+                    }
+                });
+
+            } else {
+
+                // if there is no token
+                // return an error
+                return res.status(403).send({
+                    success: false,
+                    message: 'No token provided.'
+                });
+
+            }
+        });
+
+        app.use('/api', apiRoutes);
+
         this.get();
         this.getById();
-        //this.post();
+        this.post();
         this.put();
         this.del();
     }
@@ -70,4 +105,5 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             self.baseController.deleteEntity(req, res);
         });
     }
+
 }

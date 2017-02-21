@@ -12,10 +12,12 @@ export class User extends BaseEntity
      Answer : string;
      Token : string;
      TokenValidity: Date;
-     Profile : Profile;   
+     Profile : Profile;
+     Session : Session;   
 
      constructor(){
          super();
          this.Profile = new Profile();
+         this.Session = new Session();
      } 
 }

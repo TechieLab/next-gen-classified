@@ -39,7 +39,7 @@ export class AccountService implements IAccountService {
 
     login(data: Login) {
         return this.http.post(this.url + '/login', data, this.options)
-            .map(this.setTokenData).catch(this.handleError);
+            .map(this.extractData).catch(this.handleError);
     }
 
     logout() {
@@ -52,27 +52,7 @@ export class AccountService implements IAccountService {
 
     changePassword() { }
 
-    generateAuthToken(){ }       
-        
-    setTokenData(res:Response){
-        
-        let body = res.json();
-        // login successful if there's a jwt token in the response
-        let token = 'sdfdggdg66gdg';
-        if (token) {
-            // set token property
-            this.token = token;
-
-            // store username and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify({token: token }));
-
-            // retur-n true to indicate successful login
-            return body.data || body;
-        } else {
-            // return false to indicate failed login
-            return false;
-        }      
-    }
+    generateAuthToken(){ }  
 
     private extractData(res: Response) {
         let body = res.json();

@@ -1,16 +1,24 @@
 import {BaseEntity} from './baseEntity';
 import {ObjectID} from 'mongodb';
 
-export class Media extends BaseEntity
+export class Media
 {
      DisplaySequence: number;
      Caption: string;
      Description: string;
      ImageType: string;
      ImageUrl: string;
-     Name: boolean;
-     SizeInBytes: boolean;
-     Height: string;
+     Name: string;
+     SizeInBytes: number;
+     Height: number;
      Width: number; 
-     UserId: ObjectID;
+
+     constructor(){
+         this.Name = '';
+         this.SizeInBytes = 0;
+         this.Height = 0;
+         this.Width = 0;
+         this.ImageUrl = '';         
+         this.ImageType = '';
+     }
 }

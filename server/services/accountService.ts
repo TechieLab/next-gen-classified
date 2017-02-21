@@ -107,8 +107,8 @@ export class AccountService implements IAccountService {
             if (err) throw err;
 
             var result = new Result();
-            console.log('user',user);
-            if (user) {
+            console.log('userhgggggggggggg',user);
+            if (user.length > 0) {
                 if (user[0].Passward == login.Password) {
                     result.Message = "Authenticated Succesfully";
                     result.Success = true;

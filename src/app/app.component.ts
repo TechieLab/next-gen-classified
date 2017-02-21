@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Inject, OnInit } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
@@ -7,23 +7,26 @@ import { AppComponents, featuredComponents, pages } from './common/componentCons
 import { Welcome } from '../pages/welcome/welcome.page';
 import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
-//import { AuthGuard } from '../app/services/guard.service';
+import {HomePage} from '../pages/home/home.page';
+import { AuthGuard,IAuthGuard } from '../app/services/guard.service';
+
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [AppComponents, featuredComponents,LoginPage]
-  //providers:[AuthGuard]
+  entryComponents: [AppComponents, featuredComponents,LoginPage,HomePage],
+  providers:[AuthGuard]
 })
-export class MyApp {
+export class MyApp implements OnInit{
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Welcome;
+  rootPage: any;
   pages: Array<{ title: string, component: any, name: any }>;
   private isUserAuthenticated: boolean = false;
 
   constructor(
     public platform: Platform,
-    public menu: MenuController
+    public menu: MenuController,
+     @Inject(AuthGuard) public authGuard: IAuthGuard
 
   ) {
     this.initializeApp();
@@ -69,13 +72,13 @@ export class MyApp {
     this.isUserAuthenticated = false;
   }
 
-  ionViewWillEnter() { // THERE IT IS!!!
-     //   var isLoggedin =  this.authGuard.canActivate();
-    //    if(isLoggedin){
+  ngOnInit() { // THERE IT IS!!!
+        var isLoggedin =  this.authGuard.canActivate();
+        if(isLoggedin){
           // make HelloIonicPage the root (or first) page
-     //     this.rootPage = Welcome;
-     //   }else{
-     //     this.rootPage = Welcome;
-     //   }
+          this.rootPage = HomePage;
+        }else{
+          this.rootPage = Welcome;
+       }
     }
 }

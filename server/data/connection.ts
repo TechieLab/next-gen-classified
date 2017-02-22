@@ -1,4 +1,5 @@
 import { Db, MongoClient} from 'mongodb';
+import logger = require('winston');
 
 const url: string = 'mongodb://localhost:27017/classifieddb';
 
@@ -24,7 +25,7 @@ export class MongoDBConnection {
             this.db = db;
             this.isConnected = true;
 
-            console.log('Mongo connected.......');
+            logger.log('debug' , 'Mongo connected.......');
 
             return result(error, db);
         });

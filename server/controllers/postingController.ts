@@ -1,3 +1,5 @@
+import logger = require('winston');
+
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IPostingService, PostingService } from '../services/postingService';
@@ -29,10 +31,10 @@ export class PostingController extends BaseController<Post> implements IPostingC
         post.Product.Category = data.Category;
         post.Location = data.Location;
 
-        console.log(post);
+        logger.log('debug','creating post ----' , post);
 
         return this.postingService.create(data, (err, item) => {
-            if (err) console.log(err);
+            if (err) logger.log('debug', 'create posting err---', err);
 
             this.result = {
                 Message: 'Entity created',

@@ -21,10 +21,10 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public createEntity(req: Request, res: Response) {
         var data = <TEntity>req.body;
-        console.log(data);
+        logger.log('debug', 'create entity data---', data);
 
         return this.baseService.create(data, (err, item) => {
-            if (err) console.log(err);
+            if (err) logger.log('debug', 'create entity err---', err);
 
             this.result = {
                 Message: 'Entity created',
@@ -39,7 +39,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     public getEntities(req: Request, res: Response) { 
 
         this.baseService.get(req.query, (err, item) => {
-            if (err) console.log(err);
+           if (err) logger.log('debug', 'getEntities err---', err);
 
             logger.log('debug', 'getEntities')
 
@@ -52,7 +52,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         var id = req.query.id;
 
         this.baseService.getById(id, (err, item) => {
-            if (err) console.log(err);
+             if (err) logger.log('debug', 'create getById err---', err);
 
             return res.json(item);
         });
@@ -63,7 +63,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         var data = <TEntity>{};
 
         return this.baseService.update(id, data, (err, item) => {
-            if (err) console.log(err);
+            if (err) logger.log('debug', 'update entity err---', err);
 
             return res.json(item);
         });
@@ -72,7 +72,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     public deleteEntity(req: Request, res: Response) {
         var id = new ObjectID();
         return this.baseService.delete(id, (err, item) => {
-            if (err) console.log(err);
+            if (err) logger.log('debug', 'delete entity err---', err);
 
             return res.json(item);
         });

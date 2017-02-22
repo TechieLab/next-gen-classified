@@ -1,5 +1,6 @@
 import path = require('path');
 var jwt = require('jsonwebtoken');
+import logger = require('winston');
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IAccountService, AccountService } from '../services/accountService';
@@ -61,7 +62,7 @@ export class AccountController implements IAccountController {
         var token = req.headers['authorization'];
         var user = jwt.verify(token, 'classified-application');
 
-        console.log(user);
+        logger.log('debug', user);
        
         this.accountService.logout(user.userId, (result) => {
             return res.json(result);

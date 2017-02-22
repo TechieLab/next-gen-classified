@@ -71,7 +71,7 @@ http.createServer(app).listen(app.get('port'), function () {
 
             new InitializeSampleDb().verifyData();
 
-            console.log("db connected......");
+            logger.debug("db connected......");
         });
         // database verification.
 
@@ -83,6 +83,6 @@ http.createServer(app).listen(app.get('port'), function () {
         logger.info("views copied!")
     });
 
-    console.log("Express server listening on port " + app.get('port'));
+    logger.debug("Express server listening on port " + app.get('port'));
 });
 //});

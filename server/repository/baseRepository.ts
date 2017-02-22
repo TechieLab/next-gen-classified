@@ -1,6 +1,6 @@
 ﻿import { MongoDBConnection } from '../data/connection';
 import { Db, Collection, ObjectID } from 'mongodb';
-var logger = require('winston');
+import logger = require('winston');
 
 //import Logger from '../Logger'; 
 //const logger = Logger('server');
@@ -22,7 +22,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     collection: Collection;
 
     constructor(public collectionName: string) {
-        console.log("Collection name-----" + collectionName);
+        logger.debug("Collection name-----" + collectionName);
 
         MongoDBConnection.getConnection((connection) => {
             this.db = connection;
@@ -73,15 +73,13 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
                 callback(err, results);
             });
         } else if (sortKey) {
-            logger.debug('debug', 'reading many data..with query and sortkey');
+            logger.debug('reading many data..with query and sortkey');
             options = {
                 "sort": sortKey
             };
             this.collection.find(query, options).toArray(callback);
         } else {
-            logger.debug('debug', 'reading many data..with query');
-            console.log(query);
-            console.log(this.collectionName);
+            logger.debug('debug', 'reading many data..with query' , query);            
             this.collection.find(query).toArray(callback);
         }
     }
@@ -101,8 +99,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {
-        logger.debug('debug', 'called bulk data..');
-        console.log(data);
+        logger.debug('debug', 'called bulk data..', data);
 
         if (!data) {
             callback(new Error("Empty data.."), null);
@@ -117,8 +114,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public update(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called update data..');
-        console.log(data);
+        logger.debug('debug', 'called update data..', data);
         this.collection.findOneAndUpdate({ _id: id }, data, (err, res) => {
             logger.debug('debug', 'updated data with id------' + id);
 
@@ -127,8 +123,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public replace(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called update data..');
-        console.log(data);
+        logger.debug('debug', 'called update data..', data);
         this.collection.findOneAndReplace({ _id: id }, data, (err, res) => {
             logger.debug('debug', 'replaced data with id------' + id);
 

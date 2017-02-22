@@ -36,7 +36,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
                         return res.json({ success: false, message: 'Failed to authenticate token.' });
                     } else {
                         // if everything is good, save to request for use in other routes
-                        req['decoded'] = decoded;
+                        req['userId'] = decoded.userId;
                         next();
                     }
                 });
@@ -63,6 +63,9 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
 
     except(middleware) {
         return function (req, res, next) {
+            logger.log('debug', req.path);
+            logger.log('debug', req['userId']);
+
             if (req.path.indexOf('users') === -1 && req.path.indexOf('account/register') === -1) {
                 return middleware(req, res, next);
             } else {
@@ -80,7 +83,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
     get() {
         this.app.get('/api/' + this.apiName + '/', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
-            console.log("route name ----" + this.apiName);
+            logger.debug("route name ----" + this.apiName);
             self.baseController.getEntities(req, res);
         });
     }

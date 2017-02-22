@@ -78,6 +78,8 @@ export class MyApp implements OnInit {
   logoff() {
     this.accountService.logout().subscribe((res) => {
       StorageService.removeToken();
+      this.menu.close();
+      this.rootPage = LoginPage;
     });
   }
 

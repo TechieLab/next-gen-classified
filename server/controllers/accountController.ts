@@ -57,9 +57,8 @@ export class AccountController implements IAccountController {
         });
     }
 
-    logout(req: Request, res: Response) {
-        console.log(req.signedCookies);
-        var token = req.signedCookies.token;
+    logout(req: Request, res: Response) {        
+        var token = req.headers['authorization'];
         var user = jwt.verify(token, 'classified-application');
 
         console.log(user);

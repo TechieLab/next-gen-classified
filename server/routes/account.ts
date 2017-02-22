@@ -77,7 +77,7 @@ export class AccountRoute {
     }
 
     logout() {
-        this.app.post('/api/account/logout', (req: Request, res: Response) => {
+        this.app.get('/api/account/logout', (req: Request, res: Response) => {
             self.setCollection();
             self.accountController.logout(req,res);
         });

@@ -6,8 +6,8 @@ import { Geolocation } from 'ionic-native';
 
 import { CatalogPage } from '../catalog/catalog.page';
 import { ProductPage } from '../product/product.page';
-import { PostNewAdPage } from '../postnewad/postnewad.page';
-import { IPostService, PostService } from '../../app/services/post.service';
+import { PostNewAdPage } from '../post/postnewad.page';
+import { IPostService, PostService } from '../post/post.service';
 
 import { Post } from '../../app/models/post';
 

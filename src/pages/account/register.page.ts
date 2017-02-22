@@ -3,7 +3,7 @@ import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angula
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
-import { AccountService, IAccountService } from '../../app/services/account.service';
+import { AccountService, IAccountService } from './account.service';
 import { UserService, IUserService } from '../../app/services/user.service';
 import { SignUp } from '../../app/models/login';
 import { User } from '../../app/models/user';

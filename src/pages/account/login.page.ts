@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 import { HomePage } from '../home/home.page';
 import { RegisterPage } from '../account/register.page';
-import { AccountService, IAccountService } from '../../app/services/account.service';
+import { AccountService, IAccountService } from './account.service';
 import { UserService, IUserService } from '../../app/services/user.service';
 import { StorageService } from '../../app/services/storage.service';
 import { Login } from '../../app/models/login';

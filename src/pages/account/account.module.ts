@@ -6,7 +6,7 @@ import {LoginPage} from './login.page';
 import {RegisterPage} from './register.page';
 import {ConfirmationPage} from './confirmation.page';
 
-import { AccountService, IAccountService } from '../../app/services/account.service';
+import { AccountService, IAccountService } from './account.service';
 import { UserService, IUserService } from '../../app/services/user.service';
 
 

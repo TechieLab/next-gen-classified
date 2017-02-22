@@ -49,11 +49,8 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         });
     }
 
-    public getEntity(req: Request, res: Response) {
-
-        var id = req.query.id;
-
-        this.baseService.getById(id, (err, item) => {
+    public getEntity(req: Request, res: Response) {  
+        this.baseService.getById(new ObjectID(req.params.id), (err, item) => {
             if (err) logger.log('debug', 'create getById err---', err);
 
             return res.json(item);
@@ -61,19 +58,17 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public updateEntity(req: Request, res: Response) {
-        var id = new ObjectID();
-        var data = <TEntity>{};
+        var data = <TEntity>req.body;
 
-        return this.baseService.update(id, data, (err, item) => {
+        return this.baseService.update(new ObjectID(req.params.id), data, (err, item) => {
             if (err) logger.log('debug', 'update entity err---', err);
 
             return res.json(item);
         });
     }
 
-    public deleteEntity(req: Request, res: Response) {
-        var id = new ObjectID();
-        return this.baseService.delete(id, (err, item) => {
+    public deleteEntity(req: Request, res: Response) {     
+        return this.baseService.delete(new ObjectID(req.params.id), (err, item) => {
             if (err) logger.log('debug', 'delete entity err---', err);
 
             return res.json(item);

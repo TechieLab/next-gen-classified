@@ -1,13 +1,11 @@
-import '../rxjs-operators';
-import 'rxjs/add/operator/map';
-import { StorageService } from './storage.service';
+
 import { Injectable, Optional } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { User } from '../models/user';
-import { IBaseService, BaseService } from './base.service'
-import { Constants } from '../common/constants';
-import { Login, SignUp } from '../models/login';
+import { User } from '../../app/models/user';
+import { StorageService } from '../../app/services/storage.service';
+import { Constants } from '../../app/common/constants';
+import { Login, SignUp } from '../../app/models/login';
 
 export interface IAccountService {
     register(data: SignUp);

@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ProductPage } from '../product/product.page';
-import { PostNewAdPage } from '../postnewad/postnewad.page';
+import { PostDetailsPage } from '../post/postDetails.page';
+import { PostNewAdPage } from '../post/postnewad.page';
 import { Post } from '../../app/models/post';
-import { IPostService, PostService } from '../../app/services/post.service';
+import { IPostService, PostService } from '../post/post.service';
 
 @Component({
     selector: 'my-postings-page',
@@ -39,8 +39,8 @@ export class MyPostingsPage implements OnInit {
         });
     }
 
-    showProductDetails(item: string) {
-        this.navCtrl.push(ProductPage, { category: item });
+    showProductDetails(itemId: string) {
+        this.navCtrl.push(PostDetailsPage, { _id: itemId });
     }
 
     gotoAddPostingsPage(){

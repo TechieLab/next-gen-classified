@@ -6,10 +6,8 @@ import { Welcome } from '../../pages/welcome/welcome.page';
 import { SettingsPage } from '../../pages/settings/settings.page';
 import { NotificationPage } from '../../pages/notification/notification.page';
 import { CatalogPage } from '../../pages/catalog/catalog.page';
-import { ProductPage } from '../../pages/product/product.page';
 import { AdminPage } from '../../pages/admin/admin.page';
 import { MyPostingsPage } from '../../pages/myPostings/myPostings.page';
-import { PostNewAdPage } from '../../pages/postnewad/postnewad.page';
 import { SearchPage } from '../../pages/search/search.page';
 import { FiltersPage } from '../../pages/filters/filters.page';
 import { FeedbackPage } from '../../pages/feedback/feedback.page';
@@ -24,10 +22,8 @@ export const AppComponents = [
     Welcome,
     SettingsPage,
     NotificationPage,
-    CatalogPage,
-    ProductPage,
+    CatalogPage,    
     MyPostingsPage,
-    PostNewAdPage,
     SearchPage,
     FiltersPage,
     FeedbackPage,

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ProductPage } from '../product/product.page';
+import { PostDetailsPage } from '../post/postDetails.page';
 import { Post } from '../../app/models/post';
 
 @Component({
@@ -32,7 +32,7 @@ export class CatalogPage implements OnInit {
     this.isSubCategorySelected = true;
   }
 
-  showProductDetails(item: string) {
-    this.navCtrl.push(ProductPage, { category: item });
+  showProductDetails(itemId: string) {
+    this.navCtrl.push(PostDetailsPage, { _id: itemId });
   }
 }

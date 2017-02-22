@@ -1,6 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
-import { Post } from '../models/post';
-import { IBaseService, BaseService } from './base.service'
+import { Post } from '../../app/models/post';
+import { IBaseService, BaseService } from '../../app/services/base.service';
 import { Http, URLSearchParams } from '@angular/http';
 
 export interface IPostService extends IBaseService<Post> { }

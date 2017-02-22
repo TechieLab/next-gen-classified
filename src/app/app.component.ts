@@ -9,7 +9,7 @@ import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
 import { HomePage } from '../pages/home/home.page';
 import { AuthGuard, IAuthGuard } from '../app/services/guard.service';
-import { AccountService, IAccountService } from '../app/services/account.service';
+import { AccountService, IAccountService } from '../pages/account/account.service';
 import { StorageService } from '../app/services/storage.service';
 
 @Component({

@@ -15,7 +15,7 @@
     <ion-list>
         <ion-item no-padding *ngFor="let post of myPostingsData">
             <ion-thumbnail item-left>
-                <img (click)="showProductDetails()" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+                <img (click)="showProductDetails(post._id)" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
             </ion-thumbnail>
             <h2>{{post.Title}}</h2>
             <p>{{post.Description}}</p>

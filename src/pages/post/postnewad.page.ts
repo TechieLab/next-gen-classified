@@ -5,7 +5,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ILookupService, LookupService } from '../../app/services/lookup.service';
 import { Lookup } from '../../app/models/lookup';
 import { Post } from '../../app/models/post';
-import { IPostService, PostService } from '../../app/services/post.service';
+import { IPostService, PostService } from './post.service';
 
 import { MyPostingsPage } from '../myPostings/myPostings.page';
 

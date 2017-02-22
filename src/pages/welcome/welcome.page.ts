@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import {HomePage} from '../home/home.page';
 import {LoginPage} from '../account/login.page';
-import { AccountService, IAccountService } from '../../app/services/account.service';
+import { AccountService, IAccountService } from '../account/account.service';
 
 @Component({
   selector: 'welcome-page',

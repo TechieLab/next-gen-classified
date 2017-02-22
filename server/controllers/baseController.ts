@@ -40,7 +40,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     public getEntities(req: Request, res: Response) {
         var userId = req['userId'];
 
-        this.baseService.get(userId, req.query, (err, item) => {
+        this.baseService.get(req.query, (err, item) => {
             if (err) logger.log('debug', 'getEntities err---', err);
 
             logger.log('debug', 'getEntities')

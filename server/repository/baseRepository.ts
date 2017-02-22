@@ -6,7 +6,8 @@ import logger = require('winston');
 //const logger = Logger('server');
 
 export interface IBaseRepository<TEntity> {
-    get(userId: ObjectID, query: Object, callback: (err: Error, item: Array<TEntity>) => any);
+    get(query: any, callback: (err: Error, item: Array<TEntity>) => any);
+    getByUserId(userId: ObjectID, query: any, callback: (err: Error, item: Array<TEntity>) => any);
     getById(id: ObjectID, callback: (err: Error, item: TEntity) => any);
     getCount(callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
@@ -37,7 +38,15 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public get(userId: ObjectID, query: Object, callback: (err: Error, item: Array<TEntity>) => any) {
+    public get(query: any, callback: (err: Error, item: Array<TEntity>) => any) {
+        if (query) {
+            this.getByPage(null, query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
+        } else {
+            this.getAll(null, callback);
+        }
+    }
+
+     public getByUserId(userId: ObjectID, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         if (query) {
             this.getByPage(userId, query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
         } else {

@@ -34,7 +34,8 @@ export class MyPostingsPage implements OnInit {
     }
 
     getMyPostingsData() {
-        this.postService.get().subscribe((response) => {
+        
+        this.postService.getByUserId().subscribe((response) => {
             this.myPostingsData = response
         });
     }

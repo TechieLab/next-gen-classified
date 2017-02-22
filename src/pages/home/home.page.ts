@@ -34,7 +34,7 @@ export class HomePage implements OnInit {
 
     ngOnInit() {
         this.getFeaturedPostList();
-        //this.getLatestPostList();
+        this.getLatestPostList();
     }
 
     getFeaturedPostList() {

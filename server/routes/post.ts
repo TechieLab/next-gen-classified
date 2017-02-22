@@ -3,21 +3,38 @@ import logger = require('winston');
 import { Post } from '../models/post';
 import { IBaseApiRoute, BaseApiRoute } from './baseApiRoute';
 import { IPostingService, PostingService } from '../services/postingService';
-import { IPostingRepository,PostingRepository } from '../repository/postingRepository';
+import { IPostingRepository, PostingRepository } from '../repository/postingRepository';
 import { PostingController, IPostingController } from '../controllers/postingController';
 
 var self;
-export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>{
-    postingService : IPostingService;
-    postingController : IPostingController;
+export class PostRoute{
+    postingService: IPostingService;
+    postingController: IPostingController;
 
-    constructor(public app: Express) {
-        super(app, "posts");
+    constructor(public app: Express) {       
         self = this;
         this.post();
+        this.get();
+        this.getByUser();
     }
 
-     post() {
+    get() {
+        this.app.get('/api/posts', (req: Request, res: Response) => {
+            self.setCollection();  
+            logger.debug('Inside child route posting get-------');
+            self.postingController.getEntities(req, res);
+        });
+    }
+
+    getByUser() {
+        this.app.get('/api/posts/getByUser', (req: Request, res: Response) => {
+            self.setCollection();  
+            logger.debug('Inside child route posting get-------');
+            self.postingController.getPostByUser(req, res);
+        });
+    }
+
+    post() {
         this.app.post('/api/posts', (req: Request, res: Response) => {
             self.setCollection();
             self.postingController.createEntity(req, res);

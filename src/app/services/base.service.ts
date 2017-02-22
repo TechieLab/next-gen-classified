@@ -11,7 +11,7 @@ import { StorageService } from './storage.service';
 export interface IBaseService<TEntity> {
     get(): Observable<Array<TEntity>>;
     getById(id: string): Observable<TEntity>;
-    getByUserId(id: string): Observable<TEntity>;
+    getByUserId(): Observable<Array<TEntity>>;
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
     post(entity: TEntity): Observable<Result>;
     put(entity: TEntity): Observable<Result>;
@@ -42,8 +42,8 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
-    getByUserId(id: string): Observable<TEntity> {
-        this.url = this.url + '/getByUser/' + id;
+    getByUserId(): Observable<Array<TEntity>> {
+        this.url = this.url + '/getByUser';
         this.setAuthHeader();
         return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
@@ -97,5 +97,5 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         this.options = new RequestOptions({
             headers: headers
         });
-    }
+    }  
 }

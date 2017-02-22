@@ -14,9 +14,7 @@
                 <ion-icon name="arrow-forward"  no-margin></ion-icon>
        </span>
       </h2>
-        <button clear button-end (click)="logoff()">
-        Logoff
-      </button>
+  
     </ion-item>   
   </ion-header>
   <ion-content>
@@ -24,6 +22,10 @@
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon [name]="p.name"></ion-icon>
         {{p.title}}
+      </button>
+      <button ion-item (click)="logoff()">
+        <ion-icon name="power"></ion-icon>
+        Logoff
       </button>
     </ion-list>
   </ion-content>

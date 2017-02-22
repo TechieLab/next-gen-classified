@@ -1,9 +1,7 @@
 import logger = require('winston');
-
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IPostingService, PostingService } from '../services/postingService';
-
 import { Post } from '../models/post';
 import {Result} from '../models/result';
 
@@ -21,8 +19,9 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
     public createEntity(req: Request, res: Response) {
         var data = req.body;
-        var post = new Post();
+        var post = new Post();    
 
+        post.UserId = req['userId'];
         post.Title = data.Title;
         post.Product.Description.Price = data.Price;
         post.Product.Description.PurchasedOn = data.PurchasedOn;
@@ -33,7 +32,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
         logger.log('debug','creating post ----' , post);
 
-        return this.postingService.create(data, (err, item) => {
+        return this.postingService.create(post, (err, item) => {
             if (err) logger.log('debug', 'create posting err---', err);
 
             this.result = {

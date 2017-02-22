@@ -5,8 +5,8 @@ import { Injectable, Optional } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Result } from '../models/result';
-import {Constants} from '../common/constants';
-import {StorageService} from './storage.service';
+import { Constants } from '../common/constants';
+import { StorageService } from './storage.service';
 
 export interface IBaseService<TEntity> {
     get(): Observable<Array<TEntity>>;
@@ -23,38 +23,40 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     url: string;
     entity: TEntity;
-    options : RequestOptions;
+    options: RequestOptions;
 
     constructor( @Optional() public http: Http, entityName: string) {
         this.url = Constants.baseApi + '/api/' + entityName;
-        let headers = new Headers({ 'Content-Type': 'application/json','Authorization':  StorageService.getToken() });
-        this.options = new RequestOptions({
-            headers: headers
-        });
+
+        this.setAuthHeader();
     }
 
-    get(): Observable<Array<TEntity>> {        
-        return this.http.get(this.url).map(this.extractData).catch(this.handleError);
+    get(): Observable<Array<TEntity>> {       
+        this.setAuthHeader();
+        return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     getById(id: string): Observable<TEntity> {
         this.url = this.url + '/' + id;
-        return this.http.get(this.url).map(this.extractData).catch(this.handleError);
+        this.setAuthHeader();
+        return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     getByUserId(id: string): Observable<TEntity> {
         this.url = this.url + '/getByUser/' + id;
-        return this.http.get(this.url).map(this.extractData).catch(this.handleError);
+        this.setAuthHeader();
+        return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
-    getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {    
-         this.options.search = params;
-
+    getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
+        this.setAuthHeader();
+        this.options.search = params;
         return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     post(entity: TEntity): Observable<Result> {
-        let body = JSON.stringify(entity);      
+        let body = JSON.stringify(entity);
+        this.setAuthHeader();
 
         return this.http.post(this.url, body, this.options)
             .map(this.extractData)
@@ -62,16 +64,17 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     }
 
     put(entity: TEntity): Observable<Result> {
-        let body = JSON.stringify(entity);     
-
-        return this.http.put(this.url, body,  this.options)
+        let body = JSON.stringify(entity);
+        this.setAuthHeader();
+        return this.http.put(this.url, body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     del(id: string): Observable<Result> {
         this.url = this.url + '/' + id;
-        return this.http.delete(this.url).map(this.extractData).catch(this.handleError);
+        this.setAuthHeader();
+        return this.http.delete(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {
@@ -87,5 +90,12 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
         console.error(errMsg); // log to console instead
         return Observable.throw(errMsg);
+    }
+
+    private setAuthHeader() {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': StorageService.getToken() });
+        this.options = new RequestOptions({
+            headers: headers
+        });
     }
 }

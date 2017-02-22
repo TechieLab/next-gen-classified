@@ -5,19 +5,19 @@ import {Product} from './product';
 export class Post extends BaseEntity
 {    
    public PostId : number;
-   public AdType : string;
-   public UserId: ObjectID;
+   public AdType : string; 
    public Title : string;
    public Location : string;
    public Product : Product;
+   public UserId: ObjectID;
 
    constructor(){
        super();
 
        this.PostId = 0;
-       this.AdType = '';
-       this.UserId = new ObjectID();     
+       this.AdType = '';         
        this.Title = '';
+       this.UserId = null;
        this.Product = new Product();
    }
 }

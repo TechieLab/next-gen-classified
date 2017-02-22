@@ -64,7 +64,7 @@ export class AccountService implements IAccountService {
     }
 
     public verify(token: string, callback: (item: Result) => any) {
-        this.repository.get({ "Token": token }, (err, user) => {
+        this.repository.get(null, { "Token": token }, (err, user) => {
             if (err) throw err;
 
             var result = new Result();
@@ -108,7 +108,7 @@ export class AccountService implements IAccountService {
 
     public authenticate(login: Login, callback: (item: Result) => any) {
 
-        this.repository.get({ UserName: login.UserName }, (err, users) => {
+        this.repository.get(null, { UserName: login.UserName }, (err, users) => {
             if (err) throw err;
 
             var result = new Result();

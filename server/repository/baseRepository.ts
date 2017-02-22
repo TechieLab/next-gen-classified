@@ -6,7 +6,7 @@ import logger = require('winston');
 //const logger = Logger('server');
 
 export interface IBaseRepository<TEntity> {
-    get(query: Object, callback: (err: Error, item: Array<TEntity>) => any);
+    get(userId: ObjectID, query: Object, callback: (err: Error, item: Array<TEntity>) => any);
     getById(id: ObjectID, callback: (err: Error, item: TEntity) => any);
     getCount(callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
@@ -37,11 +37,11 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public get(query: Object, callback: (err: Error, item: Array<TEntity>) => any) {
+    public get(userId: ObjectID, query: Object, callback: (err: Error, item: Array<TEntity>) => any) {
         if (query) {
-            this.getByPage(query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
+            this.getByPage(userId, query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
         } else {
-            this.getAll(callback);
+            this.getAll(userId, callback);
         }
     }
 
@@ -52,16 +52,20 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    private getAll(callback: (err: Error, item: Array<TEntity>) => any) {
-        this.collection.find({}).toArray(function (err, item) {
-            logger.debug('debug', 'reading all data..');
+    private getAll(userId: ObjectID, callback: (err: Error, item: Array<TEntity>) => any) {
+        this.collection.find({ UserId: userId }).toArray(function (err, item) {
+            logger.debug('debug', 'reading all data for user..' + userId);
             callback(err, item);
         });
     }
 
-    private getByPage(query: Object, sortKey: string, sortOrder: string, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
+    private getByPage(userId: ObjectID, query: any, sortKey: string, sortOrder: string, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
 
         var options;
+
+        if (userId) {
+            query.UserId = userId;
+        }
 
         if (sortKey && sortOrder) {
             logger.debug('debug', 'reading many data..with query and sortkey, sortorder');
@@ -79,7 +83,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             };
             this.collection.find(query, options).toArray(callback);
         } else {
-            logger.debug('debug', 'reading many data..with query' , query);            
+            logger.debug('debug', 'reading many data..with query', query);
             this.collection.find(query).toArray(callback);
         }
     }
@@ -89,7 +93,6 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         if (!data) {
             callback(new Error('Empty'), null);
         }
-
 
         this.collection.insert(data, function (err, res) {
             logger.debug('debug', 'inserting data..');

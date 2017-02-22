@@ -6,7 +6,7 @@ export interface IBaseService<TEntity>
 {
     initData(sampleData: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);   
     bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
-    get(query : Object, callback: (errr: Error, item: Array<TEntity>) => any);
+    get(userId : ObjectID ,query : Object, callback: (errr: Error, item: Array<TEntity>) => any);
     getCount(callback: (errr: Error, item: number) => any);
     getById(id: ObjectID, callback: (errr: Error, item: TEntity) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
@@ -38,9 +38,9 @@ export class BaseService<TEntity> implements IBaseService<TEntity>
         this.repository.bulkCreate(data, callback);
     }
 
-    public get(query: Object, callback: (errr: Error, item: Array<TEntity>) => any)
+    public get(userId : ObjectID , query: Object, callback: (errr: Error, item: Array<TEntity>) => any)
     {
-        this.repository.get(query,callback);
+        this.repository.get(userId,query,callback);
     }    
 
     public getCount(callback: (errr: Error, item: number) => any)

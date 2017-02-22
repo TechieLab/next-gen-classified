@@ -1,7 +1,7 @@
 import { Express, Request, Response } from "express";
 import { IBaseService } from '../services/baseService';
 import logger = require('winston');
-import {ObjectID} from 'mongodb';
+import { ObjectID } from 'mongodb';
 import { Result } from '../models/result';
 
 export interface IBaseController<TEntity> {
@@ -21,6 +21,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public createEntity(req: Request, res: Response) {
         var data = <TEntity>req.body;
+        
         logger.log('debug', 'create entity data---', data);
 
         return this.baseService.create(data, (err, item) => {
@@ -36,10 +37,11 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         });
     }
 
-    public getEntities(req: Request, res: Response) { 
+    public getEntities(req: Request, res: Response) {
+        var userId = req['userId'];
 
-        this.baseService.get(req.query, (err, item) => {
-           if (err) logger.log('debug', 'getEntities err---', err);
+        this.baseService.get(userId, req.query, (err, item) => {
+            if (err) logger.log('debug', 'getEntities err---', err);
 
             logger.log('debug', 'getEntities')
 
@@ -52,7 +54,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         var id = req.query.id;
 
         this.baseService.getById(id, (err, item) => {
-             if (err) logger.log('debug', 'create getById err---', err);
+            if (err) logger.log('debug', 'create getById err---', err);
 
             return res.json(item);
         });

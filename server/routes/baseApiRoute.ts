@@ -25,7 +25,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         this.app = app;
         self = this;
 
-        apiRoutes.use(function (req: Request, res: Response, next) {            
+        apiRoutes.use(function (req: Request, res: Response, next) {
             var token = req.body.token || req.query.token || req.headers['authorization'];
 
             // decode token
@@ -52,7 +52,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             }
         });
 
-        app.use(this.except(apiRoutes));        
+        app.use(this.except(apiRoutes));
 
         this.get();
         this.getById();
@@ -66,10 +66,10 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             logger.log('debug', req.path);
             logger.log('debug', req['userId']);
 
-            if (req.path.indexOf('users') === -1 && req.path.indexOf('account/register') === -1) {
-                return middleware(req, res, next);
-            } else {
+            if (req.path.indexOf('users') > 0 && req.path.indexOf('account/register') > 0) {
                 return next();
+            } else {
+                return middleware(req, res, next);
             }
         };
     }

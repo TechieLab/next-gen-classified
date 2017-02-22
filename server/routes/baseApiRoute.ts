@@ -52,11 +52,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             }
         });
 
-        app.use(this.except(apiRoutes));
-
-        app.use(function (req, res, next) {
-           
-        })
+        app.use(this.except(apiRoutes));        
 
         this.get();
         this.getById();

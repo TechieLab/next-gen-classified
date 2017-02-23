@@ -7,6 +7,7 @@ import { AppComponents, featuredComponents, pages } from './common/componentCons
 import { Welcome } from '../pages/welcome/welcome.page';
 import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
+import { SearchPage } from '../pages/search/search.page';
 import { HomePage } from '../pages/home/home.page';
 import { AuthGuard, IAuthGuard } from '../app/services/guard.service';
 import { AccountService, IAccountService } from '../pages/account/account.service';
@@ -14,7 +15,7 @@ import { StorageService } from '../app/services/storage.service';
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [AppComponents, featuredComponents, LoginPage, HomePage],
+  entryComponents: [AppComponents, featuredComponents, LoginPage, HomePage, SearchPage],
   providers: [AuthGuard]
 })
 export class MyApp implements OnInit {

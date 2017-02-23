@@ -51,9 +51,11 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     }   
 
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
+        debugger;
+        var url = this.url + '/' + 'all';
         this.setAuthHeader();
         this.options.search = params;
-        return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
+        return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     post(entity: TEntity): Observable<Result> {

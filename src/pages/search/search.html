@@ -13,8 +13,16 @@
 </ion-header>
 <ion-content no-padding>
     <ion-searchbar padding  [formControl]="search" ></ion-searchbar>
-    <ul>
-        <li *ngFor="let item of items | async">{{item}}</li>
-      </ul>
-   <!---  <catalog-page></catalog-page>   -->
+
+  <ion-list>
+<ion-item *ngFor="let item of items | async">
+    <ion-avatar item-left>
+     <ion-icon name="search"></ion-icon>
+    </ion-avatar>
+    <h2>{{item}}</h2>
+    <p>Category</p>
+  </ion-item>
+</ion-list>
+
+  <!-- <catalog-page></catalog-page>-->
 </ion-content>

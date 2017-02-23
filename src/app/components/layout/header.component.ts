@@ -10,7 +10,7 @@ import { CategoryComponent } from '../category';
 @Component({
     selector: 'header-component',
     templateUrl: 'header.html',
-    entryComponents: [CategoryComponent],
+    entryComponents: [CategoryComponent,SearchPage],
     providers: [VendorService],
 })
 

@@ -8,7 +8,7 @@ import { NotificationPage } from '../../pages/notification/notification.page';
 import { CatalogPage } from '../../pages/catalog/catalog.page';
 import { AdminPage } from '../../pages/admin/admin.page';
 import { MyPostingsPage } from '../../pages/myPostings/myPostings.page';
-import { SearchPage } from '../../pages/search/search.page';
+
 import { FiltersPage } from '../../pages/filters/filters.page';
 import { FeedbackPage } from '../../pages/feedback/feedback.page';
 import { HelpPage } from '../../pages/help/help.page';
@@ -24,7 +24,6 @@ export const AppComponents = [
     NotificationPage,
     CatalogPage,    
     MyPostingsPage,
-    SearchPage,
     FiltersPage,
     FeedbackPage,
     HelpPage,

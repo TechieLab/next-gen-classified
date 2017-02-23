@@ -9,8 +9,7 @@ import { VendorService } from '../../app/services/vendor.service';
 @Component({
   selector: 'search-page',
   templateUrl: 'search.html',
-  providers:[VendorService],
-  entryComponents: [FiltersPage, CatalogPage]
+  providers:[VendorService]
 })
 
 export class SearchPage implements OnInit {

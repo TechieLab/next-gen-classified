@@ -18,14 +18,7 @@ export class MyPostingsPage implements OnInit {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, @Inject(PostService) public postService: IPostService) {
         // If we navigated to this page, we will have an item available as a nav param
-        this.isSubCategorySelected = false;
-        this.selectedCategory = navParams.get('category');
-        this.subCategories = ["SmartPhone", "Android", "Iphone", "Blackberry"];
-
-        this.items = [
-            'Amsterdam',
-            'Bogota'
-        ];       
+        
     }
 
 
@@ -34,8 +27,8 @@ export class MyPostingsPage implements OnInit {
     }
 
     getMyPostingsData() {
-        
-        this.postService.getByUserId().subscribe((response) => {
+
+        this.postService.get().subscribe((response) => {
             this.myPostingsData = response
         });
     }

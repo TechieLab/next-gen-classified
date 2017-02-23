@@ -7,7 +7,7 @@ import { Post } from '../models/post';
 import { Result } from '../models/result';
 
 export interface IPostingController extends IBaseController<Post> {
-    getPostByUser(req: Request, res: Response);
+
 }
 var self;
 export class PostingController extends BaseController<Post> implements IPostingController {
@@ -16,39 +16,9 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
     constructor(public postingService: IPostingService) {
         super(postingService);
-    }
+    }  
 
-    public getEntities(req: Request, res: Response) {
-        var userId = null, query;
-
-        if (req.query) {
-            query = req.query;
-        }
-
-        query.UserId = { $ne: <ObjectID>(req['userId']) };
-
-        this.baseService.get(query, (err, item) => {
-            if (err) logger.log('debug', 'getEntities err---', err);
-
-            logger.log('debug', 'getEntities')
-
-            return res.json(item);
-        });
-    }
-
-    public getPostByUser(req: Request, res: Response) {
-        var userId = <ObjectID>(req['userId']);
-
-        this.baseService.getByUserId(userId, req.query, (err, item) => {
-            if (err) logger.log('debug', 'getEntities err---', err);
-
-            logger.log('debug', 'getPostByUser-------' + userId)
-
-            return res.json(item);
-        });
-    }
-
-    public createEntity(req: Request, res: Response) {
+    public create(req: Request, res: Response) {
         var data = req.body;
         var post = new Post();
 
@@ -61,7 +31,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
         post.Product.Category = data.Category;
         post.Location = data.Location;
 
-        logger.log('debug', 'creating post ----', post);
+        logger.log('debug', 'PostingController creating post ----', post);
 
         return this.postingService.create(post, (err, item) => {
             if (err) logger.log('debug', 'create posting err---', err);

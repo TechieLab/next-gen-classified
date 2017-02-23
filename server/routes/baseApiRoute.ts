@@ -7,10 +7,10 @@ var jwt = require('jsonwebtoken');
 
 var apiRoutes = Router();
 
-export interface IBaseApiRoute<TEntity> {
+export interface IBaseApiRoute<T> {
     get();
     getById();
-    // post();
+    post();
     put();
     del();
 }
@@ -55,6 +55,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         app.use(this.except(apiRoutes));
 
         this.get();
+        this.getAll();
         this.getById();
         this.post();
         this.put();
@@ -84,35 +85,43 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         this.app.get('/api/' + this.apiName + '/', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
             logger.debug("route name ----" + this.apiName);
-            self.baseController.getEntities(req, res);
+            self.baseController.get(req, res);
+        });
+    }
+
+    getAll() {
+        this.app.get('/api/all-' + this.apiName + '/', (req: Request, res: Response) => {
+            self.setCollection(this.apiName);
+            logger.debug("route name ----" + this.apiName);
+            self.baseController.getAll(req, res);
         });
     }
 
     getById() {
         this.app.get('/api/' + this.apiName + '/:id', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
-            self.baseController.getEntity(req, res);
+            self.baseController.get(req, res);
         });
     }
 
     post() {
         this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
-            self.baseController.createEntity(req, res);
+            self.baseController.create(req, res);
         });
     }
 
     put() {
         this.app.put('/api/' + this.apiName + '/', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
-            self.baseController.updateEntity(req, res);
+            self.baseController.update(req, res);
         });
     }
 
     del() {
         this.app.delete('/api/' + this.apiName + '/', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
-            self.baseController.deleteEntity(req, res);
+            self.baseController.delete(req, res);
         });
     }
 

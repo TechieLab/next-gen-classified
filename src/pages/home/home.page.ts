@@ -46,7 +46,7 @@ export class HomePage implements OnInit {
     }
 
     getLatestPostList() { 
-        this.postService.get().subscribe((response) => {
+        this.postService.getAll().subscribe((response) => {
             this.latestPosts = response;
         });
     }

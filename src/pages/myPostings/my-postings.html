@@ -18,9 +18,11 @@
                 <img (click)="showProductDetails(post._id)" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
             </ion-thumbnail>
             <h2>{{post.Title}}</h2>
-            <p>{{post.Description}}</p>
-            <p>{{post.Price}}</p>
-            <p>{{post.Location}}</p>
+            <p>{{post.Product.Description.Title}}</p>
+            <p>Location: {{post.Location}}</p>
+            <button ion-button clear item-right>
+                        {{post.Product.Description.Price}}
+            </button>
         </ion-item>
     </ion-list>
 </ion-content>

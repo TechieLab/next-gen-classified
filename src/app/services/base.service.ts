@@ -10,8 +10,8 @@ import { StorageService } from './storage.service';
 
 export interface IBaseService<TEntity> {
     get(): Observable<Array<TEntity>>;
-    getById(id: string): Observable<TEntity>;
-    getByUserId(): Observable<Array<TEntity>>;
+    getAll(): Observable<Array<TEntity>>;
+    getById(id: string): Observable<TEntity>;   
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
     post(entity: TEntity): Observable<Result>;
     put(entity: TEntity): Observable<Result>;
@@ -25,28 +25,30 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     entity: TEntity;
     options: RequestOptions;
 
-    constructor( @Optional() public http: Http, entityName: string) {
+    constructor( @Optional() public http: Http, public entityName: string) {
         this.url = Constants.baseApi + '/api/' + entityName;
 
         this.setAuthHeader();
     }
 
-    get(): Observable<Array<TEntity>> {       
+    // this method used to get all records with respect to a userId
+    get(): Observable<Array<TEntity>> {
         this.setAuthHeader();
         return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
+    }
+
+    // this method used to get all records with without userId
+    getAll(): Observable<Array<TEntity>> {
+        this.setAuthHeader();
+        var url = Constants.baseApi + '/api/all-' + this.entityName;
+        return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     getById(id: string): Observable<TEntity> {
-        this.url = this.url + '/' + id;
+        var url = this.url + '/' + id;
         this.setAuthHeader();
-        return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
-    }
-
-    getByUserId(): Observable<Array<TEntity>> {
-        this.url = this.url + '/getByUser';
-        this.setAuthHeader();
-        return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
-    }
+        return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
+    }   
 
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
         this.setAuthHeader();
@@ -97,5 +99,5 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         this.options = new RequestOptions({
             headers: headers
         });
-    }  
+    }
 }

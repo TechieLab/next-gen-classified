@@ -7,43 +7,24 @@ import { IPostingRepository, PostingRepository } from '../repository/postingRepo
 import { PostingController, IPostingController } from '../controllers/postingController';
 
 var self;
-export class PostRoute{
-    postingService: IPostingService;
+export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>{
     postingController: IPostingController;
 
-    constructor(public app: Express) {       
+    constructor(public app: Express) {
+        super(app, 'posts');
         self = this;
+
         this.post();
-        this.get();
-        this.getByUser();
-    }
-
-    get() {
-        this.app.get('/api/posts', (req: Request, res: Response) => {
-            self.setCollection();  
-            logger.debug('Inside child route posting get-------');
-            self.postingController.getEntities(req, res);
-        });
-    }
-
-    getByUser() {
-        this.app.get('/api/posts/getByUser', (req: Request, res: Response) => {
-            self.setCollection();  
-            logger.debug('Inside child route posting get-------');
-            self.postingController.getPostByUser(req, res);
-        });
     }
 
     post() {
-        this.app.post('/api/posts', (req: Request, res: Response) => {
-            self.setCollection();
-            self.postingController.createEntity(req, res);
-        });
-    }
+        var repository = new PostingRepository()
+        var service = new PostingService(repository);
+        var controller = new PostingController(service);
 
-    setCollection() {
-        var repository = new PostingRepository();
-        this.postingService = new PostingService(repository);
-        this.postingController = new PostingController(this.postingService);
+        this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+            console.log('inside posting controller');
+            controller.create(req, res);
+        });
     }
 }

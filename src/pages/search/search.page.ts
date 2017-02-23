@@ -47,7 +47,7 @@ export class SearchPage implements OnInit {
   ngOnInit(){
      
     //Event for Search item using temporary api
-    this.items = this.search.valueChanges.debounceTime(400).distinctUntilChanged().switchMap(term => this.getByQuery(term));
+  //  this.items = this.search.valueChanges.debounceTime(400).distinctUntilChanged().switchMap(term => this.getByQuery(term));
      
   }
 }

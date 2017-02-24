@@ -1,6 +1,6 @@
 ﻿import { Express, Router, Request, Response } from 'express';
 import logger = require('winston');
-import multer  = require('multer');
+var multer  = require('multer');
 import { Post } from '../models/post';
 import { IBaseApiRoute, BaseApiRoute } from './baseApiRoute';
 import { IPostingService, PostingService } from '../services/postingService';

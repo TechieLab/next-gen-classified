@@ -11,7 +11,7 @@ import { IPostService, PostService } from '../post/post.service';
 @Component({
   selector: 'search-page',
   templateUrl: 'search.html',
-  providers:[PostService]
+  providers:[PostService,VendorService]
 })
 
 export class SearchPage implements OnInit {
@@ -19,10 +19,11 @@ export class SearchPage implements OnInit {
   results: any[];
   categories: string[];
   search = new FormControl();
+  params:URLSearchParams = new URLSearchParams();
   items: Observable<Array<string>>;
 
   constructor(public navCtrl: NavController, 
-  public navParams: NavParams, public modalCtrl: ModalController,@Inject(PostService) public postService: IPostService) {
+  public navParams: NavParams, public modalCtrl: ModalController, public vendor:VendorService,@Inject(PostService) public postService: IPostService) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedCategory = navParams.get('category');
     this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
@@ -38,16 +39,14 @@ export class SearchPage implements OnInit {
     let profileModal = this.navCtrl.push(FiltersPage, { userId: 8675309 });
   }
   getByQuery(term:string){
-     // Parameters obj-
-      let params: URLSearchParams = new URLSearchParams();
-      params.set('Name', term);
-      this.postService.getByQuery(params);
+      this.params.set('key', term);
+      return this.postService.getByQuery(this.params);
   }
 
   ngOnInit(){
      
     //Event for Search item using temporary api
-  //  this.items = this.search.valueChanges.debounceTime(400).distinctUntilChanged().switchMap(term => this.getByQuery(term));
+    this.items = this.search.valueChanges.debounceTime(400).distinctUntilChanged().switchMap(term => this.getByQuery(term));
      
   }
 }

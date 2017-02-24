@@ -2,7 +2,7 @@
 import logger = require('winston');
 import { User } from '../models/user';
 import { IBaseApiRoute, BaseApiRoute } from './baseApiRoute';
-import multer = require('multer');
+var multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
 import { IUserService, UserService } from '../services/userService';
 import { IUserRepository, UserRepository } from '../repository/userRepository';

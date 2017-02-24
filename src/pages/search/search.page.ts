@@ -39,14 +39,12 @@ export class SearchPage implements OnInit {
     let profileModal = this.navCtrl.push(FiltersPage, { userId: 8675309 });
   }
   getByQuery(term:string){
-      this.params.set('key', term);
+      this.params.set('Title', term);
       return this.postService.getByQuery(this.params);
   }
 
   ngOnInit(){
-     
     //Event for Search item using temporary api
     this.items = this.search.valueChanges.debounceTime(400).distinctUntilChanged().switchMap(term => this.getByQuery(term));
-     
   }
 }

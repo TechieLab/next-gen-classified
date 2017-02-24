@@ -5,13 +5,13 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import {FiltersPage}   from '../filters/filters.page';
 import {CatalogPage} from '../catalog/catalog.page';
-import { VendorService } from '../../app/services/vendor.service';
 import { IPostService, PostService } from '../post/post.service';
 
 @Component({
   selector: 'search-page',
   templateUrl: 'search.html',
-  providers:[PostService,VendorService]
+  entryComponents: [CatalogPage],
+  providers:[PostService]
 })
 
 export class SearchPage implements OnInit {
@@ -23,7 +23,7 @@ export class SearchPage implements OnInit {
   items: Observable<Array<string>>;
 
   constructor(public navCtrl: NavController, 
-  public navParams: NavParams, public modalCtrl: ModalController, public vendor:VendorService,@Inject(PostService) public postService: IPostService) {
+  public navParams: NavParams, public modalCtrl: ModalController,@Inject(PostService) public postService: IPostService) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedCategory = navParams.get('category');
     this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];

@@ -11,24 +11,36 @@ var upload = multer({ dest: 'uploads/' });
 
 var self;
 export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>{
+   
     postingController: IPostingController;
+    repository:PostingRepository;
+    service:PostingService;
 
     constructor(public app: Express) {
         super(app, 'posts');
         self = this;
+        
+        this.repository = new PostingRepository()
+        this.service = new PostingService(this.repository);
+        this.postingController = new PostingController(this.service);
 
         this.post();
+        this.get();
         this.upload();
     }
 
     post() {
-        var repository = new PostingRepository()
-        var service = new PostingService(repository);
-        this.postingController = new PostingController(service);
-
+        
         this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
             console.log('inside posting controller');
-            self.postingController.create(req, res);
+            this.postingController.create(req, res);
+        });
+    }
+
+    get() {
+        this.app.get('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+            logger.debug("route name ----" + this.apiName);
+            this.postingController.get(req, res);
         });
     }
 

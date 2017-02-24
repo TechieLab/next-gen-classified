@@ -1,10 +1,13 @@
 ﻿import { Express, Router, Request, Response } from 'express';
 import logger = require('winston');
+import multer  = require('multer');
 import { Post } from '../models/post';
 import { IBaseApiRoute, BaseApiRoute } from './baseApiRoute';
 import { IPostingService, PostingService } from '../services/postingService';
 import { IPostingRepository, PostingRepository } from '../repository/postingRepository';
 import { PostingController, IPostingController } from '../controllers/postingController';
+
+var upload = multer({ dest: 'uploads/' });
 
 var self;
 export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>{
@@ -15,16 +18,26 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
         self = this;
 
         this.post();
+        this.upload();
     }
 
     post() {
         var repository = new PostingRepository()
         var service = new PostingService(repository);
-        var controller = new PostingController(service);
+        this.postingController = new PostingController(service);
 
         this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
             console.log('inside posting controller');
-            controller.create(req, res);
+            self.postingController.create(req, res);
+        });
+    }
+
+    upload() {      
+
+         this.app.post('/posts/:id/upload', upload.array('photos', 12), function (req: Request, res: Response, next) {
+            // req.files is array of `photos` files
+            // req.body will contain the text fields, if there were any
+             self.postingController.upload(req, res);
         });
     }
 }

@@ -55,8 +55,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public getById(id: ObjectID, callback: (err: Error, item: TEntity) => any) {
-        this.collection.findOne({ _id: id }, function (err, results) {
-            logger.debug('debug', 'reading get data..with id..' + id);
+        logger.debug('debug', 'reading get data..with id..' + id);
+        this.collection.findOne({ _id: new ObjectID(id.toString())}, function (err, results) {            
             callback(err, results);
         });
     }

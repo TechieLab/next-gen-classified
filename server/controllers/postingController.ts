@@ -5,6 +5,7 @@ import { IBaseController, BaseController } from './baseController';
 import { IPostingService, PostingService } from '../services/postingService';
 import { Post } from '../models/post';
 import { Result } from '../models/result';
+import {Media} from '../models/media';
 
 export interface IPostingController extends IBaseController<Post> {
 
@@ -28,7 +29,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
         post.Product.Description.PurchasedOn = data.PurchasedOn;
         post.Product.Description.Brand = data.Brand;
         post.Product.Description.Defects = data.Defects;
-        post.Product.Category = data.Category;
+        post.Category = data.Category;
         post.Location = data.Location;
 
         logger.log('debug', 'PostingController creating post ----', post);
@@ -45,4 +46,14 @@ export class PostingController extends BaseController<Post> implements IPostingC
             return res.json(this.result);
         });
     }
+
+    upload(req : any ,  res : any){
+         console.log(req.files);
+          this.postingService.getById(<ObjectID>req.params.id, (err , post) => {
+
+              if(post){
+                  var media = new Media();
+              }
+         });
+     }
 }

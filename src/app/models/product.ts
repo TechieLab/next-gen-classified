@@ -4,17 +4,13 @@ import {Review} from './review';
 import {Media} from './media';
 
 export class Product {
-    public Name: string;    
-    public Category: string; 
+    public Name: string;
     public Description : Description;
-    public Review : Review;
     public Photos : Array<Media>;
 
     constructor() {        
-        this.Name = '';        
-        this.Category = '';      
+        this.Name = '';  
         this.Description = new Description();
-        this.Photos = new Array<Media>();
-        this.Review = new Review();
+        this.Photos = new Array<Media>();       
     }
 }

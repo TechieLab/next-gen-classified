@@ -13,33 +13,28 @@
 </ion-header>
 <ion-content no-padding>
     <ion-card>
-        <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png" />
+        <ion-slides [options]="mySlideOptions">
+            <ion-slide *ngFor="let photo of post.Product.Photos">
+                <img [src]="photo.ImageUrl">
+            </ion-slide>
+        </ion-slides>
+        <img />
     </ion-card>
     <ion-card-content>
         <ion-icon text-right name="heart"></ion-icon>
         <ion-icon text-right ios="ios-share" md="md-share"></ion-icon>
-    </ion-card-content>
-    <ion-card-content>
-        <p>Phone !!!</p>
-        <ion-col>
-            <ion-note>
-                11h ago
-            </ion-note>
-        </ion-col>
-        <div>5000</div>
-        <p>Additional Details</p>
-    </ion-card-content>
+    </ion-card-content>   
     <ion-card-content>
         <ion-grid>
             <ion-row>
                 <ion-col width-50>
                     <p>
-                        <ion-icon name="people" item-left></ion-icon> Offers Made :31
+                        <ion-icon name="people" item-left></ion-icon> Offers Made :{{post.Offers.length}}
                     </p>
                 </ion-col>
                 <ion-col width-50 text-right>
                     <p>
-                        <ion-icon name="time" item-left></ion-icon>Last Offer: 1 hour ago
+                        <ion-icon name="eye" item-left></ion-icon>Views: {{post.Views.length}}
                     </p>
                 </ion-col>
             </ion-row>
@@ -51,9 +46,6 @@
                 </ion-segment-button>
                 <ion-segment-button value="description">
                     DESCRIPTIONS
-                </ion-segment-button>
-                <ion-segment-button value="reviews">
-                    REVIEWS
                 </ion-segment-button>
             </ion-segment>
         </div>
@@ -102,29 +94,20 @@
                     <p item-right>Hyderabad</p>
                 </ion-item>
             </ion-list>
-
-            <ion-list *ngSwitchCase="'reviews'">
-                <ion-item>
-                    <ion-card-content>
-                        <p wrap>Top Reviews</p>
-                        <button ion-button (click)="gotoNotificationPage()">
-                            Write Review
-                        </button>
-                    </ion-card-content>
-                </ion-item>
-            </ion-list>
         </div>
     </ion-card-content>
     <ion-card-content no-padding>
         <ion-list-header>
-            Similar Products
+            Similar Posts
         </ion-list-header>
         <ion-scroll scrollX="true">
-            <ion-card *ngFor="let item of similarItems">
+            <ion-card *ngFor="let post of similarPosts">
                 <ion-item no-padding>
-                    <img (click)="showProductDetails()" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
-                    <h2 text-center>My Neighbor</h2>
-                    <p text-center>$300</p>
+                    <ion-thumbnail>
+                        <img (click)="showDetails(post)" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+                    </ion-thumbnail>
+                    <h2 text-center>{{post.Title}}</h2>
+                    <p text-center>{{post.Product.Description.Title}}</p>
                 </ion-item>
             </ion-card>
         </ion-scroll>

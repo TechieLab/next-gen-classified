@@ -22,7 +22,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public create(req: Request, res: Response) {
         var data = <TEntity>req.body;
-        
+
         logger.log('debug', 'base controller  create  data---', data);
 
         return this.baseService.create(data, (err, item) => {
@@ -38,30 +38,31 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         });
     }
 
-    public get(req: Request, res: Response) {     
+    public get(req: Request, res: Response) {
 
         req.query.UserId = <ObjectID>(req['userId']);
+        logger.log('debug', 'base controller get');
 
         this.baseService.get(req.query, (err, item) => {
             if (err) logger.log('debug', 'get err---', err);
-
-            logger.log('debug', 'base controller get')
 
             return res.json(item);
         });
     }
 
-    public getAll(req: Request, res: Response) {     
+    public getAll(req: Request, res: Response) {
+        logger.log('debug', 'base controller get');
+
         this.baseService.get(req.query, (err, item) => {
             if (err) logger.log('debug', 'get err---', err);
-
-            logger.log('debug', 'base controller get')
 
             return res.json(item);
         });
     }
 
-    public getById(req: Request, res: Response) {  
+    public getById(req: Request, res: Response) {
+        logger.log('debug', 'base controller getById------' + req.params.id);
+        
         this.baseService.getById(<ObjectID>req.params.id, (err, item) => {
             if (err) logger.log('debug', ' create getById err---', err);
 
@@ -79,7 +80,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         });
     }
 
-    public delete(req: Request, res: Response) {     
+    public delete(req: Request, res: Response) {
         return this.baseService.delete(new ObjectID(req.params.id), (err, item) => {
             if (err) logger.log('debug', 'delete  err---', err);
 

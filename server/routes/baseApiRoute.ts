@@ -100,7 +100,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
     getById() {
         this.app.get('/api/' + this.apiName + '/:id', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
-            self.baseController.get(req, res);
+            self.baseController.getById(req, res);
         });
     }
 

@@ -1,5 +1,5 @@
 import {BaseEntity} from './baseEntity';
-import {ObjectID} from 'mongodb';
+import {Address} from './address';
 
 export class Employee extends BaseEntity
 {
@@ -9,6 +9,6 @@ export class Employee extends BaseEntity
      Department: string;
      WorkStation : string;
      Designation : string;
-     AddressId : ObjectID;
-     CompanyId : ObjectID
+     Address : Address;
+     CompanyId : string
 }

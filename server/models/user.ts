@@ -1,7 +1,6 @@
 ﻿import {BaseEntity} from './baseEntity';
 import {Profile} from './profile';
 import {Session} from './session';
-import {ObjectID} from 'mongodb';
 
 export class User extends BaseEntity
 {

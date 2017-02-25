@@ -1,12 +1,8 @@
-import {BaseEntity} from './baseEntity';
-import {ObjectID} from 'mongodb';
-
-export class Order extends BaseEntity
+export class Order
 {   
-     TransactionId: ObjectID;
+     TransactionId: string;
      Description: boolean;
-     Status: boolean;
-     ProductId: ObjectID;
-     postId: ObjectID; 
-     UserId: ObjectID;
+     Status: boolean;    
+     postId: string; 
+     UserId: string;
 }

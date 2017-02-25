@@ -1,4 +1,4 @@
-import {ObjectID} from 'mongodb'
+
 import { Result } from '../models/result';
 import { UserInfo } from '../models/userInfo';
 import { User } from '../models/user';
@@ -18,7 +18,7 @@ export interface IAccountService {
     changePassword(id: string, data: any, callback: (errr: Error, item: Result) => any);
     forgotPassword(id: string, callback: (errr: Error, item: Result) => any);
     authenticate(login: Login, callback: (item: Result) => any);
-    logout(id: ObjectID, callback: (item: Result) => any);
+    logout(id: string, callback: (item: Result) => any);
 }
 export class AccountService implements IAccountService {
     public mailService: IMailService;
@@ -143,7 +143,7 @@ export class AccountService implements IAccountService {
         });
     }
 
-    public logout(id: ObjectID, callback: (item: Result) => any) {
+    public logout(id: string, callback: (item: Result) => any) {
 
         this.repository.getById(id, (err, user) => {
             if (err) throw err;

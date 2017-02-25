@@ -4,8 +4,6 @@ import {Contact} from './contact';
 import {Theme} from './theme';
 import {Media} from './media';
 
-import {ObjectID} from 'mongodb';
-
 export class Profile
 {
      EmailId: string;

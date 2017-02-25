@@ -1,7 +1,6 @@
 import { Express, Request, Response } from "express";
 import { IBaseService } from '../services/baseService';
 import logger = require('winston');
-import { ObjectID } from 'mongodb';
 import { Result } from '../models/result';
 
 export interface IBaseController<TEntity> {
@@ -40,7 +39,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public get(req: Request, res: Response) {
 
-        req.query.UserId = <ObjectID>(req['userId']);
+        req.query.UserId = req['userId'];
         logger.log('debug', 'base controller get');
 
         this.baseService.get(req.query, (err, item) => {
@@ -63,7 +62,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     public getById(req: Request, res: Response) {
         logger.log('debug', 'base controller getById------' + req.params.id);
         
-        this.baseService.getById(<ObjectID>req.params.id, (err, item) => {
+        this.baseService.getById(req.params.id, (err, item) => {
             if (err) logger.log('debug', ' create getById err---', err);
 
             return res.json(item);
@@ -73,7 +72,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     public update(req: Request, res: Response) {
         var data = <TEntity>req.body;
 
-        return this.baseService.update(new ObjectID(req.params.id), data, (err, item) => {
+        return this.baseService.update(req.params.id, data, (err, item) => {
             if (err) logger.log('debug', 'update  err---', err);
 
             return res.json(item);
@@ -81,7 +80,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public delete(req: Request, res: Response) {
-        return this.baseService.delete(new ObjectID(req.params.id), (err, item) => {
+        return this.baseService.delete(req.params.id, (err, item) => {
             if (err) logger.log('debug', 'delete  err---', err);
 
             return res.json(item);

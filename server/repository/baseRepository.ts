@@ -7,14 +7,14 @@ import logger = require('winston');
 
 export interface IBaseRepository<TEntity> {
     get(query: any, callback: (err: Error, item: Array<TEntity>) => any);
-    getByUserId(userId: ObjectID, query: any, callback: (err: Error, item: Array<TEntity>) => any);
-    getById(id: ObjectID, callback: (err: Error, item: TEntity) => any);
+    getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any);
+    getById(id: string, callback: (err: Error, item: TEntity) => any);
     getCount(callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
     bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
-    update(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    replace(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    delete(id: ObjectID, callback: (errr: Error, item: TEntity) => any);
+    update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    delete(id: string, callback: (errr: Error, item: TEntity) => any);
 }
 
 export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
@@ -46,7 +46,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         }
     }
 
-     public getByUserId(userId: ObjectID, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
+     public getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         if (query) {
             this.getByPage(userId, query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
         } else {
@@ -54,26 +54,26 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         }
     }
 
-    public getById(id: ObjectID, callback: (err: Error, item: TEntity) => any) {
+    public getById(id: string, callback: (err: Error, item: TEntity) => any) {
         logger.debug('debug', 'reading get data..with id..' + id);
-        this.collection.findOne({ _id: new ObjectID(id.toString())}, function (err, results) {            
+        this.collection.findOne({ _id: new ObjectID(id)}, function (err, results) {            
             callback(err, results);
         });
     }
 
-    private getAll(userId: ObjectID, callback: (err: Error, item: Array<TEntity>) => any) {
+    private getAll(userId: string, callback: (err: Error, item: Array<TEntity>) => any) {
         this.collection.find({ UserId: userId }).toArray(function (err, item) {
             logger.debug('debug', 'reading all data for user..' + userId);
             callback(err, item);
         });
     }
 
-    private getByPage(userId: ObjectID, query: any, sortKey: string, sortOrder: string, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
+    private getByPage(userId: string, query: any, sortKey: string, sortOrder: string, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
 
         var options;
 
         if (userId) {
-            query.UserId = userId;
+            query.UserId = new ObjectID(userId);
         }
 
         if (sortKey && sortOrder) {
@@ -125,18 +125,18 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public update(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
+    public update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data..', data);
-        this.collection.findOneAndUpdate({ _id: id }, data, (err, res) => {
+        this.collection.findOneAndUpdate({ _id: new ObjectID(id)}, data, (err, res) => {
             logger.debug('debug', 'updated data with id------' + id);
 
             callback(err, res.value);
         });
     }
 
-    public replace(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
+    public replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data..', data);
-        this.collection.findOneAndReplace({ _id: id }, data, (err, res) => {
+        this.collection.findOneAndReplace({ _id: new ObjectID(id) }, data, (err, res) => {
             logger.debug('debug', 'replaced data with id------' + id);
 
             callback(err, res.value);
@@ -144,10 +144,10 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
 
-    public delete(id: ObjectID, callback: (errr: Error, item: TEntity) => any) {
+    public delete(id: string, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called delele data..');
 
-        this.collection.findOneAndDelete({ _id: id }, (err, res) => {
+        this.collection.findOneAndDelete({ _id: new ObjectID(id)}, (err, res) => {
             logger.debug('debug', 'deleleed data..');
 
             callback(err, res.value);

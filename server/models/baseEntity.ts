@@ -1,11 +1,11 @@
-import { ObjectID } from 'mongodb';
+
 export class BaseEntity {
-    _id: ObjectID;
+    _id: string;
     Status: string;
 
-    CreatedBy: ObjectID;
+    CreatedBy: string;
     CreatedOn: Date;
-    ModifiedBy: ObjectID;
+    ModifiedBy: string;
     ModifiedOn: Date;
 
     constructor() {        

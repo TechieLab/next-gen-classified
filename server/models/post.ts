@@ -1,5 +1,4 @@
 import { BaseEntity } from './baseEntity';
-import { ObjectID } from 'mongodb';
 import { Product } from './product';
 
 export class Post extends BaseEntity {
@@ -9,11 +8,11 @@ export class Post extends BaseEntity {
     Category: string;
     Location: string;
     Product: Product;
-    Views: Array<ObjectID>;
-    Offers: Array<ObjectID>;
+    Views: Array<string>;
+    Offers: Array<string>;
     LastViewed: Date;
     LastOffered: Date;
-    UserId: ObjectID;
+    UserId: string;
 
     constructor() {
         super();
@@ -23,8 +22,8 @@ export class Post extends BaseEntity {
         this.Title = '';
         this.UserId = null;
         this.Category = '';
-        this.Views = new Array<ObjectID>();
-        this.Offers = new Array<ObjectID>();
+        this.Views = new Array<string>();
+        this.Offers = new Array<string>();
         this.Product = new Product();
     }
 }

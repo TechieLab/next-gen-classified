@@ -1,4 +1,4 @@
-﻿import {ObjectID} from 'mongodb';
+﻿
 import logger = require('winston');
 import { BaseRepository, IBaseRepository } from '../repository/baseRepository';
 

@@ -1,4 +1,4 @@
-import { ObjectID } from 'mongodb';
+
 import {Description} from './description';
 import {Review} from './review';
 import {Media} from './media';

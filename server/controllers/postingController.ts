@@ -1,5 +1,4 @@
 import logger = require('winston');
-import { ObjectID } from 'mongodb';
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IPostingService, PostingService } from '../services/postingService';
@@ -49,7 +48,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
     upload(req : any ,  res : any){
          console.log(req.files);
-          this.postingService.getById(<ObjectID>req.params.id, (err , post) => {
+          this.postingService.getById(req.params.id, (err , post) => {
 
               if(post){
                   var media = new Media();

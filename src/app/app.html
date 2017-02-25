@@ -1,20 +1,22 @@
 <ion-menu [content]="content">
   <ion-header>
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
-      </ion-avatar>
+    <ion-item>      
        <h2 *ngIf="!isUserAuthenticated">Login/SignUp
          <span (click)="gotoLoginPage()" style="float:right;margin:0">
                 <ion-icon name="arrow-forward" no-margin></ion-icon>               
        </span>         
       </h2>
-       <h2 *ngIf="isUserAuthenticated">{{currentUserName}}
-         <span (click)="gotoProfilePage()" style="float:right;margin:0">
+      <div *ngIf="isUserAuthenticated"  (click)="gotoProfilePage()">
+       <ion-avatar item-left>
+          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+        </ion-avatar>
+       <h2 >        
+        {{currentUserName}}
+         <span  style="float:right;margin:0">
                 <ion-icon name="arrow-forward"  no-margin></ion-icon>
        </span>
       </h2>
-  
+      </div>  
     </ion-item>   
   </ion-header>
   <ion-content>

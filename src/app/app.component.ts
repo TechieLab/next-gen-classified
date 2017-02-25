@@ -57,7 +57,7 @@ export class MyApp implements OnInit {
 
   gotoProfilePage() {
     this.menu.close();
-    this.nav.push(ProfilePage);
+    this.nav.push(ProfilePage); 
   }
 
   openPage(page) {

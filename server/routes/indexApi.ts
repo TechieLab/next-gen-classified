@@ -5,7 +5,7 @@ import {LookupRoute} from './lookup';
 import {UserRoute} from './user';
 import {AccountRoute} from './account'
 import {PostRoute} from './post';
-
+import {ProfileRoute} from './profile';
 export class IndexApiRoute
 { 
     constructor(private app : Express)
@@ -14,6 +14,7 @@ export class IndexApiRoute
         new LookupRoute(app);
         new UserRoute(app);
         new PostRoute(app);
+        new ProfileRoute(app);
     }  
 }
 

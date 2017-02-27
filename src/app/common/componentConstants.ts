@@ -1,6 +1,5 @@
 import { HeaderComponent } from '../components/layout/header.component';
 import { HomePage } from '../../pages/home/home.page';
-import { ProfilePage } from '../../pages/profile/profile.page';
 import { Welcome } from '../../pages/welcome/welcome.page';
 
 import { SettingsPage } from '../../pages/settings/settings.page';
@@ -18,7 +17,6 @@ import { CategoryComponent } from '../components/category';
 export const AppComponents = [
     HeaderComponent,
     HomePage,
-    ProfilePage,
     Welcome,
     SettingsPage,
     NotificationPage,

@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Profile } from '../../app/models/profile';
-import { EditProfilePage } from './edit-profile';
-import { ProfileService, IProfileService } from '../../app/services/profile.service';
+import { EditProfilePage } from './editProfile.page';
+import { ProfileService, IProfileService } from './profile.service';
 
 @Component({
   selector: 'profile-page',
-  templateUrl: 'profile.html'
+  templateUrl: 'profile.html',
+  providers: [ProfileService]
 })
 
 export class ProfilePage implements OnInit {

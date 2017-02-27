@@ -1,4 +1,5 @@
 import logger = require('winston');
+import {ObjectID} from 'mongodb';
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IPostingService, PostingService } from '../services/postingService';

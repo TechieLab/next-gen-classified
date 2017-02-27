@@ -1,0 +1,37 @@
+<form [formGroup]="editProfileForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
+
+    <ion-card>        
+        <ion-card-content>
+            <ion-card-title>
+                Basic Information
+            </ion-card-title>
+            <ion-item>
+                <ion-label floating>Full Name</ion-label>
+                <ion-input type="file" formControlName="FullName" name="fullName" required></ion-input>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            Contact Detail
+        </ion-card-header>
+        <ion-card-content>
+            <!-- Hello World -->
+        </ion-card-content>
+        <ion-list>
+            <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input type="email" formControlName="EmailId" name="emailId" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Skype</ion-label>
+                <ion-input type="text" formControlName="SkypeId" name="skypeId"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Phone</ion-label>
+                <ion-input type="tel" formControlName="PhoneNumber" name="phoneNo" required></ion-input>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+    <button ion-button type="submit" block [disabled]="!newform.form.valid">POST</button>
+</form>

@@ -1,17 +1,19 @@
 import { Component , OnInit, Inject } from '@angular/core';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
+import { Client } from 'elasticsearch';
 import {Http, Headers, Response, RequestOptions, URLSearchParams,Jsonp} from '@angular/http';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import {FiltersPage}   from '../filters/filters.page';
 import {CatalogPage} from '../catalog/catalog.page';
 import { IPostService, PostService } from '../post/post.service';
+import {IElasticSearchService , ElasticSearchService} from '../../app/services/elasticsearch.service';
 
-@Component({
+@Component({ 
   selector: 'search-page',
   templateUrl: 'search.html',
   entryComponents: [CatalogPage],
-  providers:[PostService]
+  providers:[PostService, ElasticSearchService]
 })
 
 export class SearchPage implements OnInit {
@@ -23,7 +25,10 @@ export class SearchPage implements OnInit {
   items: Observable<Array<string>>;
 
   constructor(public navCtrl: NavController, 
-  public navParams: NavParams, public modalCtrl: ModalController,@Inject(PostService) public postService: IPostService) {
+  public navParams: NavParams, public modalCtrl: ModalController,
+  @Inject(PostService) public postService: IPostService,
+  @Inject(ElasticSearchService) public es: IElasticSearchService
+  ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedCategory = navParams.get('category');
     this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
@@ -32,6 +37,8 @@ export class SearchPage implements OnInit {
                   { Title: 'Mouse', Price: '200' },
                   { Title: 'Mouse', Price: '200' }
                   ];
+
+      
   }
 
   gotoFiltersPage() {
@@ -40,11 +47,15 @@ export class SearchPage implements OnInit {
   }
   getByQuery(term:string){
       this.params.set('Title', term);
-      return this.postService.getByQuery(this.params);
+      return this.es.search(term,1);
   }
 
   ngOnInit(){
     //Event for Search item using temporary api
     this.items = this.search.valueChanges.debounceTime(400).distinctUntilChanged().switchMap(term => this.getByQuery(term));
+  }
+
+  gotoCatalogPage(item:any){
+         console.log(item);
   }
 }

@@ -14,13 +14,21 @@
 <ion-content no-padding>
   <ion-searchbar padding [formControl]="search"></ion-searchbar>
 
-  <ion-list padding> 
-    <ion-item *ngFor="let item of items | async">
+  <ion-list padding *ngIf="items.length"> 
+    <ion-item *ngFor="let item of items | async" (click)="gotoCatalogPage(item)">
       <ion-avatar item-left>
         <ion-icon name="search"></ion-icon>
       </ion-avatar>
       <h2>{{item.Title}}</h2>
       <p>{{item.Product.Category}}</p>
+    </ion-item>
+  </ion-list>
+   <ion-list padding *ngIf="items.length === 0"> 
+    <ion-item>
+      <ion-avatar item-left>
+        <ion-icon name=""></ion-icon>
+      </ion-avatar>
+      <h2>No Results</h2>
     </ion-item>
   </ion-list>
  <!--<catalog-page></catalog-page>-->

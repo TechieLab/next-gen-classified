@@ -70,4 +70,6 @@ export class PostingController extends BaseController<Post> implements IPostingC
             return res.json(item);
         });
      }
+
+     
 }

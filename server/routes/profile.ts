@@ -18,6 +18,7 @@ export class ProfileRoute{
 
         this.getById();
         this.upload();
+        this.update()
     }
 
     getById() {
@@ -28,7 +29,7 @@ export class ProfileRoute{
     }
 
     update() {
-        this.app.get('/api/profile', (req: Request, res: Response) => {
+        this.app.put('/api/profile', (req: Request, res: Response) => {
             self.setCollection();
             self.controller.updateProfile(req, res);
         });

@@ -15,10 +15,14 @@
     <div>
         <ion-card>
             <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png" />
+            {{lastImage}}
+            <button buttons-end ion-button (click)="openActionSheet()">
+                  <ion-icon name="pencil"></ion-icon> Edit
+            </button>
             <ion-card-content>
                 <ion-card-title>
-                   {{profile.FullName}}
-                </ion-card-title>               
+                    {{profile.FullName}}
+                </ion-card-title>
             </ion-card-content>
         </ion-card>
         <ion-card>

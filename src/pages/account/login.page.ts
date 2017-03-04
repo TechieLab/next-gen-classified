@@ -54,6 +54,7 @@ export class LoginPage implements OnInit {
             if (result.Success) {
                 StorageService.setToken(result.Content);
                 this.navCtrl.setRoot(HomePage);
+                
             } else {
                 this.errorMsg = result.Message;
             }

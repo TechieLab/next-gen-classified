@@ -61,7 +61,7 @@ export class RegisterPage {
         });
     }
 
-    onSubmitForm() {
+    onSubmitForm() {        
         this.accountService.register(this.signUpForm.value).subscribe((result) => {
             if (result.Success) {
                 this.isAccountCreated = true;

@@ -2,7 +2,6 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { JsonpModule } from '@angular/http';
-import { ReactiveFormsModule } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
@@ -21,7 +20,6 @@ import { AppComponents, featuredComponents } from './common/componentConstants';
     FormsModule,
     CommonModule,
     JsonpModule,
-    ReactiveFormsModule,
 
     AppModules,
 

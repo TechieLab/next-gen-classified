@@ -15,8 +15,9 @@ export class UserController extends BaseController<User> implements IUserControl
         super(userService);
     }
 
-    upload(req: any, res: any) {
+    public upload(req: any, res: any) {
         console.log(req.file);
+        
         this.userService.getById(req['userId'], (err, user) => {
             if (err) logger.log('debug', ' getById err---', err);
 

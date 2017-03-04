@@ -66,14 +66,14 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             logger.debug('debug', 'reading all data for user..' + userId);
             callback(err, item);
         });
-    }
+    }   
 
     private getByPage(userId: string, query: any, sortKey: string, sortOrder: string, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
 
         var options;
 
         if (userId) {
-            query.UserId = new ObjectID(userId);
+            query.UserId = userId;
         }
 
         if (sortKey && sortOrder) {
@@ -98,7 +98,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public create(data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called create data..');
+        logger.debug('debug', 'called create data--------', data);
         if (!data) {
             callback(new Error('Empty'), null);
         }
@@ -111,7 +111,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {
-        logger.debug('debug', 'called bulk data..', data);
+        logger.debug('debug', 'called bulk data-------', data);
 
         if (!data) {
             callback(new Error("Empty data.."), null);
@@ -126,8 +126,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called update data..', data);
-        this.collection.findOneAndUpdate({ _id: new ObjectID(id)}, data, (err, res) => {
+        logger.debug('debug', 'called update data-----', data);
+        this.collection.findOneAndUpdate({ _id: id}, data, (err, res) => {
             logger.debug('debug', 'updated data with id------' + id);
 
             callback(err, res.value);
@@ -135,8 +135,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called update data..', data);
-        this.collection.findOneAndReplace({ _id: new ObjectID(id) }, data, (err, res) => {
+        logger.debug('debug', 'called update data--------', data);
+        this.collection.findOneAndReplace({ _id:id }, data, (err, res) => {
             logger.debug('debug', 'replaced data with id------' + id);
 
             callback(err, res.value);
@@ -145,9 +145,9 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
 
     public delete(id: string, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called delele data..');
+        logger.debug('debug', 'called delele data---------',id);
 
-        this.collection.findOneAndDelete({ _id: new ObjectID(id)}, (err, res) => {
+        this.collection.findOneAndDelete({ _id: id}, (err, res) => {
             logger.debug('debug', 'deleleed data..');
 
             callback(err, res.value);

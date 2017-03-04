@@ -4,7 +4,7 @@ import logger = require('winston');
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IAccountService, AccountService } from '../services/accountService';
-import { Post } from '../models/post';
+import { User } from '../models/user';
 import { Result } from '../models/result';
 import { Register } from '../models/account';
 import { Login } from '../models/account';
@@ -27,7 +27,9 @@ export class AccountController implements IAccountController {
     }
 
     register(req: Request, res: Response) {
-        var registerModel = <Register>req.body;
+        var registerModel = <User>req.body;
+
+        logger.log('debug', 'account controller register------', registerModel);
 
         this.accountService.register(registerModel, (result) => {
             return res.json(result);

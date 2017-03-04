@@ -3,8 +3,7 @@ import {Contact} from './contact';
 import {Theme} from './theme';
 import {Media} from './media';
 export class Profile
-{
-     EmailId: string;
+{    
      FullName: string;
      DisplayName: string;   
      Signature : string;
@@ -14,7 +13,7 @@ export class Profile
      Media : Media;
 
      constructor(){
-         this.FullName = '';
+         this.FullName = '';    
          this.Address = new Address()
          this.Contact = new Contact();
          this.Media = new Media();

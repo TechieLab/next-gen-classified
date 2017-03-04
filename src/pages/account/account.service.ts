@@ -31,7 +31,14 @@ export class AccountService implements IAccountService {
     }
 
     register(data: SignUp) {
-        return this.http.post(this.url + '/signup', data, this.options)
+        var user = new User();
+        user.Password = data.Password;
+        user.UserName = data.UserName;
+        user.EmailId = data.EmailId;
+        user.Profile.FullName = data.FullName;
+        user.Profile.Contact.EmailId = data.EmailId;      
+
+        return this.http.post(this.url + '/signup', user, this.options)
             .map(this.extractData).catch(this.handleError);
     }
 

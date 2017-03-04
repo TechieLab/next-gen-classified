@@ -7,7 +7,7 @@
             </ion-card-title>
             <ion-item>
                 <ion-label floating>Full Name</ion-label>
-                <ion-input type="file" formControlName="FullName" name="fullName" required></ion-input>
+                <ion-input type="file" formControlName="FullName" name="fullName"  [(ngModel)]="profile.FullName" required></ion-input>
             </ion-item>
         </ion-card-content>
     </ion-card>
@@ -21,17 +21,17 @@
         <ion-list>
             <ion-item>
                 <ion-label floating>Email</ion-label>
-                <ion-input type="email" formControlName="EmailId" name="emailId" required></ion-input>
+                <ion-input type="email" formControlName="EmailId" name="emailId" [(ngModel)]="profile.Contact.EmailId" required></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Skype</ion-label>
-                <ion-input type="text" formControlName="SkypeId" name="skypeId"></ion-input>
+                <ion-input type="text" formControlName="SkypeId"  [(ngModel)]="profile.Contact.SkypeId" name="skypeId"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Phone</ion-label>
-                <ion-input type="tel" formControlName="PhoneNumber" name="phoneNo" required></ion-input>
+                <ion-input type="tel" formControlName="PhoneNumber" name="phoneNo"  [(ngModel)]="profile.Contact.PhoneNumber" required></ion-input>
             </ion-item>
         </ion-list>
     </ion-card>
-    <button ion-button type="submit" block [disabled]="!newform.form.valid">POST</button>
+    <button ion-button type="submit" block [disabled]="!newform.form.valid">Submit</button>
 </form>

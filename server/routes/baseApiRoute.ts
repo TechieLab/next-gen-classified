@@ -67,7 +67,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             logger.log('debug', req.path);
             logger.log('debug', req['userId']);
 
-            if (req.path.indexOf('users') > 0 && req.path.indexOf('account/register') > 0) {
+            if (req.path.indexOf('users') > 0 || req.path.indexOf('account/register') > 0) {
                 return next();
             } else {
                 return middleware(req, res, next);
@@ -82,7 +82,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
     }
 
     get() {
-        this.app.get('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+        this.app.get('/api/' + this.apiName, (req: Request, res: Response) => {
             self.setCollection(this.apiName);
             logger.debug("route name ----" + this.apiName);
             self.baseController.get(req, res);
@@ -90,7 +90,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
     }
 
     getAll() {
-        this.app.get('/api/all-' + this.apiName + '/', (req: Request, res: Response) => {
+        this.app.get('/api/all-' + this.apiName, (req: Request, res: Response) => {
             self.setCollection(this.apiName);
             logger.debug("route name ----" + this.apiName);
             self.baseController.getAll(req, res);
@@ -105,21 +105,21 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
     }
 
     post() {
-        this.app.post('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+        this.app.post('/api/' + this.apiName, (req: Request, res: Response) => {
             self.setCollection(this.apiName);
             self.baseController.create(req, res);
         });
     }
 
     put() {
-        this.app.put('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+        this.app.put('/api/' + this.apiName, (req: Request, res: Response) => {
             self.setCollection(this.apiName);
             self.baseController.update(req, res);
         });
     }
 
     del() {
-        this.app.delete('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+        this.app.delete('/api/' + this.apiName, (req: Request, res: Response) => {
             self.setCollection(this.apiName);
             self.baseController.delete(req, res);
         });

@@ -12,7 +12,7 @@ import { Session } from '../models/session';
 var jwt = require('jsonwebtoken');
 
 export interface IAccountService {
-    register(data: Register, callback: (item: Result) => any);
+    register(data: User, callback: (item: Result) => any);
     verify(token: string, callback: (item: Result) => any);
     getUserInfo(id: string, callback: (errr: Error, item: UserInfo) => any);
     changePassword(id: string, data: any, callback: (errr: Error, item: Result) => any);
@@ -28,26 +28,18 @@ export class AccountService implements IAccountService {
         this.mailService = new MailService();
     }
 
-    public register(data: Register, callback: (item: Result) => any) {
-        var user = new User();
-        user.UserName = data.UserName;
-        user.Password = data.Password;
-        user.EmailId = data.EmailId;
-        user.Token = this.generateToken().token;
-        user.TokenValidity = this.generateToken().expries;
-
-        if (user.Profile) {
-            user.Profile.FullName = data.FullName;
-        }
-
-        this.repository.create(user, (err, item) => {
+    public register(data: User, callback: (item: Result) => any) {       
+        data.Token = this.generateToken().token;
+        data.TokenValidity = this.generateToken().expries;
+        
+        this.repository.create(data, (err, item) => {
             var result = new Result();
 
             if (!err) {
                 result.Message = "Account Created Succesfully";
                 result.Success = true;
 
-                var url = "http://localhost:3000/account/verify/" + user.Token;
+                var url = "http://localhost:3000/account/verify/" + data.Token;
 
                 var message = "Thank you for create an account on classifed.realpage.com. Your Username is " + item.UserName + "<br />";
                 message += "You may now activate you account by clicking this link or copying and pasting it into your browser <br />";

@@ -28,7 +28,7 @@ export class ProfileController {
 
                 user.Profile = <Profile>req.body;
 
-                self.userService.put(user._id, user, (err, result) => {
+                self.userService.update(user._id, user, (err, result) => {
 
                     return res.json(user.Profile);
                 });

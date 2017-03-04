@@ -72,6 +72,8 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     public update(req: Request, res: Response) {
         var data = <TEntity>req.body;
 
+         logger.log('debug', 'base controller  update  data---', data);
+
         return this.baseService.update(req.params.id, data, (err, item) => {
             if (err) logger.log('debug', 'update  err---', err);
 
@@ -80,6 +82,8 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public delete(req: Request, res: Response) {
+         logger.log('debug', 'base controller  delete  data---', req.params.id);
+
         return this.baseService.delete(req.params.id, (err, item) => {
             if (err) logger.log('debug', 'delete  err---', err);
 

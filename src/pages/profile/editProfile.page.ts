@@ -50,7 +50,14 @@ export class EditProfilePage implements OnInit {
   }
 
   onSubmitForm() {
-    this.profile = this.editProfileForm.value;
+    var data = this.editProfileForm.value;
+
+    if (data) {
+      this.profile.FullName = data.FullName;
+      this.profile.Contact.EmailId = data.EmailId;
+      this.profile.Contact.PhoneNumber = data.PhoneNumber;
+    }
+
 
     this.profileService.put(this.profile).subscribe((result) => {
       if (result) {

@@ -84,7 +84,7 @@ export class MyApp implements OnInit {
     });
   }
 
-  ngOnInit() { // THERE IT IS!!!
+  ngOnInit() { // THERE IT IS!!!  debugger;
     this.isUserAuthenticated = this.authGuard.canActivate();
     this.currentUserName = this.authGuard.getCurrentUserName();
     if (this.isUserAuthenticated) {

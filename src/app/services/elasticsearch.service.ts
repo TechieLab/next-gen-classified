@@ -14,14 +14,14 @@ export interface IElasticSearchService{
 @Injectable()
 export class ElasticSearchService implements IElasticSearchService{
     
-    private client;
+    private client : Client;
     constructor(){
          if (!this.client) this.connect();
     }
 
    connect(){
         this.client = new Client({
-            host: 'http://localhost:9200',
+            host: 'http://localhost:3000',
             log: 'trace'
         });
    }    

@@ -14,8 +14,6 @@ export class UserRoute extends BaseApiRoute<User> implements IBaseApiRoute<User>
         super(app, 'users');
 
         self = this;
-
-        this.getById();
     }
   
     setCollection() {

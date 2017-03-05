@@ -37,12 +37,12 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
         });
     }
 
-    get() {
-        this.app.get('/api/' + this.apiName + '/', (req: Request, res: Response) => {
-            logger.debug("route name ----" + this.apiName);
-            this.postingController.get(req, res);
-        });
-    }
+    // get() {
+    //     this.app.get('/api/' + this.apiName + '/', (req: Request, res: Response) => {
+    //         logger.debug("route name ----" + this.apiName);
+    //         this.postingController.get(req, res);
+    //     });
+    // }
 
     upload() {      
 

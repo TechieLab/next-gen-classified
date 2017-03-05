@@ -47,6 +47,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
      public getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
+         logger.debug('base repo getByUserId...' + userId, query);
         if (query) {
             this.getByPage(userId, query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
         } else {
@@ -62,7 +63,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     private getAll(userId: string, callback: (err: Error, item: Array<TEntity>) => any) {
-        this.collection.find({ UserId: userId }).toArray(function (err, item) {
+        this.collection.find({ UserId: new ObjectID(userId) }).toArray(function (err, item) {
             logger.debug('debug', 'reading all data for user..' + userId);
             callback(err, item);
         });

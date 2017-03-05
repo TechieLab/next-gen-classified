@@ -57,19 +57,19 @@ export class PostingController extends BaseController<Post> implements IPostingC
          });
      }
 
-     get(req : any , res : any){
+    //  get(req : any , res : any){
         
-        req.query.UserId = <ObjectID>(req['userId']);
-        req.query.Title = new RegExp('^' + req.query.Title);
+    //     req.query.UserId = <ObjectID>(req['userId']);
+    //     req.query.Title = new RegExp('^' + req.query.Title);
 
-        logger.log('debug', 'base controller get');
+    //     logger.log('debug', 'postings controller get');
 
-        this.postingService.get(req.query, (err, item) => {
-            if (err) logger.log('debug', 'get err---', err);
+    //     this.postingService.get(req.query, (err, item) => {
+    //         if (err) logger.log('debug', 'get err---', err);
 
-            return res.json(item);
-        });
-     }
+    //         return res.json(item);
+    //     });
+    //  }
 
      
 }

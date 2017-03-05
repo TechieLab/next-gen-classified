@@ -29,10 +29,12 @@ export class MyApp implements OnInit {
   constructor(
     public platform: Platform,
     public menu: MenuController,
+   
     @Inject(AuthGuard) public authGuard: IAuthGuard,
     @Inject(AccountService) public accountService: IAccountService
 
   ) {
+ 
     this.initializeApp();
 
     // set our app's pages

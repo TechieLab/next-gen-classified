@@ -23,7 +23,7 @@ export class SearchPage implements OnInit {
   categories: string[];
   search : FormControl;
   params: URLSearchParams;
-  items: Array<string>;
+  items: any;
   seachTextModel: string;
   results$: Subject<Array<any>> = new Subject<Array<any>>();
   message: string = "";
@@ -61,13 +61,19 @@ export class SearchPage implements OnInit {
   ngOnInit() {
     //Event for Search item using temporary api
     // this.search.valueChanges.subscribe(term => this.getByQuery(term));
-       this.search
-            .valueChanges.subscribe(term =>{
-                // perform search operation outside of angular boundaries
-                this.es.search().subscribe((response) =>{
-                    this.items = response;
-                })              
-            })          
+      
+       this.search.valueChanges.subscribe(term =>{
+       let entity = {
+                    size: 20,
+                    from: 0,
+                    query: {match: {Title: { query: `${term}`,fuzziness: 2 } }
+                    }
+        };
+        // perform search operation outside of angular boundaries
+        this.es.search(entity).subscribe((response:any) =>{
+            this.items = response.hits.hits;
+        })              
+    })          
   }
 
   gotoCatalogPage(item: any) {

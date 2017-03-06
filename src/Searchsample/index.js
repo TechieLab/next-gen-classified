@@ -39,10 +39,10 @@
   // only for testing purposes
   // all calls should be initiated through the module
   const test = function test() {
-    const articlesRaw = fs.readFileSync('data.json');
+    const articlesRaw = fs.readFileSync('post.json');
     const articles = JSON.parse(articlesRaw);
     console.log(`${articles.length} items parsed from data file`);
-    bulkIndex('library', 'article', articles);
+    bulkIndex('post', 'article', articles);
   };
 
   test();
@@ -51,3 +51,5 @@
     bulkIndex
   };
 } ());
+
+

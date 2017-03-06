@@ -1,0 +1,74 @@
+[{
+       
+        "Status" : "inactive",
+        "CreatedBy" : null,
+        "PostId" : 0,
+        "AdType" : "",
+        "Title" : "iphone",
+        "UserId" : "58ac694306d96a1a44e5cd49",
+        "Product" : {
+                "Status" : "inactive",
+               
+                "Name" : "",
+                "Category" : "mobile",
+                "Description" : {
+                        "Title" : "",
+                        "IsNew" : false,
+                        "IsUsed" : false,
+                        "Features" : [ ],
+                        "IsBillAvaialbe" : false,
+                        "PurchasedOn" : "2012",
+                        "Price" : "56000",
+                        "Brand" : "apple",
+                        "Model" : "",
+                        "Defects" : ""
+                },
+                "Photos" : [ ],
+                "Review" : {
+                        "Status" : "inactive",
+                       
+                        "Title" : "",
+                        "Description" : "",
+                        "Rating" : 0
+                }
+        },
+        "Location" : "hyderabad"
+},
+{
+       
+        "Status" : "inactive",
+        "CreatedBy" : null,
+        "PostId" : 0,
+        "AdType" : "",
+        "Title" : "new device",
+        "UserId" : "58ac694306d96a1a44e5cd49",
+        "Product" : {
+                "Status" : "inactive",
+               
+                "Name" : "",
+                "Category" : "mobile",
+                "Description" : {
+                        "Title" : "",
+                        "IsNew" : false,
+                        "IsUsed" : false,
+                        "Features" : [ ],
+                        "IsBillAvaialbe" : false,
+                        "PurchasedOn" : "2012",
+                        "Price" : "56000",
+                        "Brand" : "apple",
+                        "Model" : "",
+                        "Defects" : ""
+                },
+                "Photos" : [ ],
+                "Review" : {
+                        "Status" : "inactive",
+                       
+                        "Title" : "",
+                        "Description" : "",
+                        "Rating" : 0
+                }
+        },
+        "Location" : "hyderabad"
+}
+
+]

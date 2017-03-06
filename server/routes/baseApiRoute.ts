@@ -67,7 +67,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             logger.log('debug', req.path);
             logger.log('debug', req['userId']);
 
-            if (req.path.indexOf('users') > 0 || req.path.indexOf('account/register') > 0) {
+            if (req.path.indexOf('users') > 0 || req.path.indexOf('account/register') > 0 || req.path.indexOf('all-posts')) {
                 return next();
             } else {
                 return middleware(req, res, next);

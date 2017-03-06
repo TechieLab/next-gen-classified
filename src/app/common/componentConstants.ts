@@ -13,6 +13,7 @@ import { FeedbackPage } from '../../pages/feedback/feedback.page';
 import { HelpPage } from '../../pages/help/help.page';
 import { Rating } from '../components/rating';
 import { CategoryComponent } from '../components/category';
+import {AuthGuard} from '../services/guard.service';
 
 export const AppComponents = [
     HeaderComponent,
@@ -37,9 +38,9 @@ export const featuredComponents = [
 ];
 
 export const pages = [
-    { title: 'Home', component: HomePage, name: "home" },
+    { title: 'Home', component: HomePage, name: "home"},
     { title: 'Admin', component: AdminPage, name: "person" },
-    { title: 'My Postings', component: MyPostingsPage, name: "paper" },
+    { title: 'My Postings', component: MyPostingsPage, name: "paper" , canActivate: [AuthGuard] },
     { title: 'Favourites', component: SettingsPage, name: "star" },
     { title: 'About', component: HomePage, name: "book" },
     { title: 'Settings', component: SettingsPage, name: "settings" },

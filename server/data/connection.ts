@@ -1,7 +1,7 @@
 import { Db, MongoClient} from 'mongodb';
 import logger = require('winston');
 
-const url: string = 'mongodb://localhost:27017/classifieddb';
+const url: string = 'mongodb://168.63.255.189:27017/classifieddb';
 
 export class MongoDBConnection {
     private static isConnected: boolean = false;

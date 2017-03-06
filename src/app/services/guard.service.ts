@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import {LoginPage} from './../../pages/account/login.page';
+import { CanActivate } from '@angular/router';
 
-export interface IAuthGuard{
+export interface IAuthGuard extends CanActivate {
     canActivate();
     getCurrentUserName();
+
 }
 
 @Injectable()
-export class AuthGuard implements IAuthGuard{
-  
-  constructor(){}
+export class AuthGuard implements IAuthGuard {
 
-  canActivate() {
+    constructor() { }
+
+    canActivate() {
         if (localStorage.getItem('Auth_Token')) {
             // logged in so return true
             return true;
-        }else{
-            return false
+        } else {    
+            return false;
         }
     }
 
-    getCurrentUserName(){
-        if(localStorage.getItem('User_Name')){
+    getCurrentUserName() {
+        if (localStorage.getItem('User_Name')) {
             return localStorage.getItem('User_Name');
         }
     }

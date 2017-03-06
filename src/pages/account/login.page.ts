@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Inject } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
@@ -38,10 +38,11 @@ export class LoginPage implements OnInit {
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public builder: FormBuilder,
+        public toastCtrl: ToastController,
         @Inject(AccountService) public accountService: IAccountService, @Inject(UserService) public userService: IUserService
     ) {
 
-        this.errorMsg = ''; 
+        this.errorMsg = '';
     }
 
     ngOnInit() {
@@ -54,9 +55,9 @@ export class LoginPage implements OnInit {
             if (result.Success) {
                 StorageService.setToken(result.Content);
                 this.navCtrl.setRoot(HomePage);
-                
+
             } else {
-                this.errorMsg = result.Message;
+               this.presentToast(result.Message);
             }
         });
     }
@@ -69,7 +70,16 @@ export class LoginPage implements OnInit {
         this.navCtrl.push(RegisterPage);
     }
 
-    logOut(){
-          this.accountService.logout();
+    logOut() {
+        this.accountService.logout();
+    }
+
+    private presentToast(text) {
+        let toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
     }
 }

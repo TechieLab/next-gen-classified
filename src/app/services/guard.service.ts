@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { CanActivate } from '@angular/router';
 import { LoginPage } from './../../pages/account/login.page';
 
-export interface IAuthGuard extends CanActivate {
+export interface IAuthGuard  {
     canActivate();
     getCurrentUserName();
 

@@ -28,11 +28,11 @@ export class ElasticSearchService {
         });
    }    
 
-    search() : Observable<Array<any>>{
-        
+    search(entity:any) : Observable<Array<any>>{
+        let body = JSON.stringify(entity);
         this.setAuthHeader();
-        var url = this.url + '/library/article/_search';
-        return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
+        var url = this.url + '/post/_search';
+        return this.http.post(url, body,this.options).map(this.extractData).catch(this.handleError);
     }
     
        private extractData(res: Response) {

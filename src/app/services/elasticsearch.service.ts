@@ -1,48 +1,60 @@
-import 'rxjs/add/operator/toPromise';
-
-import {Component , Injectable } from '@angular/core';
+import {Component , Injectable, Optional } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http, URLSearchParams } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import {Post} from '../models/post';
 import { Client, SearchResponse } from "elasticsearch";
+import { StorageService } from './storage.service';
 
-
-export interface IElasticSearchService{
-   search(val:string,offset:any)
-}
 
 @Injectable()
-export class ElasticSearchService implements IElasticSearchService{
-    
+export class ElasticSearchService {
+
+    url: string;
+    entity: any;
+    options: RequestOptions;
     private client : Client;
-    constructor(){
+
+    constructor(@Optional() public http: Http){
          if (!this.client) this.connect();
+        
+        this.url = 'http://localhost:9200' ;
+        this.setAuthHeader();
     }
 
    connect(){
         this.client = new Client({
-            host: 'http://localhost:3000',
+            host: 'http://localhost:9200',
             log: 'trace'
         });
    }    
 
-    search(term, offset){
-      if (term) {
-            console.log(term);
-            var query = {
-                         match: {
-                                _all: term
-                          }
-                       };
-           this.client.search({
-                index: 'recipes',
-                type:  'recipe',
-                body: {
-                    size: 10,
-                    from: (offset || 0) * 10,
-                    query: query
-                }
-            }).then(function(){});
-        } 
+    search() : Observable<Array<any>>{
+        
+        this.setAuthHeader();
+        var url = this.url + '/library/article/_search';
+        return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
+    }
+    
+       private extractData(res: Response) {
+        let body = res.json();
+        return body.data || body;
+    }
+
+    private handleError(error: any) {
+        // In a real world app, we might use a remote logging infrastructure
+        // We'd also dig deeper into the error to get a better message
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+
+        console.error(errMsg); // log to console instead
+        return Observable.throw(errMsg);
+    }
+
+
+   private setAuthHeader() {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': StorageService.getToken() });
+        this.options = new RequestOptions({
+            headers: headers
+        });
     }
 }

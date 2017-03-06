@@ -1,13 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import 'rxjs/add/operator/toPromise';
+import { Component, OnInit, Inject, NgZone } from '@angular/core';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { Client } from 'elasticsearch';
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { Subject ,Observable } from 'rxjs';
 import { FiltersPage } from '../filters/filters.page';
 import { CatalogPage } from '../catalog/catalog.page';
 import { IPostService, PostService } from '../post/post.service';
-import { IElasticSearchService, ElasticSearchService } from '../../app/services/elasticsearch.service';
+import { ElasticSearchService } from '../../app/services/elasticsearch.service';
 
 @Component({
   selector: 'search-page',
@@ -23,11 +24,15 @@ export class SearchPage implements OnInit {
   search : FormControl;
   params: URLSearchParams;
   items: Array<string>;
+  seachTextModel: string;
+  results$: Subject<Array<any>> = new Subject<Array<any>>();
+  message: string = "";
+  active: boolean = false;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams, public modalCtrl: ModalController,
+    public navParams: NavParams, public modalCtrl: ModalController,private _ngZone: NgZone,
     @Inject(PostService) public postService: IPostService,
-    @Inject(ElasticSearchService) public es: IElasticSearchService
+     public es: ElasticSearchService
   ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedCategory = navParams.get('category');
@@ -49,16 +54,29 @@ export class SearchPage implements OnInit {
   }
 
   getByQuery(term: string) {
-    this.params.set('Title', term);
-    return this.es.search(term, 1);
+   //,1 this.params.set('Title', term);
+   // return this.es.search(term);
   }
 
   ngOnInit() {
     //Event for Search item using temporary api
-    this.search.valueChanges.subscribe(term => this.getByQuery(term));
+    // this.search.valueChanges.subscribe(term => this.getByQuery(term));
+       this.search
+            .valueChanges.subscribe(term =>{
+                // perform search operation outside of angular boundaries
+                this.es.search().subscribe((response) =>{
+                    this.items = response;
+                })              
+            })          
   }
 
   gotoCatalogPage(item: any) {
     console.log(item);
   }
+
+  
+  handleError(): any {
+        this.message = "something went wrong";
+    }
+
 }

@@ -2,8 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { PostNewAdPage } from '../post/postnewad.page';
+import { LoginPage } from '../account/login.page';
 import { Post } from '../../app/models/post';
 import { IPostService, PostService } from '../post/post.service';
+import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';
 
 @Component({
     selector: 'my-postings-page',
@@ -15,19 +17,26 @@ export class MyPostingsPage implements OnInit {
     subCategories: string[];
     isSubCategorySelected: boolean;
     myPostingsData: Array<Post>;
+    private isUserAuthenticated: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, @Inject(PostService) public postService: IPostService) {
+    constructor(public navCtrl: NavController, public navParams: NavParams,
+        @Inject(AuthGuard) public authGuard: IAuthGuard,
+        @Inject(PostService) public postService: IPostService) {
         // If we navigated to this page, we will have an item available as a nav param
-        
+
+        //this.navCtrl.pop();
     }
 
-
     ngOnInit() {
-        this.getMyPostingsData();
+        this.isUserAuthenticated = this.authGuard.canActivate();
+        if (!this.isUserAuthenticated) {
+            this.navCtrl.setRoot(LoginPage);
+        } else {
+            this.getMyPostingsData();
+        }
     }
 
     getMyPostingsData() {
-
         this.postService.get().subscribe((response) => {
             this.myPostingsData = response
         });
@@ -37,7 +46,7 @@ export class MyPostingsPage implements OnInit {
         this.navCtrl.push(PostDetailsPage, { _id: itemId });
     }
 
-    gotoAddPostingsPage(){
+    gotoAddPostingsPage() {
         this.navCtrl.push(PostNewAdPage);
     }
 }

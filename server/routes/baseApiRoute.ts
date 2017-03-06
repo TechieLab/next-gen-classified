@@ -42,17 +42,19 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
                 });
 
             } else {
+                next();
 
                 // if there is no token
                 // return an error
-                return res.status(403).send({
-                    success: false,
-                    message: 'No token provided.'
-                });
+                // return res.status(403).send({
+                //     success: false,
+                //     message: 'No token provided.'
+                // });                
             }
         });
 
-        app.use(this.except(apiRoutes));
+        //app.use(this.except(apiRoutes));
+        app.use(apiRoutes);
 
         this.get();
         this.getAll();
@@ -62,18 +64,18 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         this.del();
     }
 
-    except(middleware) {
-        return function (req, res, next) {
-            logger.log('debug', req.path);
-            logger.log('debug', req['userId']);
+    // except(middleware) {
+    //     return function (req, res, next) {
+    //         logger.log('debug', req.path);
+    //         logger.log('debug', req['userId']);
 
-            if (req.path.indexOf('users') > 0 || req.path.indexOf('account/register') > 0 || req.path.indexOf('all-posts')) {
-                return next();
-            } else {
-                return middleware(req, res, next);
-            }
-        };
-    }
+    //         if (req.path.indexOf('users') > 0 || req.path.indexOf('account/register') > 0) { //|| req.path.indexOf('all-posts')
+    //             return next();
+    //         } else {
+    //             return middleware(req, res, next);
+    //         }
+    //     };
+    // }
 
     setCollection(apiName) {
         var repository = new BaseRepository(apiName);

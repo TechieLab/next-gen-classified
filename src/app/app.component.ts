@@ -1,5 +1,5 @@
 import { Component, ViewChild, Inject, OnInit } from '@angular/core';
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Events, Platform, MenuController, Nav } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
@@ -29,12 +29,12 @@ export class MyApp implements OnInit {
   constructor(
     public platform: Platform,
     public menu: MenuController,
-   
+    public events: Events,
     @Inject(AuthGuard) public authGuard: IAuthGuard,
     @Inject(AccountService) public accountService: IAccountService
 
   ) {
- 
+
     this.initializeApp();
 
     // set our app's pages
@@ -59,7 +59,7 @@ export class MyApp implements OnInit {
 
   gotoProfilePage() {
     this.menu.close();
-    this.nav.push(ProfilePage); 
+    this.nav.push(ProfilePage);
   }
 
   openPage(page) {
@@ -76,6 +76,10 @@ export class MyApp implements OnInit {
 
   getUserContext() {
     this.isUserAuthenticated = false;
+    this.events.subscribe('user:login', (res) => {
+      this.isUserAuthenticated = this.authGuard.canActivate();
+      this.currentUserName = this.authGuard.getCurrentUserName();
+    });
   }
 
   logoff() {

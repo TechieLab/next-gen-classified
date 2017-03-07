@@ -5,7 +5,7 @@ const User_Name: string = 'User_Name';
 export class StorageService {
 
     static getItem(key: string): any {
-        return JSON.parse(localStorage.getItem(key));
+        return localStorage.getItem(key);
     }
 
     static setItem(key: string, item: any): any {

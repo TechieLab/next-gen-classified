@@ -28,6 +28,8 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         apiRoutes.use(function (req: Request, res: Response, next) {
             var token = req.body.token || req.query.token || req.headers['authorization'];
 
+            console.log(token);
+
             // decode token
             if (token) {
                 // verifies secret and checks exp

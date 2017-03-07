@@ -14,13 +14,15 @@ import { HelpPage } from '../../pages/help/help.page';
 import { Rating } from '../components/rating';
 import { CategoryComponent } from '../components/category';
 
+import {OrderBy} from '../pipes/orderBy';
+
 export const AppComponents = [
     HeaderComponent,
     HomePage,
     Welcome,
     SettingsPage,
     NotificationPage,
-    CatalogPage,    
+    CatalogPage,
     MyPostingsPage,
     FiltersPage,
     FeedbackPage,
@@ -36,14 +38,21 @@ export const featuredComponents = [
     CategoryComponent
 ];
 
-export const pages = [
-    { title: 'Home', component: HomePage, name: "home" },
-    { title: 'Admin', component: AdminPage, name: "person" },
-    { title: 'My Postings', component: MyPostingsPage, name: "paper" },
-    { title: 'Favourites', component: SettingsPage, name: "star" },
-    { title: 'About', component: HomePage, name: "book" },
-    { title: 'Settings', component: SettingsPage, name: "settings" },
-    { title: 'Feedback', component: FeedbackPage, name: "paper" },
-    { title: 'Help', component: HelpPage, name: "help-circle" }
-  
+export const customPipes = [
+    OrderBy
+];
+
+export const appPages = [
+    { title: 'Home', component: HomePage, name: "home", seq: 1 },
+    { title: 'About', component: HomePage, name: "book", seq: 7 },
+    { title: 'Feedback', component: FeedbackPage, name: "paper", seq: 6 },
+    { title: 'Help', component: HelpPage, name: "help-circle", seq: 8 }
+
+];
+
+export const authPages = [
+    { title: 'Admin', component: AdminPage, name: "person", seq: 2 },
+    { title: 'My Postings', component: MyPostingsPage, name: "paper", seq: 3 },
+    { title: 'Favourites', component: SettingsPage, name: "star", seq: 4 },
+    { title: 'Settings', component: SettingsPage, name: "settings", seq: 5 }
 ];

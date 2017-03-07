@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams } from 'ionic-angular';
+import { NavController, Events, ModalController, NavParams } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 import { NotificationPage } from '../../../pages/notification/notification.page';
@@ -10,7 +10,7 @@ import { CategoryComponent } from '../category';
 @Component({
     selector: 'header-component',
     templateUrl: 'header.html',
-    entryComponents: [CategoryComponent,SearchPage],
+    entryComponents: [CategoryComponent, SearchPage],
     providers: [VendorService],
 })
 
@@ -19,12 +19,20 @@ export class HeaderComponent {
     private selectedCategory: string;
     private ads: Array<any>;
     private items: Array<any>;
-    private city: String; 
+    private city: String;
 
-    constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public service: VendorService) {
+    constructor(public navCtrl: NavController,
+        public modalCtrl: ModalController,
+        public navParams: NavParams,
+        public events: Events,
+      
+        public service: VendorService) {
         this.selectedCategory = 'Select Category';
         //this.category = new CategoryComponent();
 
+        this.events.subscribe('category:selected', (res) => {
+            this.selectedCategory = res.name;
+        });
     }
 
     ngOnInit() {
@@ -34,8 +42,8 @@ export class HeaderComponent {
             });
         }).catch((error) => {
             console.log('Error getting Location', error)
-        });       
-    }
+        });
+    }  
 
     gotoNotificationPage() {
         this.navCtrl.push(NotificationPage, {

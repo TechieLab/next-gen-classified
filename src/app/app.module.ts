@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { JsonpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
+import {OrderBy} from '../app/pipes/orderBy';
 import { Constants } from './common/constants';
 import { AppModules } from './common/moduleConstants';
 import { AppProviders } from './common/providerConstants';
 
-import { AppComponents, featuredComponents } from './common/componentConstants';
+import { AppComponents, featuredComponents, customPipes } from './common/componentConstants';
 
 @NgModule({
   declarations: [

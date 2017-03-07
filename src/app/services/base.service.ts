@@ -40,7 +40,10 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     // this method used to get all records with without userId
     getAll(): Observable<Array<TEntity>> {
-        this.setAuthHeader();
+        let headers = new Headers({ 'Content-Type': 'application/json'});
+        this.options = new RequestOptions({
+            headers: headers
+        });
         var url = Constants.baseApi + '/api/all-' + this.entityName;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }

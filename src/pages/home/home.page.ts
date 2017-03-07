@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController,Events, NavParams } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 import { CatalogPage } from '../catalog/catalog.page';
@@ -26,27 +26,26 @@ export class HomePage implements OnInit {
     private city: String;
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,
+    constructor(public navCtrl: NavController, public navParams: NavParams,   public events: Events,
         @Inject(PostService) public postService: IPostService) {
         this.category = true;
-        this.selectedCategory = navParams.get('category');
-    }
+        this.selectedCategory = '';
 
-    ngOnInit() {
-        this.getFeaturedPostList();
-        this.getLatestPostList();
-    }
-
-    getFeaturedPostList() {
-        var params = new URLSearchParams();
-        params.set('IsFeatured', 'true');
-        this.postService.getByQuery(params).subscribe((response) => {
-            this.featuredPosts = response;
+        this.events.subscribe('category:selected', (res) => {
+            this.selectedCategory = res.name;
+            this.getLatestPostList();
         });
     }
 
-    getLatestPostList() { 
-        this.postService.getAll().subscribe((response) => {
+    ngOnInit() {
+        this.getLatestPostList();
+    }
+
+    getLatestPostList() {
+        var params = new URLSearchParams();
+        params.set('Category',  this.selectedCategory.toLowerCase());
+
+        this.postService.getAllByQuery(params).subscribe((response) => {
             this.latestPosts = response;
         });
     }

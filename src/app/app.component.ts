@@ -2,8 +2,9 @@ import { Component, ViewChild, Inject, OnInit } from '@angular/core';
 import { Events, Platform, MenuController, Nav } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
+import { OrderBy } from '../app/pipes/orderBy';
 
-import { AppComponents, featuredComponents, pages } from './common/componentConstants';
+import { AppComponents, featuredComponents, appPages, authPages } from './common/componentConstants';
 import { Welcome } from '../pages/welcome/welcome.page';
 import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
@@ -22,7 +23,7 @@ export class MyApp implements OnInit {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
-  pages: Array<{ title: string, component: any, name: any }>;
+  pages: Array<{ title: string, component: any, name: any, seq: number }>;
   private isUserAuthenticated: boolean = false;
   private currentUserName: string;
 
@@ -38,7 +39,7 @@ export class MyApp implements OnInit {
     this.initializeApp();
 
     // set our app's pages
-    this.pages = pages;
+    this.pages = appPages;
 
     this.getUserContext();
   }
@@ -76,10 +77,6 @@ export class MyApp implements OnInit {
 
   getUserContext() {
     this.isUserAuthenticated = false;
-    this.events.subscribe('user:login', (res) => {
-      this.isUserAuthenticated = this.authGuard.canActivate();
-      this.currentUserName = this.authGuard.getCurrentUserName();
-    });
   }
 
   logoff() {
@@ -87,17 +84,29 @@ export class MyApp implements OnInit {
       StorageService.removeToken();
       this.menu.close();
       this.rootPage = LoginPage;
+      this.isUserAuthenticated = false;
+      this.pages = appPages;
     });
   }
 
   ngOnInit() { // THERE IT IS!!!  debugger;
     this.isUserAuthenticated = this.authGuard.canActivate();
-    this.currentUserName = this.authGuard.getCurrentUserName();
+    this.currentUserName = StorageService.getItem('User_Name');
+
     if (this.isUserAuthenticated) {
-      // make HelloIonicPage the root (or first) page
       this.rootPage = HomePage;
+      this.pages = this.pages.concat(authPages);
     } else {
       this.rootPage = Welcome;
     }
+
+    this.events.subscribe('user:login', (res) => {
+      this.isUserAuthenticated = this.authGuard.canActivate();
+      this.currentUserName = StorageService.getItem('User_Name');
+
+      if (this.isUserAuthenticated) {
+        this.pages = this.pages.concat(authPages);
+      }
+    });
   }
 }

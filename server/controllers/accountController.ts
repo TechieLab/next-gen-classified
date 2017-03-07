@@ -60,15 +60,9 @@ export class AccountController implements IAccountController {
         });
     }
 
-    logout(req: Request, res: Response) {        
-        var token = req.headers['authorization'];
-        var user = jwt.verify(token, 'classified-application');
-
-        logger.log('debug', user);
-       
-        this.accountService.logout(user.userId, (result) => {
+    logout(req: Request, res: Response) {
+        this.accountService.logout(req["userId"], (result) => {
             return res.json(result);
-        });
+        });    
     }
-
 }

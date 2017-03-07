@@ -1,4 +1,6 @@
-import { Component,Output, EventEmitter } from '@angular/core';
+import { Component, Output, Inject } from '@angular/core';
+import { Events, NavController } from 'ionic-angular';
+import { ILookupService, LookupService } from '../services/lookup.service';
 
 @Component({
     selector: 'category-components',
@@ -13,25 +15,32 @@ import { Component,Output, EventEmitter } from '@angular/core';
      <ion-content> 
         <ion-list>
             <button ion-item *ngFor="let item of categories" (click)="itemSelected(item)">
-                {{ item }}
+                {{ item.name }}
             </button>  
         </ion-list>
     </ion-content>
   `
 })
 
+
 export class CategoryComponent {
     private categories: Array<string>;
-    @Output() changecategory = new EventEmitter();
 
-    constructor() {
-        this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
-
+    constructor(public navCtrl: NavController, public events: Events,
+        @Inject(LookupService) public lookupService: ILookupService, ) {        
+        this.getCategoryData();
     }
 
-    itemSelected(value:any) {
-        this.changecategory.subscribe((value) => {
-                 debugger;
-        })
+    itemSelected(value: any) {
+        this.events.publish('category:selected', value);
+        this.navCtrl.pop();
+    }
+
+    getCategoryData() {
+        this.lookupService.getCategories().subscribe((response) => {
+            if (response) {
+                this.categories = response
+            }
+        });
     }
 }

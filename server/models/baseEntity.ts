@@ -1,6 +1,7 @@
+import {ObjectID} from 'mongodb';
 
 export class BaseEntity {
-    _id: string;
+    _id: ObjectID;
     Status: string;
 
     CreatedBy: string;

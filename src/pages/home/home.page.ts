@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
-import { NavController,Events, NavParams } from 'ionic-angular';
+import { NavController, Events, NavParams } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 import { CatalogPage } from '../catalog/catalog.page';
@@ -26,7 +26,7 @@ export class HomePage implements OnInit {
     private city: String;
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,   public events: Events,
+    constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
         @Inject(PostService) public postService: IPostService) {
         this.category = true;
         this.selectedCategory = '';
@@ -42,9 +42,11 @@ export class HomePage implements OnInit {
     }
 
     getLatestPostList() {
-        var params = new URLSearchParams();
-        params.set('Category',  this.selectedCategory.toLowerCase());
-
+        var params;
+        if (this.selectedCategory.toLowerCase()) {
+            params = new URLSearchParams();
+            params.set('Category', this.selectedCategory.toLowerCase());
+        }
         this.postService.getAllByQuery(params).subscribe((response) => {
             this.latestPosts = response;
         });

@@ -62,7 +62,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     }
 
     getAllByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
-        this.setAuthHeader();
+        this.setHeader();
         var url = Constants.baseApi + '/api/all-' + this.entityName;
         this.options.search = params;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
@@ -107,6 +107,13 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     private setAuthHeader() {
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': StorageService.getToken() });
+        this.options = new RequestOptions({
+            headers: headers
+        });
+    }
+
+    private setHeader() {
+        let headers = new Headers({ 'Content-Type': 'application/json'});
         this.options = new RequestOptions({
             headers: headers
         });

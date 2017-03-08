@@ -40,7 +40,7 @@ export class StorageService {
     }
     static setToken(response: any): void {
         localStorage.setItem(User_Name, response.UserName);
-        localStorage.setItem(Auth_Token, JSON.stringify(response.Token));
+        localStorage.setItem(Auth_Token, response.Token);
     }
     static removeToken(): void {
         localStorage.removeItem(User_Name);

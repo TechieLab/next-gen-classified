@@ -70,7 +70,7 @@ export class AccountService implements IAccountService {
                         var tempUser = user[0];
                         tempUser.Status = 'active';
 
-                        this.repository.update(tempUser._id, tempUser, (error, res) => {
+                        this.repository.update(tempUser._id.toString(), tempUser, (error, res) => {
                             if (error) throw err;
 
                             result.Message = "Account Verified Succesfully";
@@ -111,7 +111,7 @@ export class AccountService implements IAccountService {
                         currentUser.Session = new Session();
                     }
                     currentUser.Session.AuthToken = this.generateAuthToken(currentUser);
-                    this.repository.update(currentUser._id, currentUser, function (err, res) {
+                    this.repository.update(currentUser._id.toString(), currentUser, function (err, res) {
                         if (err) throw err;
 
                         result.Message = "Authenticated Succesfully";
@@ -143,7 +143,7 @@ export class AccountService implements IAccountService {
             var result = new Result();
             if (user) { 
                 user.Session.AuthToken = null;
-                this.repository.update(user._id, user, function (err, res) {
+                this.repository.update(user._id.toString(), user, function (err, res) {
                     if (err) throw err;
 
                     result.Message = "Logged off Succesfully";

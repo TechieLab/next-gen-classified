@@ -39,7 +39,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public get(req: Request, res: Response) {
                
-        logger.log('debug', 'base controller get');
+        logger.log('debug', 'base controller get------');
 
         this.baseService.getByUserId(req['userId'], req.query, (err, item) => {
             if (err) logger.log('debug', 'get err---', err);
@@ -49,7 +49,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public getAll(req: Request, res: Response) {
-        logger.log('debug', 'base controller get');
+        logger.log('debug', 'base controller getAll------');
 
         this.baseService.get(req.query, (err, item) => {
             if (err) logger.log('debug', 'get err---', err);

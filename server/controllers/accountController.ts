@@ -49,7 +49,13 @@ export class AccountController implements IAccountController {
     }
 
     getUserInfo(req: Request, res: Response) { }
-    changePassword(req: Request, res: Response) { }
+    changePassword(req: Request, res: Response) { 
+        var Model = <User>req.body.Password;
+
+        this.accountService.changePassword(req["userId"],Model,(result)=>{
+            return res.json(result);
+        })
+    }
     forgotPassword(req: Request, res: Response) { }
 
     login(req: Request, res: Response) {

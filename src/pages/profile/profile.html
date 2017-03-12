@@ -5,10 +5,25 @@
         </button>
         <ion-title>Profile</ion-title>
         <ion-buttons end>
+            <button buttons-end ion-button (click)="isopen = !isopen">
+                <ion-icon name="settings"></ion-icon>
+            </button>
             <button buttons-end ion-button (click)="editProfile()">
                   <ion-icon name="create"></ion-icon>
             </button>
         </ion-buttons>
+         <div class="isopen" *ngIf="isopen">
+                    <ion-card>  
+                          <ion-list>
+                                <button ion-item (click)="changePassword()">
+                                Change Password
+                                </button>
+                                <button ion-item>
+                                LogOff
+                                </button>
+                            </ion-list>
+                    </ion-card>
+                </div> 
     </ion-navbar>
 </ion-header>
 <ion-content class="home">
@@ -24,6 +39,47 @@
                     {{profile.FullName}}
                 </ion-card-title>
             </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-4>
+                       
+                        <ion-card-content>
+                            <ion-card-title>
+                                 Ads Posted
+                            </ion-card-title>
+                             <ion-card-title>
+                                 0
+                            </ion-card-title>
+                        </ion-card-content>
+
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-card-content>
+                            <ion-card-title>
+                                 Ads Responded
+                            </ion-card-title>
+                             <ion-card-title>
+                                 0
+                            </ion-card-title>
+                        </ion-card-content>
+                    </ion-col>
+                    <ion-col col-4>
+                         <ion-card-content>
+                            <ion-card-title>
+                                Active Since
+                            </ion-card-title>
+                             <ion-card-title>
+                                 11 Feb 2017
+                            </ion-card-title>
+                        </ion-card-content>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-6>This column will take 6 columns</ion-col>
+                </ion-row>
+                </ion-grid>
         </ion-card>
         <ion-card>
             <ion-card-header>

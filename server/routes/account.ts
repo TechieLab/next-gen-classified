@@ -58,6 +58,7 @@ export class AccountRoute {
     changePassword() {
         this.app.post('/api/account/changepassword', (req: Request, res: Response) => {
             self.setCollection();
+            self.accountController.changePassword(req, res);
         });
     }
 

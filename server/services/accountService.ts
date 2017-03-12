@@ -15,7 +15,7 @@ export interface IAccountService {
     register(data: User, callback: (item: Result) => any);
     verify(token: string, callback: (item: Result) => any);
     getUserInfo(id: string, callback: (errr: Error, item: UserInfo) => any);
-    changePassword(id: string, data: any, callback: (errr: Error, item: Result) => any);
+    changePassword(id: string, data: any, callback: (item: Result) => any);
     forgotPassword(id: string, callback: (errr: Error, item: Result) => any);
     authenticate(login: Login, callback: (item: Result) => any);
     logout(id: string, callback: (item: Result) => any);
@@ -95,7 +95,24 @@ export class AccountService implements IAccountService {
     }
 
     public getUserInfo(id: string, callback: (errr: Error, item: UserInfo) => any) { }
-    public changePassword(id: string, data: any, callback: (errr: Error, item: Result) => any) { }
+    public changePassword(id: string, data: any, callback: (item: Result) => any) { 
+        this.repository.getById(id,(err, user)=>{
+            if(err) throw err;
+            
+             var result = new Result();
+             console.log('tetstetstst-password',user);
+            if(user){   
+                   this.repository.update(user._id.toString(), user, function (err, res) {
+                    if (err) throw err;
+
+                    result.Message = "password change Succesfully";
+                    result.Success = true;
+
+                    callback(result);
+                });
+            }
+        })
+    }
     public forgotPassword(id: string, callback: (errr: Error, item: Result) => any) { }
 
     public authenticate(login: Login, callback: (item: Result) => any) {
@@ -136,7 +153,7 @@ export class AccountService implements IAccountService {
     }
 
     public logout(id: string, callback: (item: Result) => any) {
-
+        
         this.repository.getById(id, (err, user) => {
             if (err) throw err;
 

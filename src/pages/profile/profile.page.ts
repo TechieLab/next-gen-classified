@@ -3,6 +3,7 @@ import { NavController, NavParams, Platform,ToastController, ActionSheetControll
 import { Camera, File, Transfer, FilePath } from 'ionic-native';
 import { Profile } from '../../app/models/profile';
 import { EditProfilePage } from './editProfile.page';
+import { ChangePasswordPage} from '../account/change-password.page'
 import { ProfileService, IProfileService } from './profile.service';
 
 declare var cordova: any;
@@ -10,6 +11,7 @@ declare var cordova: any;
 @Component({
   selector: 'profile-page',
   templateUrl: 'profile.html',
+  entryComponents:[ChangePasswordPage],
   providers: [ProfileService]
 })
 
@@ -20,6 +22,7 @@ export class ProfilePage implements OnInit {
   profileService: IProfileService;
   loading: Loading;
   lastImage : string;
+  isopen:Boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public actionSheetCtrl: ActionSheetController,
@@ -40,6 +43,10 @@ export class ProfilePage implements OnInit {
 
   editProfile() {
     this.navCtrl.push(EditProfilePage);
+  }
+
+  changePassword(){
+    this.navCtrl.push(ChangePasswordPage);
   }
 
   getProfileProfile() {

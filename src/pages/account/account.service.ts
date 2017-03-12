@@ -12,7 +12,7 @@ export interface IAccountService {
     login(data: Login);
     logout();
     forgotPassword();
-    changePassword();
+    changePassword(data:User);
 }
 
 @Injectable()
@@ -60,7 +60,15 @@ export class AccountService implements IAccountService {
 
     forgotPassword() { }
 
-    changePassword() { }
+    changePassword(data:User) { 
+        // clear token remove user from local storage to log user out
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': StorageService.getToken() });
+        this.options = new RequestOptions({
+            headers: headers
+        });
+        return this.http.post(this.url + '/changepassword', this.options)
+            .map(this.extractData).catch(this.handleError);
+     }
 
     generateAuthToken() { }
 

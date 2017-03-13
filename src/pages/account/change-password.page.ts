@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { Events , NavController, NavParams, ToastController } from 'ionic-angular';
+import { HomePage } from '../home/home.page';
 import { User } from '../../app/models/user';
 import { AccountService, IAccountService } from './account.service';
 
@@ -15,6 +16,7 @@ export class ChangePasswordPage  {
   editMode: boolean = false;
   user: User;
   INVALID_INVALID_PASSWORD:Boolean = false;
+  isAccountPasswordChnaged:Boolean = false;
 
    public changePasswordForm = this.builder.group({
         CurrentPassword:['', Validators.compose([Validators.minLength(6)
@@ -29,7 +31,10 @@ export class ChangePasswordPage  {
     });
   
   constructor(public builder: FormBuilder, public navCtrl: NavController, public navParams: NavParams,
-    @Inject(AccountService) public accountService: IAccountService) {
+    @Inject(AccountService) public accountService: IAccountService,
+     public toastCtrl: ToastController,
+     public events: Events
+    ) {
     
       this.user = new User();
   }
@@ -44,9 +49,10 @@ export class ChangePasswordPage  {
      this.user.Password = data.CurrentPassword;
   
      if(newpassword ===  confirmpassword){
-         this.accountService.changePassword(this.user).subscribe((results) =>{
-            if(results.success){
-                 debugger;
+         this.accountService.changePassword(this.changePasswordForm.value).subscribe((results) =>{
+            if(results.Success){
+                this.events.publish('user:changePassword');
+                this.navCtrl.setRoot(HomePage);
             }
          })  
      }else{

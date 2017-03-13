@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
-import { NavController, Events, NavParams } from 'ionic-angular';
+import {  Events , NavController, NavParams, ToastController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 import { CatalogPage } from '../catalog/catalog.page';
@@ -27,7 +27,8 @@ export class HomePage implements OnInit {
 
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
-        @Inject(PostService) public postService: IPostService) {
+        @Inject(PostService) public postService: IPostService,
+        public toastCtrl : ToastController) {
         this.category = true;
         this.selectedCategory = '';
 
@@ -39,6 +40,10 @@ export class HomePage implements OnInit {
 
     ngOnInit() {
         this.getLatestPostList();
+
+        this.events.subscribe('user:changePassword', (res) => {
+             this.presentToast('password changed Successfully');
+        });
     }
 
     getLatestPostList() {
@@ -58,5 +63,14 @@ export class HomePage implements OnInit {
 
     gotoPostingAdPage() {
         this.navCtrl.push(PostNewAdPage, { category: 'POST FOR FREE' });
+    }
+
+    private presentToast(text) {
+        let toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
     }
 }

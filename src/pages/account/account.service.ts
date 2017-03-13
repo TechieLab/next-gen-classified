@@ -2,6 +2,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { ChangePassword } from '../../app/models/login';
 import { User } from '../../app/models/user';
 import { StorageService } from '../../app/services/storage.service';
 import { Constants } from '../../app/common/constants';
@@ -12,7 +13,7 @@ export interface IAccountService {
     login(data: Login);
     logout();
     forgotPassword();
-    changePassword(data:User);
+    changePassword(data:ChangePassword);
 }
 
 @Injectable()
@@ -60,13 +61,13 @@ export class AccountService implements IAccountService {
 
     forgotPassword() { }
 
-    changePassword(data:User) { 
+    changePassword(data:ChangePassword) { 
         // clear token remove user from local storage to log user out
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': StorageService.getToken() });
         this.options = new RequestOptions({
             headers: headers
         });
-        return this.http.post(this.url + '/changepassword', this.options)
+        return this.http.post(this.url + '/changepassword',data,this.options)
             .map(this.extractData).catch(this.handleError);
      }
 

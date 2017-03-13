@@ -2,6 +2,7 @@
 import { Result } from '../models/result';
 import { UserInfo } from '../models/userInfo';
 import { User } from '../models/user';
+import {ChangePassword} from '../models/account';
 import { IMailService, MailService } from './mail.service';
 import { IBaseService, BaseService } from '../services/baseService';
 import { IUserRepository } from '../repository/userRepository';
@@ -95,23 +96,33 @@ export class AccountService implements IAccountService {
     }
 
     public getUserInfo(id: string, callback: (errr: Error, item: UserInfo) => any) { }
-    public changePassword(id: string, data: any, callback: (item: Result) => any) { 
-        this.repository.getById(id,(err, user)=>{
-            if(err) throw err;
-            
-             var result = new Result();
-             console.log('tetstetstst-password',user);
-            if(user){   
-                   this.repository.update(user._id.toString(), user, function (err, res) {
-                    if (err) throw err;
+    public changePassword(id: string, data: ChangePassword, callback: (item: Result) => any) { 
+        console.log('testdaata',data);
+        this.repository.get({Password: data.CurrentPassword}, (err, user) => {
+            if (err) throw err;
 
-                    result.Message = "password change Succesfully";
+            var result = new Result();
+            if (user && user.length) { 
+                var currentUser = user[0];
+                 currentUser.Password = data.NewPassword;
+                 console.log('current user',currentUser);
+                 this.repository.update(currentUser._id.toString(),currentUser,(err,res)=>{
+                     if(err) throw err;
+ 
+                    result.Message = "Password Changed Succesfully";
+                    result.Content ={ UserName: currentUser.UserName}
                     result.Success = true;
 
                     callback(result);
-                });
+
+                 })        
+            } else {
+                result.Message = "Sorry your current password is wrong";
+                result.Success = false;
+
+                callback(result);
             }
-        })
+        });
     }
     public forgotPassword(id: string, callback: (errr: Error, item: Result) => any) { }
 

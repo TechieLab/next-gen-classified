@@ -11,3 +11,8 @@ export class SignUp {
    ConfirmPassword:string;
    EmailId:string;
 }
+
+export class ChangePassword{
+    CurrentPassword:string;
+    NewPassword:string;  
+}

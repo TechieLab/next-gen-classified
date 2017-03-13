@@ -10,3 +10,8 @@ export class Login{
     public UserName : string; 
     public Password : string;
 }
+
+export class ChangePassword{
+    public CurrentPassword : string; 
+    public NewPassword : string;
+}

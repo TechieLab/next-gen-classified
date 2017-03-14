@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
 import { NotificationPage } from '../notification/notification.page';
+import { AddEditPostPage } from '../post/addEditPost.page';
 import { PostService, IPostService } from './post.service';
 import { Post } from '../../app/models/post';
 import { Product } from '../../app/models/product';
@@ -15,13 +16,15 @@ import { Media } from '../../app/models/media';
 export class PostDetailsPage implements OnInit {
   postId: string;
   post: Post;
+  canEdit : string;
   similarPosts: Array<Post>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     @Inject(PostService) public postService: IPostService
   ) {
     // If we navigated to this page, we will have an item available as a nav param
-    this.postId = navParams.get('_id');
+    this.canEdit = navParams.get('canEdit');
+    this.postId =  navParams.get('_id');
     this.post = new Post();
     this.similarPosts = new Array<Post>();
   }
@@ -59,6 +62,10 @@ export class PostDetailsPage implements OnInit {
 
   showDetails(post: Post) {
     this.post = post;
+  }
+
+  editPost(){
+    this.navCtrl.push(AddEditPostPage, { _id : this.postId});
   }
 
   gotoNotificationPage() {

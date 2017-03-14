@@ -12,5 +12,21 @@
     </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-    <catalog-page [posts]="myPostingsData"></catalog-page>
+   <ion-grid>
+    <ion-row wrap>
+        <ion-col *ngFor="let post of myPostingsData">
+            <ion-item no-padding (click)="showProductDetails(post._id)">
+                <ion-thumbnail item-left>
+                    <img  src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+                </ion-thumbnail>
+                <h2>{{post.Title}}</h2>
+                <p>{{post.Product.Description.Title}}</p>
+                <p>Location: {{post.Location}}</p>
+                <button ion-button clear item-right>
+                        {{post.Product.Description.Price}}
+                </button>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+</ion-grid>
 </ion-content>

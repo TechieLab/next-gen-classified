@@ -60,7 +60,7 @@ export class EditProfilePage implements OnInit {
 
 
     this.profileService.put(this.profile).subscribe((result) => {
-      if (result) {
+      if (result) {      
         this.navCtrl.push(ProfilePage);
       }
     });

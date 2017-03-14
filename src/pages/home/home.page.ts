@@ -6,7 +6,7 @@ import { Geolocation } from 'ionic-native';
 
 import { CatalogPage } from '../catalog/catalog.page';
 import { ProductPage } from '../product/product.page';
-import { PostNewAdPage } from '../post/postnewad.page';
+import { AddEditPostPage } from '../post/addEditPost.page';
 import { IPostService, PostService } from '../post/post.service';
 
 import { Post } from '../../app/models/post';
@@ -62,7 +62,7 @@ export class HomePage implements OnInit {
     }
 
     gotoPostingAdPage() {
-        this.navCtrl.push(PostNewAdPage, { category: 'POST FOR FREE' });
+        this.navCtrl.push(AddEditPostPage, { category: 'POST FOR FREE' });
     }
 
     private presentToast(text) {

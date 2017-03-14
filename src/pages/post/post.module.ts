@@ -3,13 +3,13 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { FormsModule } from '@angular/forms';
 
 import {PostDetailsPage} from './postDetails.page';
-import {PostNewAdPage} from './postnewad.page';
+import {AddEditPostPage} from './addEditPost.page';
 import { PostService, IPostService } from './post.service';
 
 @NgModule({
-    declarations:[PostDetailsPage,PostNewAdPage],    
-    exports:[PostDetailsPage, PostNewAdPage],
-    entryComponents:[PostNewAdPage, PostDetailsPage],
+    declarations:[PostDetailsPage,AddEditPostPage],    
+    exports:[PostDetailsPage, AddEditPostPage],
+    entryComponents:[AddEditPostPage, PostDetailsPage],
     imports:[IonicModule, FormsModule],
     providers:[PostService]
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { PostDetailsPage } from '../post/postDetails.page';
-import { PostNewAdPage } from '../post/postnewad.page';
+import { AddEditPostPage } from '../post/addEditPost.page';
 import { LoginPage } from '../account/login.page';
 import { Post } from '../../app/models/post';
 import { IPostService, PostService } from '../post/post.service';
@@ -43,10 +43,10 @@ export class MyPostingsPage implements OnInit {
     }
 
     showProductDetails(itemId: string) {
-        this.navCtrl.push(PostDetailsPage, { _id: itemId });
+        this.navCtrl.push(PostDetailsPage, { canEdit:true, _id : itemId });
     }
 
     gotoAddPostingsPage() {
-        this.navCtrl.push(PostNewAdPage);
+        this.navCtrl.push(AddEditPostPage);
     }
 }

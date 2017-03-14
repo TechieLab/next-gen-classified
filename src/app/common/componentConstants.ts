@@ -4,10 +4,8 @@ import { Welcome } from '../../pages/welcome/welcome.page';
 
 import { SettingsPage } from '../../pages/settings/settings.page';
 import { NotificationPage } from '../../pages/notification/notification.page';
-import { CatalogPage } from '../../pages/catalog/catalog.page';
 import { AdminPage } from '../../pages/admin/admin.page';
 import { MyPostingsPage } from '../../pages/myPostings/myPostings.page';
-
 import { FiltersPage } from '../../pages/filters/filters.page';
 import { FeedbackPage } from '../../pages/feedback/feedback.page';
 import { HelpPage } from '../../pages/help/help.page';
@@ -22,7 +20,6 @@ export const AppComponents = [
     Welcome,
     SettingsPage,
     NotificationPage,
-    CatalogPage,
     MyPostingsPage,
     FiltersPage,
     FeedbackPage,

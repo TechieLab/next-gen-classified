@@ -5,19 +5,14 @@ import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import {FiltersPage}   from '../filters/filters.page';
 import {CatalogPage} from '../catalog/catalog.page';
-import {CatalogModule} from '../catalog/catalog.module';
-import {SearchPage} from '../search/search.page';
-import { VendorService } from '../../app/services/vendor.service';
-
 
 @NgModule({
-    declarations:[SearchPage],    
-    exports:[SearchPage],
-    imports:[IonicModule, FormsModule, ReactiveFormsModule, CatalogModule],
-    providers:[VendorService],
-    entryComponents: [FiltersPage,CatalogPage]
+    declarations:[CatalogPage],    
+    exports:[CatalogPage],
+    imports:[IonicModule, FormsModule, ReactiveFormsModule],
+    providers:[],
+    entryComponents: [CatalogPage]
 })
 
-export class SearchModule{}
+export class CatalogModule{}

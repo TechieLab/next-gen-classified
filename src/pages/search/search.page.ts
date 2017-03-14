@@ -4,10 +4,11 @@ import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { Client } from 'elasticsearch';
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { FormControl } from '@angular/forms';
-import { Subject ,Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { FiltersPage } from '../filters/filters.page';
 import { CatalogPage } from '../catalog/catalog.page';
 import { IPostService, PostService } from '../post/post.service';
+import { Post } from '../../app/models/post';
 import { ElasticSearchService } from '../../app/services/elasticsearch.service';
 
 @Component({
@@ -21,18 +22,20 @@ export class SearchPage implements OnInit {
   selectedCategory: string;
   results: any[];
   categories: string[];
-  search : FormControl;
+  search: FormControl;
   params: URLSearchParams;
-  items: any;
+  searchResults: Array<Post>;
   seachTextModel: string;
   results$: Subject<Array<any>> = new Subject<Array<any>>();
   message: string = "";
   active: boolean = false;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams, public modalCtrl: ModalController,private _ngZone: NgZone,
+    public navParams: NavParams,
+    public modalCtrl: ModalController,
+    private _ngZone: NgZone,
     @Inject(PostService) public postService: IPostService,
-     public es: ElasticSearchService
+    public es: ElasticSearchService
   ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedCategory = navParams.get('category');
@@ -45,7 +48,7 @@ export class SearchPage implements OnInit {
 
     this.search = new FormControl();
     this.params = new URLSearchParams();
-    this.items = new Array<string>();
+    this.searchResults = new Array<Post>();
   }
 
   gotoFiltersPage() {
@@ -54,35 +57,42 @@ export class SearchPage implements OnInit {
   }
 
   getByQuery(term: string) {
-   //,1 this.params.set('Title', term);
-   // return this.es.search(term);
+    //,1 this.params.set('Title', term);
+    // return this.es.search(term);
   }
 
   ngOnInit() {
     //Event for Search item using temporary api
     // this.search.valueChanges.subscribe(term => this.getByQuery(term));
-      
-       this.search.valueChanges.subscribe(term =>{
-       let entity = {
-                    size: 20,
-                    from: 0,
-                    query: {match: {Title: { query: `${term}`,fuzziness: 2 } }
-                    }
-        };
-        // perform search operation outside of angular boundaries
-        this.es.search(entity).subscribe((response:any) =>{
-            this.items = response.hits.hits;
-        })              
-    })          
+
+    this.search.valueChanges.subscribe(term => {
+      let entity = {
+        size: 20,
+        from: 0,
+        query: {
+          match: {
+            Title: { query: `${term}`, fuzziness: 2 }
+          }
+        }
+      };
+      // perform search operation outside of angular boundaries
+      this.es.search(entity).subscribe((response: any) => {
+        var data = response.hits.hits, posts = [];
+        for (var i = 0; i < data.length; i++) {
+         posts.push(data[i]._source);
+        }
+        this.searchResults = posts;
+      });
+    });
   }
 
   gotoCatalogPage(item: any) {
     console.log(item);
   }
 
-  
+
   handleError(): any {
-        this.message = "something went wrong";
-    }
+    this.message = "something went wrong";
+  }
 
 }

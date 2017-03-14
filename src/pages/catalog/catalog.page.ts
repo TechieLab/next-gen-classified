@@ -23,6 +23,8 @@ export class CatalogPage implements OnInit {
     this.isSubCategorySelected = false;
     this.selectedCategory = navParams.get('category');
     this.subCategories = ["SmartPhone", "Android", "Iphone", "Blackberry"];
+    this.posts = new Array<Post>();
+
   }
 
   ngOnInit() {

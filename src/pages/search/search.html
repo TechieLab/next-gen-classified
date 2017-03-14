@@ -13,8 +13,7 @@
 </ion-header>
 <ion-content no-padding>
   <ion-searchbar padding [formControl]="search"></ion-searchbar>
-
-  <ion-list padding *ngIf="items.length"> 
+  <!--<ion-list padding *ngIf="items.length"> 
     <ion-item *ngFor="let item of items" (click)="gotoCatalogPage(item)">
       <ion-avatar item-left>
         <ion-icon name="search"></ion-icon>
@@ -22,6 +21,6 @@
       <h2>{{item._source.Title}}</h2>
       <p>{{item._source.Product.Category}}</p>
     </ion-item>
-  </ion-list>
- <!--<catalog-page></catalog-page>-->
+  </ion-list>-->
+ <catalog-page [posts]="searchResults"></catalog-page>
 </ion-content>

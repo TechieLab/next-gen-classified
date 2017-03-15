@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title *ngIf="!editMode">Create New Post</ion-title>
+    <ion-title *ngIf="editMode">Edit Post</ion-title>
+    <ion-buttons end>
+      <button buttons-end ion-button>
+                <ion-icon name="refresh" md="md-refresh"></ion-icon>
+            </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="newPostForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
+    <ion-item>
+      <ion-label floating>Add a title</ion-label>
+      <ion-input type="text" formControlName="Title" name="title"  [(ngModel)]="post.Title" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Choose a category</ion-label>
+      <ion-select name="category" required formControlName="Category"  [(ngModel)]="post.Category" >
+        <ion-option value="{{cat.value}}" *ngFor="let cat of categories">{{cat.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Brand</ion-label>
+      <ion-select name="brand" required formControlName="Brand"  [(ngModel)]="post.Product.Brand">
+        <ion-option value="{{brand.value}}" *ngFor="let brand of brands">{{brand.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Model</ion-label>
+      <ion-input type="text" formControlName="Model" name="model" [(ngModel)]="post.Product.Model" required></ion-input>
+    </ion-item>
+    <ion-list radio-group>
+      <ion-list-header>
+        Condition
+      </ion-list-header>
+      <ion-item>
+        <ion-label>New</ion-label>
+        <ion-radio checked="true" value="new"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Used</ion-label>
+        <ion-radio value="used"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <ion-label floating>Price</ion-label>
+      <ion-input type="text" name="price" formControlName="Price" [(ngModel)]="post.Product.Price"   required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Year of Purchased</ion-label>
+      <ion-input type="text" name="purchasedOn" formControlName="PurchasedOn"  [(ngModel)]="post.Product.PurchasedOn" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Defacts</ion-label>
+      <ion-select name="defacts" formControlName="Defects"  [(ngModel)]="post.Product.Brand">
+        <ion-option value="{{defect.value}}" *ngFor="let defect of defects">{{defect.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-textarea name="description" formControlName="Description"  [(ngModel)]="post.Product.Description.Title" required></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Location</ion-label>
+      <ion-textarea name="location" formControlName="Location" [(ngModel)]="post.Location" required></ion-textarea>
+    </ion-item>
+    <button ion-button type="submit" block [disabled]="!newform.form.valid">POST</button>
+  </form>
+</ion-content>

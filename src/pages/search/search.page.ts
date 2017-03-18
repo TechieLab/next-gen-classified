@@ -77,11 +77,16 @@ export class SearchPage implements OnInit {
       };
       // perform search operation outside of angular boundaries
       this.es.search(entity).subscribe((response: any) => {
-        var data = response.hits.hits, posts = [];
-        for (var i = 0; i < data.length; i++) {
-         posts.push(data[i]._source);
-        }
-        this.searchResults = posts;
+        var data = response.hits.hits, posts:any = [];
+         for (var i = 0; i < data.length; i++) {
+               if(data[i]._id){
+                  data[i]._source._id = data[i]._id;
+               }
+               posts.push(data[i]._source);
+         }
+       
+           this.searchResults = posts;
+           console.log(this.searchResults);  
       });
     });
   }

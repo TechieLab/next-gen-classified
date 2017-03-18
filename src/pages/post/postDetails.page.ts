@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
 import { NotificationPage } from '../notification/notification.page';
-import { AddEditPostPage } from '../post/addEditPost.page';
+//import { AddEditPostPage } from '../post/addEditPost.page';
 import { PostService, IPostService } from './post.service';
 import { Post } from '../../app/models/post';
 import { Product } from '../../app/models/product';
@@ -65,7 +65,7 @@ export class PostDetailsPage implements OnInit {
   }
 
   editPost(){
-    this.navCtrl.push(AddEditPostPage, { _id : this.postId});
+  //  this.navCtrl.push(AddEditPostPage, { _id : this.postId});
   }
 
   gotoNotificationPage() {

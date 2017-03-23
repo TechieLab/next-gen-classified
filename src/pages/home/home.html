@@ -1,18 +1,28 @@
 <ion-header>
-    <header-component></header-component>
+  <header-component></header-component>
 </ion-header>
 <ion-content>
-    <ion-list>       
-        <ion-item-divider color="light">Latest Postings</ion-item-divider>
-        <ion-item>
-            <catalog-page [posts]="latestPosts"></catalog-page>
-        </ion-item>
-    </ion-list>
-    <ion-fab right bottom>
-        <button ion-fab color="danger" (click)="gotoPostingAdPage()">
+  <ion-list>
+    <ion-item-divider color="light">
+      Latest Postings     
+    </ion-item-divider>
+     <ion-buttons end>
+        <button buttons-end ion-button clear large (click)="viewType = 'list'">
+                <ion-icon name="list"></ion-icon>
+            </button>
+        <button buttons-end ion-button clear large (click)="viewType = 'grid'">
+                  <ion-icon name="grid"></ion-icon>
+            </button>
+      </ion-buttons>
+    <ion-item>
+      <catalog-page [posts]="latestPosts" [viewType]="viewType"></catalog-page>
+    </ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="danger" (click)="gotoPostingAdPage()">
             <span class="button-inner">
               Post Ad
           </span>
      </button>
-    </ion-fab>
+  </ion-fab>
 </ion-content>

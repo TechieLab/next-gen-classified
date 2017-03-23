@@ -23,7 +23,8 @@ export class HomePage implements OnInit {
     private category: boolean;
     private featuredPosts: Array<Post>;
     private latestPosts: Array<Post>;
-    private city: String;
+    private city: string;
+    private viewType : string;
 
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
@@ -31,6 +32,7 @@ export class HomePage implements OnInit {
         public toastCtrl : ToastController) {
         this.category = true;
         this.selectedCategory = '';
+        this.viewType = 'list';
 
         this.events.subscribe('category:selected', (res) => {
             this.selectedCategory = res.name;

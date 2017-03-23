@@ -1,17 +1,32 @@
-<ion-grid>
-    <ion-row wrap>
-        <ion-col *ngFor="let post of posts">
-            <ion-item no-padding (click)="showProductDetails(post._id)">
-                <ion-thumbnail item-left>
-                    <img  src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
-                </ion-thumbnail>
-                <h2>{{post.Title}}</h2>
-                <p>{{post.Product.Description.Title}}</p>
-                <p>Location: {{post.Location}}</p>
-                <button ion-button clear item-right>
-                        {{post.Product.Description.Price}}
-                </button>
-            </ion-item>
-        </ion-col>
-    </ion-row>
+<ion-grid *ngIf="viewType == 'grid'">
+  <ion-row wrap>
+    <ion-col width-50 no-padding *ngFor="let post of posts">
+      <ion-item (click)="showProductDetails(post._id)">
+        <ion-thumbnail item-bottom padding-bottom>
+          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+        </ion-thumbnail>
+        <h2>{{post.Title}}</h2>
+        <p>{{post.Product.Description.Title}}</p>
+        <p>Location: {{post.Location}}</p>
+        <p>Price:{{post.Product.Description.Price}} </p>
+        <button ion-button>
+            Offer
+        </button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 </ion-grid>
+<ion-list *ngIf="viewType == 'list'">
+  <ion-item *ngFor="let post of posts" no-padding (click)="showProductDetails(post._id)">
+    <ion-thumbnail item-left>
+      <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+    </ion-thumbnail>
+    <h2>{{post.Title}}</h2>
+    <p>{{post.Product.Description.Title}}</p>
+    <p>Location: {{post.Location}}</p>
+    <p>Price:{{post.Product.Description.Price}} </p>
+    <button ion-button item-right>
+            Offer
+        </button>
+  </ion-item>
+</ion-list>

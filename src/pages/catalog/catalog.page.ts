@@ -10,6 +10,7 @@ import { Post } from '../../app/models/post';
 })
 export class CatalogPage implements OnInit {
 
+  @Input() viewType: string;
   @Input() posts: Array<Post>;
 
   selectedCategory: string;
@@ -24,7 +25,7 @@ export class CatalogPage implements OnInit {
     this.selectedCategory = navParams.get('category');
     this.subCategories = ["SmartPhone", "Android", "Iphone", "Blackberry"];
     this.posts = new Array<Post>();
-
+    this.viewType = 'list';
   }
 
   ngOnInit() {

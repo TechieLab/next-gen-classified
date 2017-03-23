@@ -28,7 +28,6 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     constructor( @Optional() public http: Http, public entityName: string) {
         this.url = Constants.baseApi + '/api/' + entityName;
-
         this.setAuthHeader();
     }
 

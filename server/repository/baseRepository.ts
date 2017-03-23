@@ -1,6 +1,8 @@
 ﻿import { MongoDBConnection } from '../data/connection';
+import { ElasticSearchConnection } from '../data/ElasticSearchConnection';
 import { Db, Collection, ObjectID } from 'mongodb';
 import logger = require('winston');
+var es = require('elasticsearch');
 
 //import Logger from '../Logger'; 
 //const logger = Logger('server');
@@ -20,14 +22,22 @@ export interface IBaseRepository<TEntity> {
 export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 {
     db: Db;
+    client:any;
     collection: Collection;
+    collectionname:string;
 
     constructor(public collectionName: string) {
         logger.debug("Collection name-----" + collectionName);
+        this.collectionname = collectionName;
 
         MongoDBConnection.getConnection((connection) => {
             this.db = connection;
             this.collection = this.db.collection(collectionName);
+        });
+
+          this.client = new es.Client({
+                host: '127.0.0.1:9200',
+                log: 'error'
         });
     }
 
@@ -109,6 +119,18 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
             callback(err, res.ops[0]);
         });
+
+    let bulkBody = [];
+      bulkBody.push({
+        index: {
+          _index: this.collectionname,
+          _type: this.collectionname
+        }
+      });
+
+      bulkBody.push(data);
+      this.client.bulk({ body: bulkBody });
+      
     }
 
     public bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {

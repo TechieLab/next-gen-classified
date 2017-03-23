@@ -13,8 +13,10 @@ import swig = require('swig');
 var fs = require('fs-extra');
 var cors = require('cors')
 
-import { MongoDBConnection } from './data/connection';
 
+
+import { MongoDBConnection } from './data/connection';
+import { ElasticSearchConnection } from './data/ElasticSearchConnection';
 import { IndexRoute } from './routes/index';
 import { IndexApiRoute } from './routes/indexApi';
 import { InitializeSampleDb } from './data/initializeDb';
@@ -23,6 +25,8 @@ import Logger from './Logger';
 const logger = Logger('server');
 
 var app = express();
+
+
 
 //MongoDB.MongoClient.connect("mongodb://localhost:27017/classfieddb", function (err, db) {
 
@@ -74,6 +78,12 @@ http.createServer(app).listen(app.get('port'), function () {
             logger.debug("db connected......");
         });
         // database verification.
+
+        ElasticSearchConnection.getConnection((connection) => {
+            this.db = connection;
+            logger.debug("elastic  connected......");
+            console.log("elastic  connected......",this.bodyParser);
+        });
 
     });
 

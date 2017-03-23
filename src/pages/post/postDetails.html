@@ -3,7 +3,7 @@
         <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Product</ion-title>
+        <ion-title>{{post.Title}}</ion-title>
         <ion-buttons end>
             <button buttons-end ion-button (click)="isopen = !isopen">
                 <ion-icon name="add"></ion-icon>
@@ -105,7 +105,7 @@
         </ion-list-header>
         <ion-scroll scrollX="true">
             <ion-card *ngFor="let post of similarPosts">
-                <ion-item no-padding>
+                <ion-item no-padding (click)="showProductDetails(post._id)">
                     <ion-thumbnail>
                         <img (click)="showDetails(post)" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
                     </ion-thumbnail>

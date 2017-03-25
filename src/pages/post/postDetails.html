@@ -15,7 +15,7 @@
     </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-    <ion-card>
+    <ion-card *ngIf="post.Product.Photos.length">
         <ion-slides [options]="mySlideOptions">
             <ion-slide *ngFor="let photo of post.Product.Photos">
                 <img [src]="photo.ImageUrl">

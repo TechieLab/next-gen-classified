@@ -11,6 +11,8 @@ export class Profile
      Contact: Contact;
      Language: string;   
      Media : Media;
+     CreatedOn : Date;
+     Status : string;
 
      constructor(){
          this.FullName = '';    

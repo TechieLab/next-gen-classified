@@ -1,11 +1,11 @@
 import logger = require('winston');
-import {ObjectID} from 'mongodb';
+import { ObjectID } from 'mongodb';
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { IPostingService, PostingService } from '../services/postingService';
 import { Post } from '../models/post';
 import { Result } from '../models/result';
-import {Media} from '../models/media';
+import { Media } from '../models/media';
 
 export interface IPostingController extends IBaseController<Post> {
 
@@ -17,7 +17,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
     constructor(public postingService: IPostingService) {
         super(postingService);
-    }  
+    }
 
     public create(req: Request, res: Response) {
         var data = req.body;
@@ -47,18 +47,37 @@ export class PostingController extends BaseController<Post> implements IPostingC
         });
     }
 
-    upload(req : any ,  res : any){
-         console.log(req.files);
-          this.postingService.getById(req.params.id, (err , post) => {
+    upload(req: any, res: any) {
+        console.log(req.file);
+        this.postingService.getById(req.params.id, (err, post) => {
 
-              if(post){
-                  var media = new Media();
-              }
-         });
-     }
+            if (post && req.file) {
+                //for (var i = 0; i < req.files.length; i++) {
+                var media = new Media();
+                media.Name = req.file.originalname;
+                media.ImageUrl = 'http://192.168.0.105:3000/images/' + req.file.originalname;
+                media.SizeInBytes = req.file.size;
+
+                post.Product.Photos.push(media);
+                //}
+
+                this.postingService.update(post._id.toString(), post, (err, item) => {
+                    if (err) logger.log('debug', 'create posting err---', err);
+
+                    this.result = {
+                        Message: 'Post update with media',
+                        Success: true,
+                        Content: item
+                    };
+
+                    return res.json(this.result);
+                });
+            }
+        });
+    }
 
     //  get(req : any , res : any){
-        
+
     //     req.query.UserId = <ObjectID>(req['userId']);
     //     req.query.Title = new RegExp('^' + req.query.Title);
 
@@ -71,5 +90,5 @@ export class PostingController extends BaseController<Post> implements IPostingC
     //     });
     //  }
 
-     
+
 }

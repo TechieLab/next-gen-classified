@@ -13,6 +13,8 @@ import { HomePage } from '../pages/home/home.page';
 import { AuthGuard, IAuthGuard } from '../app/services/guard.service';
 import { AccountService, IAccountService } from '../pages/account/account.service';
 import { StorageService } from '../app/services/storage.service';
+import { ProfileService, IProfileService } from '../pages/profile/profile.service';
+import {Profile} from '../app/models/profile';
 
 @Component({
   templateUrl: 'app.html',
@@ -26,14 +28,15 @@ export class MyApp implements OnInit {
   pages: Array<{ title: string, component: any, name: any, seq: number }>;
   private isUserAuthenticated: boolean = false;
   private currentUserName: string;
+  private profile : Profile
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public events: Events,
     @Inject(AuthGuard) public authGuard: IAuthGuard,
-    @Inject(AccountService) public accountService: IAccountService
-
+    @Inject(AccountService) public accountService: IAccountService,
+    @Inject(ProfileService) public profileService: IProfileService
   ) {
 
     this.initializeApp();
@@ -41,7 +44,10 @@ export class MyApp implements OnInit {
     // set our app's pages
     this.pages = appPages;
 
+    this.profile = new Profile();
+
     this.getUserContext();
+    this.getProfile();
   }
 
   initializeApp() {
@@ -77,6 +83,14 @@ export class MyApp implements OnInit {
 
   getUserContext() {
     this.isUserAuthenticated = false;
+  }
+
+  getProfile() {
+    this.profileService.getById(null).subscribe((result) => {
+      if (result) {
+        this.profile = result;
+      }
+    });
   }
 
   logoff() {

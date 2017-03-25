@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
-import {  Events , NavController, NavParams, ToastController } from 'ionic-angular';
+import { Events, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 import { CatalogPage } from '../catalog/catalog.page';
@@ -24,12 +24,14 @@ export class HomePage implements OnInit {
     private featuredPosts: Array<Post>;
     private latestPosts: Array<Post>;
     private city: string;
-    private viewType : string;
+    private viewType: string;
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
+    constructor(public navCtrl: NavController,
+        public navParams: NavParams, public events: Events,
         @Inject(PostService) public postService: IPostService,
-        public toastCtrl : ToastController) {
+        public toastCtrl: ToastController,
+        private loadingCtrl: LoadingController) {
         this.category = true;
         this.selectedCategory = '';
         this.viewType = 'list';
@@ -44,7 +46,7 @@ export class HomePage implements OnInit {
         this.getLatestPostList();
 
         this.events.subscribe('user:changePassword', (res) => {
-             this.presentToast('password changed Successfully');
+            this.presentToast('password changed Successfully');
         });
     }
 
@@ -54,8 +56,13 @@ export class HomePage implements OnInit {
             params = new URLSearchParams();
             params.set('Category', this.selectedCategory.toLowerCase());
         }
+        let loader = this.loadingCtrl.create({
+            content: "Loading Photos..."
+        });
+        loader.present();
         this.postService.getAllByQuery(params).subscribe((response) => {
             this.latestPosts = response;
+            loader.dismiss();
         });
     }
 

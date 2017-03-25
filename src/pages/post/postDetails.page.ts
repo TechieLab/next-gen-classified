@@ -37,13 +37,6 @@ export class PostDetailsPage implements OnInit {
     this.postService.getById(this.postId).subscribe((response) => {
       if (response) {
         this.post = response;
-        var media = new Media();
-        media.ImageUrl = "https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png";
-        this.post.Product.Photos.push(media);
-        this.post.Product.Photos.push(media);
-        this.post.Product.Photos.push(media);
-        this.post.Product.Photos.push(media);
-
         this.getSimilarPosts();
       }
     });

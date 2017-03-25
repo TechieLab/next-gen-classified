@@ -1,109 +1,111 @@
 <ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
+  <ion-navbar>
+    <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Profile</ion-title>
-        <ion-buttons end>
-            <button buttons-end ion-button (click)="isopen = !isopen">
+    <ion-title>Profile</ion-title>
+    <ion-buttons end>
+      <button buttons-end ion-button (click)="isopen = !isopen">
                 <ion-icon name="settings"></ion-icon>
             </button>
-            <button buttons-end ion-button (click)="editProfile()">
+      <button buttons-end ion-button (click)="editProfile()">
                   <ion-icon name="create"></ion-icon>
             </button>
-        </ion-buttons>
-         <div class="isopen" *ngIf="isopen">
-                    <ion-card>  
-                          <ion-list>
-                                <button ion-item (click)="changePassword()">
-                                Change Password
-                                </button>
-                                <button ion-item>
-                                LogOff
-                                </button>
-                            </ion-list>
-                    </ion-card>
-                </div> 
-    </ion-navbar>
+    </ion-buttons>
+    <div class="isopen" *ngIf="isopen">
+      <ion-card>
+        <ion-list>
+          <button ion-item (click)="changePassword()">
+                 Change Password
+            </button>
+          <button ion-item>
+                LogOff
+            </button>
+        </ion-list>
+      </ion-card>
+    </div>
+  </ion-navbar>
 </ion-header>
 <ion-content class="home">
-    <div>
-        <ion-card>
-            <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png" />
-            {{lastImage}}
-            <button buttons-end ion-button (click)="openActionSheet()">
-                  <ion-icon name="pencil"></ion-icon> Edit
-            </button>
-            <ion-card-content>
-                <ion-card-title>
-                    {{profile.FullName}}
-                </ion-card-title>
-            </ion-card-content>
-        </ion-card>
-        <ion-card>
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-4>
-                       
-                        <ion-card-content>
-                            <ion-card-title>
-                                 Ads Posted
-                            </ion-card-title>
-                             <ion-card-title>
-                                 0
-                            </ion-card-title>
-                        </ion-card-content>
+  <div text-center>
+    <ion-avatar>
+      <img src="{{profile.Media.ImageUrl}}" />
+    </ion-avatar>
+    <button buttons-end ion-button (click)="changePhoto()">
+                  <ion-icon name="pencil"></ion-icon> change
+     </button>
+  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{profile.FullName}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
 
-                    </ion-col>
-                    <ion-col col-4>
-                        <ion-card-content>
-                            <ion-card-title>
-                                 Ads Responded
-                            </ion-card-title>
-                             <ion-card-title>
-                                 0
-                            </ion-card-title>
-                        </ion-card-content>
-                    </ion-col>
-                    <ion-col col-4>
-                         <ion-card-content>
-                            <ion-card-title>
-                                Active Since
-                            </ion-card-title>
-                             <ion-card-title>
-                                 11 Feb 2017
-                            </ion-card-title>
-                        </ion-card-content>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col col-6>This column will take 6 columns</ion-col>
-                </ion-row>
-                </ion-grid>
-        </ion-card>
-        <ion-card>
-            <ion-card-header>
-                Contact Detail
-            </ion-card-header>
-            <ion-card-content>
-                <!-- Hello World -->
-            </ion-card-content>
-            <ion-list>
-                <button ion-item>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          <ion-card-content>
+            <ion-card-title>
+              Ads Posted
+            </ion-card-title>
+            <ion-card-title>
+              0
+            </ion-card-title>
+          </ion-card-content>
+        </ion-col>
+        <ion-col col-4>
+          <ion-card-content>
+            <ion-card-title>
+              Ads Responded
+            </ion-card-title>
+            <ion-card-title>
+              0
+            </ion-card-title>
+          </ion-card-content>
+        </ion-col>
+        <ion-col col-4>
+          <ion-card-content>
+            <ion-card-title>
+              Active Since
+            </ion-card-title>
+            <ion-card-title>
+              11 Feb 2017
+            </ion-card-title>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      Contact Detail
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Hello World -->
+    </ion-card-content>
+    <ion-list>
+      <button ion-item>
                 <ion-icon name="mail" item-left></ion-icon>
                 <a class="plainText" href="mailto:smkamranqadri@yahoo.com">{{profile.Contact.EmailId}}</a>
             </button>
 
-                <button ion-item>
+      <button ion-item>
                 <ion-icon name="skype" ios="logo-skype" md="logo-skype" item-left></ion-icon>
                 <a class="plainText" href="skype:smkamranqadri">{{profile.Contact.SkypeId}}</a>
             </button>
 
-                <button ion-item>
+      <button ion-item>
                 <ion-icon name="call" item-left></ion-icon>
                 <a class="plainText" href="tel:+923008203588">{{profile.Contact.PhoneNumber}}</a>
             </button>
-            </ion-list>
-        </ion-card>
-    </div>
+    </ion-list>
+  </ion-card>
+
 </ion-content>

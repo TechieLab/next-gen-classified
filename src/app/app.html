@@ -9,7 +9,7 @@
       </h2>
       <div *ngIf="isUserAuthenticated" (click)="gotoProfilePage()">
         <ion-avatar item-left>
-          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+          <img src="{{profile.Media.ImageUrl}}">
         </ion-avatar>
         <h2>
           {{currentUserName}}

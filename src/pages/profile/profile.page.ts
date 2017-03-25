@@ -1,17 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { NavController, NavParams, Platform,ToastController, ActionSheetController, LoadingController, Loading } from 'ionic-angular';
-import { Camera, File, Transfer, FilePath } from 'ionic-native';
-import { Profile } from '../../app/models/profile';
-import { EditProfilePage } from './editProfile.page';
-import { ChangePasswordPage} from '../account/change-password.page'
-import { ProfileService, IProfileService } from './profile.service';
+import { Headers } from '@angular/http';
 
-declare var cordova: any;
+import { Events, NavController, NavParams, Platform, ToastController, ActionSheetController, LoadingController, Loading } from 'ionic-angular';
+
+import { Profile } from '../../app/models/profile';
+import { Media } from '../../app/models/media';
+import { EditProfilePage } from './editProfile.page';
+import { ChangePasswordPage } from '../account/change-password.page'
+import { ProfileService, IProfileService } from './profile.service';
+import { StorageService } from '../../app/services/storage.service';
+import { IUploadService, UploadService } from '../../app/services/upload.service';
 
 @Component({
   selector: 'profile-page',
   templateUrl: 'profile.html',
-  entryComponents:[ChangePasswordPage],
+  entryComponents: [ChangePasswordPage],
   providers: [ProfileService]
 })
 
@@ -20,36 +23,63 @@ export class ProfilePage implements OnInit {
   editMode: boolean = false;
   profile: Profile;
   profileService: IProfileService;
+  uploadService: IUploadService;
   loading: Loading;
-  lastImage : string;
-  isopen:Boolean = false;
+  lastImage: string;
+  isopen: Boolean = false;
+  imageChosen: any = 0;
+  imagePath: any;
+  imageNewPath: any;
+  filename: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public actionSheetCtrl: ActionSheetController,
+    public actionSheetCtrl: ActionSheetController, public events: Events,
     public platform: Platform,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
-    @Inject(ProfileService) profileService: IProfileService) {
+    @Inject(ProfileService) profileService: IProfileService,
+    @Inject(UploadService) uploadService: IUploadService) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.profileService = profileService;
+    this.uploadService = uploadService;
 
     this.profile = new Profile();
   }
 
   ngOnInit() {
-    this.getProfileProfile();
+    this.getProfile();
+
+    this.events.subscribe('photo-uploaded', () => {
+      this.getProfile();
+    });
+
+    this.events.subscribe('photo-removed', () => {
+      this.removePhoto();
+    });
   }
 
   editProfile() {
     this.navCtrl.push(EditProfilePage);
   }
 
-  changePassword(){
+  changePassword() {
     this.navCtrl.push(ChangePasswordPage);
   }
 
-  getProfileProfile() {
+  changePhoto() {
+    var url = 'http://192.168.0.105:3000/api/profile/upload';
+    this.uploadService.openActionSheet(url);
+  }
+
+  removePhoto() {
+    this.profile.Media = new Media();
+    this.profileService.put(this.profile).subscribe((res) => {
+      this.presentToast('Photo removed succesfully');
+    });
+  }
+
+  getProfile() {
     this.profileService.getById(null).subscribe((result) => {
       if (result) {
         this.profile = result;
@@ -57,96 +87,12 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  openActionSheet() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Change Profile Picture',
-      buttons: [
-        {
-          text: 'Capture Photo',
-          role: 'capture',
-          handler: () => {
-            this.takePicture(Camera.PictureSourceType.CAMERA);
-          }
-        }, {
-          text: 'Select From Library',
-          handler: () => {
-            this.takePicture(Camera.PictureSourceType.PHOTOLIBRARY);
-          }
-        }, {
-          text: 'Remove Picture',
-          handler: () => {
-
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel'
-        }
-      ]
-    });
-    actionSheet.present();
-  }
-
-  public takePicture(sourceType) {
-    // Create options for the Camera Dialog
-    var options = {
-      quality: 100,
-      sourceType: sourceType,
-      saveToPhotoAlbum: false,
-      correctOrientation: true
-    };
-
-    // Get the data of an image
-    Camera.getPicture(options).then((imagePath) => {
-      // Special handling for Android library
-      if (this.platform.is('android') && sourceType === Camera.PictureSourceType.PHOTOLIBRARY) {
-        FilePath.resolveNativePath(imagePath)
-          .then(filePath => {
-            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-            let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-          });
-      } else {
-        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-      }
-    }, (err) => {
-      this.presentToast('Error while selecting image.');
-    });
-  }
-
-  // Create a new name for the image
-  private createFileName() {
-    var d = new Date(),
-      n = d.getTime(),
-      newFileName = n + ".jpg";
-    return newFileName;
-  }
-
-  // Copy the image to a local folder
-  private copyFileToLocalDir(namePath, currentName, newFileName) {
-    File.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
-      this.lastImage = newFileName;
-    }, error => {
-      this.presentToast('Error while storing file.');
-    });
-  }
-
   private presentToast(text) {
     let toast = this.toastCtrl.create({
       message: text,
       duration: 3000,
-      position: 'top'
+      position: 'middle'
     });
     toast.present();
-  }
-
-  // Always get the accurate path to your apps folder
-  public pathForImage(img) {
-    if (img === null) {
-      return '';
-    } else {
-      return cordova.file.dataDirectory + img;
-    }
   }
 }

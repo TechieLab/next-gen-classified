@@ -17,7 +17,7 @@ export class ElasticSearchService {
     constructor(@Optional() public http: Http){
          if (!this.client) this.connect();
         
-        this.url = 'http://localhost:9200' ;
+        this.url = 'http://localhost:9201' ;
         this.setAuthHeader();
     }
 

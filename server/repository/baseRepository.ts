@@ -150,7 +150,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data-----', data);
-        this.collection.findOneAndUpdate({ _id: id}, data, (err, res) => {
+        this.collection.findOneAndUpdate({ _id: new ObjectID(id)}, data, (err, res) => {
             logger.debug('debug', 'updated data with id------' + id);
 
             callback(err, res.value);
@@ -159,7 +159,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data--------', data);
-        this.collection.findOneAndReplace({ _id:id }, data, (err, res) => {
+        this.collection.findOneAndReplace({ _id: new ObjectID(id)}, data, (err, res) => {
             logger.debug('debug', 'replaced data with id------' + id);
 
             callback(err, res.value);

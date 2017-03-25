@@ -38,6 +38,7 @@ export class AccountRoute {
     register() {
         this.app.post('/api/account/signup', (req: Request, res: Response) => {
             self.setCollection();
+            logger.debug("/api/account/signup......");
             self.accountController.register(req, res);
         });
     }
@@ -45,12 +46,14 @@ export class AccountRoute {
     verify(){
         this.app.get('/account/verify/:token', (req: Request, res: Response) => {
             self.setCollection();
+            logger.debug("/account/verify/:token......");
             self.accountController.verify(req, res);
         });
     }
 
     getUserInfo() {
         this.app.post('/api/account/userInfo', (req: Request, res: Response) => {
+            logger.debug("/api/account/userInfo......");
             self.setCollection();
         });
     }
@@ -58,12 +61,14 @@ export class AccountRoute {
     changePassword() {
         this.app.post('/api/account/changepassword', (req: Request, res: Response) => {
             self.setCollection();
+            logger.debug("/api/account/changepassword......");
             self.accountController.changePassword(req, res);
         });
     }
 
     forgotPassword() {
         this.app.post('/api/account/forgotpassword', (req: Request, res: Response) => {
+            logger.debug("/pi/account/forgotpassword.....");
             self.setCollection();
         });
     }
@@ -73,6 +78,7 @@ export class AccountRoute {
     login() {
         this.app.post('/api/account/login', (req: Request, res: Response) => {
             self.setCollection();
+            logger.debug("/api/account/login.....");
             self.accountController.login(req,res);
         });
     }
@@ -80,6 +86,7 @@ export class AccountRoute {
     logout() {
         this.app.get('/api/account/logout', (req: Request, res: Response) => {
             self.setCollection();
+            logger.debug("api/account/logout.....");
             self.accountController.logout(req,res);
         });
     }

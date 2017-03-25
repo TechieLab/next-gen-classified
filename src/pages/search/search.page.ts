@@ -95,9 +95,7 @@ export class SearchPage implements OnInit {
     console.log(item);
   }
 
-
   handleError(): any {
     this.message = "something went wrong";
   }
-
 }

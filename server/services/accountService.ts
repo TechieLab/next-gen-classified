@@ -40,7 +40,7 @@ export class AccountService implements IAccountService {
                 result.Message = "Account Created Succesfully";
                 result.Success = true;
 
-                var url = "http://localhost:3000/account/verify/" + data.Token;
+                var url = "http://192.168.0.102:3000/account/verify/" + data.Token;
 
                 var message = "Thank you for create an account on classifed.realpage.com. Your Username is " + item.UserName + "<br />";
                 message += "You may now activate you account by clicking this link or copying and pasting it into your browser <br />";

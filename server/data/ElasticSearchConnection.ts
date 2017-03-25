@@ -22,7 +22,7 @@ export class ElasticSearchConnection {
 
     private static connect(result: (error: Error, db: Db) => void) {
      var client = new es.Client({
-                host: '127.0.0.1:9200',
+                host: '127.0.0.1:9201',
                 log: 'error'
             });
         client.ping({}, (error: Error, db: Db) => {

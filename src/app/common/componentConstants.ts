@@ -6,6 +6,7 @@ import { SettingsPage } from '../../pages/settings/settings.page';
 import { NotificationPage } from '../../pages/notification/notification.page';
 import { AdminPage } from '../../pages/admin/admin.page';
 import { MyPostingsPage } from '../../pages/myPostings/myPostings.page';
+import { MyFavtPostingPage } from '../../pages/myFavourite/myFavt.page';
 import { FiltersPage } from '../../pages/filters/filters.page';
 import { FeedbackPage } from '../../pages/feedback/feedback.page';
 import { HelpPage } from '../../pages/help/help.page';
@@ -21,6 +22,7 @@ export const AppComponents = [
     SettingsPage,
     NotificationPage,
     MyPostingsPage,
+    MyFavtPostingPage,
     FiltersPage,
     FeedbackPage,
     HelpPage,
@@ -50,6 +52,6 @@ export const appPages = [
 export const authPages = [
     { title: 'Admin', component: AdminPage, name: "person", seq: 2 },
     { title: 'My Postings', component: MyPostingsPage, name: "paper", seq: 3 },
-    { title: 'Favourites', component: SettingsPage, name: "star", seq: 4 },
+    { title: 'Favourites', component: MyFavtPostingPage, name: "star", seq: 4 },
     { title: 'Settings', component: SettingsPage, name: "settings", seq: 5 }
 ];

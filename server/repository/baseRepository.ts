@@ -14,7 +14,7 @@ export interface IBaseRepository<TEntity> {
     getCount(callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
     bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
-    update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    update(id: string, data: TEntity, option:Object,callback: (errr: Error, item: TEntity) => any);
     replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
     delete(id: string, callback: (errr: Error, item: TEntity) => any);
 }
@@ -104,6 +104,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             this.collection.find(query, options).toArray(callback);
         } else {
             logger.debug('debug', 'reading many data..with query', query);
+            console.log('query',query);
             this.collection.find(query).toArray(callback);
         }
     }
@@ -148,12 +149,11 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
+    public update(id: string, data: TEntity, option:Object, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data-----', data);
-        this.collection.findOneAndUpdate({ _id: id}, data, (err, res) => {
+        this.collection.findOneAndUpdate({ _id: id}, data, option,(err, res) => {
             logger.debug('debug', 'updated data with id------' + id);
-
-            callback(err, res.value);
+              callback(err,res.value);
         });
     }
 
@@ -161,7 +161,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         logger.debug('debug', 'called update data--------', data);
         this.collection.findOneAndReplace({ _id:id }, data, (err, res) => {
             logger.debug('debug', 'replaced data with id------' + id);
-
+         
             callback(err, res.value);
         });
     }

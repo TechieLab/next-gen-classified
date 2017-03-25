@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NavController, Events, ModalController, NavParams } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
@@ -6,12 +6,15 @@ import { NotificationPage } from '../../../pages/notification/notification.page'
 import { SearchPage } from '../../../pages/search/search.page';
 import { VendorService } from '../../services/vendor.service';
 import { CategoryComponent } from '../category';
+import { MyFavtPostingPage } from '../../../pages/myFavourite/myFavt.page';
+import { AuthGuard, IAuthGuard } from '../../services/guard.service';
+import { AccountService, IAccountService } from '../../../pages/account/account.service';
 
 @Component({
     selector: 'header-component',
     templateUrl: 'header.html',
     entryComponents: [CategoryComponent, SearchPage],
-    providers: [VendorService],
+    providers: [VendorService,AuthGuard,AccountService]
 })
 
 export class HeaderComponent {
@@ -20,12 +23,14 @@ export class HeaderComponent {
     private ads: Array<any>;
     private items: Array<any>;
     private city: String;
+    private isUserAuthenticated: boolean = false;
 
     constructor(public navCtrl: NavController,
         public modalCtrl: ModalController,
         public navParams: NavParams,
         public events: Events,
-      
+        @Inject(AuthGuard) public authGuard: IAuthGuard,
+        @Inject(AccountService) public accountService: IAccountService,
         public service: VendorService) {
         this.selectedCategory = 'Select Category';
         //this.category = new CategoryComponent();
@@ -43,6 +48,9 @@ export class HeaderComponent {
         }).catch((error) => {
             console.log('Error getting Location', error)
         });
+
+        this.isUserAuthenticated = this.authGuard.canActivate();
+
     }  
 
     gotoNotificationPage() {
@@ -54,6 +62,10 @@ export class HeaderComponent {
 
     gotoSearchPage() {
         this.navCtrl.setRoot(SearchPage, { category: 'POST FOR FREE' });
+    }
+
+     gotoFavouritePage() {
+       this.navCtrl.push(MyFavtPostingPage); 
     }
 
     onSelectCategory() {

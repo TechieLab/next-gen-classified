@@ -25,7 +25,7 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
         this.postingController = new PostingController(this.service);
 
         this.post();
-        this.get();
+ 
         this.upload();
     }
 
@@ -36,14 +36,6 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
             this.postingController.create(req, res);
         });
     }
-
-    // get() {
-    //     this.app.get('/api/' + this.apiName + '/', (req: Request, res: Response) => {
-    //         logger.debug("route name ----" + this.apiName);
-    //         this.postingController.get(req, res);
-    //     });
-    // }
-
     upload() {      
 
          this.app.post('/posts/:id/upload', upload.array('photos', 12), function (req: Request, res: Response, next) {

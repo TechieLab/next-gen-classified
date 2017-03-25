@@ -1,7 +1,7 @@
 <ion-grid *ngIf="viewType == 'grid'">
   <ion-row wrap>
-    <ion-col width-50 no-padding *ngFor="let post of posts">
-      <ion-item (click)="showProductDetails(post._id)">
+    <ion-col width-50 no-padding *ngFor="let post of posts; let i = index">
+      <ion-item >
         <ion-thumbnail item-bottom padding-bottom>
           <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
         </ion-thumbnail>
@@ -9,6 +9,10 @@
         <p>{{post.Product.Description.Title}}</p>
         <p>Location: {{post.Location}}</p>
         <p>Price:{{post.Product.Description.Price}} </p>
+        <div item-right (click)="favouritePost(i,post)">
+          <ion-icon *ngIf="!post.Favt" name="heart-outline"></ion-icon>
+          <ion-icon *ngIf="post.Favt" name="heart"></ion-icon>
+       </div>
         <button ion-button>
             Offer
         </button>
@@ -17,7 +21,7 @@
   </ion-row>
 </ion-grid>
 <ion-list *ngIf="viewType == 'list'">
-  <ion-item *ngFor="let post of posts" no-padding (click)="showProductDetails(post._id)">
+  <ion-item *ngFor="let post of posts; let i = index" no-padding >
     <ion-thumbnail item-left>
       <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
     </ion-thumbnail>
@@ -25,6 +29,10 @@
     <p>{{post.Product.Description.Title}}</p>
     <p>Location: {{post.Location}}</p>
     <p>Price:{{post.Product.Description.Price}} </p>
+    <div  item-right (click)="favouritePost(i,post)">
+         <ion-icon *ngIf="!post.Favt" name="heart-outline"></ion-icon>
+          <ion-icon *ngIf="post.Favt" name="heart"></ion-icon>
+    </div>
     <button ion-button item-right>
             Offer
         </button>

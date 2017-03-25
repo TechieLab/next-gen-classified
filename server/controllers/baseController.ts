@@ -22,7 +22,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     public create(req: Request, res: Response) {
         var data = <TEntity>req.body;
 
-        logger.log('debug', 'base controller  create  data---', data);
+        logger.log('debug', 'base controller  create  data---',data);
 
         return this.baseService.create(data, (err, item) => {
             if (err) logger.log('debug', 'create  err---', err);
@@ -43,7 +43,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
         this.baseService.getByUserId(req['userId'], req.query, (err, item) => {
             if (err) logger.log('debug', 'get err---', err);
-
+            
             return res.json(item);
         });
     }
@@ -69,11 +69,13 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public update(req: Request, res: Response) {
-        var data = <TEntity>req.body;
+    
+        var data:any = <TEntity>req.body;
+        var option = {upsert:true, returnOriginal:true};
+         req.params.id = req.params.id ? req.params.id : data._id;
+         logger.log('debug', 'base controller  update  data---');
 
-         logger.log('debug', 'base controller  update  data---', data);
-
-        return this.baseService.update(req.params.id, data, (err, item) => {
+        return this.baseService.update(req.params.id, data, option,(err, item) => {
             if (err) logger.log('debug', 'update  err---', err);
 
             return res.json(item);

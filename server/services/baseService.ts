@@ -10,7 +10,7 @@ export interface IBaseService<TEntity>
     getCount(callback: (errr: Error, item: number) => any);
     getById(id: string, callback: (errr: Error, item: TEntity) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    update(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    update(id: string, data: TEntity,option:Object, callback: (errr: Error, item: TEntity) => any);
     delete(id: string, callback: (errr: Error, item: TEntity) => any);
 }
 
@@ -58,9 +58,9 @@ export class BaseService<TEntity> implements IBaseService<TEntity>
         this.repository.getById(id, callback);
     }    
 
-    public update(id: string, data : TEntity, callback: (errr: Error, item: TEntity) => any)
+    public update(id: string, data : TEntity, option:Object, callback: (errr: Error, item: TEntity) => any)
     {
-        return this.repository.update(id, data, callback);
+        return this.repository.update(id, data,option,callback);
     }
 
     public delete(id: string, callback: (errr: Error, item: TEntity) => any)

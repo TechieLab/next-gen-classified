@@ -57,11 +57,11 @@ export class AccountService implements IAccountService {
     }
 
     public verify(token: string, callback: (item: Result) => any) {
-        this.repository.get({ "Token": token }, (err, user) => {
+        this.repository.get({ "Token": token }, (err, user:any) => {
             if (err) throw err;
 
             var result = new Result();
-
+            var option = {};
             if (user && user.length) {
                 if (user[0].Token && user[0].Token == token) {
                     if (new Date(user[0].TokenValidity).getHours() == new Date().getHours()) {
@@ -71,7 +71,7 @@ export class AccountService implements IAccountService {
                         var tempUser = user[0];
                         tempUser.Status = 'active';
 
-                        this.repository.update(tempUser._id.toString(), tempUser, (error, res) => {
+                        this.repository.update(tempUser._id.toString(), tempUser, option,(error, res) => {
                             if (error) throw err;
 
                             result.Message = "Account Verified Succesfully";
@@ -102,11 +102,12 @@ export class AccountService implements IAccountService {
             if (err) throw err;
 
             var result = new Result();
+            var option = {};
             if (user && user.length) { 
                 var currentUser = user[0];
                  currentUser.Password = data.NewPassword;
                  console.log('current user',currentUser);
-                 this.repository.update(currentUser._id.toString(),currentUser,(err,res)=>{
+                 this.repository.update(currentUser._id.toString(),currentUser, option,(err,res)=>{
                      if(err) throw err;
  
                     result.Message = "Password Changed Succesfully";
@@ -128,10 +129,13 @@ export class AccountService implements IAccountService {
 
     public authenticate(login: Login, callback: (item: Result) => any) {
 
+         console.log('login repository outside.................');
         this.repository.get({ UserName: login.UserName }, (err, users) => {
             if (err) throw err;
 
+            console.log('login repository',users);
             var result = new Result();
+            var option= {};
             if (users && users.length) {
                 var currentUser = users[0];
                 if (currentUser.Password == login.Password) {
@@ -139,7 +143,7 @@ export class AccountService implements IAccountService {
                         currentUser.Session = new Session();
                     }
                     currentUser.Session.AuthToken = this.generateAuthToken(currentUser);
-                    this.repository.update(currentUser._id.toString(), currentUser, function (err, res) {
+                    this.repository.update(currentUser._id.toString(), currentUser,option,function (err, res) {
                         if (err) throw err;
 
                         result.Message = "Authenticated Succesfully";
@@ -169,9 +173,10 @@ export class AccountService implements IAccountService {
             if (err) throw err;
 
             var result = new Result();
+            var option= {};
             if (user) { 
                 user.Session.AuthToken = null;
-                this.repository.update(user._id.toString(), user, function (err, res) {
+                this.repository.update(user._id.toString(), user, option,function (err, res) {
                     if (err) throw err;
 
                     result.Message = "Logged off Succesfully";

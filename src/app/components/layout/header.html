@@ -5,8 +5,11 @@
 
     <button clear ion-button (click)="onSelectCategory()">
          {{selectedCategory}} &nbsp; <ion-icon name="arrow-down" item-right></ion-icon>        
-</button>
+  </button>
 <ion-buttons end>
+    <button *ngIf="isUserAuthenticated" ion-button (click)="gotoFavouritePage()">
+          <ion-icon name="heart-outline"></ion-icon>
+    </button>
     <button buttons-end ion-button (click)="gotoSearchPage()">
                  <ion-icon name="search"></ion-icon>
             </button>

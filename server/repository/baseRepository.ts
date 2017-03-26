@@ -14,7 +14,7 @@ export interface IBaseRepository<TEntity> {
     getCount(callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
     bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
-    update(id: string, data: TEntity, option:Object,callback: (errr: Error, item: TEntity) => any);
+    update(id: string, data: TEntity, option: Object, callback: (errr: Error, item: TEntity) => any);
     replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
     delete(id: string, callback: (errr: Error, item: TEntity) => any);
 }
@@ -22,9 +22,9 @@ export interface IBaseRepository<TEntity> {
 export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 {
     db: Db;
-    client:any;
+    client: any;
     collection: Collection;
-    collectionname:string;
+    collectionname: string;
 
     constructor(public collectionName: string) {
         logger.debug("Collection name-----" + collectionName);
@@ -35,9 +35,9 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             this.collection = this.db.collection(collectionName);
         });
 
-          this.client = new es.Client({
-                host: '127.0.0.1:9200',
-                log: 'error'
+        this.client = new es.Client({
+            host: '127.0.0.1:9200',
+            log: 'error'
         });
     }
 
@@ -56,8 +56,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         }
     }
 
-     public getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
-         logger.debug('base repo getByUserId...' + userId, query);
+    public getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
+        logger.debug('base repo getByUserId...' + userId, query);
         if (query) {
             this.getByPage(userId, query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
         } else {
@@ -67,7 +67,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public getById(id: string, callback: (err: Error, item: TEntity) => any) {
         logger.debug('debug', 'reading get data..with id..' + id);
-        this.collection.findOne({ _id: new ObjectID(id)}, function (err, results) {            
+        this.collection.findOne({ _id: new ObjectID(id) }, function (err, results) {
             callback(err, results);
         });
     }
@@ -77,7 +77,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             logger.debug('debug', 'reading all data for user..' + userId);
             callback(err, item);
         });
-    }   
+    }
 
     private getByPage(userId: string, query: any, sortKey: string, sortOrder: string, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
 
@@ -104,7 +104,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             this.collection.find(query, options).toArray(callback);
         } else {
             logger.debug('debug', 'reading many data..with query', query);
-            console.log('query',query);
+            console.log('query', query);
             this.collection.find(query).toArray(callback);
         }
     }
@@ -121,17 +121,17 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             callback(err, res.ops[0]);
         });
 
-    let bulkBody = [];
-      bulkBody.push({
-        index: {
-          _index: this.collectionname,
-          _type: this.collectionname
-        }
-      });
+        let bulkBody = [];
+        bulkBody.push({
+            index: {
+                _index: this.collectionname,
+                _type: this.collectionname
+            }
+        });
 
-      bulkBody.push(data);
-      this.client.bulk({ body: bulkBody });
-      
+        bulkBody.push(data);
+        this.client.bulk({ body: bulkBody });
+
     }
 
     public bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {
@@ -149,30 +149,30 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public update(id: string, data: TEntity, option:Object, callback: (errr: Error, item: TEntity) => any) {
+    public update(id: string, data: TEntity, option: Object, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data-----', data);
-        console.log('before updated value is ',option);
-        this.collection.findOneAndUpdate({ _id: id}, data, option,(err, res) => {    
+        console.log('before updated value is ', option);
+        this.collection.findOneAndUpdate({ _id: new ObjectID(id) }, data, option, (err, res) => {
             logger.debug('debug', 'updated data with id------' + id);
-            console.log('updated value is ',res);
-              callback(err,res.value);
+            console.log('updated value is ', res);
+            callback(err, res.value);
         });
     }
 
     public replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data--------', data);
-        this.collection.findOneAndReplace({ _id: new ObjectID(id)}, data, (err, res) => {
+        this.collection.findOneAndReplace({ _id: new ObjectID(id) }, data, (err, res) => {
             logger.debug('debug', 'replaced data with id------' + id);
-         
+
             callback(err, res.value);
         });
     }
 
 
     public delete(id: string, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called delele data---------',id);
+        logger.debug('debug', 'called delele data---------', id);
 
-        this.collection.findOneAndDelete({ _id: id}, (err, res) => {
+        this.collection.findOneAndDelete({ _id: id }, (err, res) => {
             logger.debug('debug', 'deleleed data..');
 
             callback(err, res.value);

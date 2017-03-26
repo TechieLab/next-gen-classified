@@ -1,49 +1,49 @@
 <ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
+  <ion-navbar>
+    <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Shortlisted Ads</ion-title>
-        <ion-buttons end>
-            <button buttons-end ion-button clear (click)="gotoAddPostingsPage()">
+    <ion-title>Shortlisted Ads</ion-title>
+    <ion-buttons end>
+      <button buttons-end ion-button clear (click)="gotoAddPostingsPage()">
                  Post Ad
             </button>
-        </ion-buttons>
-    </ion-navbar>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-   <ion-grid *ngIf="myFavtsPostData.length">
+  <ion-grid *ngIf="myFavtsPostData.length">
     <ion-row wrap>
-        <ion-col *ngFor="let post of myFavtsPostData">
-            <ion-item no-padding (click)="showProductDetails(post._id)">
-                <ion-thumbnail item-left>
-                    <img  src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
-                </ion-thumbnail>
-                <h2>{{post.Title}}</h2>
-                <p>{{post.Product.Description.Title}}</p>
-                <p>Location: {{post.Location}}</p>
-                <div item-right (click)="favouritePost(i,post)">
-                    <ion-icon *ngIf="!post.Favt" name="heart-outline"></ion-icon>
-                    <ion-icon *ngIf="post.Favt" name="heart"></ion-icon>
-                </div>
-                <button ion-button clear item-right>
+      <ion-col *ngFor="let post of myFavtsPostData">
+        <ion-item no-padding (click)="showProductDetails(post._id)">
+          <ion-thumbnail item-left>
+            <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+          </ion-thumbnail>
+          <h2>{{post.Title}}</h2>
+          <p>{{post.Product.Description.Title}}</p>
+          <p>Location: {{post.Location}}</p>
+          <div item-right (click)="favouritePost(i,post)">
+            <ion-icon *ngIf="!post.Favt" name="heart-outline"></ion-icon>
+            <ion-icon *ngIf="post.Favt" name="heart"></ion-icon>
+          </div>
+          <button ion-button clear item-right>
                         {{post.Product.Description.Price}}
                 </button>
-            </ion-item>
-        </ion-col>
+        </ion-item>
+      </ion-col>
     </ion-row>
-</ion-grid>
-<ion-grid *ngIf="!myFavtsPostData.length">
-<ion-row >
-  <ion-col>
-      <div class="slide-zoom">
-      <img class="slide-image" src="https://ionicframework.com/dist/preview-app/www/assets/img/ica-slidebox-img-2.png"/>
-      <h2 class="slide-title">OMG Your shortlist is empty.</h2>
-      <p>Add items to your wish list by going through our awesome  range of products.</p>
-    </div>
-    </ion-col>
+  </ion-grid>
+  <ion-grid *ngIf="!myFavtsPostData.length">
+    <ion-row>
+      <ion-col>
+        <div class="slide-zoom">
+          <img class="slide-image" src="https://ionicframework.com/dist/preview-app/www/assets/img/ica-slidebox-img-2.png" />
+          <h2 class="slide-title">OMG Your shortlist is empty.</h2>
+          <p>Add items to your wish list by going through our awesome range of products.</p>
+        </div>
+      </ion-col>
 
 
-</ion-row>
-</ion-grid>
+    </ion-row>
+  </ion-grid>
 </ion-content>

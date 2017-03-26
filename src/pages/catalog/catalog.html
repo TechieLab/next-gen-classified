@@ -1,7 +1,7 @@
 <ion-grid *ngIf="viewType == 'grid'">
   <ion-row wrap>
-    <ion-col width-50 no-padding *ngFor="let post of posts; let i = index">
-      <ion-item >
+    <ion-col width-50 no-padding *ngFor="let post of postsResult; let i = index">
+      <ion-item>
         <ion-thumbnail item-bottom padding-bottom>
           <img src="{{post.Product.Photos[0].ImageUrl}}">
         </ion-thumbnail>
@@ -21,21 +21,21 @@
   </ion-row>
 </ion-grid>
 <ion-list *ngIf="viewType == 'list'">
-      <ion-item *ngFor="let post of posts;let i = index" no-padding >
-        <ion-thumbnail item-left *ngIf="post.Product.Photos.length">
-          <img src="{{post.Product.Photos[0].ImageUrl}}">
-        </ion-thumbnail>
-        <h2>{{post.Title}}</h2>
-        <p>{{post.Product.Description.Title}}</p>
-        <p>Location: {{post.Location}}</p>
-        <p>Price:{{post.Product.Description.Price}} </p>
-        <div item-right (click)="favouritePost(i,post)">
-          <ion-icon *ngIf="!post.Favt" name="heart-outline"></ion-icon>
-          <ion-icon *ngIf="post.Favt" name="heart"></ion-icon>
-        </div>
-        <button ion-button item-right>
+  <ion-item *ngFor="let post of postsResult;let i = index" no-padding>
+    <ion-thumbnail item-left *ngIf="post.Product.Photos.length">
+      <img src="{{post.Product.Photos[0].ImageUrl}}">
+    </ion-thumbnail>
+    <h2>{{post.Title}}</h2>
+    <p>{{post.Product.Description.Title}}</p>
+    <p>Location: {{post.Location}}</p>
+    <p>Price:{{post.Product.Description.Price}} </p>
+    <div item-right (click)="favouritePost(i,post)">
+      <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
+      <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
+    </div>
+    <button ion-button item-right>
             Offer
         </button>
-      </ion-item>
-  
+  </ion-item>
+
 </ion-list>

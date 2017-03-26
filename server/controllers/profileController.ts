@@ -3,6 +3,8 @@ import { IBaseController, BaseController } from './baseController';
 import { Profile } from '../models/profile';
 import { IUserService, UserService } from '../services/userService';
 import {Media} from '../models/media';
+import {Settings} from '../config/settings';
+
 var logger = require('winston');
 
 export interface IProfileController {
@@ -47,7 +49,7 @@ export class ProfileController {
               if(user && req.file){
                   var media = new Media();
                   media.Name = req.file.originalname;
-                  media.ImageUrl = 'http://192.168.0.105:3000/images/' +  req.file.originalname;
+                  media.ImageUrl = Settings.BackendHost + Settings.ImageRepository + req.file.originalname;
                   media.SizeInBytes = req.file.size;
                   user.Profile.Media = media;
                   self.userService.update(user._id, user, (err, result) => {

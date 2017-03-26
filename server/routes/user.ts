@@ -16,7 +16,7 @@ export class UserRoute extends BaseApiRoute<User> implements IBaseApiRoute<User>
         self = this;
     }
   
-    setCollection() {
+    setUserCollection() {
         var repository = new UserRepository();
         var service = new UserService(repository);
         this.controller = new UserController(service);

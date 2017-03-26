@@ -100,7 +100,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
     //     };
     // }
 
-    setCollection(apiName) {
+    private setCollection(apiName) {
         var repository = new BaseRepository(apiName);
         this.baseService = new BaseService(repository);
         this.baseController = new BaseController(this.baseService);

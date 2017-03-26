@@ -24,7 +24,7 @@ export class AccountService implements IAccountService {
     token: string;
 
     constructor(public http: Http) {
-        this.url = Constants.baseApi + '/' + Constants.accountApi;
+        this.url = Constants.AccountApi;
         let headers = new Headers({ 'Content-Type': 'application/json' });
         this.options = new RequestOptions({
             headers: headers
@@ -39,12 +39,12 @@ export class AccountService implements IAccountService {
         user.Profile.FullName = data.FullName;
         user.Profile.Contact.EmailId = data.EmailId;      
 
-        return this.http.post(this.url + '/signup', user, this.options)
+        return this.http.post(this.url + 'signup', user, this.options)
             .map(this.extractData).catch(this.handleError);
     }
 
     login(data: Login) {
-        return this.http.post(this.url + '/login', data, this.options)
+        return this.http.post(this.url + 'login', data, this.options)
             .map(this.extractData).catch(this.handleError);
     }
 
@@ -54,7 +54,7 @@ export class AccountService implements IAccountService {
         this.options = new RequestOptions({
             headers: headers
         });
-        return this.http.get(this.url + '/logout', this.options)
+        return this.http.get(this.url + 'logout', this.options)
             .map(this.extractData).catch(this.handleError);
 
     }
@@ -67,7 +67,7 @@ export class AccountService implements IAccountService {
         this.options = new RequestOptions({
             headers: headers
         });
-        return this.http.post(this.url + '/changepassword',data,this.options)
+        return this.http.post(this.url + 'changepassword',data,this.options)
             .map(this.extractData).catch(this.handleError);
      }
 

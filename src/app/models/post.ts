@@ -10,13 +10,15 @@ export class Post {
     Offers: Array<string>;
     LastViewed: Date;
     LastOffered: Date;
-    Favt: boolean;
+    Likes:Array<string>;
+    UserId: string;
+    IsFav : boolean;
 
     constructor() {
         this.Title = '';
         this.Category = '';
         this.Location = '';
-        this.Favt = false;
+        this.Likes = new Array<string>();
         this.Product = new Product();
         this.Views = new Array<string>();
         this.Offers = new Array<string>();

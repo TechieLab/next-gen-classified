@@ -1,3 +1,4 @@
+import { Subscriber, Observable } from 'rxjs';
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { PostDetailsPage } from '../post/postDetails.page';
@@ -15,62 +16,78 @@ import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';
 export class CatalogPage implements OnInit {
 
   @Input() viewType: string;
-  @Input() posts: Array<Post>;
+  @Input() posts: Observable<Array<Post>>;
 
   selectedCategory: string;
   subCategories: string[];
   isSubCategorySelected: boolean;
-  ads: any[];
-  isFavt:boolean = false;
-  isUserAuthenticated:boolean = false;
+  postsResult: Array<Post>;
+  isFav: boolean = false;
+  isUserAuthenticated: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-   @Inject(AuthGuard) public authGuard: IAuthGuard,
+    @Inject(AuthGuard) public authGuard: IAuthGuard,
     public toastCtrl: ToastController,
-   @Inject(PostService) public postService: IPostService
-   
+    @Inject(PostService) public postService: IPostService
+
   ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.isSubCategorySelected = false;
     this.selectedCategory = navParams.get('category');
     this.subCategories = ["SmartPhone", "Android", "Iphone", "Blackberry"];
-    this.posts = new Array<Post>();
+    this.posts = new Observable<Array<Post>>();
     this.viewType = 'list';
   }
 
   ngOnInit() {
-     this.isUserAuthenticated = this.authGuard.canActivate();
+    this.isUserAuthenticated = this.authGuard.canActivate();
+    this.posts.subscribe((result) => {
+      this.postsResult = result;
+      this.checkIsFavouritePost();
+    });
   }
   selectSubCategory() {
     this.isSubCategorySelected = true;
   }
 
-  favouritePost(index,post:Post){
-     if(this.isUserAuthenticated){
-         post.Favt = !post.Favt;
-        this.postService.put(post).subscribe((response:any) => {
-                this.posts[index] = response;
-                if(response.Favt){
-                    this.presentToast('Added to shortlist');
-                }else{
-                    this.presentToast('Remove from shortlist');
-                }
-          });
-     }else{
-        this.navCtrl.push(LoginPage);
-     }
+  checkIsFavouritePost() {
+    if (this.postsResult && this.postsResult.length) {
+      this.postsResult.forEach((item) => {
+        item.Likes.forEach((like) => {
+          if (item.UserId == like) {
+            item.IsFav = true;
+          }
+        });
+      });
+    }
+  }
+
+  favouritePost(index, post: Post) {
+    if (this.isUserAuthenticated) {
+      this.postService.addRemoveFavorite(post._id, false).subscribe((response: Result) => {
+        if (response.Success && response.Content.IsFav) {
+          this.postsResult[index].IsFav = true;
+          this.presentToast('Added to shortlist');
+        } else {
+          this.postsResult[index].IsFav = false;
+          this.presentToast('Remove from shortlist');
+        }
+      });
+    } else {
+      this.navCtrl.push(LoginPage);
+    }
   }
 
   showProductDetails(itemId: string) {
     this.navCtrl.push(PostDetailsPage, { _id: itemId });
   }
 
-   private presentToast(text) {
-        let toast = this.toastCtrl.create({
-            message: text,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
-    }
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
 }

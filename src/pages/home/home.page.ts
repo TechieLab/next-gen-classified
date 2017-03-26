@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs';
 
 import { Events, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
@@ -22,7 +23,7 @@ export class HomePage implements OnInit {
     private selectedCategory: string;
     private category: boolean;
     private featuredPosts: Array<Post>;
-    private latestPosts: Array<Post>;
+    private latestPosts: Observable<Array<Post>>;
     private city: string;
     private viewType: string;
 
@@ -60,8 +61,8 @@ export class HomePage implements OnInit {
             content: "Loading Photos..."
         });
         loader.present();
-        this.postService.getAllByQuery(params).subscribe((response) => {
-            this.latestPosts = response;
+        this.latestPosts = this.postService.getAllByQuery(params);
+        this.latestPosts.subscribe(() => {
             loader.dismiss();
         });
     }

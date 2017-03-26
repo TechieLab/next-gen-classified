@@ -6,6 +6,8 @@ import { ILookupService, LookupService } from '../../app/services/lookup.service
 import { Lookup } from '../../app/models/lookup';
 import { Post } from '../../app/models/post';
 import { Media } from '../../app/models/media';
+import {Constants} from '../../app/common/constants';
+
 import { IPostService, PostService } from './post.service';
 import { IUploadService, UploadService } from '../../app/services/upload.service';
 import { MyPostingsPage } from '../myPostings/myPostings.page';
@@ -78,7 +80,7 @@ export class AddEditPostPage implements OnInit {
   }
 
   uploadPhotos() {
-    var url = 'http://192.168.0.105:3000/api/posts/' + this.post._id + '/upload';
+    var url = Constants.PostApi + this.post._id + '/upload';
     this.uploadService.openActionSheet(url);
   }
 

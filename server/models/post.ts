@@ -13,7 +13,7 @@ export class Post extends BaseEntity {
     LastViewed: Date;
     LastOffered: Date;
     UserId: string;
-    Favt:boolean;
+    Likes:Array<string>;
 
     constructor() {
         super();
@@ -23,7 +23,7 @@ export class Post extends BaseEntity {
         this.Title = '';
         this.UserId = null;
         this.Category = '';
-        this.Favt = false;
+        this.Likes = new Array<string>();
         this.Views = new Array<string>();
         this.Offers = new Array<string>();
         this.Product = new Product();

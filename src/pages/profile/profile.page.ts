@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { Events, NavController, NavParams, Platform, ToastController, ActionSheetController, LoadingController, Loading } from 'ionic-angular';
-
+import {Constants} from '../../app/common/constants';
 import { Profile } from '../../app/models/profile';
 import { Media } from '../../app/models/media';
 import { EditProfilePage } from './editProfile.page';
@@ -68,7 +68,7 @@ export class ProfilePage implements OnInit {
   }
 
   changePhoto() {
-    var url = 'http://192.168.0.105:3000/api/profile/upload';
+    var url = Constants.ProfileApi + 'upload';
     this.uploadService.openActionSheet(url);
   }
 

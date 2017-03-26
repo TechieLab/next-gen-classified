@@ -27,7 +27,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     options: RequestOptions;
 
     constructor( @Optional() public http: Http, public entityName: string) {
-        this.url = Constants.baseApi + '/api/' + entityName;
+        this.url = Constants.BaseApi + '/api/' + entityName;
         this.setAuthHeader();
     }
 
@@ -43,7 +43,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         this.options = new RequestOptions({
             headers: headers
         });
-        var url = Constants.baseApi + '/api/all-' + this.entityName;
+        var url = Constants.BaseApi + '/api/all-' + this.entityName;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
@@ -62,7 +62,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     getAllByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
         this.setHeader();
-        var url = Constants.baseApi + '/api/all-' + this.entityName;
+        var url = Constants.BaseApi + '/api/all-' + this.entityName;
         this.options.search = params;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
@@ -89,12 +89,12 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         return this.http.delete(this.url, this.options).map(this.extractData).catch(this.handleError);
     }
 
-    private extractData(res: Response) {
+    extractData(res: Response) {
         let body = res.json();
         return body.data || body;
     }
 
-    private handleError(error: any) {
+    handleError(error: any) {
         // In a real world app, we might use a remote logging infrastructure
         // We'd also dig deeper into the error to get a better message
         let errMsg = (error.message) ? error.message :
@@ -104,17 +104,20 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         return Observable.throw(errMsg);
     }
 
-    private setAuthHeader() {
+    setAuthHeader() {
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': StorageService.getToken() });
         this.options = new RequestOptions({
             headers: headers
         });
     }
 
-    private setHeader() {
+    setHeader() {
         let headers = new Headers({ 'Content-Type': 'application/json'});
         this.options = new RequestOptions({
             headers: headers
         });
+    }
+    setUrl(url: string){
+        this.url = url;
     }
 }

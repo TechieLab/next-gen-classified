@@ -9,14 +9,14 @@
     {
         "_id":"507f191f810c19729de860ea",
         "key":"category",
-        "value": "pet",
-        "name": "Pet",
+        "value": "petCare",
+        "name": "Pet Care",
         "description" : ""
     },{
         "_id":"507c191e810c19729de860ea",
         "key":"category",
         "value": "home",
-        "name": "HOme",
+        "name": "Home",
         "description" : ""
     },{
         "_id":"507f191d810c19729de860ea",
@@ -25,10 +25,22 @@
         "name": "AutoMobile",
         "description" : ""
     },{
-        "_id":"501f191e812c19729de860ea",
+        "_id":"502f1931814c19729de860ea",
         "key":"category",
-        "value": "electronics",
-        "name": "Electronics",
+        "value": "education",
+        "name": "Education",
+        "description" : ""
+    },{
+        "_id":"502f1931814c19829dec60ea",
+        "key":"category",
+        "value": "fashion",
+        "name": "Fashion",
+        "description" : ""
+    },{
+        "_id":"502f1931814c19e29dec60ea",
+        "key":"category",
+        "value": "furniture",
+        "name": "Furniture",
         "description" : ""
     },{
         "_id":"501f191e310c19729de860ea",
@@ -37,10 +49,46 @@
         "name": "Apple",
         "description" : ""
     },{
+        "_id":"501f391e310c19729de860ea",
+        "key":"brand",
+        "value": "samsung",
+        "name": "Samsung",
+        "description" : ""
+    },{
+        "_id":"501f391e330c19729de860ea",
+        "key":"brand",
+        "value": "lg",
+        "name": "LG",
+        "description" : ""
+    },{
+        "_id":"501f391e310c14729de360ea",
+        "key":"brand",
+        "value": "lenovo",
+        "name": "Lenovo",
+        "description" : ""
+    },{
         "_id":"501f191e814c19729de860ea",
         "key":"defect",
         "value": "brokenScreen",
         "name": "Broken Screen",
+        "description" : ""
+    },{
+        "_id":"502f191e814c19729de860ea",
+        "key":"defect",
+        "value": "nodefect",
+        "name": "No Defect",
+        "description" : ""
+    },{
+        "_id":"502f1912814c19729de860ea",
+        "key":"defect",
+        "value": "keyPadDamaged",
+        "name": "KeyPad Damaged",
+        "description" : ""
+    },{
+        "_id":"502f1912814c29729de860ea",
+        "key":"defect",
+        "value": "motorProblem",
+        "name": "MotorProblem",
         "description" : ""
     }
 ]

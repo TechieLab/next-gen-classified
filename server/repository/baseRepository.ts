@@ -151,8 +151,10 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public update(id: string, data: TEntity, option:Object, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data-----', data);
-        this.collection.findOneAndUpdate({ _id: new ObjectID(id)}, data, option,(err, res) => {    
+        console.log('before updated value is ',option);
+        this.collection.findOneAndUpdate({ _id: id}, data, option,(err, res) => {    
             logger.debug('debug', 'updated data with id------' + id);
+            console.log('updated value is ',res);
               callback(err,res.value);
         });
     }

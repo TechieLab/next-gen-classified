@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
@@ -24,6 +24,7 @@ export class MyFavtPostingPage implements OnInit {
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
         @Inject(AuthGuard) public authGuard: IAuthGuard,
+         public toastCtrl: ToastController,
         @Inject(PostService) public postService: IPostService) {
         // If we navigated to this page, we will have an item available as a nav param
 
@@ -46,7 +47,18 @@ export class MyFavtPostingPage implements OnInit {
                this.myFavtsPostData = response;
         });
     }
-
+    
+     favouritePost(index,post:Post){
+        post.Favt = !post.Favt;
+        this.postService.put(post).subscribe((response:any) => {
+                this.myFavtsPostData[index] = response;
+                if(response.Favt){
+                    this.presentToast('Added to shortlist');
+                }else{
+                    this.presentToast('Remove from shortlist');
+                }
+          });
+    }
   
 
     showProductDetails(itemId: string) {
@@ -55,5 +67,14 @@ export class MyFavtPostingPage implements OnInit {
 
     gotoAddPostingsPage() {
         this.navCtrl.push(AddEditPostPage);
+    }
+
+     private presentToast(text) {
+        let toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { LoginPage } from '../account/login.page';
 import { Post } from '../../app/models/post';
@@ -26,6 +26,7 @@ export class CatalogPage implements OnInit {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
    @Inject(AuthGuard) public authGuard: IAuthGuard,
+    public toastCtrl: ToastController,
    @Inject(PostService) public postService: IPostService
    
   ) {
@@ -49,6 +50,11 @@ export class CatalogPage implements OnInit {
          post.Favt = !post.Favt;
         this.postService.put(post).subscribe((response:any) => {
                 this.posts[index] = response;
+                if(response.Favt){
+                    this.presentToast('Added to shortlist');
+                }else{
+                    this.presentToast('Remove from shortlist');
+                }
           });
      }else{
         this.navCtrl.push(LoginPage);
@@ -58,4 +64,13 @@ export class CatalogPage implements OnInit {
   showProductDetails(itemId: string) {
     this.navCtrl.push(PostDetailsPage, { _id: itemId });
   }
+
+   private presentToast(text) {
+        let toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    }
 }

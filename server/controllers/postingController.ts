@@ -61,7 +61,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
                 post.Product.Photos.push(media);
                 //}
 
-                this.postingService.update(post._id.toString(), post, (err, item) => {
+                this.postingService.update(post._id.toString(), post,{}, (err, item) => {
                     if (err) logger.log('debug', 'create posting err---', err);
 
                     this.result = {

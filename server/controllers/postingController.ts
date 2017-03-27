@@ -133,12 +133,17 @@ export class PostingController extends BaseController<Post> implements IPostingC
     public getFavorite(req:Request, res:Response){
         logger.log('debug', 'posting base controller getAll------');
        
-        this.baseService.get(null, (err, post) => {
+        this.baseService.get({}, (err, post) => {
             if (err) logger.log('debug', 'get err---', err);
             if(post){
-              console.log('post item',post);
+               var alreadyAdded = post.filter((item:Post) => {
+                    if(item.Likes.indexOf(req['userId']) > 0){
+                        return true;
+                    }
+                });
+                return res.json(alreadyAdded);
             }
-            return res.json(post);
+            
         });
     }
 

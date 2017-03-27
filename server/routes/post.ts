@@ -22,6 +22,7 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
 
         this.post();
         this.addFavorite();
+        this.getFavorite();
         this.upload();
     }
 
@@ -50,6 +51,16 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
             self.setPostCollection();
             logger.debug("/api/posts/:id/favorite----");
             self.postingController.addFavorite(req, res);
+        });
+    }
+
+    getFavorite(){
+        this.app.get('/api/all-posts/favorite', function (req: Request, res: Response, next) {
+            // req.files is array of `photos` files
+            // req.body will contain the text fields, if there were any
+            self.setPostCollection();
+            logger.debug("/api/posts/favorite----");
+            self.postingController.getFavorite(req, res);
         });
     }
 

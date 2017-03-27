@@ -12,6 +12,7 @@ export interface IPostingController extends IBaseController<Post> {
     create(req: Request, res: Response);
     upload(req: any, res: Response);
     addFavorite(req: Request, res: Response);
+    getFavorite(req:Request, res:Response);
 }
 var self;
 export class PostingController extends BaseController<Post> implements IPostingController {
@@ -108,8 +109,10 @@ export class PostingController extends BaseController<Post> implements IPostingC
                     }
                 }
 
-                this.postingService.update(post._id.toString(), post, null, (err, item) => {
-                    if (req.query.remove) {
+                this.postingService.update(post._id.toString(), post, {returnOriginal:true}, (err, item) => {
+                   console.log('in update method updating value is',item.Likes);
+                 
+                    if (!item.Likes.length) {
                         return res.json({
                             Message: 'Post removed as favroite',
                             Success: true,
@@ -124,6 +127,18 @@ export class PostingController extends BaseController<Post> implements IPostingC
                     }
                 });
             }
+        });
+    }
+
+    public getFavorite(req:Request, res:Response){
+        logger.log('debug', 'posting base controller getAll------');
+       
+        this.baseService.get(null, (err, post) => {
+            if (err) logger.log('debug', 'get err---', err);
+            if(post){
+              console.log('post item',post);
+            }
+            return res.json(post);
         });
     }
 

@@ -8,6 +8,7 @@ import { Constants } from '../../app/common/constants';
 
 export interface IPostService extends IBaseService<Post> { 
     addRemoveFavorite(postId : string,remove:boolean);
+    getFavorite();
 }
 
 @Injectable()
@@ -17,7 +18,13 @@ export class PostService extends BaseService<Post> implements IPostService {
         super(http, 'posts');
     }
 
-    addRemoveFavorite(postId : string, remove:boolean){
+    getFavorite(){
+       var url = Constants.BaseApi + '/api/all-posts/favorite' ;
+       this.setUrl(url);
+       return this.get();
+    }
+
+  addRemoveFavorite(postId : string, remove:boolean){
        var url = Constants.PostApi + postId + '/favorite';
        if(remove){
            url += '?remove=true';

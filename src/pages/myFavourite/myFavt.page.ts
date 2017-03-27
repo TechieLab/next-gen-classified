@@ -43,7 +43,7 @@ export class MyFavtPostingPage implements OnInit {
     }
 
     getMyFavtPostData() {
-        this.postService.getByQuery(this.params).subscribe((response) => {
+        this.postService.getFavorite().subscribe((response) => {
             this.myFavtsPostData = response;
         });
     }
@@ -54,6 +54,7 @@ export class MyFavtPostingPage implements OnInit {
                 this.myFavtsPostData[index].IsFav = true;
                 this.presentToast('Added to shortlist');
             } else {
+                 this.myFavtsPostData[index].IsFav = false;
                 this.presentToast('Remove from shortlist');
             }
         });

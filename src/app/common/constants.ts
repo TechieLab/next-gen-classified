@@ -2,7 +2,7 @@
 export class Constants {
 
   public static AppName: string = "Rp Classified";
-  public static BaseApi: string = 'http://192.168.0.107:3000';
+  public static BaseApi: string = 'http://127.0.0.1:3000' /*http://192.168.0.107:3000*/;
   public static ElasticApi : string = "http://192.168.0.107:9201";
   public static LookupApi: string = Constants.BaseApi + '/api/lookups/';
   public static PostApi : string =  Constants.BaseApi +'/api/posts/';

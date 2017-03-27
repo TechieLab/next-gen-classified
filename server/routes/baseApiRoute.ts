@@ -108,10 +108,6 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
 
     get() {
         this.app.get('/api/' + this.apiName, (req: Request, res: Response) => {
-            if(req.query.Favt){
-                var key = Boolean(req.query.Favt);
-                req.query = {'Favt':key};
-            }
             self.setCollection(this.apiName);
             logger.debug("route name get----" + this.apiName);
             self.baseController.get(req, res);

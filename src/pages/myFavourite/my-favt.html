@@ -14,17 +14,18 @@
 <ion-content no-padding>
   <ion-grid *ngIf="myFavtsPostData.length">
     <ion-row wrap>
-      <ion-col *ngFor="let post of myFavtsPostData">
-        <ion-item no-padding (click)="showProductDetails(post._id)">
-          <ion-thumbnail item-left>
+      <ion-col *ngFor="let post of myFavtsPostData;let i = index;">
+        <ion-item no-padding>
+          <ion-thumbnail item-left (click)="showProductDetails(post._id)">
             <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
           </ion-thumbnail>
           <h2>{{post.Title}}</h2>
           <p>{{post.Product.Description.Title}}</p>
           <p>Location: {{post.Location}}</p>
-          <div item-right (click)="favouritePost(i,post)">
-            <ion-icon *ngIf="!post.Favt" name="heart-outline"></ion-icon>
-            <ion-icon *ngIf="post.Favt" name="heart"></ion-icon>
+          <div item-right (click)="removefavouritePost(i,post)">
+            <p>test - {{post.IsFav}}</p>
+            <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
+            <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
           </div>
           <button ion-button clear item-right>
                         {{post.Product.Description.Price}}

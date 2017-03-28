@@ -89,19 +89,19 @@ export class PostingController extends BaseController<Post> implements IPostingC
                 }
 
                 if(req.query.remove == "true"){
-                       console.log('inside if condition sending request query-------------',req.query.remove);
-                     var index = post.Likes.findIndex((item) => {
-                             return (item === req['userId'])
-                         });
-                         post.isFavouritePost = false;
-                         post.Likes.splice(index, 1);
+                    console.log('inside if condition sending request query-------------',req.query.remove);
+                    var index:any = post.Likes.forEach((item,index)=>{
+                          if((item === req['userId'])){
+                              return index;
+                          }
+                    })
+                     post.Likes.splice(index, 1);
                 }else{
                       post.Likes.push(req['userId']);
-                       post.isFavouritePost = true;
+
                 }
 
-              
-                 console.log('before update method updating value is',post.isFavouritePost);
+            
                 console.log('before upadting post value-----------',post);
                 this.postingService.update(post._id.toString(), post, {returnNewDocument : true}, (err, item) => {
                    console.log('in update method updating value is',item.Likes);
@@ -128,12 +128,13 @@ export class PostingController extends BaseController<Post> implements IPostingC
     public getFavorite(req:Request, res:Response){
         logger.log('debug', 'posting base controller getAll------');
        
-        this.baseService.get({}, (err, post) => {
+        this.postingService.get({Likes:{$gt:[]}}, (err, post) => {
             if (err) logger.log('debug', 'get err---', err);
             if(post){
+
+                console.log('post fetching dataa------------',post);
                var alreadyAdded = post.filter((item:Post) => {
-                    if(item.Likes.indexOf(req['userId']) > 0){
-                        item.isFavouritePost = true
+                    if(item.Likes.indexOf(req['userId']) >= 0){
                         return true;
                     }
                 });

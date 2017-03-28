@@ -6,6 +6,7 @@ import { SettingsPage } from '../../pages/settings/settings.page';
 import { NotificationPage } from '../../pages/notification/notification.page';
 import { AdminPage } from '../../pages/admin/admin.page';
 import { MyPostingsPage } from '../../pages/myPostings/myPostings.page';
+import { OfferPage } from '../../pages/offers/offers.page';
 import { MyFavtPostingPage } from '../../pages/myFavourite/myFavt.page';
 import { FiltersPage } from '../../pages/filters/filters.page';
 import { FeedbackPage } from '../../pages/feedback/feedback.page';
@@ -22,6 +23,7 @@ export const AppComponents = [
     SettingsPage,
     NotificationPage,
     MyPostingsPage,
+    OfferPage,
     MyFavtPostingPage,
     FiltersPage,
     FeedbackPage,

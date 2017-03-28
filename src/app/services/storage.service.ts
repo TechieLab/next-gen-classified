@@ -1,6 +1,7 @@
 const App_Context: string = 'APP_Context';
 const Auth_Token: string = 'Auth_Token';
 const User_Name: string = 'User_Name';
+const Client_Id ='Client_Id'
 
 export class StorageService {
 
@@ -41,7 +42,9 @@ export class StorageService {
     static setToken(response: any): void {
         localStorage.setItem(User_Name, response.UserName);
         localStorage.setItem(Auth_Token, response.Token);
+        localStorage.setItem(Client_Id, response.ClientId);
     }
+   
     static removeToken(): void {
         localStorage.removeItem(User_Name);
         localStorage.removeItem(Auth_Token);

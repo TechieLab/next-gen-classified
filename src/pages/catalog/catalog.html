@@ -10,10 +10,10 @@
         <p>Location: {{post.Location}}</p>
         <p>Price:{{post.Product.Description.Price}} </p>
         <div item-right (click)="favouritePost(i,post)">
-          <ion-icon *ngIf="!post.isFavouritePost" name="heart-outline"></ion-icon>
-          <ion-icon *ngIf="post.isFavouritePost" name="heart"></ion-icon>
+          <ion-icon *ngIf="!post.isFav" name="heart-outline"></ion-icon>
+          <ion-icon *ngIf="post.isFav" name="heart"></ion-icon>
         </div>
-        <button ion-button>
+        <button ion-button (click)="goToOffersPage()">
             Offer
         </button>
       </ion-item>
@@ -30,10 +30,10 @@
     <p>Location: {{post.Location}}</p>
     <p>Price:{{post.Product.Description.Price}} </p>
     <div item-right (click)="favouritePost(i,post)">
-      <ion-icon *ngIf="!post.isFavouritePost" name="heart-outline"></ion-icon>
-      <ion-icon *ngIf="post.isFavouritePost" name="heart"></ion-icon>
+      <ion-icon *ngIf="!post.isFav" name="heart-outline"></ion-icon>
+      <ion-icon *ngIf="post.isFav" name="heart"></ion-icon>
     </div>
-    <button ion-button item-right>
+    <button ion-button item-right (click)="goToOffersPage(post.Product)">
             Offer
         </button>
   </ion-item>

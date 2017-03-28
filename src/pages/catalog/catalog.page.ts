@@ -1,12 +1,14 @@
 import { Subscriber, Observable } from 'rxjs';
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import {Events , NavController, NavParams, ToastController } from 'ionic-angular';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { LoginPage } from '../account/login.page';
+import { OfferPage } from '../offers/offers.page';
 import { Post } from '../../app/models/post';
 import { Result } from '../../app/models/result';
 import { IPostService, PostService } from '../post/post.service';
 import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';
+import { StorageService } from '../../app/services/storage.service';
 
 @Component({
   selector: 'catalog-page',
@@ -24,10 +26,12 @@ export class CatalogPage implements OnInit {
   postsResult: Array<Post>;
   isFav: boolean = false;
   isUserAuthenticated: boolean = false;
+  clientId:string = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     @Inject(AuthGuard) public authGuard: IAuthGuard,
     public toastCtrl: ToastController,
+    public events: Events,
     @Inject(PostService) public postService: IPostService
 
   ) {
@@ -37,39 +41,43 @@ export class CatalogPage implements OnInit {
     this.subCategories = ["SmartPhone", "Android", "Iphone", "Blackberry"];
     this.posts = new Observable<Array<Post>>();
     this.viewType = 'list';
+    this.clientId = StorageService.getItem('Client_Id');
   }
 
   ngOnInit() {
     this.isUserAuthenticated = this.authGuard.canActivate();
     this.posts.subscribe((result) => {
       this.postsResult = result;
-    //  this.checkIsFavouritePost();
+      this.checkIsFavouritePost();
     });
   }
+
+    checkIsFavouritePost() {
+    if (this.postsResult && this.postsResult.length) {
+      this.postsResult.forEach((item) => {
+        item.Likes.forEach((like) => {
+          if (this.clientId == like) {
+            item.isFav = true;
+          }
+        });
+      });
+    }
+  }
+
   selectSubCategory() {
     this.isSubCategorySelected = true;
   }
 
-  // checkIsFavouritePost() {
-  //   if (this.postsResult && this.postsResult.length) {
-  //     this.postsResult.forEach((item) => {
-  //       item.Likes.forEach((like) => {
-  //         if (item.UserId == like) {
-  //           item.IsFav = true;
-  //         }
-  //       });
-  //     });
-  //   }
-  // }
-
+  
   favouritePost(index, post: Post) {
     if (this.isUserAuthenticated) {
-      this.postService.addRemoveFavorite(post._id, post.isFavouritePost).subscribe((response: Result) => {
+      this.postService.addRemoveFavorite(post._id, post.isFav).subscribe((response: Result) => {
         if (response.Success && response.Content.IsFav) {
-          this.postsResult[index].isFavouritePost = true;
+          this.postsResult[index].isFav = true;
           this.presentToast('Added to shortlist');
+           
         } else {
-          this.postsResult[index].isFavouritePost = false;
+          this.postsResult[index].isFav = false;
           this.presentToast('Remove from shortlist');
         }
       });
@@ -80,6 +88,10 @@ export class CatalogPage implements OnInit {
 
   showProductDetails(itemId: string) {
     this.navCtrl.push(PostDetailsPage, { _id: itemId });
+  }
+
+  goToOffersPage(result){
+    this.navCtrl.push(OfferPage,{price:result.Description.Price});
   }
 
   private presentToast(text) {

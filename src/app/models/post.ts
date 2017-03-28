@@ -12,7 +12,7 @@ export class Post {
     LastOffered: Date;
     Likes:Array<string>;
     UserId: string;
-    IsFav : boolean;
+    isFavouritePost : boolean;
 
     constructor() {
         this.Title = '';
@@ -22,5 +22,6 @@ export class Post {
         this.Product = new Product();
         this.Views = new Array<string>();
         this.Offers = new Array<string>();
+        this.isFavouritePost = false;
     }
 }

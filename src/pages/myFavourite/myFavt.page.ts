@@ -51,10 +51,10 @@ export class MyFavtPostingPage implements OnInit {
     removefavouritePost(index, post: Post) {
         this.postService.addRemoveFavorite(post._id, true).subscribe((response: Result) => {
             if (response.Success && response.Content.IsFav) {
-                this.myFavtsPostData[index].IsFav = true;
+                this.myFavtsPostData[index].isFavouritePost = true;
                 this.presentToast('Added to shortlist');
             } else {
-                 this.myFavtsPostData[index].IsFav = false;
+                 this.myFavtsPostData[index].isFavouritePost = false;
                 this.presentToast('Remove from shortlist');
             }
         });

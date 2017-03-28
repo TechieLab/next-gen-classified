@@ -26,9 +26,7 @@ export class PostService extends BaseService<Post> implements IPostService {
 
   addRemoveFavorite(postId : string, remove:boolean){
        var url = Constants.PostApi + postId + '/favorite';
-       if(remove){
-           url += '?remove=true';
-       }
+        url += '?remove='+ remove;
        
        this.setUrl(url);
        return this.get();

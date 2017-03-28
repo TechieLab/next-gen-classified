@@ -82,47 +82,42 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
     public addFavorite(req: Request, res: Response) {
         this.postingService.getById(req.params.id, (err, post) => {
-
+            console.log('sending request query-------------',req.query.remove);
             if (post) {
                 if (!post.Likes) {
                     post.Likes = new Array<string>();
                 }
 
-                var alreadyAdded = post.Likes.filter((item) => {
-                    return (item === req['userId']);
-                });
-
-                if (!alreadyAdded.length) {
-                    post.Likes.push(req['userId']);
-                } else {
-                    if (req.query.remove) {
-                        var index = post.Likes.findIndex((item) => {
-                            return (item === req['userId'])
-                        });
-                        post.Likes.splice(index, 1);
-                    } else {
-                        return res.json({
-                            Message: 'Post already added as favroite',
-                            Success: true,
-                            Content: { IsFav: true }
-                        });
-                    }
+                if(req.query.remove == "true"){
+                       console.log('inside if condition sending request query-------------',req.query.remove);
+                     var index = post.Likes.findIndex((item) => {
+                             return (item === req['userId'])
+                         });
+                         post.isFavouritePost = false;
+                         post.Likes.splice(index, 1);
+                }else{
+                      post.Likes.push(req['userId']);
+                       post.isFavouritePost = true;
                 }
 
-                this.postingService.update(post._id.toString(), post, {returnOriginal:true}, (err, item) => {
+              
+                 console.log('before update method updating value is',post.isFavouritePost);
+                console.log('before upadting post value-----------',post);
+                this.postingService.update(post._id.toString(), post, {returnNewDocument : true}, (err, item) => {
                    console.log('in update method updating value is',item.Likes);
+                    console.log('in update method updating value is',typeof(post.Likes.indexOf(req['userId'])));
                  
-                    if (!item.Likes.length) {
-                        return res.json({
-                            Message: 'Post removed as favroite',
-                            Success: true,
-                            Content: { IsFav: false }
-                        });
-                    } else {
+                    if (post.Likes.indexOf(req['userId']) >= 0) {
                         return res.json({
                             Message: 'Post added as favroite',
                             Success: true,
                             Content: { IsFav: true }
+                        });
+                    } else {
+                        return res.json({
+                            Message: 'Post remove as favroite',
+                            Success: true,
+                            Content: { IsFav: false }
                         });
                     }
                 });
@@ -138,9 +133,11 @@ export class PostingController extends BaseController<Post> implements IPostingC
             if(post){
                var alreadyAdded = post.filter((item:Post) => {
                     if(item.Likes.indexOf(req['userId']) > 0){
+                        item.isFavouritePost = true
                         return true;
                     }
                 });
+                console.log('already addedd',alreadyAdded);
                 return res.json(alreadyAdded);
             }
             

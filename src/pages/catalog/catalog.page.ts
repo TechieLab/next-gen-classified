@@ -43,33 +43,33 @@ export class CatalogPage implements OnInit {
     this.isUserAuthenticated = this.authGuard.canActivate();
     this.posts.subscribe((result) => {
       this.postsResult = result;
-      this.checkIsFavouritePost();
+    //  this.checkIsFavouritePost();
     });
   }
   selectSubCategory() {
     this.isSubCategorySelected = true;
   }
 
-  checkIsFavouritePost() {
-    if (this.postsResult && this.postsResult.length) {
-      this.postsResult.forEach((item) => {
-        item.Likes.forEach((like) => {
-          if (item.UserId == like) {
-            item.IsFav = true;
-          }
-        });
-      });
-    }
-  }
+  // checkIsFavouritePost() {
+  //   if (this.postsResult && this.postsResult.length) {
+  //     this.postsResult.forEach((item) => {
+  //       item.Likes.forEach((like) => {
+  //         if (item.UserId == like) {
+  //           item.IsFav = true;
+  //         }
+  //       });
+  //     });
+  //   }
+  // }
 
   favouritePost(index, post: Post) {
     if (this.isUserAuthenticated) {
-      this.postService.addRemoveFavorite(post._id, false).subscribe((response: Result) => {
+      this.postService.addRemoveFavorite(post._id, post.isFavouritePost).subscribe((response: Result) => {
         if (response.Success && response.Content.IsFav) {
-          this.postsResult[index].IsFav = true;
+          this.postsResult[index].isFavouritePost = true;
           this.presentToast('Added to shortlist');
         } else {
-          this.postsResult[index].IsFav = false;
+          this.postsResult[index].isFavouritePost = false;
           this.presentToast('Remove from shortlist');
         }
       });

@@ -14,6 +14,7 @@ export class Post extends BaseEntity {
     LastOffered: Date;
     UserId: string;
     Likes:Array<string>;
+    isFavouritePost:boolean;
 
     constructor() {
         super();
@@ -27,5 +28,6 @@ export class Post extends BaseEntity {
         this.Views = new Array<string>();
         this.Offers = new Array<string>();
         this.Product = new Product();
+        this.isFavouritePost = false;
     }
 }

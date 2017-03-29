@@ -5,6 +5,7 @@ import {LookupRoute} from './lookup';
 import {UserRoute} from './user';
 import {AccountRoute} from './account'
 import {PostRoute} from './post';
+import {OfferRoute} from './offer';
 import {ProfileRoute} from './profile';
 export class IndexApiRoute
 { 
@@ -15,6 +16,7 @@ export class IndexApiRoute
         new UserRoute(app);
         new PostRoute(app);
         new ProfileRoute(app);
+        new OfferRoute(app);
     }  
 }
 

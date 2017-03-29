@@ -33,9 +33,11 @@
       <ion-icon *ngIf="!post.isFav" name="heart-outline"></ion-icon>
       <ion-icon *ngIf="post.isFav" name="heart"></ion-icon>
     </div>
-    <button ion-button item-right (click)="goToOffersPage(post.Product)">
+    <button *ngIf="!post.isOffered" ion-button item-right (click)="goToOffersPage(post)">
             Offer
         </button>
+
+   <button *ngIf="post.isOffered" ion-button item-right> <ion-icon  name="mail"></ion-icon></button>
   </ion-item>
 
 </ion-list>

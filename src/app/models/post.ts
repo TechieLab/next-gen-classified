@@ -13,6 +13,7 @@ export class Post {
     Likes:Array<string>;
     UserId: string;
     isFav : boolean;
+    isOffered:boolean;
 
     constructor() {
         this.Title = '';
@@ -23,5 +24,6 @@ export class Post {
         this.Views = new Array<string>();
         this.Offers = new Array<string>();
         this.isFav = false;
+        this.isOffered = false;
     }
 }

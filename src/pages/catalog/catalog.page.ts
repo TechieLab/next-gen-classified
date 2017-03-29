@@ -25,6 +25,7 @@ export class CatalogPage implements OnInit {
   isSubCategorySelected: boolean;
   postsResult: Array<Post>;
   isFav: boolean = false;
+  isOffered:boolean = false;
   isUserAuthenticated: boolean = false;
   clientId:string = '';
 
@@ -60,6 +61,11 @@ export class CatalogPage implements OnInit {
             item.isFav = true;
           }
         });
+        item.Offers.forEach((offer) => {
+          if (this.clientId == offer) {
+             item.isOffered = true;
+          }
+        });
       });
     }
   }
@@ -91,7 +97,7 @@ export class CatalogPage implements OnInit {
   }
 
   goToOffersPage(result){
-    this.navCtrl.push(OfferPage,{price:result.Description.Price});
+    this.navCtrl.push(OfferPage,{price:result.Product.Description.Price,_id:result._id});
   }
 
   private presentToast(text) {

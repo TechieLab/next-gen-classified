@@ -147,7 +147,7 @@ export class AccountService implements IAccountService {
                         if (err) throw err;
 
                         result.Message = "Authenticated Succesfully";
-                        result.Content = { UserName: currentUser.UserName, Token: currentUser.Session.AuthToken,ClientId: currentUser._id }
+                        result.Content = { UserName: currentUser.UserName, Token: currentUser.Session.AuthToken,ClientId: currentUser._id,EmailId:currentUser.EmailId }
                         result.Success = true;
 
                         callback(result);

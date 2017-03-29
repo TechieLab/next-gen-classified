@@ -22,6 +22,7 @@ export class ProfileController {
     getProfile(req: Request, res: Response) {
         this.userService.getById(req['userId'], (err, user) => {
             if (user) {
+                user.Profile.EmailId = user.EmailId;
                 return res.json(user.Profile);
             }
         });

@@ -7,7 +7,8 @@ import {Media} from './media';
 export class Profile
 {
      FullName: string;
-     DisplayName: string;   
+     DisplayName: string;
+     EmailId:string;   
      Address : Address;
      Contact: Contact;
      Theme: Theme;

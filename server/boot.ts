@@ -28,7 +28,7 @@ var app = express();
 
 //MongoDB.MongoClient.connect("mongodb://localhost:27017/classfieddb", function (err, db) {
 
-app.set('port', process.env.PORT || '3000');
+app.set('port', process.env.PORT || '80');
 swig.setDefaults({ cache: false });
 
 // uncomment after placing your favicon in /public

@@ -4,17 +4,20 @@ import { CommonModule } from '@angular/common';
 import { JsonpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import {OrderBy} from '../app/pipes/orderBy';
 import { Constants } from './common/constants';
 import { AppModules } from './common/moduleConstants';
 import { AppProviders } from './common/providerConstants';
-
-import { AppComponents, featuredComponents, customPipes } from './common/componentConstants';
+import { AppComponents } from './common/componentConstants';
+import { Directives } from './common/directiveConstants';
+import { Pages } from './common/pageConstants';
+import { Pipes } from './common/pipeConstants';
 
 @NgModule({
   declarations: [
     MyApp,
-    AppComponents
+    AppComponents,
+    Pages,
+    Directives
   ],
   imports: [
     FormsModule,
@@ -33,8 +36,7 @@ import { AppComponents, featuredComponents, customPipes } from './common/compone
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    featuredComponents
+    MyApp
   ],
   providers: [
     AppProviders,

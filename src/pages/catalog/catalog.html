@@ -3,8 +3,11 @@
     <ion-col width-50 no-padding *ngFor="let post of postsResult; let i = index">
       <ion-item>
         <div (click)="showProductDetails(post._id)">
-          <ion-thumbnail item-bottom padding-bottom>
+          <ion-thumbnail item-bottom padding-bottom *ngIf="post.Product.Photos.length">
             <img src="{{post.Product.Photos[0].ImageUrl}}">
+          </ion-thumbnail>
+          <ion-thumbnail item-left *ngIf="!post.Product.Photos.length">
+            <img src="/assets/gallery.jpg">
           </ion-thumbnail>
           <h2>{{post.Title}}</h2>
           <p>{{post.Product.Description.Title}}</p>
@@ -24,10 +27,13 @@
 </ion-grid>
 <ion-list *ngIf="viewType == 'list'">
   <ion-item *ngFor="let post of postsResult;let i = index" no-padding>
+    <ion-thumbnail item-left *ngIf="post.Product.Photos.length">
+      <img src="{{post.Product.Photos[0].ImageUrl}}">
+    </ion-thumbnail>
+    <ion-thumbnail item-left *ngIf="!post.Product.Photos.length">
+      <img src="/assets/gallery.jpg">
+    </ion-thumbnail>
     <div (click)="showProductDetails(post._id)">
-      <ion-thumbnail item-left *ngIf="post.Product.Photos.length">
-        <img src="{{post.Product.Photos[0].ImageUrl}}">
-      </ion-thumbnail>
       <h2>{{post.Title}}</h2>
       <p>{{post.Product.Description.Title}}</p>
       <p>Location: {{post.Location}}</p>
@@ -41,5 +47,4 @@
             Offer
         </button>
   </ion-item>
-
 </ion-list>

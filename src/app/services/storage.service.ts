@@ -50,5 +50,7 @@ export class StorageService {
     static removeToken(): void {
         localStorage.removeItem(User_Name);
         localStorage.removeItem(Auth_Token);
+        localStorage.removeItem(Client_Id);
+        localStorage.removeItem(Email_Id);
     }
 }

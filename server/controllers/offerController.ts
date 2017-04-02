@@ -13,19 +13,19 @@ export interface IOfferController extends IBaseController<Offer> {
 }
 
 export class OfferController extends BaseController<Offer> implements IOfferController {
-    
+
     public result: Result;
 
-    constructor(public offerService: IOfferService,public postingService: IPostingService) {
+    constructor(public offerService: IOfferService, public postingService: IPostingService) {
         super(offerService);
     }
 
-   public create(req: Request, res: Response) {
+    public create(req: Request, res: Response) {
         var data = req.body;
         var offer = new Offer();
 
         offer.UserId = req['userId'];
-        
+
         offer.Price = data.Price;
         offer.PostId = data.PostId;
         offer.Contact.PhoneNumber = data.PhoneNumber;
@@ -34,32 +34,29 @@ export class OfferController extends BaseController<Offer> implements IOfferCont
 
         logger.log('debug', 'PostingController creating post ----', offer);
 
-         this.offerService.create(offer, (err, item) => {
+        this.offerService.create(offer, (err, item) => {
             if (err) logger.log('debug', 'create posting err---', err);
-        
+
+            this.result = {
+                Message: 'Entity created',
+                Success: true,
+                Content: item
+            };
+            return res.json(this.result);
         });
 
         this.postingService.getById(offer.PostId.toString(), (err, post) => {
-                    if (err) logger.log('debug', 'create posting err---', err);
+            if (err) logger.log('debug', 'create posting err---', err);
 
-                    if (!post.Offers) {
-                        post.Offers = new Array<string>();
-                    }
-                    
-                    post.Offers.push(req['userId']);
+            if (!post.Offers) {
+                post.Offers = new Array<string>();
+            }
 
-                    this.postingService.update(offer.PostId.toString(),post ,{}, (err, post) => {
-                        if (err) logger.log('debug', 'create posting err---', err);
+            post.Offers.push(req['userId']);
 
-                        if (post.Offers.indexOf(req['userId']) >= 0) {
-                                this.result = {
-                                    Message: 'Entity created',
-                                    Success: true,
-                                    Content: { MakeOffer: true }
-                                };
-                                return res.json(this.result);
-                            } 
-                    });
-             });
+            this.postingService.update(offer.PostId.toString(), post, {}, (err, post) => {
+                if (err) logger.log('debug', 'create posting err---', err);
+            });
+        });
     }
 }

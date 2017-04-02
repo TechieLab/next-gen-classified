@@ -4,7 +4,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { OrderBy } from '../app/pipes/orderBy';
 
-import { AppComponents, featuredComponents, appPages, authPages } from './common/componentConstants';
+import { AppComponents} from './common/componentConstants';
+import { appPages, authPages} from './common/pageConstants';
 import { Welcome } from '../pages/welcome/welcome.page';
 import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
@@ -18,7 +19,7 @@ import {Profile} from '../app/models/profile';
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [AppComponents, featuredComponents, LoginPage, HomePage, SearchPage],
+  entryComponents: [AppComponents, LoginPage, HomePage, SearchPage],
   providers: [AuthGuard]
 })
 export class MyApp implements OnInit {

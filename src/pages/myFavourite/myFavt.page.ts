@@ -61,7 +61,7 @@ export class MyFavtPostingPage implements OnInit {
       this.myFavtsPostData.forEach((item) => {
         item.Likes.forEach((like) => {
           if (this.clientId == like) {
-            item.isFav = true;
+            item.IsFav = true;
           }
         });
       });
@@ -70,7 +70,7 @@ export class MyFavtPostingPage implements OnInit {
 
   private fetchUpdatedFavtPostsCount(res:Array<Post>){
      var selectedPost = res.filter(element => {
-          if(element.isFav){
+          if(element.IsFav){
             return true;
           }
      });
@@ -79,15 +79,15 @@ export class MyFavtPostingPage implements OnInit {
 
 
     removefavouritePost(index, post: Post) {
-        this.postService.addRemoveFavorite(post._id, post.isFav).subscribe((response: Result) => {
+        this.postService.addRemoveFavorite(post._id, post.IsFav).subscribe((response: Result) => {
             if (response.Success && response.Content.IsFav) {
-                this.myFavtsPostData[index].isFav = true;
+                this.myFavtsPostData[index].IsFav = true;
                 this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
                 this.presentToast('Added to shortlist');
                 
                 
             } else {
-                 this.myFavtsPostData[index].isFav = false;
+                 this.myFavtsPostData[index].IsFav = false;
                  this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
                  this.presentToast('Remove from shortlist');
                 

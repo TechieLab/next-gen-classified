@@ -24,8 +24,8 @@
           <p>Location: {{post.Location}}</p>
           <div item-right (click)="removefavouritePost(i,post)">
         
-            <ion-icon *ngIf="!post.isFav" name="heart-outline"></ion-icon>
-            <ion-icon *ngIf="post.isFav" name="heart"></ion-icon>
+            <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
+            <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
           </div>
           <button ion-button clear item-right>
                         {{post.Product.Description.Price}}

@@ -1,6 +1,4 @@
-﻿/// <reference path='../typings/index.d.ts' />
-
-import express = require('express');
+﻿import express = require('express');
 import MongoDB = require('mongodb');
 import path = require('path');
 

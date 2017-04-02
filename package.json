@@ -8,8 +8,9 @@
     "build": "ionic-app-scripts build",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "start": "node ./dist/server/boot.js",
-    "server": "tsc --sourcemap --outDir ./dist/ --rootDir ./ --module commonjs ./server/boot.ts --experimentalDecorators && node ./dist/server/boot.js ",
+    "server-start": "node ./dist/server/boot.js",
+    "server-build": "tsc --sourcemap --outDir ./dist/ --rootDir ./ --module commonjs ./server/boot.ts --experimentalDecorators",
+    "server-build-start": "tsc --sourcemap --outDir ./dist/ --rootDir ./ --module commonjs ./server/boot.ts --experimentalDecorators && node ./dist/server/boot.js ",
     "lint": "tslint \"src/**/*.ts\""
   },
   "dependencies": {

@@ -3,6 +3,7 @@ import { NavController, NavParams, ToastController, Events } from 'ionic-angular
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
+import { HomePage } from '../home/home.page'
 
 import { LoginPage } from '../account/login.page';
 import { Post } from '../../app/models/post';
@@ -73,11 +74,13 @@ export class MyFavtPostingPage implements OnInit {
             if (response.Success && response.Content.IsFav) {
                 this.myFavtsPostData[index].isFav = true;
                 this.presentToast('Added to shortlist');
-                this.events.publish('user:like');
+                
+                
             } else {
                  this.myFavtsPostData[index].isFav = false;
                 this.presentToast('Remove from shortlist');
-                this.events.publish('user:like');
+                
+              
             }
         });
     }

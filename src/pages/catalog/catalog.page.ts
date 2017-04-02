@@ -53,6 +53,8 @@ export class CatalogPage implements OnInit {
     });
   }
 
+  
+
     checkIsFavouritePost() {
     if (this.postsResult && this.postsResult.length) {
       this.postsResult.forEach((item) => {
@@ -80,10 +82,12 @@ export class CatalogPage implements OnInit {
       this.postService.addRemoveFavorite(post._id, post.isFav).subscribe((response: Result) => {
         if (response.Success && response.Content.IsFav) {
           this.postsResult[index].isFav = true;
+          this.fetchUpdatedFavtPostsCount(this.postsResult);
           this.presentToast('Added to shortlist');
-           
+         
         } else {
           this.postsResult[index].isFav = false;
+          this.fetchUpdatedFavtPostsCount(this.postsResult);
           this.presentToast('Remove from shortlist');
         }
       });
@@ -97,7 +101,21 @@ export class CatalogPage implements OnInit {
   }
 
   goToOffersPage(result){
-    this.navCtrl.push(OfferPage,{price:result.Product.Description.Price,_id:result._id});
+    if(this.isUserAuthenticated){
+      this.navCtrl.push(OfferPage,{price:result.Product.Description.Price,_id:result._id});
+    }else {
+      this.navCtrl.push(LoginPage);
+    }
+    
+  }
+
+  private fetchUpdatedFavtPostsCount(res:Array<Post>){
+     var selectedPost = res.filter(element => {
+          if(element.isFav){
+            return true;
+          }
+     });
+    this.events.publish('favtpost:count',{post:selectedPost});
   }
 
   private presentToast(text) {

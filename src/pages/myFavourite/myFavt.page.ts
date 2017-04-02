@@ -68,17 +68,28 @@ export class MyFavtPostingPage implements OnInit {
     }
   }
 
+  private fetchUpdatedFavtPostsCount(res:Array<Post>){
+     var selectedPost = res.filter(element => {
+          if(element.isFav){
+            return true;
+          }
+     });
+    this.events.publish('favtpost:count',{post:selectedPost});
+  }
+
 
     removefavouritePost(index, post: Post) {
         this.postService.addRemoveFavorite(post._id, post.isFav).subscribe((response: Result) => {
             if (response.Success && response.Content.IsFav) {
                 this.myFavtsPostData[index].isFav = true;
+                this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
                 this.presentToast('Added to shortlist');
                 
                 
             } else {
                  this.myFavtsPostData[index].isFav = false;
-                this.presentToast('Remove from shortlist');
+                 this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
+                 this.presentToast('Remove from shortlist');
                 
               
             }

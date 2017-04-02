@@ -9,7 +9,7 @@ import { Directive, Input } from '@angular/core';
 })
 export class DefaultImageDirective { 
     @Input() src: string;
-    public defaultImg: string = '/assets/gallery.jpg';
+    public defaultImg: string = '/assets/default-placeholder.png';
     public onError() {
         return this.defaultImg;
     }

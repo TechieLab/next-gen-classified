@@ -10,7 +10,6 @@ export class Description
     public Price: string;
     public Brand : string;
     public Model : string;
-    public Defects : Array<string>;
 
     constructor(){
         this.Title = '';
@@ -22,6 +21,5 @@ export class Description
         this.Price = '';    
         this.Brand = '';
         this.Model = '';  
-        this.Defects =  [];
     }
 }

@@ -11,6 +11,8 @@ import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
 import { SearchPage } from '../pages/search/search.page';
 import { HomePage } from '../pages/home/home.page';
+import { MyPostingsPage } from '../pages/myPostings/myPostings.page';
+import { MyFavtPostingPage } from '../pages/myFavourite/myFavt.page';
 import { AuthGuard, IAuthGuard } from '../app/services/guard.service';
 import { AccountService, IAccountService } from '../pages/account/account.service';
 import { StorageService } from '../app/services/storage.service';
@@ -19,7 +21,7 @@ import {Profile} from '../app/models/profile';
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [AppComponents, LoginPage, HomePage, SearchPage],
+  entryComponents: [AppComponents, LoginPage, HomePage, SearchPage, MyPostingsPage, MyFavtPostingPage],
   providers: [AuthGuard]
 })
 export class MyApp implements OnInit {

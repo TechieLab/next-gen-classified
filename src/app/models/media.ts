@@ -15,7 +15,7 @@ export class Media
          this.SizeInBytes = 0;
          this.Height = 0;
          this.Width = 0;
-         this.ImageUrl = '';         
+         this.ImageUrl = '/assets/default-placeholder.png';         
          this.ImageType = '';
      }
 }

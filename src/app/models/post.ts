@@ -12,18 +12,20 @@ export class Post {
     LastOffered: Date;
     Likes:Array<string>;
     UserId: string;
-    isFav : boolean;
-    isOffered:boolean;
+    IsFav : boolean;
+    IsOffered:boolean;
+    PostedOn : Date;
 
     constructor() {
         this.Title = '';
         this.Category = '';
         this.Location = '';
+        this.PostedOn = new Date();
         this.Likes = new Array<string>();
         this.Product = new Product();
         this.Views = new Array<string>();
         this.Offers = new Array<string>();
-        this.isFav = false;
-        this.isOffered = false;
+        this.IsFav = false;
+        this.IsOffered = false;
     }
 }

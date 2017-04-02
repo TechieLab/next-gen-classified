@@ -23,13 +23,11 @@ export const Pages = [
     HelpPage,
 ];
 
-export const featuredComponents = [
+export const EntryComponents = [
     FiltersPage,
     FeedbackPage,
     HelpPage,
 ];
-
-
 
 export const appPages = [
     { title: 'Home', component: HomePage, name: "home", seq: 1 },

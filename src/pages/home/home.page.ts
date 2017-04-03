@@ -29,30 +29,31 @@ export class HomePage implements OnInit {
 
 
     constructor(public navCtrl: NavController,
-        public navParams: NavParams, public events: Events,
-        @Inject(PostService) public postService: IPostService,
+        public navParams: NavParams,
+        public events: Events,
         public toastCtrl: ToastController,
-        private loadingCtrl: LoadingController) {
+        private loadingCtrl: LoadingController,
+        @Inject(PostService) public postService: IPostService, ) {
         this.category = true;
         this.selectedCategory = '';
         this.viewType = 'list';
+    }
+
+    ngOnInit() {
+        this.getLatestPostList();
 
         this.events.subscribe('category:selected', (res) => {
             this.selectedCategory = res.name;
             this.getLatestPostList();
         });
-    }
-
-    ngOnInit() {
-        this.getLatestPostList();
 
         this.events.subscribe('user:changePassword', (res) => {
             this.presentToast('password changed Successfully');
         });
 
         this.events.subscribe('remove:favouritePost', (res) => {
-             debugger;
-              this.getLatestPostList();
+            debugger;
+            this.getLatestPostList();
         });
     }
 
@@ -66,7 +67,9 @@ export class HomePage implements OnInit {
             content: "Loading Posts..."
         });
         loader.present();
+
         this.latestPosts = this.postService.getAllByQuery(params);
+
         this.latestPosts.subscribe(() => {
             loader.dismiss();
         });

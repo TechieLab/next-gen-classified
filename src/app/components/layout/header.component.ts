@@ -14,7 +14,7 @@ import { IPostService, PostService } from '../../../pages/post/post.service';
 @Component({
     selector: 'header-component',
     templateUrl: 'header.html',
-    entryComponents: [CategoryComponent, SearchPage],
+    entryComponents: [CategoryComponent, SearchPage, NotificationPage],
     providers: [VendorService,AuthGuard,AccountService]
 })
 

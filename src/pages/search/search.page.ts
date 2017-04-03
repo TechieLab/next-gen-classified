@@ -24,7 +24,7 @@ export class SearchPage implements OnInit {
   categories: string[];
   search: FormControl;
   params: URLSearchParams;
-  searchResults: Array<Post>;
+  searchResults: Observable<Array<Post>>;
   seachTextModel: string;
   results$: Subject<Array<any>> = new Subject<Array<any>>();
   message: string = "";
@@ -41,14 +41,9 @@ export class SearchPage implements OnInit {
     this.selectedCategory = navParams.get('category');
     this.categories = ["Mobile", "Electronics", "Home", "Entertainment", "Pet Care", "Education"];
 
-    this.results = [{ Title: 'Mouse', Price: '200' },
-    { Title: 'Mouse', Price: '200' },
-    { Title: 'Mouse', Price: '200' }
-    ];
-
     this.search = new FormControl();
     this.params = new URLSearchParams();
-    this.searchResults = new Array<Post>();
+    this.searchResults = new Observable<Array<Post>>();
   }
 
   gotoFiltersPage() {
@@ -65,6 +60,9 @@ export class SearchPage implements OnInit {
     //Event for Search item using temporary api
     // this.search.valueChanges.subscribe(term => this.getByQuery(term));
 
+
+    // perform search operation outside of angular boundaries
+
     this.search.valueChanges.subscribe(term => {
       let entity = {
         size: 20,
@@ -75,19 +73,20 @@ export class SearchPage implements OnInit {
           }
         }
       };
-      // perform search operation outside of angular boundaries
-      this.es.search(entity).subscribe((response: any) => {
-        var data = response.hits.hits, posts:any = [];
-         for (var i = 0; i < data.length; i++) {
-               if(data[i]._id){
-                  data[i]._source._id = data[i]._id;
-               }
-               posts.push(data[i]._source);
-         }
-       
-           this.searchResults = posts;
-           console.log(this.searchResults);  
-      });
+      this.searchResults = this.es.search(entity);
+    });
+
+    this.searchResults.subscribe((response: any) => {
+      var data = response.hits.hits,
+        posts = new Array<Post>();
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]._id) {
+          data[i]._source._id = data[i]._id;
+        }
+        posts.push(data[i]._source);
+      }
+
+      //this.searchResults.map(() => posts);
     });
   }
 

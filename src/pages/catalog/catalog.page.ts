@@ -1,6 +1,6 @@
 import { Subscriber, Observable } from 'rxjs';
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import {Events , NavController, NavParams, ToastController } from 'ionic-angular';
+import { Events, NavController, NavParams, ToastController } from 'ionic-angular';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { LoginPage } from '../account/login.page';
 import { OfferPage } from '../offers/offers.page';
@@ -25,9 +25,9 @@ export class CatalogPage implements OnInit {
   isSubCategorySelected: boolean;
   postsResult: Array<Post>;
   isFav: boolean = false;
-  isOffered:boolean = false;
+  isOffered: boolean = false;
   isUserAuthenticated: boolean = false;
-  clientId:string = '';
+  clientId: string = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     @Inject(AuthGuard) public authGuard: IAuthGuard,
@@ -39,24 +39,21 @@ export class CatalogPage implements OnInit {
     // If we navigated to this page, we will have an item available as a nav param
     this.isSubCategorySelected = false;
     this.selectedCategory = navParams.get('category');
-    this.subCategories = ["SmartPhone", "Android", "Iphone", "Blackberry"];
-    this.posts = new Observable<Array<Post>>();
     this.viewType = 'list';
     this.clientId = StorageService.getItem('Client_Id');
+
+    this.posts = new Observable<Array<Post>>();
   }
 
   ngOnInit() {
     this.isUserAuthenticated = this.authGuard.canActivate();
+
     this.posts.subscribe((result) => {
       this.postsResult = result;
       this.checkIsFavouritePost();
     });
   }
-   
-
-  
-
-    checkIsFavouritePost() {
+  checkIsFavouritePost() {
     if (this.postsResult && this.postsResult.length) {
       this.postsResult.forEach((item) => {
         item.Likes.forEach((like) => {
@@ -66,7 +63,7 @@ export class CatalogPage implements OnInit {
         });
         item.Offers.forEach((offer) => {
           if (this.clientId == offer) {
-             item.IsOffered = true;
+            item.IsOffered = true;
           }
         });
       });
@@ -77,7 +74,7 @@ export class CatalogPage implements OnInit {
     this.isSubCategorySelected = true;
   }
 
-  
+
   favouritePost(index, post: Post) {
     if (this.isUserAuthenticated) {
       this.postService.addRemoveFavorite(post._id, post.IsFav).subscribe((response: Result) => {
@@ -85,7 +82,7 @@ export class CatalogPage implements OnInit {
           this.postsResult[index].IsFav = true;
           this.fetchUpdatedFavtPostsCount(this.postsResult);
           this.presentToast('Added to shortlist');
-         
+
         } else {
           this.postsResult[index].IsFav = false;
           this.fetchUpdatedFavtPostsCount(this.postsResult);
@@ -101,22 +98,22 @@ export class CatalogPage implements OnInit {
     this.navCtrl.push(PostDetailsPage, { _id: itemId });
   }
 
-  goToOffersPage(result){
-    if(this.isUserAuthenticated){
-      this.navCtrl.push(OfferPage,{price:result.Product.Description.Price,_id:result._id});
-    }else {
+  goToOffersPage(result) {
+    if (this.isUserAuthenticated) {
+      this.navCtrl.push(OfferPage, { price: result.Product.Description.Price, _id: result._id });
+    } else {
       this.navCtrl.push(LoginPage);
     }
-    
+
   }
 
-  private fetchUpdatedFavtPostsCount(res:Array<Post>){
-     var selectedPost = res.filter(element => {
-          if(element.IsFav){
-            return true;
-          }
-     });
-    this.events.publish('favtpost:count',{post:selectedPost});
+  private fetchUpdatedFavtPostsCount(res: Array<Post>) {
+    var selectedPost = res.filter(element => {
+      if (element.IsFav) {
+        return true;
+      }
+    });
+    this.events.publish('favtpost:count', { post: selectedPost });
   }
 
   private presentToast(text) {

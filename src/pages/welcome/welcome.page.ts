@@ -1,36 +1,35 @@
-import {Component, OnInit, ElementRef , Inject} from '@angular/core';
+import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import {HomePage} from '../home/home.page';
-import {LoginPage} from '../account/login.page';
+import { HomePage } from '../home/home.page';
+import { LoginPage } from '../account/login.page';
 import { AccountService, IAccountService } from '../account/account.service';
 
 @Component({
   selector: 'welcome-page',
-  templateUrl: 'welcome.html', 
-  entryComponents:[LoginPage],
-  providers: [AccountService]  
+  templateUrl: 'welcome.html',
+  entryComponents: [LoginPage, HomePage],
+  providers: [AccountService]
 })
 
-export class Welcome implements OnInit { 
+export class WelcomePage implements OnInit {
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     @Inject(AccountService) public accountService: IAccountService) {
-    
-  }  
 
-  ngOnInit(){
-      this.accountService.logout();
   }
 
-  gotoDashboardPage(){
-          this.navCtrl.setRoot(HomePage, { category : 'Dashboard' });
-    }
+  ngOnInit() {
+    this.accountService.logout();
+  }
 
-   gotoLoginPage(){
-          this.navCtrl.setRoot(LoginPage, { category : 'SignIn' });
-    }
+  gotoDashboardPage() {
+    this.navCtrl.setRoot(HomePage, { category: 'Dashboard' });
+  }
 
+  gotoLoginPage() {
+    this.navCtrl.setRoot(LoginPage, { category: 'SignIn' });
+  }
 }

@@ -1,5 +1,5 @@
 import { HomePage } from '../../pages/home/home.page';
-import { Welcome } from '../../pages/welcome/welcome.page';
+import { WelcomePage } from '../../pages/welcome/welcome.page';
 import { SettingsPage } from '../../pages/settings/settings.page';
 import { NotificationPage } from '../../pages/notification/notification.page';
 import { AdminPage } from '../../pages/admin/admin.page';
@@ -12,7 +12,7 @@ import { HelpPage } from '../../pages/help/help.page';
 
 export const Pages = [
     HomePage,
-    Welcome,
+    WelcomePage,
     SettingsPage,
     NotificationPage,
     MyPostingsPage,

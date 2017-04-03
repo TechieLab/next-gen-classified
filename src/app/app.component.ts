@@ -4,9 +4,10 @@ import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { OrderBy } from '../app/pipes/orderBy';
 
-import { AppComponents} from './common/componentConstants';
-import { appPages, authPages} from './common/pageConstants';
-import { Welcome } from '../pages/welcome/welcome.page';
+import { AppComponents } from './common/componentConstants';
+import { appPages, authPages } from './common/pageConstants';
+import { WelcomePage } from '../pages/welcome/welcome.page';
+import { NotificationPage } from '../pages/notification/notification.page';
 import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
 import { SearchPage } from '../pages/search/search.page';
@@ -17,13 +18,23 @@ import { AuthGuard, IAuthGuard } from '../app/services/guard.service';
 import { AccountService, IAccountService } from '../pages/account/account.service';
 import { StorageService } from '../app/services/storage.service';
 import { ProfileService, IProfileService } from '../pages/profile/profile.service';
-import {Profile} from '../app/models/profile';
+import { Profile } from '../app/models/profile';
 
 @Component({
   templateUrl: 'app.html',
-  entryComponents: [AppComponents, LoginPage, HomePage, SearchPage, MyPostingsPage, MyFavtPostingPage],
+  entryComponents: [
+    AppComponents,
+    WelcomePage,
+    LoginPage,
+    HomePage,
+    SearchPage,
+    MyPostingsPage,
+    MyFavtPostingPage,
+    NotificationPage
+  ],
   providers: [AuthGuard]
 })
+
 export class MyApp implements OnInit {
   @ViewChild(Nav) nav: Nav;
 
@@ -31,7 +42,7 @@ export class MyApp implements OnInit {
   pages: Array<{ title: string, component: any, name: any, seq: number }>;
   private isUserAuthenticated: boolean = false;
   private currentUserName: string;
-  private profile : Profile
+  private profile: Profile
 
   constructor(
     public platform: Platform,
@@ -114,7 +125,7 @@ export class MyApp implements OnInit {
       this.rootPage = HomePage;
       this.pages = this.pages.concat(authPages);
     } else {
-      this.rootPage = Welcome;
+      this.rootPage = WelcomePage;
     }
 
     this.events.subscribe('user:login', (res) => {

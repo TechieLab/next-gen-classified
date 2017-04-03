@@ -58,7 +58,7 @@ export class HomePage implements OnInit {
             params.set('Category', this.selectedCategory.toLowerCase());
         }
         let loader = this.loadingCtrl.create({
-            content: "Loading Photos..."
+            content: "Loading Posts..."
         });
         loader.present();
         this.latestPosts = this.postService.getAllByQuery(params);

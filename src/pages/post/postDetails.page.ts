@@ -18,6 +18,7 @@ export class PostDetailsPage implements OnInit {
   post: Post;
   canEdit: string;
   similarPosts: Array<Post>;
+  detailSegment : string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     @Inject(PostService) public postService: IPostService
@@ -27,6 +28,7 @@ export class PostDetailsPage implements OnInit {
     this.postId = navParams.get('_id');
     this.post = new Post();
     this.similarPosts = new Array<Post>();
+    this.detailSegment = "description";
   }
 
   ngOnInit() {
@@ -37,6 +39,10 @@ export class PostDetailsPage implements OnInit {
     this.postService.getById(this.postId).subscribe((response) => {
       if (response) {
         this.post = response;
+        if (!response.Product.Photos.length) {
+          var media = new Media()         
+          this.post.Product.Photos.push(media);
+        }
         this.getSimilarPosts();
       }
     });
@@ -51,7 +57,11 @@ export class PostDetailsPage implements OnInit {
       if (response) {
         response.forEach(element => {
           if (this.post._id !== element._id) {
-            items.push(element);
+            if (!element.Product.Photos.length) {
+              var media = new Media();
+              element.Product.Photos.push(media);
+              items.push(element);
+            }
           }
         });
         this.similarPosts = items;

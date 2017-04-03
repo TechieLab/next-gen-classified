@@ -9,6 +9,7 @@ import { CategoryComponent } from '../category';
 import { MyFavtPostingPage } from '../../../pages/myFavourite/myFavt.page';
 import { AuthGuard, IAuthGuard } from '../../services/guard.service';
 import { AccountService, IAccountService } from '../../../pages/account/account.service';
+import { IPostService, PostService } from '../../../pages/post/post.service';
 
 @Component({
     selector: 'header-component',
@@ -24,34 +25,38 @@ export class HeaderComponent {
     private items: Array<any>;
     private city: String;
     private isUserAuthenticated: boolean = false;
+    private FavouritePostCount:number;
+    private updatedCount:number;
 
     constructor(public navCtrl: NavController,
         public modalCtrl: ModalController,
         public navParams: NavParams,
         public events: Events,
+        @Inject(PostService) public postService: IPostService,
         @Inject(AuthGuard) public authGuard: IAuthGuard,
         @Inject(AccountService) public accountService: IAccountService,
         public service: VendorService) {
         this.selectedCategory = 'Select Category';
         //this.category = new CategoryComponent();
 
-        this.events.subscribe('category:selected', (res) => {
-            this.selectedCategory = res.name;
-        });
     }
 
     ngOnInit() {
-        Geolocation.getCurrentPosition().then((resp) => {
-            this.service.getCity(resp).subscribe((res: any) => {
-                this.city = JSON.parse(res._body)['results']['0']['address_components']['4']['long_name'];
-            });
-        }).catch((error) => {
-            console.log('Error getting Location', error)
-        });
-
+        this.getFavouritePostsCount();
         this.isUserAuthenticated = this.authGuard.canActivate();
 
+        this.events.subscribe('favtpost:count', (res) => {
+              debugger;
+            this.FavouritePostCount = res.post.length; 
+        });
+
     }  
+
+    getFavouritePostsCount(){
+         this.postService.getFavorite().subscribe((response) => {
+            this.FavouritePostCount = response.length;
+        });
+    }
 
     gotoNotificationPage() {
         this.navCtrl.push(NotificationPage, {

@@ -25,6 +25,7 @@ export class CatalogPage implements OnInit {
   isSubCategorySelected: boolean;
   postsResult: Array<Post>;
   isFav: boolean = false;
+  isOffered:boolean = false;
   isUserAuthenticated: boolean = false;
   clientId:string = '';
 
@@ -53,12 +54,19 @@ export class CatalogPage implements OnInit {
   }
    
 
+  
+
     checkIsFavouritePost() {
     if (this.postsResult && this.postsResult.length) {
       this.postsResult.forEach((item) => {
         item.Likes.forEach((like) => {
           if (this.clientId == like) {
-            item.isFav = true;
+            item.IsFav = true;
+          }
+        });
+        item.Offers.forEach((offer) => {
+          if (this.clientId == offer) {
+             item.IsOffered = true;
           }
         });
       });
@@ -72,13 +80,15 @@ export class CatalogPage implements OnInit {
   
   favouritePost(index, post: Post) {
     if (this.isUserAuthenticated) {
-      this.postService.addRemoveFavorite(post._id, post.isFav).subscribe((response: Result) => {
+      this.postService.addRemoveFavorite(post._id, post.IsFav).subscribe((response: Result) => {
         if (response.Success && response.Content.IsFav) {
-          this.postsResult[index].isFav = true;
+          this.postsResult[index].IsFav = true;
+          this.fetchUpdatedFavtPostsCount(this.postsResult);
           this.presentToast('Added to shortlist');
-           
+         
         } else {
-          this.postsResult[index].isFav = false;
+          this.postsResult[index].IsFav = false;
+          this.fetchUpdatedFavtPostsCount(this.postsResult);
           this.presentToast('Remove from shortlist');
         }
       });
@@ -92,7 +102,21 @@ export class CatalogPage implements OnInit {
   }
 
   goToOffersPage(result){
-    this.navCtrl.push(OfferPage,{price:result.Description.Price});
+    if(this.isUserAuthenticated){
+      this.navCtrl.push(OfferPage,{price:result.Product.Description.Price,_id:result._id});
+    }else {
+      this.navCtrl.push(LoginPage);
+    }
+    
+  }
+
+  private fetchUpdatedFavtPostsCount(res:Array<Post>){
+     var selectedPost = res.filter(element => {
+          if(element.IsFav){
+            return true;
+          }
+     });
+    this.events.publish('favtpost:count',{post:selectedPost});
   }
 
   private presentToast(text) {

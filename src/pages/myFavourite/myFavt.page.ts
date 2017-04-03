@@ -3,6 +3,7 @@ import { NavController, NavParams, ToastController, Events } from 'ionic-angular
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
+import { HomePage } from '../home/home.page'
 
 import { LoginPage } from '../account/login.page';
 import { Post } from '../../app/models/post';
@@ -60,24 +61,37 @@ export class MyFavtPostingPage implements OnInit {
       this.myFavtsPostData.forEach((item) => {
         item.Likes.forEach((like) => {
           if (this.clientId == like) {
-            item.isFav = true;
+            item.IsFav = true;
           }
         });
       });
     }
   }
 
+  private fetchUpdatedFavtPostsCount(res:Array<Post>){
+     var selectedPost = res.filter(element => {
+          if(element.IsFav){
+            return true;
+          }
+     });
+    this.events.publish('favtpost:count',{post:selectedPost});
+  }
+
 
     removefavouritePost(index, post: Post) {
-        this.postService.addRemoveFavorite(post._id, post.isFav).subscribe((response: Result) => {
+        this.postService.addRemoveFavorite(post._id, post.IsFav).subscribe((response: Result) => {
             if (response.Success && response.Content.IsFav) {
-                this.myFavtsPostData[index].isFav = true;
+                this.myFavtsPostData[index].IsFav = true;
+                this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
                 this.presentToast('Added to shortlist');
-                this.events.publish('user:like');
+                
+                
             } else {
-                 this.myFavtsPostData[index].isFav = false;
-                this.presentToast('Remove from shortlist');
-                this.events.publish('user:like');
+                 this.myFavtsPostData[index].IsFav = false;
+                 this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
+                 this.presentToast('Remove from shortlist');
+                
+              
             }
         });
     }

@@ -49,6 +49,11 @@ export class HomePage implements OnInit {
         this.events.subscribe('user:changePassword', (res) => {
             this.presentToast('password changed Successfully');
         });
+
+        this.events.subscribe('remove:favouritePost', (res) => {
+             debugger;
+              this.getLatestPostList();
+        });
     }
 
     getLatestPostList() {

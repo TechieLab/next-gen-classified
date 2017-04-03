@@ -38,7 +38,6 @@ export class HeaderComponent {
         public service: VendorService) {
         this.selectedCategory = 'Select Category';
         //this.category = new CategoryComponent();
-
     }
 
     ngOnInit() {
@@ -46,7 +45,7 @@ export class HeaderComponent {
         this.isUserAuthenticated = this.authGuard.canActivate();
 
         this.events.subscribe('favtpost:count', (res) => {
-              debugger;
+
             this.FavouritePostCount = res.post.length; 
         });
 

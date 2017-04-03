@@ -6,13 +6,14 @@ import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import {CatalogPage} from '../catalog/catalog.page';
+import { OfferPage } from '../offers/offers.page';
 
 @NgModule({
     declarations:[CatalogPage],    
     exports:[CatalogPage],
     imports:[IonicModule, FormsModule, ReactiveFormsModule],
     providers:[],
-    entryComponents: [CatalogPage]
+    entryComponents: [CatalogPage, OfferPage]
 })
 
 export class CatalogModule{}

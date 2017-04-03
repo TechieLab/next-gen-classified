@@ -83,8 +83,8 @@ export class MyFavtPostingPage implements OnInit {
             if (response.Success && response.Content.IsFav) {
                 this.myFavtsPostData[index].IsFav = true;
                 this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
-                this.presentToast('Added to shortlist');
-                
+                this.events.publish('remove:favouritePost');
+                this.presentToast('Added to shortlist');                
                 
             } else {
                  this.myFavtsPostData[index].IsFav = false;

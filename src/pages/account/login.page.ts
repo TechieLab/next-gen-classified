@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnInit, Inject } from '@angular/core';
-import {Events , NavController, NavParams, ToastController } from 'ionic-angular';
+import {Events, NavController, NavParams, ToastController } from 'ionic-angular';
 import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { Facebook, NativeStorage } from 'ionic-native';
 
 //import { AccountService } from '../../app/services/account.service';
 import { Router } from '@angular/router';
@@ -21,6 +22,7 @@ import { User } from '../../app/models/user';
 })
 
 export class LoginPage implements OnInit {
+    FB_APP_ID: number = 1899760586938292;
     public isLogged: boolean = false;
     public signInForm = this.builder.group({
         UserName: ['', Validators.compose([Validators.minLength(6)
@@ -44,6 +46,7 @@ export class LoginPage implements OnInit {
     ) {
 
         this.errorMsg = '';
+        Facebook.browserInit(this.FB_APP_ID, "v2.8");
     }
 
     ngOnInit() {
@@ -58,7 +61,7 @@ export class LoginPage implements OnInit {
                 this.navCtrl.setRoot(HomePage);
                 this.events.publish('user:login');
             } else {
-               this.presentToast(result.Message);
+                this.presentToast(result.Message);
             }
         });
     }
@@ -73,6 +76,39 @@ export class LoginPage implements OnInit {
 
     logOut() {
         this.accountService.logout();
+    }
+
+    doFacebookLogin() {
+        let permissions = new Array();
+        //the permissions your facebook app needs from the user
+        permissions = ["public_profile"];
+        Facebook.login(permissions)
+            .then(function (response) {
+                let userId = response.authResponse.userID;
+                let params = new Array();
+
+                //Getting name and gender properties
+                Facebook.api("/me?fields=name,gender", params)
+                    .then(function (user) {
+                        user.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
+                        //now we have the users info, let's save it in the NativeStorage
+                        NativeStorage.setItem('user',
+                            {
+                                name: user.name,
+                                gender: user.gender,
+                                picture: user.picture
+                            })
+                            .then(function () {
+                                this.navCtrl.push(HomePage);
+                            }, function (error) {
+                                console.log(error);
+                            })
+                    })
+            }, function (error) {
+                console.log(error);
+                alert(error);    
+        });
+
     }
 
     private presentToast(text) {

@@ -51,6 +51,7 @@ export class CatalogPage implements OnInit {
       this.checkIsFavouritePost();
     });
   }
+   
 
     checkIsFavouritePost() {
     if (this.postsResult && this.postsResult.length) {

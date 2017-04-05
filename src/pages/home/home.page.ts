@@ -68,9 +68,7 @@ export class HomePage implements OnInit {
         });
         loader.present();
 
-        this.latestPosts = this.postService.getAllByQuery(params);
-
-        this.latestPosts.subscribe(() => {
+        this.latestPosts = this.postService.getAllByQuery(params).finally(() => {
             loader.dismiss();
         });
     }

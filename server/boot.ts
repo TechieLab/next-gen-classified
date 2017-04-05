@@ -19,7 +19,7 @@ var fs = require('fs-extra');
 var cors = require('cors');
 var app = express();
 
-app.set('port', process.env.PORT || '80');
+app.set('port', process.env.PORT || '3000');
 swig.setDefaults({ cache: false });
 
 // uncomment after placing your favicon in /public

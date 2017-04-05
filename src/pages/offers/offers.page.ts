@@ -17,18 +17,13 @@ export class OfferPage {
   offer:Offer;
   EmailId:string;
   public offerForm = this.builder.group({
-        Price: [''],
-        Email: [''],
-        City: [""],
-        EmailId: [""],
-        PhoneNumber: [""],
+        Price: [''],     
         Comments:[""]
     });
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public builder: FormBuilder,
   @Inject(OfferService) public offerService: IOfferService,public toastCtrl: ToastController) {
-      this.offer = new Offer();
-      this.offer.Contact.EmailId = StorageService.getItem('Email_Id');
+      this.offer = new Offer();     
       this.listingPrice = navParams.get('price');
       this.offer.PostId = navParams.get('_id');
         

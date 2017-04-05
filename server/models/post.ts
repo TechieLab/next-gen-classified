@@ -1,5 +1,6 @@
 import { BaseEntity } from './baseEntity';
 import { Product } from './product';
+import {Offer} from './offer';
 
 export class Post extends BaseEntity {
     PostId: number;
@@ -9,7 +10,7 @@ export class Post extends BaseEntity {
     Location: string;
     Product: Product;
     Views: Array<string>;
-    Offers: Array<string>;
+    Offers: Array<Offer>;
     LastViewed: Date;
     LastOffered: Date;
     UserId: string;
@@ -26,7 +27,7 @@ export class Post extends BaseEntity {
         this.Category = '';
         this.Likes = new Array<string>();
         this.Views = new Array<string>();
-        this.Offers = new Array<string>();
+        this.Offers = new Array<Offer>();
         this.Product = new Product();
         
     }

@@ -12,11 +12,8 @@ export interface IOfferService extends IBaseService<Offer> {
 }
 
 @Injectable()
-export class OfferService extends BaseService<Offer> implements IOfferService {  
- 
+export class OfferService extends BaseService<Offer> implements IOfferService {   
     constructor(public http: Http){
         super(http, 'offers');
-    }
-
-    
+    }    
 }

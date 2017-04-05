@@ -1,4 +1,5 @@
 import { Product } from './product';
+import {Offer} from './offer';
 
 export class Post {
     _id: string;
@@ -7,7 +8,7 @@ export class Post {
     Location: string;
     Product: Product;
     Views: Array<string>;
-    Offers: Array<string>;
+    Offers: Array<Offer>;
     LastViewed: Date;
     LastOffered: Date;
     Likes:Array<string>;

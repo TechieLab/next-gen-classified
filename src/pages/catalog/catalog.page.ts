@@ -62,7 +62,7 @@ export class CatalogPage implements OnInit {
           }
         });
         item.Offers.forEach((offer) => {
-          if (this.clientId == offer) {
+          if (this.clientId == offer.UserId) {
             item.IsOffered = true;
           }
         });

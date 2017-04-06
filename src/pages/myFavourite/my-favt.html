@@ -12,29 +12,24 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-  <ion-grid *ngIf="myFavtsPostData.length">
-    <ion-row wrap>
-      <ion-col *ngFor="let post of myFavtsPostData;let i = index;">
-        <ion-item no-padding>
-          <ion-thumbnail item-left (click)="showProductDetails(post._id)">
-            <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
-          </ion-thumbnail>
-          <h2>{{post.Title}}</h2>
-          <p>{{post.Product.Description.Title}}</p>
-          <p>Location: {{post.Location}}</p>
-          <div item-right (click)="removefavouritePost(i,post)">
-        
-            <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
-            <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
-          </div>
-          <button ion-button clear item-right>
-                        {{post.Product.Description.Price}}
-                </button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid *ngIf="!myFavtsPostData.length">
+  <ion-list *ngIf="myFavtsPostCount">
+    <ion-item-divider color="light">
+      Favourite Postings   
+    </ion-item-divider>
+     <ion-buttons end>
+        <button buttons-end ion-button clear large (click)="viewType = 'list'">
+                <ion-icon name="list"></ion-icon>
+            </button>
+        <button buttons-end ion-button clear large (click)="viewType = 'grid'">
+                  <ion-icon name="grid"></ion-icon>
+            </button>
+      </ion-buttons>
+    <ion-item>
+      <catalog-page [posts]="myFavtsPostData" [viewType]="viewType"></catalog-page>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid *ngIf="!myFavtsPostCount">
     <ion-row>
       <ion-col>
         <div class="slide-zoom">
@@ -43,8 +38,6 @@
           <p>Add items to your wish list by going through our awesome range of products.</p>
         </div>
       </ion-col>
-
-
     </ion-row>
   </ion-grid>
 </ion-content>

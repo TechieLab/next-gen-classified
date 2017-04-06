@@ -25,7 +25,7 @@ export class Post {
         this.Likes = new Array<string>();
         this.Product = new Product();
         this.Views = new Array<string>();
-        this.Offers = new Array<string>();
+        this.Offers = new Array<Offer>();
         this.IsFav = false;
         this.IsOffered = false;
     }

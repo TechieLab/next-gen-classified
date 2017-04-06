@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, ElementRef,AfterViewInit, ViewChild } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs';
 
@@ -19,6 +19,8 @@ import { Post } from '../../app/models/post';
 })
 
 export class HomePage implements OnInit {
+
+
     private categories: Array<string>;
     private selectedCategory: string;
     private category: boolean;
@@ -51,11 +53,10 @@ export class HomePage implements OnInit {
             this.presentToast('password changed Successfully');
         });
 
-        this.events.subscribe('remove:favouritePost', (res) => {
-            debugger;
-            this.getLatestPostList();
+        this.postService.getLogged().subscribe((logged: boolean) => {
+            console.log('Welcome %s', logged);
         });
-    }
+    } 
 
     getLatestPostList() {
         var params;

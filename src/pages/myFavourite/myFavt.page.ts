@@ -1,6 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject,EventEmitter, Input, Output } from '@angular/core';
 import { NavController, NavParams, ToastController, Events } from 'ionic-angular';
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
+import { Observable } from 'rxjs';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
 import { HomePage } from '../home/home.page'
@@ -18,14 +19,18 @@ import { StorageService } from '../../app/services/storage.service';
     templateUrl: 'my-favt.html'
 })
 export class MyFavtPostingPage implements OnInit {
+
+    @Output() onPost = new EventEmitter<boolean>();
+
     selectedCategory: string;
     items: string[];
     subCategories: string[];
     isSubCategorySelected: boolean;
-    myFavtsPostData: Array<Post> = [];
+    myFavtsPostCount:number;
     params: URLSearchParams;
     private isUserAuthenticated: boolean = false;
-    clientId:string= '';
+    private myFavtsPostData: Observable<Array<Post>>;
+    private viewType: string;
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
         @Inject(AuthGuard) public authGuard: IAuthGuard,
@@ -35,8 +40,9 @@ export class MyFavtPostingPage implements OnInit {
         // If we navigated to this page, we will have an item available as a nav param
 
         //this.navCtrl.pop();
+        this.viewType ='list';
+        this.myFavtsPostCount = 0;
         this.params = new URLSearchParams();
-         this.clientId = StorageService.getItem('Client_Id');
     }
 
     ngOnInit() {
@@ -50,26 +56,14 @@ export class MyFavtPostingPage implements OnInit {
     }
 
     getMyFavtPostData() {
-        this.postService.getFavorite().subscribe((response) => {
-            this.myFavtsPostData = response;
-            this.checkIsFavouritePost();
-        });
+         this.myFavtsPostData = this.postService.getFavorite();
+         this.myFavtsPostData.subscribe((result) => {
+            this.myFavtsPostCount = result.length;
+         });
     }
 
- checkIsFavouritePost() {
-    if (this.myFavtsPostData && this.myFavtsPostData.length) {
-      this.myFavtsPostData.forEach((item) => {
-        item.Likes.forEach((like) => {
-          if (this.clientId == like) {
-            item.IsFav = true;
-          }
-        });
-      });
-    }
-  }
-
-  private fetchUpdatedFavtPostsCount(res:Array<Post>){
-     var selectedPost = res.filter(element => {
+  private fetchUpdatedFavtPostsCount(res:Observable<Array<Post>>){
+     var selectedPost = res.count( (element:any) => {
           if(element.IsFav){
             return true;
           }
@@ -83,16 +77,14 @@ export class MyFavtPostingPage implements OnInit {
             if (response.Success && response.Content.IsFav) {
                 this.myFavtsPostData[index].IsFav = true;
                 this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
-                this.events.publish('remove:favouritePost');
-                this.presentToast('Added to shortlist');                
-                
+                this.presentToast('Added to shortlist');                                
             } else {
                  this.myFavtsPostData[index].IsFav = false;
                  this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
-                 this.presentToast('Remove from shortlist');
-                
-              
+                 this.presentToast('Remove from shortlist'); 
             }
+            this.postService.setLogged(true);
+            
         });
     }
 

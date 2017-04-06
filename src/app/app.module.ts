@@ -14,10 +14,10 @@ import { Pipes } from './common/pipeConstants';
 
 @NgModule({
   declarations: [
-    MyApp,
+    Directives,
     AppComponents,
     Pages,
-    Directives
+    MyApp,
   ],
   imports: [
     FormsModule,

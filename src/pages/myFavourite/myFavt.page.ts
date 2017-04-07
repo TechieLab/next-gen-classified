@@ -26,10 +26,9 @@ export class MyFavtPostingPage implements OnInit {
     items: string[];
     subCategories: string[];
     isSubCategorySelected: boolean;
-    myFavtsPostCount:number;
     params: URLSearchParams;
     private isUserAuthenticated: boolean = false;
-    private myFavtsPostData: Observable<Array<Post>>;
+    private myFavtsPostData: Array<Post> = [];
     private viewType: string;
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -41,7 +40,6 @@ export class MyFavtPostingPage implements OnInit {
 
         //this.navCtrl.pop();
         this.viewType ='list';
-        this.myFavtsPostCount = 0;
         this.params = new URLSearchParams();
     }
 
@@ -56,53 +54,14 @@ export class MyFavtPostingPage implements OnInit {
     }
 
     getMyFavtPostData() {
-         this.myFavtsPostData = this.postService.getFavorite();
-         this.myFavtsPostData.subscribe((result) => {
-            this.myFavtsPostCount = result.length;
+         this.postService.getFavorite().subscribe((result) => {
+            this.myFavtsPostData = result;
          });
     }
 
-  private fetchUpdatedFavtPostsCount(res:Observable<Array<Post>>){
-     var selectedPost = res.count( (element:any) => {
-          if(element.IsFav){
-            return true;
-          }
-     });
-    this.events.publish('favtpost:count',{post:selectedPost});
-  }
-
-
-    removefavouritePost(index, post: Post) {
-        this.postService.addRemoveFavorite(post._id, post.IsFav).subscribe((response: Result) => {
-            if (response.Success && response.Content.IsFav) {
-                this.myFavtsPostData[index].IsFav = true;
-                this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
-                this.presentToast('Added to shortlist');                                
-            } else {
-                 this.myFavtsPostData[index].IsFav = false;
-                 this.fetchUpdatedFavtPostsCount(this.myFavtsPostData);
-                 this.presentToast('Remove from shortlist'); 
-            }
-            this.postService.setLogged(true);
-            
-        });
-    }
-
-
-    showProductDetails(itemId: string) {
-        this.navCtrl.push(PostDetailsPage, { canEdit: true, _id: itemId });
-    }
 
     gotoAddPostingsPage() {
         this.navCtrl.push(AddEditPostPage);
     }
 
-    private presentToast(text) {
-        let toast = this.toastCtrl.create({
-            message: text,
-            duration: 3000,
-            position: 'middle'
-        });
-        toast.present();
-    }
 }

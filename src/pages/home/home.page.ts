@@ -51,9 +51,7 @@ export class HomePage implements OnInit {
             this.presentToast('password changed Successfully');
         });
 
-        this.postService.getLogged().subscribe((logged: boolean) => {
-            console.log('Welcome %s', logged);
-        });
+        
     }
 
     ionViewWillEnter() { // THERE IT IS!!!

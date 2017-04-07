@@ -24,7 +24,7 @@ export class SearchPage implements OnInit {
   categories: string[];
   search: FormControl;
   params: URLSearchParams;
-  searchResults: Observable<Array<Post>>;
+  searchResults: Array<Post>;
   seachTextModel: string;
   results$: Subject<Array<any>> = new Subject<Array<any>>();
   message: string = "";
@@ -43,7 +43,7 @@ export class SearchPage implements OnInit {
 
     this.search = new FormControl();
     this.params = new URLSearchParams();
-    this.searchResults = new Observable<Array<Post>>();
+    this.searchResults = new Array<Post>();
   }
 
   gotoFiltersPage() {
@@ -73,20 +73,17 @@ export class SearchPage implements OnInit {
           }
         }
       };
-      this.searchResults = this.es.search(entity);
-    });
 
-    this.searchResults.subscribe((response: any) => {
-      var data = response.hits.hits,
-        posts = new Array<Post>();
-      for (var i = 0; i < data.length; i++) {
-        if (data[i]._id) {
-          data[i]._source._id = data[i]._id;
+      this.es.search(entity).subscribe((response: any) => {
+        var data = response.hits.hits, posts = new Array<Post>();
+        for (var i = 0; i < data.length; i++) {
+          if (data[i]._id) {
+            data[i]._source._id = data[i]._id;
+          }
+          posts.push(data[i]._source);
         }
-        posts.push(data[i]._source);
-      }
-
-      //this.searchResults.map(() => posts);
+        this.searchResults = posts;
+      });
     });
   }
 

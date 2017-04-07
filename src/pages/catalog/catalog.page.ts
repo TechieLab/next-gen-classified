@@ -1,5 +1,5 @@
 import { Subscriber, Observable } from 'rxjs';
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnChanges } from '@angular/core';
 import { Events, NavController, NavParams, ToastController } from 'ionic-angular';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { LoginPage } from '../account/login.page';
@@ -15,10 +15,10 @@ import { StorageService } from '../../app/services/storage.service';
   templateUrl: 'catalog.html',
   providers: [AuthGuard]
 })
-export class CatalogPage implements OnInit {
+export class CatalogPage implements OnInit, OnChanges {
 
   @Input() viewType: string;
-  @Input() posts: Observable<Array<Post>>;
+  @Input() posts: Array<Post>;
 
   selectedCategory: string;
   subCategories: string[];
@@ -42,17 +42,20 @@ export class CatalogPage implements OnInit {
     this.viewType = 'list';
     this.clientId = StorageService.getItem('Client_Id');
 
-    this.posts = new Observable<Array<Post>>();
+    this.posts = new Array<Post>();
   }
 
   ngOnInit() {
     this.isUserAuthenticated = this.authGuard.canActivate();
-
-    this.posts.subscribe((result) => {
-      this.postsResult = result;
-      this.checkIsFavouritePost();
-    });
   }
+
+  ngOnChanges(changes) {
+    if (changes && changes.posts && changes.posts.currentValue) {
+      this.postsResult = changes.posts.currentValue;
+      this.checkIsFavouritePost();
+    }
+  }
+
   checkIsFavouritePost() {
     if (this.postsResult && this.postsResult.length) {
       this.postsResult.forEach((item) => {

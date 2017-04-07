@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ElementRef,AfterViewInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs';
 
@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
     private selectedCategory: string;
     private category: boolean;
     private featuredPosts: Array<Post>;
-    private latestPosts: Observable<Array<Post>>;
+    private latestPosts: Array<Post>;
     private city: string;
     private viewType: string;
 
@@ -41,9 +41,7 @@ export class HomePage implements OnInit {
         this.viewType = 'list';
     }
 
-    ngOnInit() {
-        this.getLatestPostList();
-
+    ngOnInit() {      
         this.events.subscribe('category:selected', (res) => {
             this.selectedCategory = res.name;
             this.getLatestPostList();
@@ -56,7 +54,11 @@ export class HomePage implements OnInit {
         this.postService.getLogged().subscribe((logged: boolean) => {
             console.log('Welcome %s', logged);
         });
-    } 
+    }
+
+    ionViewWillEnter() { // THERE IT IS!!!
+        this.getLatestPostList();
+    }
 
     getLatestPostList() {
         var params;
@@ -67,9 +69,11 @@ export class HomePage implements OnInit {
         let loader = this.loadingCtrl.create({
             content: "Loading Posts..."
         });
+
         loader.present();
 
-        this.latestPosts = this.postService.getAllByQuery(params).finally(() => {
+        this.postService.getAllByQuery(params).subscribe((res) => {
+            this.latestPosts = res;
             loader.dismiss();
         });
     }

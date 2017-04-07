@@ -11,7 +11,7 @@ export interface IBaseRepository<TEntity> {
     get(query: any, callback: (err: Error, item: Array<TEntity>) => any);
     getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any);
     getById(id: string, callback: (err: Error, item: TEntity) => any);
-    getCount(callback: (err: Error, item: number) => any);
+    getCount(query: any, callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
     bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
     update(id: string, data: TEntity, option: Object, callback: (errr: Error, item: TEntity) => any);
@@ -41,8 +41,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public getCount(callback: (err: Error, item: number) => any) {
-        this.collection.count(function (err, item) {
+    public getCount(query: any, callback: (err: Error, item: number) => any) {
+        this.collection.count(query, function (err, item) {
             logger.debug('Gettng Count...' + item);
             callback(err, item);
         });

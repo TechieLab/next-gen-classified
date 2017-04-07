@@ -5,7 +5,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { OrderBy } from '../app/pipes/orderBy';
 
 import { AppComponents } from './common/componentConstants';
-import { appPages, authPages } from './common/pageConstants';
+import { appPages, authPages, Pages } from './common/pageConstants';
 import { WelcomePage } from '../pages/welcome/welcome.page';
 import { NotificationPage } from '../pages/notification/notification.page';
 import { ProfilePage } from '../pages/profile/profile.page';
@@ -24,13 +24,9 @@ import { Profile } from '../app/models/profile';
   templateUrl: 'app.html',
   entryComponents: [
     AppComponents,
-    WelcomePage,
+    Pages,
     LoginPage,
-    HomePage,
-    SearchPage,
-    MyPostingsPage,
-    MyFavtPostingPage,
-    NotificationPage
+    SearchPage
   ],
   providers: [AuthGuard]
 })

@@ -6,6 +6,7 @@ import { Result } from '../models/result';
 export interface IBaseController<TEntity> {
     create(req: Request, res: Response);
     get(req: Request, res: Response);
+    getCount(req: Request, res: Response);
     getAll(req: Request, res: Response);
     getById(req: Request, res: Response);
     update(req: Request, res: Response);
@@ -42,6 +43,16 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.log('debug', 'base controller get------');
 
         this.baseService.getByUserId(req['userId'], req.query, (err, item) => {
+            if (err) logger.log('debug', 'get err---', err);
+            
+            return res.json(item);
+        });
+    }
+
+    public getCount(req: Request, res: Response){
+        logger.log('debug', 'base controller getCount------');
+
+        this.baseService.getCount({ UserId : req['userId']}, (err, item) => {
             if (err) logger.log('debug', 'get err---', err);
             
             return res.json(item);

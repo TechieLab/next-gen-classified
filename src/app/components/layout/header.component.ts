@@ -5,7 +5,7 @@ import { Geolocation } from 'ionic-native';
 import { NotificationPage } from '../../../pages/notification/notification.page';
 import { SearchPage } from '../../../pages/search/search.page';
 import { VendorService } from '../../services/vendor.service';
-import { CategoryComponent } from '../category';
+import { CategoryComponent } from '../category.component';
 import { MyFavtPostingPage } from '../../../pages/myFavourite/myFavt.page';
 import { AuthGuard, IAuthGuard } from '../../services/guard.service';
 import { AccountService, IAccountService } from '../../../pages/account/account.service';

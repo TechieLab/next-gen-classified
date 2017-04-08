@@ -50,7 +50,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public get(query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         if (query) {
-            this.getByPage(null, query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
+            this.getByPage(null, query, query["pageSize"], query["pageNbr"], callback);
         } else {
             this.getAll(null, callback);
         }
@@ -59,7 +59,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     public getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         logger.debug('base repo getByUserId...' + userId, query);
         if (query) {
-            this.getByPage(userId, query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
+            this.getByPage(userId, query, query["pageSize"], query["pageNbr"], callback);
         } else {
             this.getAll(userId, callback);
         }
@@ -79,34 +79,20 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    private getByPage(userId: string, query: any, sortKey: string, sortOrder: string, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
-
-        var options;
+    private getByPage(userId: string, query: any, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
 
         if (userId) {
             query.UserId = userId;
         }
 
-        if (sortKey && sortOrder) {
-            logger.debug('debug', 'reading many data..with query and sortkey, sortorder');
-            options = {
-                "sort": [sortKey, sortOrder]
-            };
+        logger.debug('debug', 'reading many data..with query', query);
 
-            this.collection.find(query, options).toArray((err, results) => {
-                callback(err, results);
-            });
-        } else if (sortKey) {
-            logger.debug('reading many data..with query and sortkey');
-            options = {
-                "sort": sortKey
-            };
-            this.collection.find(query, options).toArray(callback);
-        } else {
-            logger.debug('debug', 'reading many data..with query', query);
-            console.log('query', query);
-            this.collection.find(query).toArray(callback);
-        }
+        var sortObj = this.getSortBy(query);
+
+        delete query['sortKey'];
+        delete query['sortOrder'];
+
+        this.collection.find(query).sort(sortObj).toArray(callback);
     }
 
     public create(data: TEntity, callback: (errr: Error, item: TEntity) => any) {
@@ -177,5 +163,25 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
             callback(err, res.value);
         });
+    }
+
+    private getSortBy(query: string) {
+        let sortObj: any = {};
+
+        if (query['sortKey'] == 'Price') {
+            sortObj = { 'Product.Description.Price' : +query['sortOrder'] }
+        }
+
+        if (query['sortKey'] == 'ModifiedOn') {
+            sortObj = { "ModifiedOn": +query['sortOrder'] };
+        }
+
+        if (query['sortKey'] == 'Discount') {
+            sortObj = { 'Product.Description.Discount' : +query['sortOrder'] };
+        }
+
+       console.log(sortObj);
+
+        return sortObj;
     }
 }

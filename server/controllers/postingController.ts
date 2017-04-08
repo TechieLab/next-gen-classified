@@ -12,7 +12,7 @@ export interface IPostingController extends IBaseController<Post> {
     create(req: Request, res: Response);
     upload(req: any, res: Response);
     addFavorite(req: Request, res: Response);
-    getFavorite(req:Request, res:Response);
+    getFavorite(req: Request, res: Response);
 }
 var self;
 export class PostingController extends BaseController<Post> implements IPostingController {
@@ -82,31 +82,31 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
     public addFavorite(req: Request, res: Response) {
         this.postingService.getById(req.params.id, (err, post) => {
-            console.log('sending request query-------------',req.query.remove);
+            console.log('sending request query-------------', req.query.remove);
             if (post) {
                 if (!post.Likes) {
                     post.Likes = new Array<string>();
                 }
 
-                if(req.query.remove == "true"){
-                    console.log('inside if condition sending request query-------------',req.query.remove);
-                    var index:any = post.Likes.forEach((item,index)=>{
-                          if((item === req['userId'])){
-                              return index;
-                          }
+                if (req.query.remove == "true") {
+                    console.log('inside if condition sending request query-------------', req.query.remove);
+                    var index: any = post.Likes.forEach((item, index) => {
+                        if ((item === req['userId'])) {
+                            return index;
+                        }
                     })
-                     post.Likes.splice(index, 1);
-                }else{
-                      post.Likes.push(req['userId']);
+                    post.Likes.splice(index, 1);
+                } else {
+                    post.Likes.push(req['userId']);
 
                 }
 
-            
-                console.log('before upadting post value-----------',post);
-                this.postingService.update(post._id.toString(), post, {returnNewDocument : true}, (err, item) => {
-                   console.log('in update method updating value is',item.Likes);
-                    console.log('in update method updating value is',typeof(post.Likes.indexOf(req['userId'])));
-                 
+
+                console.log('before upadting post value-----------', post);
+                this.postingService.update(post._id.toString(), post, { returnNewDocument: true }, (err, item) => {
+                    console.log('in update method updating value is', item.Likes);
+                    console.log('in update method updating value is', typeof (post.Likes.indexOf(req['userId'])));
+
                     if (post.Likes.indexOf(req['userId']) >= 0) {
                         return res.json({
                             Message: 'Post added as favroite',
@@ -125,23 +125,19 @@ export class PostingController extends BaseController<Post> implements IPostingC
         });
     }
 
-    public getFavorite(req:Request, res:Response){
+    public getFavorite(req: Request, res: Response) {
         logger.log('debug', 'posting base controller getAll------');
-       
-        this.postingService.get({Likes:{$gt:[]}}, (err, post) => {
-            if (err) logger.log('debug', 'get err---', err);
-            if(post){
 
-                console.log('post fetching dataa------------',post);
-               var alreadyAdded = post.filter((item:Post) => {
-                    if(item.Likes.indexOf(req['userId']) >= 0){
+        this.postingService.get({ Likes: { $gt: [] } }, (err, post) => {
+            if (err) logger.log('debug', 'get err---', err);
+            if (post) {
+                var alreadyAdded = post.filter((item: Post) => {
+                    if (item.Likes.indexOf(req['userId']) >= 0) {
                         return true;
                     }
                 });
-                console.log('already addedd',alreadyAdded);
                 return res.json(alreadyAdded);
             }
-            
         });
     }
 

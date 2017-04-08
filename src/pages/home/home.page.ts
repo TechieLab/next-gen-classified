@@ -2,9 +2,17 @@ import { Component, Inject, OnInit, ElementRef, AfterViewInit, ViewChild } from 
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs';
 
-import { Events, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
-import { Geolocation } from 'ionic-native';
+import {
+    Events,
+    NavController,
+    NavParams,
+    ToastController,
+    LoadingController,
+    ModalController
+} from 'ionic-angular';
 
+import { Geolocation } from 'ionic-native';
+import { SortComponent } from '../../app/components/sort.component';
 import { CatalogPage } from '../catalog/catalog.page';
 import { ProductPage } from '../product/product.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
@@ -15,7 +23,7 @@ import { Post } from '../../app/models/post';
 @Component({
     selector: 'home-page',
     templateUrl: 'home.html',
-    entryComponents: []
+    entryComponents: [SortComponent]
 })
 
 export class HomePage implements OnInit {
@@ -28,11 +36,12 @@ export class HomePage implements OnInit {
     private latestPosts: Array<Post>;
     private city: string;
     private viewType: string;
-
+    private sortBy: Object;
 
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public events: Events,
+        public modalCtrl: ModalController,
         public toastCtrl: ToastController,
         private loadingCtrl: LoadingController,
         @Inject(PostService) public postService: IPostService, ) {
@@ -41,7 +50,7 @@ export class HomePage implements OnInit {
         this.viewType = 'list';
     }
 
-    ngOnInit() {      
+    ngOnInit() {
         this.events.subscribe('category:selected', (res) => {
             this.selectedCategory = res.name;
             this.getLatestPostList();
@@ -49,6 +58,10 @@ export class HomePage implements OnInit {
 
         this.events.subscribe('user:changePassword', (res) => {
             this.presentToast('password changed Successfully');
+        });
+
+        this.events.subscribe('sortBy:selected', (res) => {
+            this.getLatestPostList()
         });
 
         this.postService.getLogged().subscribe((logged: boolean) => {
@@ -61,11 +74,17 @@ export class HomePage implements OnInit {
     }
 
     getLatestPostList() {
-        var params;
+        var params = new URLSearchParams();;
+
         if (this.selectedCategory.toLowerCase()) {
-            params = new URLSearchParams();
             params.set('Category', this.selectedCategory.toLowerCase());
         }
+
+        if (this.sortBy) {
+            params.set('sortKey', this.sortBy['value']);
+            params.set('sortOrder', this.sortBy['order']);
+        }
+
         let loader = this.loadingCtrl.create({
             content: "Loading Posts..."
         });
@@ -76,6 +95,23 @@ export class HomePage implements OnInit {
             this.latestPosts = res;
             loader.dismiss();
         });
+    }
+
+    switchView(viewType: string) {
+        if (viewType) {
+
+        }
+
+        this.getLatestPostList();
+    }
+
+    openSortingMenu() {
+        let modal = this.modalCtrl.create(SortComponent, { sortBy: this.sortBy }, { enableBackdropDismiss: true });
+        modal.onDidDismiss(data => {
+            this.sortBy = data;
+            this.getLatestPostList();
+        });
+        modal.present();
     }
 
     gotoCatalogPage(cat: string) {

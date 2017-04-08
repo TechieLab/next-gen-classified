@@ -6,14 +6,27 @@
     <ion-item-divider color="light">
       Latest Postings     
     </ion-item-divider>
-     <ion-buttons end>
-        <button buttons-end ion-button clear large (click)="viewType = 'list'">
+    <ion-grid>
+      <ion-row>
+        <ion-col width-75>
+          <ion-buttons>
+            <button buttons-end ion-button clear large (click)="openSortingMenu('list')">
+                <ion-icon name="funnel"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col width-25>
+          <ion-buttons end>
+            <button buttons-end ion-button clear large (click)="switchView('list')">
                 <ion-icon name="list"></ion-icon>
             </button>
-        <button buttons-end ion-button clear large (click)="viewType = 'grid'">
+            <button buttons-end ion-button clear large (click)="switchView('grid')">
                   <ion-icon name="grid"></ion-icon>
             </button>
-      </ion-buttons>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     <ion-item>
       <catalog-page [posts]="latestPosts" [viewType]="viewType"></catalog-page>
     </ion-item>

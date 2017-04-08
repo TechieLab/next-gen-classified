@@ -7,7 +7,7 @@ import { MyApp } from './app.component';
 import { Constants } from './common/constants';
 import { AppModules } from './common/moduleConstants';
 import { AppProviders } from './common/providerConstants';
-import { AppComponents } from './common/componentConstants';
+import { Components } from './common/componentConstants';
 import { Directives } from './common/directiveConstants';
 import { Pages } from './common/pageConstants';
 import { Pipes } from './common/pipeConstants';
@@ -15,7 +15,7 @@ import { Pipes } from './common/pipeConstants';
 @NgModule({
   declarations: [
     Directives,
-    AppComponents,
+    Components,
     Pages,
     MyApp,
   ],
@@ -36,7 +36,7 @@ import { Pipes } from './common/pipeConstants';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp, Components
   ],
   providers: [
     AppProviders,

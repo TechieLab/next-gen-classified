@@ -1,9 +1,11 @@
 import { HeaderComponent } from '../components/layout/header.component';
 import { Rating } from '../components/rating';
-import { CategoryComponent } from '../components/category';
+import { CategoryComponent } from '../components/category.component';
+import { SortComponent } from '../components/sort.component';
 
-export const AppComponents = [
+export const Components = [
     HeaderComponent,
     Rating,
-    CategoryComponent
+    CategoryComponent,
+    SortComponent
 ];

@@ -2,26 +2,21 @@
   <header-component></header-component>
 </ion-header>
 <ion-content>
-  <ion-list>
-    <ion-item-divider color="light">
-      Latest Postings     
-    </ion-item-divider>
+  <ion-list >
     <ion-grid>
       <ion-row>
         <ion-col width-75>
           <ion-buttons>
-            <button buttons-end ion-button clear large (click)="openSortingMenu('list')">
+            <button buttons-end ion-button clear (click)="openSortingMenu('list')">
                 <ion-icon name="funnel"></ion-icon>
             </button>
           </ion-buttons>
         </ion-col>
         <ion-col width-25>
           <ion-buttons end>
-            <button buttons-end ion-button clear large (click)="switchView('list')">
-                <ion-icon name="list"></ion-icon>
-            </button>
-            <button buttons-end ion-button clear large (click)="switchView('grid')">
-                  <ion-icon name="grid"></ion-icon>
+            <button buttons-end ion-button clear (click)="switchView(viewType)">
+                <ion-icon name="list" *ngIf="viewType == 'list'"></ion-icon>
+                <ion-icon name="grid" *ngIf="viewType == 'grid'"></ion-icon>
             </button>
           </ion-buttons>
         </ion-col>
@@ -31,6 +26,9 @@
       <catalog-page [posts]="latestPosts" [viewType]="viewType"></catalog-page>
     </ion-item>
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="200px">
+    <ion-infinite-scroll-content  loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <ion-fab right bottom>
     <button ion-fab color="danger" (click)="gotoPostingAdPage()">
             <span class="button-inner">

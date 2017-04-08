@@ -17,7 +17,6 @@ import { CatalogPage } from '../catalog/catalog.page';
 import { ProductPage } from '../product/product.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
 import { IPostService, PostService } from '../post/post.service';
-
 import { Post } from '../../app/models/post';
 
 @Component({
@@ -28,7 +27,6 @@ import { Post } from '../../app/models/post';
 
 export class HomePage implements OnInit {
 
-
     private categories: Array<string>;
     private selectedCategory: string;
     private category: boolean;
@@ -37,6 +35,8 @@ export class HomePage implements OnInit {
     private city: string;
     private viewType: string;
     private sortBy: Object;
+    private pageSize: number = 1;
+    private pageNumber: number = 1;
 
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
@@ -74,6 +74,20 @@ export class HomePage implements OnInit {
     }
 
     getLatestPostList() {
+
+        let loader = this.loadingCtrl.create({
+            content: "Loading Posts..."
+        });
+
+        loader.present();
+
+        this.getPostData().then((data) => {
+            this.latestPosts = data;
+            loader.dismiss();
+        });
+    }
+
+    getPostData(): Promise<any> {
         var params = new URLSearchParams();;
 
         if (this.selectedCategory.toLowerCase()) {
@@ -85,21 +99,41 @@ export class HomePage implements OnInit {
             params.set('sortOrder', this.sortBy['order']);
         }
 
-        let loader = this.loadingCtrl.create({
-            content: "Loading Posts..."
-        });
+        if (this.pageSize) {
+            params.set('pageSize', this.pageSize.toString());
+        }
 
-        loader.present();
+        if (this.pageNumber) {
+            params.set('page', this.pageNumber.toString());
+        }
 
-        this.postService.getAllByQuery(params).subscribe((res) => {
-            this.latestPosts = res;
-            loader.dismiss();
+        return new Promise(resolve => {
+            this.postService.getAllByQuery(params).subscribe((res) => {              
+                resolve(res);
+            });
         });
     }
 
-    switchView(viewType: string) {
-        if (viewType) {
+    doInfinite(infiniteScroll) {     
+        // increase pagenumber to get next set of records.  
+        this.pageNumber += 1;
+        
+        setTimeout(() => {
+            this.getPostData().then((data) => {
+                if (data.length == this.latestPosts.length) {
+                    infiniteScroll.enable(false); 
+                }
+                this.latestPosts = data;
+                infiniteScroll.complete();                
+            });
+        }, 500);
+    }
 
+    switchView(viewType: string) {
+        if (viewType == 'list') {
+            this.viewType = 'grid';
+        } else {
+            this.viewType = 'list';
         }
 
         this.getLatestPostList();

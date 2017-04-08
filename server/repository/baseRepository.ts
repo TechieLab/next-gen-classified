@@ -50,7 +50,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public get(query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         if (query) {
-            this.getByPage(null, query, query["pageSize"], query["pageNbr"], callback);
+            this.getByPage(null, query, callback);
         } else {
             this.getAll(null, callback);
         }
@@ -59,7 +59,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     public getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         logger.debug('base repo getByUserId...' + userId, query);
         if (query) {
-            this.getByPage(userId, query, query["pageSize"], query["pageNbr"], callback);
+            this.getByPage(userId, query, callback);
         } else {
             this.getAll(userId, callback);
         }
@@ -79,20 +79,25 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    private getByPage(userId: string, query: any, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
+    private getByPage(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
+        let fields: Array<string> = this.getFields(query);
+        let sortObj = this.getSortBy(query);
+        let pageSize: number = query['pageSize'];
+        let pageNbr: number = query['page'];
 
         if (userId) {
             query.UserId = userId;
         }
 
-        logger.debug('debug', 'reading many data..with query', query);
-
-        var sortObj = this.getSortBy(query);
-
         delete query['sortKey'];
         delete query['sortOrder'];
+        delete query['fields'];
+        delete query['pageSize'];
+        delete query['page'];
 
-        this.collection.find(query).sort(sortObj).toArray(callback);
+        logger.debug('debug', 'reading many data..with query', query);
+
+        this.collection.find(query, fields, null , pageSize * pageNbr).sort(sortObj).toArray(callback);
     }
 
     public create(data: TEntity, callback: (errr: Error, item: TEntity) => any) {
@@ -165,11 +170,23 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    private getSortBy(query: string) {
+    /*************PRIVATE FUNCTIONS****************************** */
+
+    private getFields(query: any) {
+        let fields: Array<string>;
+
+        if (query['fields']) {
+            fields = query['fields'].split(',');
+        }
+
+        return fields;
+    }
+
+    private getSortBy(query: any) {
         let sortObj: any = {};
 
         if (query['sortKey'] == 'Price') {
-            sortObj = { 'Product.Description.Price' : +query['sortOrder'] }
+            sortObj = { 'Product.Description.Price': +query['sortOrder'] }
         }
 
         if (query['sortKey'] == 'ModifiedOn') {
@@ -177,10 +194,10 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         }
 
         if (query['sortKey'] == 'Discount') {
-            sortObj = { 'Product.Description.Discount' : +query['sortOrder'] };
+            sortObj = { 'Product.Description.Discount': +query['sortOrder'] };
         }
 
-       console.log(sortObj);
+        console.log(sortObj);
 
         return sortObj;
     }

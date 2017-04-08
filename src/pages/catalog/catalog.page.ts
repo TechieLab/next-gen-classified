@@ -54,7 +54,7 @@ export class CatalogPage implements OnInit, OnChanges {
       this.postsResult = changes.posts.currentValue;
       this.checkIsFavouritePost();
     }
-  }
+  } 
 
   checkIsFavouritePost() {
     if (this.postsResult && this.postsResult.length) {

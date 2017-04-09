@@ -24,17 +24,14 @@ export class PostService extends BaseService<Post> implements IPostService {
     }
 
     getFavorite() {
-        var url = Constants.BaseApi + '/api/all-posts/favorite';
-        this.setUrl(url);
-        return this.get();
+        var url = '/api/all-posts/favorite';     
+        return this.customGet(url);
     }
 
     addRemoveFavorite(postId: string, remove: boolean) {
         var url = Constants.PostApi + postId + '/favorite';
-        url += '?remove=' + remove;
-
-        this.setUrl(url);
-        return this.get();
+        url += '?remove=' + remove;     
+        return this.customGet(url);
     }
     
     setLogged(logged: boolean): void {

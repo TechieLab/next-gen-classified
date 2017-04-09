@@ -10,6 +10,7 @@ import { StorageService } from './storage.service';
 
 export interface IBaseService<TEntity> {
     get(): Observable<Array<TEntity>>;
+    customGet(url: String): Observable<Array<TEntity>>;
     getAll(): Observable<Array<TEntity>>;
     getById(id: string): Observable<TEntity>;
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
@@ -27,7 +28,6 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     options: RequestOptions;
 
     constructor( @Optional() public http: Http, public entityName: string) {
-        this.url = Constants.BaseApi + '/api/' + entityName;
         this.setAuthHeader();
     }
 
@@ -36,6 +36,11 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         this.setAuthHeader();
         let url = Constants.BaseApi + '/api/' + this.entityName;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
+    }
+
+    customGet(url: String) {
+        let apiUrl = Constants.BaseApi + url;
+        return this.http.get(apiUrl, this.options).map(this.extractData).catch(this.handleError);
     }
 
     // this method used to get all records with without userId
@@ -55,23 +60,23 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     }
 
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
-        let url = Constants.BaseApi + '/api/' + this.entityName
         this.setAuthHeader();
+        let url = Constants.BaseApi + '/api/' + this.entityName;
         this.options.search = params;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     getAllByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
-        this.setHeader();
         let url = Constants.BaseApi + '/api/all-' + this.entityName;
+        this.setHeader();
         this.options.search = params;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     post(entity: TEntity): Observable<Result> {
-        let url = Constants.BaseApi + '/api/' + this.entityName;
         let body = JSON.stringify(entity);
         this.setAuthHeader();
+        let url = Constants.BaseApi + '/api/' + this.entityName;
         return this.http.post(url, body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
@@ -79,16 +84,16 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     put(id: string, entity: TEntity): Observable<Result> {
         let body = JSON.stringify(entity);
-        let url = Constants.BaseApi + '/api/' + this.entityName;
         this.setAuthHeader();
+        let url = Constants.BaseApi + '/api/' + this.entityName;
         return this.http.put(url, body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     del(id: string): Observable<Result> {
-        let url = Constants.BaseApi + '/api/' + this.entityName;
         this.setAuthHeader();
+        let url = Constants.BaseApi + '/api/' + this.entityName;
         return this.http.delete(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
@@ -119,8 +124,5 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         this.options = new RequestOptions({
             headers: headers
         });
-    }
-    setUrl(url: string) {
-        this.url = url;
     }
 }

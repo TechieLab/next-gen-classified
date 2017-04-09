@@ -25,14 +25,10 @@ import { Post } from '../../app/models/post';
     entryComponents: [SortComponent]
 })
 
-export class HomePage implements OnInit {
-
-    private categories: Array<string>;
-    private selectedCategory: string;
-    private category: boolean;
-    private featuredPosts: Array<Post>;
-    private latestPosts: Array<Post>;
-    private city: string;
+export class HomePage implements OnInit {  
+    private selectedCategoryId: string;
+    private category: boolean;  
+    private latestPosts: Array<Post>;    
     private viewType: string;
     private sortBy: Object;
     private pageSize: number = 1;
@@ -46,13 +42,13 @@ export class HomePage implements OnInit {
         private loadingCtrl: LoadingController,
         @Inject(PostService) public postService: IPostService, ) {
         this.category = true;
-        this.selectedCategory = '';
+        this.selectedCategoryId = '';
         this.viewType = 'list';
     }
 
     ngOnInit() {
         this.events.subscribe('category:selected', (res) => {
-            this.selectedCategory = res.name;
+            this.selectedCategoryId = res._id;
             this.getLatestPostList();
         });
 
@@ -90,8 +86,8 @@ export class HomePage implements OnInit {
     getPostData(): Promise<any> {
         var params = new URLSearchParams();;
 
-        if (this.selectedCategory.toLowerCase()) {
-            params.set('Category', this.selectedCategory.toLowerCase());
+        if (this.selectedCategoryId) {
+            params.set('Category', this.selectedCategoryId);
         }
 
         if (this.sortBy) {
@@ -117,7 +113,7 @@ export class HomePage implements OnInit {
     doInfinite(infiniteScroll) {     
         // increase pagenumber to get next set of records.  
         this.pageNumber += 1;
-        
+
         setTimeout(() => {
             this.getPostData().then((data) => {
                 if (data.length == this.latestPosts.length) {

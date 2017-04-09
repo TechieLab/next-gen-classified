@@ -1,6 +1,7 @@
 import { Component, Output, Inject } from '@angular/core';
 import { Events, NavController } from 'ionic-angular';
 import { ILookupService, LookupService } from '../services/lookup.service';
+import {Lookup} from '../models/lookup';
 
 @Component({
     selector: 'category-components',
@@ -22,16 +23,15 @@ import { ILookupService, LookupService } from '../services/lookup.service';
   `
 })
 
-
 export class CategoryComponent {
-    private categories: Array<string>;
+    private categories: Array<Lookup>;
 
     constructor(public navCtrl: NavController, public events: Events,
         @Inject(LookupService) public lookupService: ILookupService, ) {        
         this.getCategoryData();
     }
 
-    itemSelected(value: any) {
+    itemSelected(value: Lookup) {
         this.events.publish('category:selected', value);
         this.navCtrl.pop();
     }

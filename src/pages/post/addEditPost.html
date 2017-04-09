@@ -34,13 +34,13 @@
     <ion-item>
       <ion-label floating>Choose a category</ion-label>
       <ion-select name="category" required formControlName="Category" [(ngModel)]="post.Category">
-        <ion-option value="{{cat.value}}" *ngFor="let cat of categories">{{cat.name}}</ion-option>
+        <ion-option value="{{cat._id}}" *ngFor="let cat of categories">{{cat.name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label floating>Brand</ion-label>
       <ion-select name="brand" required formControlName="Brand" [(ngModel)]="post.Product.Brand">
-        <ion-option value="{{brand.value}}" *ngFor="let brand of brands">{{brand.name}}</ion-option>
+        <ion-option value="{{brand._id}}" *ngFor="let brand of brands">{{brand.name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
@@ -72,7 +72,7 @@
     <ion-item>
       <ion-label floating>Defacts</ion-label>
       <ion-select name="defacts" formControlName="Defects" [(ngModel)]="post.Product.Brand">
-        <ion-option value="{{defect.value}}" *ngFor="let defect of defects">{{defect.name}}</ion-option>
+        <ion-option value="{{defect._id}}" *ngFor="let defect of defects">{{defect.name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>

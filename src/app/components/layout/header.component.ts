@@ -4,7 +4,7 @@ import { Geolocation } from 'ionic-native';
 
 import { NotificationPage } from '../../../pages/notification/notification.page';
 import { SearchPage } from '../../../pages/search/search.page';
-import { VendorService } from '../../services/vendor.service';
+import { ExternalService } from '../../services/external.service';
 import { CategoryComponent } from '../category.component';
 import { MyFavtPostingPage } from '../../../pages/myFavourite/myFavt.page';
 import { AuthGuard, IAuthGuard } from '../../services/guard.service';
@@ -15,7 +15,7 @@ import { IPostService, PostService } from '../../../pages/post/post.service';
     selector: 'header-component',
     templateUrl: 'header.html',
     entryComponents: [CategoryComponent, SearchPage, NotificationPage],
-    providers: [VendorService,AuthGuard,AccountService]
+    providers: [ExternalService,AuthGuard,AccountService]
 })
 
 export class HeaderComponent {
@@ -34,8 +34,7 @@ export class HeaderComponent {
         public events: Events,
         @Inject(PostService) public postService: IPostService,
         @Inject(AuthGuard) public authGuard: IAuthGuard,
-        @Inject(AccountService) public accountService: IAccountService,
-        public service: VendorService) {
+        @Inject(AccountService) public accountService: IAccountService) {
         this.selectedCategory = 'Select Category';
         //this.category = new CategoryComponent();
     }

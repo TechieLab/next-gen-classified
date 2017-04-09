@@ -27,14 +27,8 @@ export class PostingController extends BaseController<Post> implements IPostingC
         var data = req.body;
         var post = new Post();
 
-        post.UserId = req['userId'];
-        post.Title = data.Title;
-        post.Product.Description.Price = data.Price;
-        post.Product.Description.PurchasedOn = data.PurchasedOn;
-        post.Product.Description.Brand = data.Brand;
-        post.Product.Description.Defects = data.Defects;
-        post.Category = data.Category;
-        post.Location = data.Location;
+        post = <Post>data;
+        post.UserId = req['userId'];       
 
         logger.log('debug', 'PostingController creating post ----', post);
 

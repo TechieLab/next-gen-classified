@@ -23,7 +23,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     public create(req: Request, res: Response) {
         var data = <TEntity>req.body;
 
-        logger.log('debug', 'base controller  create  data---',data);
+        logger.log('debug', 'base controller  create  data---', data);
 
         return this.baseService.create(data, (err, item) => {
             if (err) logger.log('debug', 'create  err---', err);
@@ -39,22 +39,22 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public get(req: Request, res: Response) {
-               
+
         logger.log('debug', 'base controller get------');
 
         this.baseService.getByUserId(req['userId'], req.query, (err, item) => {
             if (err) logger.log('debug', 'get err---', err);
-            
+
             return res.json(item);
         });
     }
 
-    public getCount(req: Request, res: Response){
+    public getCount(req: Request, res: Response) {
         logger.log('debug', 'base controller getCount------');
 
-        this.baseService.getCount({ UserId : req['userId']}, (err, item) => {
+        this.baseService.getCount({ UserId: req['userId'] }, (err, item) => {
             if (err) logger.log('debug', 'get err---', err);
-            
+
             return res.json(item);
         });
     }
@@ -71,7 +71,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
 
     public getById(req: Request, res: Response) {
         logger.log('debug', 'base controller getById------' + req.params.id);
-        
+
         this.baseService.getById(req.params.id, (err, item) => {
             if (err) logger.log('debug', ' create getById err---', err);
 
@@ -80,13 +80,12 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public update(req: Request, res: Response) {
-    
-        var data:any = <TEntity>req.body;
-        var option = {upsert:true, returnOriginal:true};
-         req.params.id = req.params.id ? req.params.id : data._id;
-         logger.log('debug', 'base controller  update  data---');
+        var data: any = <TEntity>req.body;
+        var options = { upsert: true, returnOriginal: true };
 
-        return this.baseService.update(req.params.id, data, option,(err, item) => {
+        logger.debug('base controller  update  data---', data);
+
+        return this.baseService.update(req.params.id, data, options, (err, item) => {
             if (err) logger.log('debug', 'update  err---', err);
 
             return res.json(item);
@@ -94,7 +93,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
     }
 
     public delete(req: Request, res: Response) {
-         logger.log('debug', 'base controller  delete  data---', req.params.id);
+        logger.log('debug', 'base controller  delete  data---', req.params.id);
 
         return this.baseService.delete(req.params.id, (err, item) => {
             if (err) logger.log('debug', 'delete  err---', err);

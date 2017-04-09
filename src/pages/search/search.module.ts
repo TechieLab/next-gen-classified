@@ -9,14 +9,13 @@ import {FiltersPage}   from '../filters/filters.page';
 import {CatalogPage} from '../catalog/catalog.page';
 import {CatalogModule} from '../catalog/catalog.module';
 import {SearchPage} from '../search/search.page';
-import { VendorService } from '../../app/services/vendor.service';
-
+import { ExternalService } from '../../app/services/external.service';
 
 @NgModule({
     declarations:[SearchPage],    
     exports:[SearchPage],
     imports:[IonicModule, FormsModule, ReactiveFormsModule, CatalogModule],
-    providers:[VendorService],
+    providers:[ExternalService],
     entryComponents: [FiltersPage,CatalogPage]
 })
 

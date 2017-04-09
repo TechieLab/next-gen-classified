@@ -57,9 +57,8 @@ export class EditProfilePage implements OnInit {
       this.profile.Contact.EmailId = data.EmailId;
       this.profile.Contact.PhoneNumber = data.PhoneNumber;
     }
-
-
-    this.profileService.put(this.profile).subscribe((result) => {
+    
+    this.profileService.put(this.profile._id, this.profile).subscribe((result) => {
       if (result) {      
         this.navCtrl.push(ProfilePage);
       }

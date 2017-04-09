@@ -139,7 +139,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
     }
 
     put() {
-        this.app.put('/api/' + this.apiName, (req: Request, res: Response) => {
+        this.app.put('/api/' + this.apiName + '/:id', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
              logger.debug("route name post----" + this.apiName);
             self.baseController.update(req, res);
@@ -147,7 +147,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
     }
 
     del() {
-        this.app.delete('/api/' + this.apiName, (req: Request, res: Response) => {
+        this.app.delete('/api/' + this.apiName + '/:id', (req: Request, res: Response) => {
             self.setCollection(this.apiName);
              logger.debug("route name del----" + this.apiName);
             self.baseController.delete(req, res);

@@ -106,23 +106,16 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             callback(new Error('Empty'), null);
         }
 
-        this.collection.insert(data, function (err, res) {
+        this.collection.insert(data, (err, res) => {
             logger.debug('debug', 'inserting data..');
 
+            if(err){
+                callback(err, null);
+            }
+
+            this.saveEntityElasticSearch(res.ops[0]);
             callback(err, res.ops[0]);
         });
-
-        let bulkBody = [];
-        bulkBody.push({
-            index: {
-                _index: this.collectionname,
-                _type: this.collectionname
-            }
-        });
-
-        bulkBody.push(data);
-        this.client.bulk({ body: bulkBody });
-
     }
 
     public bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {
@@ -140,12 +133,15 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public update(id: string, data: TEntity, option: Object, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called update data-----', data);
-        console.log('before updated value is ', option);
-        this.collection.findOneAndUpdate({ _id: new ObjectID(id) }, data, option, (err, res) => {
-            logger.debug('debug', 'updated data with id------' + id);
-            console.log('updated value is ', res);
+    public update(id: string, data: TEntity, options: Object, callback: (errr: Error, item: TEntity) => any) {
+        logger.debug('debug', 'called update data-----', data);       
+
+        this.collection.findOneAndUpdate({ _id:id}, data, options, (err, res) => {
+            if(err){
+                callback(err, null);
+            }
+
+            logger.debug('debug', 'updated data with id------' + id);           
             callback(err, res.value);
         });
     }
@@ -200,5 +196,19 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         console.log(sortObj);
 
         return sortObj;
+    }
+
+    private saveEntityElasticSearch(data){       
+
+        let bulkBody = [];
+        bulkBody.push({
+            index: {
+                _index: this.collectionname,
+                _type: this.collectionname
+            }
+        });
+
+        bulkBody.push(data);
+        this.client.bulk({ body: bulkBody });
     }
 }

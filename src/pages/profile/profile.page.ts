@@ -74,7 +74,7 @@ export class ProfilePage implements OnInit {
 
   removePhoto() {
     this.profile.Media = new Media();
-    this.profileService.put(this.profile).subscribe((res) => {
+    this.profileService.put(this.profile._id, this.profile).subscribe((res) => {
       this.presentToast('Photo removed succesfully');
     });
   }

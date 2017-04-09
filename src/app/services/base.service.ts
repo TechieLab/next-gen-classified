@@ -15,7 +15,7 @@ export interface IBaseService<TEntity> {
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
     getAllByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
     post(entity: TEntity): Observable<Result>;
-    put(entity: TEntity): Observable<Result>;
+    put(id: string, entity: TEntity): Observable<Result>;
     del(id: string): Observable<Result>
 }
 
@@ -34,27 +34,28 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     // this method used to get all records with respect to a userId
     get(): Observable<Array<TEntity>> {
         this.setAuthHeader();
-        return this.http.get(this.url, this.options).map(this.extractData).catch(this.handleError);
+        let url = Constants.BaseApi + '/api/' + this.entityName;
+        return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     // this method used to get all records with without userId
     getAll(): Observable<Array<TEntity>> {
-        let headers = new Headers({ 'Content-Type': 'application/json'});
+        let headers = new Headers({ 'Content-Type': 'application/json' });
         this.options = new RequestOptions({
             headers: headers
         });
-        var url = Constants.BaseApi + '/api/all-' + this.entityName;
+        let url = Constants.BaseApi + '/api/all-' + this.entityName;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     getById(id: string): Observable<TEntity> {
-        var url = this.url + '/' + id;
+        let url = Constants.BaseApi + '/api/' + this.entityName + '/' + id;
         this.setAuthHeader();
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
-        var url = this.url + '/';
+        let url = Constants.BaseApi + '/api/' + this.entityName
         this.setAuthHeader();
         this.options.search = params;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
@@ -62,31 +63,33 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
 
     getAllByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
         this.setHeader();
-        var url = Constants.BaseApi + '/api/all-' + this.entityName;
+        let url = Constants.BaseApi + '/api/all-' + this.entityName;
         this.options.search = params;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     post(entity: TEntity): Observable<Result> {
+        let url = Constants.BaseApi + '/api/' + this.entityName;
         let body = JSON.stringify(entity);
         this.setAuthHeader();
-        return this.http.post(this.url, body, this.options)
+        return this.http.post(url, body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    put(entity: TEntity): Observable<Result> {
+    put(id: string, entity: TEntity): Observable<Result> {
         let body = JSON.stringify(entity);
+        let url = Constants.BaseApi + '/api/' + this.entityName;
         this.setAuthHeader();
-        return this.http.put(this.url, body, this.options)
+        return this.http.put(url, body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     del(id: string): Observable<Result> {
-        this.url = this.url + '/' + id;
+        let url = Constants.BaseApi + '/api/' + this.entityName;
         this.setAuthHeader();
-        return this.http.delete(this.url, this.options).map(this.extractData).catch(this.handleError);
+        return this.http.delete(url, this.options).map(this.extractData).catch(this.handleError);
     }
 
     extractData(res: Response) {
@@ -112,12 +115,12 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     }
 
     setHeader() {
-        let headers = new Headers({ 'Content-Type': 'application/json'});
+        let headers = new Headers({ 'Content-Type': 'application/json' });
         this.options = new RequestOptions({
             headers: headers
         });
     }
-    setUrl(url: string){
+    setUrl(url: string) {
         this.url = url;
     }
 }

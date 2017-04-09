@@ -7,9 +7,13 @@ import { OrderBy } from '../app/pipes/orderBy';
 import { Components } from './common/componentConstants';
 import { appPages, authPages, Pages } from './common/pageConstants';
 import { WelcomePage } from '../pages/welcome/welcome.page';
+import { NotificationPage } from '../pages/notification/notification.page';
 import { ProfilePage } from '../pages/profile/profile.page';
 import { LoginPage } from '../pages/account/login.page';
+import { SearchPage } from '../pages/search/search.page';
 import { HomePage } from '../pages/home/home.page';
+import { MyPostingsPage } from '../pages/myPostings/myPostings.page';
+import { MyFavtPostingPage } from '../pages/myFavourite/myFavt.page';
 import { AuthGuard, IAuthGuard } from '../app/services/guard.service';
 import { AccountService, IAccountService } from '../pages/account/account.service';
 import { StorageService } from '../app/services/storage.service';
@@ -21,7 +25,8 @@ import { Profile } from '../app/models/profile';
   entryComponents: [
     Components,
     Pages,
-    LoginPage
+    LoginPage,
+    SearchPage
   ],
   providers: [AuthGuard]
 })

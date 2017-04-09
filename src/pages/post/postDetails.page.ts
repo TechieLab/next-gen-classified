@@ -3,10 +3,14 @@ import { URLSearchParams } from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
 import { NotificationPage } from '../notification/notification.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
+import { OfferPage } from '../offers/offers.page';
+import { LoginPage } from '../account/login.page';
 import { PostService, IPostService } from './post.service';
 import { Post } from '../../app/models/post';
 import { Product } from '../../app/models/product';
 import { Media } from '../../app/models/media';
+import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';
+import { StorageService } from '../../app/services/storage.service';
 
 @Component({
   selector: 'post-details-page',
@@ -18,10 +22,11 @@ export class PostDetailsPage implements OnInit {
   post: Post;
   canEdit: string;
   similarPosts: Array<Post>;
-  detailSegment : string;
-
+  detailSegment: string;
+  isUserAuthenticated: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    @Inject(PostService) public postService: IPostService
+    @Inject(PostService) public postService: IPostService,
+    @Inject(AuthGuard) public authGuard: IAuthGuard
   ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.canEdit = navParams.get('canEdit');
@@ -29,6 +34,8 @@ export class PostDetailsPage implements OnInit {
     this.post = new Post();
     this.similarPosts = new Array<Post>();
     this.detailSegment = "description";
+
+    this.isUserAuthenticated = this.authGuard.canActivate();
   }
 
   ngOnInit() {
@@ -40,12 +47,29 @@ export class PostDetailsPage implements OnInit {
       if (response) {
         this.post = response;
         if (!response.Product.Photos.length) {
-          var media = new Media()         
+          var media = new Media()
           this.post.Product.Photos.push(media);
         }
+        this.checkLikesAndOffers();
         this.getSimilarPosts();
       }
     });
+  }
+
+  checkLikesAndOffers() {
+    var clientId = StorageService.getItem('Client_Id');
+    if (this.post) {
+      this.post.Likes.forEach((like) => {
+        if (clientId == like) {
+          this.post.IsFav = true;
+        }
+      });
+      this.post.Offers.forEach((offer) => {
+        if (clientId == offer.UserId) {
+          this.post.IsOffered = true;
+        }
+      });
+    }
   }
 
   getSimilarPosts() {
@@ -71,6 +95,14 @@ export class PostDetailsPage implements OnInit {
 
   showDetails(post: Post) {
     this.post = post;
+  }
+
+  goToOffersPage(post) {
+    if (this.isUserAuthenticated) {
+      this.navCtrl.push(OfferPage, { price: post.Product.Description.Price, _id: post._id });
+    } else {
+      this.navCtrl.push(LoginPage);
+    }
   }
 
   editPost() {

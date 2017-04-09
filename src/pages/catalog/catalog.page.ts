@@ -101,9 +101,9 @@ export class CatalogPage implements OnInit, OnChanges {
     this.navCtrl.push(PostDetailsPage, { _id: itemId });
   }
 
-  goToOffersPage(result) {
+  goToOffersPage(post) {
     if (this.isUserAuthenticated) {
-      this.navCtrl.push(OfferPage, { price: result.Product.Description.Price, _id: result._id });
+      this.navCtrl.push(OfferPage, { price: post.Product.Description.Price, _id: post._id });
     } else {
       this.navCtrl.push(LoginPage);
     }

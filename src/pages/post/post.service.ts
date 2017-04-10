@@ -29,7 +29,7 @@ export class PostService extends BaseService<Post> implements IPostService {
     }
 
     addRemoveFavorite(postId: string, remove: boolean) {
-        var url = Constants.PostApi + postId + '/favorite';
+        var url = '/api/posts/'+ postId + '/favorite';
         url += '?remove=' + remove;     
         return this.customGet(url);
     }

@@ -98,7 +98,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
                 console.log('before upadting post value-----------', post);
                 this.postingService.update(post._id.toString(), post, { returnNewDocument: true }, (err, item) => {
-                    console.log('in update method updating value is', item.Likes);
+                    console.log('in update method updating value is', item);
                     console.log('in update method updating value is', typeof (post.Likes.indexOf(req['userId'])));
 
                     if (post.Likes.indexOf(req['userId']) >= 0) {

@@ -11,7 +11,7 @@
           </ion-thumbnail>
           <h2>{{post.Title}}</h2>
           <p>{{post.Product.Description.Title}}</p>
-          <p>Location: {{post.Location}}</p>
+          <p>Location: {{post.Location.Locality}}</p>
           <p>Price:{{post.Product.Description.Price}} </p>
         </div>
         <div item-right (click)="favouritePost(i,post)">

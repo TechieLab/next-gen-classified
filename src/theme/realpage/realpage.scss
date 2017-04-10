@@ -1,0 +1,23 @@
+.rp-theme {
+  h1, h2, h3, h4, h5, h6,
+  .toolbar-title {
+    color: $rp-dark;
+  }
+  .toolbar-background {
+    background-color: $rp-light;
+  }
+  ion-content {
+    background-color: $rp-background;
+  }
+  ion-list {
+    .item {
+      background-color: darken($rp-background, 1.5%);
+    }
+  }
+  catalog-page{
+    button{
+      background-color: $rp-orange;
+   }
+  }
+  
+}

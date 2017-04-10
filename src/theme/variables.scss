@@ -85,3 +85,18 @@ $colors: (
   vimeo:      #23b6ea,
   facebook:   #3b5998
 );
+
+// take the red pill
+$ion-background: #f4f4f4;
+$ion-light: #f4f4f4;
+$ion-dark: #222;
+
+$rp-background: #f4f4f4;
+$rp-light: #fff;
+$rp-dark: #74000e;
+$rp-orange:#f06000;
+
+
+//import theme
+@import "./ionic/ionic";
+@import "./realpage/realpage";

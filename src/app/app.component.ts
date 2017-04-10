@@ -17,6 +17,7 @@ import { MyFavtPostingPage } from '../pages/myFavourite/myFavt.page';
 import { AuthGuard, IAuthGuard } from '../app/services/guard.service';
 import { AccountService, IAccountService } from '../pages/account/account.service';
 import { StorageService } from '../app/services/storage.service';
+import { SettingsService } from '../pages/settings/settings.service';
 import { ProfileService, IProfileService } from '../pages/profile/profile.service';
 import { Profile } from '../app/models/profile';
 
@@ -28,13 +29,14 @@ import { Profile } from '../app/models/profile';
     LoginPage,
     SearchPage
   ],
-  providers: [AuthGuard]
+  providers: [AuthGuard,SettingsService]
 })
 
 export class MyApp implements OnInit {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
+  chosenTheme:any;
   pages: Array<{ title: string, component: any, name: any, seq: number }>;
   private isUserAuthenticated: boolean = false;
   private currentUserName: string;
@@ -44,6 +46,7 @@ export class MyApp implements OnInit {
     public platform: Platform,
     public menu: MenuController,
     public events: Events,
+    private _settings: SettingsService,
     @Inject(AuthGuard) public authGuard: IAuthGuard,
     @Inject(AccountService) public accountService: IAccountService,
     @Inject(ProfileService) public profileService: IProfileService
@@ -53,6 +56,9 @@ export class MyApp implements OnInit {
 
     // set our app's pages
     this.pages = appPages;
+    
+    //default theme
+    this._settings.getTheme().subscribe(val => this.chosenTheme = val);
 
     this.profile = new Profile();
 

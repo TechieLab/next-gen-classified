@@ -96,6 +96,7 @@ export class AccountService implements IAccountService {
     }
 
     public getUserInfo(id: string, callback: (errr: Error, item: UserInfo) => any) { }
+
     public changePassword(id: string, data: ChangePassword, callback: (item: Result) => any) { 
         console.log('testdaata',data);
         this.repository.get({Password: data.CurrentPassword}, (err, user) => {
@@ -147,7 +148,12 @@ export class AccountService implements IAccountService {
                         if (err) throw err;
 
                         result.Message = "Authenticated Succesfully";
-                        result.Content = { UserName: currentUser.UserName, Token: currentUser.Session.AuthToken,ClientId: currentUser._id,EmailId:currentUser.EmailId }
+                        result.Content = { 
+                            UserName: currentUser.UserName, 
+                            Token: currentUser.Session.AuthToken,
+                            ClientId: currentUser._id,
+                            EmailId:currentUser.EmailId
+                        };
                         result.Success = true;
 
                         callback(result);

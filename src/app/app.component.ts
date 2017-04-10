@@ -96,7 +96,8 @@ export class MyApp implements OnInit {
   }
 
   getProfile() {
-    this.profileService.getById(null).subscribe((result) => {
+    let clientId = StorageService.getItem('Client_Id')
+    this.profileService.getById(clientId).subscribe((result) => {
       if (result) {
         this.profile = result;
       }

@@ -43,6 +43,10 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public getCount(query: any, callback: (err: Error, item: number) => any) {
         this.collection.count(query, function (err, item) {
+            if (err) {
+                logger.debug('error base getCount...', err);
+            }
+
             logger.debug('Gettng Count...' + item);
             callback(err, item);
         });
@@ -67,14 +71,20 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
     public getById(id: string, callback: (err: Error, item: TEntity) => any) {
         logger.debug('debug', 'reading get data..with id..' + id);
-        this.collection.findOne({ _id: new ObjectID(id) }, function (err, results) {
-            callback(err, results);
+        this.collection.findOne({ _id: new ObjectID(id) }, (err, result) => {
+            if (err) {
+                logger.debug('error base getById...', err);
+            }
+            callback(err, result);
         });
     }
 
     private getAll(userId: string, callback: (err: Error, item: Array<TEntity>) => any) {
-        this.collection.find({ UserId: new ObjectID(userId) }).toArray(function (err, item) {
-            logger.debug('debug', 'reading all data for user..' + userId);
+        this.collection.find({ UserId: new ObjectID(userId) }).toArray((err, item) => {
+            if (err) {
+                logger.debug('error base getAll...', err);
+            }
+           
             callback(err, item);
         });
     }
@@ -97,7 +107,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
         logger.debug('debug', 'reading many data..with query', query);
 
-        this.collection.find(query, fields, null , pageSize * pageNbr).sort(sortObj).toArray(callback);
+        this.collection.find(query, fields, null, pageSize * pageNbr).sort(sortObj).toArray(callback);
     }
 
     public create(data: TEntity, callback: (errr: Error, item: TEntity) => any) {
@@ -109,7 +119,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         this.collection.insert(data, (err, res) => {
             logger.debug('debug', 'inserting data..');
 
-            if(err){
+            if (err) {
                 callback(err, null);
             }
 
@@ -134,14 +144,14 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public update(id: string, data: TEntity, options: Object, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called update data-----', data);       
+        logger.debug('debug', 'called update data-----', data);
 
-        this.collection.findOneAndUpdate({ _id:id}, data, options, (err, res) => {
-            if(err){
+        this.collection.findOneAndUpdate({ _id: id }, data, options, (err, res) => {
+            if (err) {
                 callback(err, null);
             }
 
-            logger.debug('debug', 'updated data with id------' + id);           
+            logger.debug('debug', 'updated data with id------' + id);
             callback(err, res.value);
         });
     }
@@ -198,7 +208,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         return sortObj;
     }
 
-    private saveEntityElasticSearch(data){       
+    private saveEntityElasticSearch(data) {
 
         let bulkBody = [];
         bulkBody.push({

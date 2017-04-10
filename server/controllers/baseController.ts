@@ -26,7 +26,9 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.log('debug', 'base controller  create  data---', data);
 
         return this.baseService.create(data, (err, item) => {
-            if (err) logger.log('debug', 'create  err---', err);
+            if (err) {
+                return res.json(err);
+            }
 
             this.result = {
                 Message: ' created',
@@ -43,8 +45,9 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.log('debug', 'base controller get------');
 
         this.baseService.getByUserId(req['userId'], req.query, (err, item) => {
-            if (err) logger.log('debug', 'get err---', err);
-
+            if (err) {
+                return res.json(err);
+            }
             return res.json(item);
         });
     }
@@ -53,7 +56,9 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.log('debug', 'base controller getCount------');
 
         this.baseService.getCount({ UserId: req['userId'] }, (err, item) => {
-            if (err) logger.log('debug', 'get err---', err);
+            if (err) {
+                return res.json(err);
+            }
 
             return res.json(item);
         });
@@ -63,7 +68,9 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.log('debug', 'base controller getAll------');
 
         this.baseService.get(req.query, (err, item) => {
-            if (err) logger.log('debug', 'get err---', err);
+            if (err) {
+                return res.json(err);
+            }
 
             return res.json(item);
         });
@@ -73,7 +80,9 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.log('debug', 'base controller getById------' + req.params.id);
 
         this.baseService.getById(req.params.id, (err, item) => {
-            if (err) logger.log('debug', ' create getById err---', err);
+            if (err) {
+                return res.json(err);
+            }
 
             return res.json(item);
         });
@@ -86,7 +95,9 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.debug('base controller  update  data---', data);
 
         return this.baseService.update(req.params.id, data, options, (err, item) => {
-            if (err) logger.log('debug', 'update  err---', err);
+            if (err) {
+                return res.json(err);
+            }
 
             return res.json(item);
         });
@@ -96,7 +107,9 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.log('debug', 'base controller  delete  data---', req.params.id);
 
         return this.baseService.delete(req.params.id, (err, item) => {
-            if (err) logger.log('debug', 'delete  err---', err);
+            if (err) {
+                return res.json(err);
+            }
 
             return res.json(item);
         });

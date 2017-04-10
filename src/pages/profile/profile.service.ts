@@ -10,6 +10,6 @@ export interface IProfileService extends IBaseService<Profile> {   }
 export class ProfileService extends BaseService<Profile> implements IProfileService {  
 
     constructor(public http: Http){
-        super(http, "profile");
+        super(http, "profiles");
     }
 }

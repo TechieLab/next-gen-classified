@@ -48,10 +48,11 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    this.getProfile();
+    let clientId = StorageService.getItem('Client_Id')
+    this.getProfile(clientId);
 
     this.events.subscribe('photo-uploaded', () => {
-      this.getProfile();
+      this.getProfile(clientId);
     });
 
     this.events.subscribe('photo-removed', () => {
@@ -79,8 +80,8 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  getProfile() {
-    this.profileService.getById(null).subscribe((result) => {
+  getProfile(clientId : string) {
+    this.profileService.getById(clientId).subscribe((result) => {
       if (result) {
         this.profile = result;
       }

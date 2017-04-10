@@ -28,6 +28,7 @@ export class CatalogPage implements OnInit, OnChanges {
   isOffered: boolean = false;
   isUserAuthenticated: boolean = false;
   clientId: string = '';
+  editPermission: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     @Inject(AuthGuard) public authGuard: IAuthGuard,
@@ -39,6 +40,7 @@ export class CatalogPage implements OnInit, OnChanges {
     // If we navigated to this page, we will have an item available as a nav param
     this.isSubCategorySelected = false;
     this.selectedCategory = navParams.get('category');
+    this.editPermission = navParams.get('editPermission');
     this.viewType = 'list';
     this.clientId = StorageService.getItem('Client_Id');
 
@@ -54,7 +56,7 @@ export class CatalogPage implements OnInit, OnChanges {
       this.postsResult = changes.posts.currentValue;
       this.checkIsFavouritePost();
     }
-  } 
+  }
 
   checkIsFavouritePost() {
     if (this.postsResult && this.postsResult.length) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, AlertController, NavParams } from 'ionic-angular';
 import { PostDetailsPage } from '../post/postDetails.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
 import { LoginPage } from '../account/login.page';
@@ -19,7 +19,8 @@ export class MyPostingsPage implements OnInit {
     myPostingsData: Array<Post>;
     private isUserAuthenticated: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,
+    constructor(public navCtrl: NavController, public alertCtrl: AlertController,
+        public navParams: NavParams,
         @Inject(AuthGuard) public authGuard: IAuthGuard,
         @Inject(PostService) public postService: IPostService) {
         // If we navigated to this page, we will have an item available as a nav param
@@ -43,10 +44,53 @@ export class MyPostingsPage implements OnInit {
     }
 
     showProductDetails(itemId: string) {
-        this.navCtrl.push(PostDetailsPage, { canEdit:true, _id : itemId });
+        this.navCtrl.push(PostDetailsPage, { editPermission: true, _id: itemId });
     }
 
     gotoAddPostingsPage() {
         this.navCtrl.push(AddEditPostPage);
+    }
+
+    editPost(post: Post) {
+        this.navCtrl.push(AddEditPostPage, { _id: post._id });
+    }
+
+    deletePost(post: Post) {
+        this.postService.del(post._id).subscribe((res) => {
+            if (res) {
+                let alert = this.alertCtrl.create({
+                    title: 'Post Removed Succesfully',
+                    buttons: [{
+                        text: 'Ok',
+                        handler: () => {
+                            this.getMyPostingsData();
+                        }
+                    }]
+                });
+                alert.present();
+            }
+        });
+    }
+
+    showDeleteConfirm(post: Post) {
+        let confirm = this.alertCtrl.create({
+            title: 'Delete Post',
+            message: 'Are you sure you want to remove?',
+            buttons: [
+                {
+                    text: 'Disagree',
+                    handler: () => {
+                        console.log('Disagree clicked');
+                    }
+                },
+                {
+                    text: 'Agree',
+                    handler: () => {
+                        this.deletePost(post);
+                    }
+                }
+            ]
+        });
+        confirm.present();
     }
 }

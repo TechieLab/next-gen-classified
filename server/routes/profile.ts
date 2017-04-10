@@ -22,7 +22,7 @@ export class ProfileRoute{
     }
 
     getById() {
-        this.app.get('/api/profile/:id', (req: Request, res: Response) => {
+        this.app.get('/api/profiles/:id', (req: Request, res: Response) => {
             self.setCollection();
               logger.debug("api/profile getById----");
             self.controller.getProfile(req, res);
@@ -30,7 +30,7 @@ export class ProfileRoute{
     }
 
     update() {
-        this.app.put('/api/profile', (req: Request, res: Response) => {
+        this.app.put('/api/profiles', (req: Request, res: Response) => {
             self.setCollection();
              logger.debug("api/profile put----");
             self.controller.updateProfile(req, res);
@@ -39,7 +39,7 @@ export class ProfileRoute{
 
     upload() {
         console.log('profikle upload route......');
-        this.app.post('/api/profile/upload',upload.single('file'), function (req: Request, res: Response, next) {
+        this.app.post('/api/profiles/upload',upload.single('file'), function (req: Request, res: Response, next) {
             // req.file is the `avatar` file
             // req.body will hold the text fields, if there were any
             self.setCollection();

@@ -20,7 +20,7 @@ import { StorageService } from '../../app/services/storage.service';
 export class PostDetailsPage implements OnInit {
   postId: string;
   post: Post;
-  canEdit: string;
+  editPermission: boolean;
   similarPosts: Array<Post>;
   detailSegment: string;
   isUserAuthenticated: boolean = false;
@@ -28,8 +28,8 @@ export class PostDetailsPage implements OnInit {
     @Inject(PostService) public postService: IPostService,
     @Inject(AuthGuard) public authGuard: IAuthGuard
   ) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.canEdit = navParams.get('canEdit');
+    // If we navigated to this page, we will have an item available as a nav param    
+    this.editPermission =  navParams.get('editPermission');
     this.postId = navParams.get('_id');
     this.post = new Post();
     this.similarPosts = new Array<Post>();
@@ -104,11 +104,7 @@ export class PostDetailsPage implements OnInit {
       this.navCtrl.push(LoginPage);
     }
   }
-
-  editPost() {
-    this.navCtrl.push(AddEditPostPage, { _id: this.postId });
-  }
-
+  
   gotoNotificationPage() {
     this.navCtrl.push(NotificationPage);
   }

@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title class="text-center">Make Offer</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-item-divider color="light">
+        Quote your price to initiate chat and negotiation
+        <p><b>Listed Price:</b>Rs {{listingPrice}}</p>
+    </ion-item-divider>
+    <form  [formGroup]="offerForm" (ngSubmit)="onSubmitForm()" #newform="ngForm">
+        <ion-item>
+            <ion-label floating>Your Price</ion-label>
+            <ion-input type="text" formControlName="Price" name="Price" [(ngModel)]="offer.Price"  required></ion-input>
+        </ion-item> 
+        <ion-item>
+            <ion-label floating>would you like to add comments?</ion-label>
+            <ion-input type="text" formControlName="Comments" name="Comments" [(ngModel)]="offer.Comments"></ion-input>
+        </ion-item>
+        <div padding>
+            <button ion-button color="primary" block [disabled]="!newform.form.valid">Make an Offer</button>
+        </div>
+    </form>
+</ion-content>

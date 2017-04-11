@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>{{post.Title}}</ion-title>
+    <ion-buttons end>
+      <button buttons-end ion-button (click)="isopen = !isopen">
+                <ion-icon name="add"></ion-icon>
+            </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content no-padding>
+  <ion-card *ngIf="post.Product.Photos.length">
+    <ion-slides [options]="mySlideOptions">
+      <ion-slide *ngFor="let photo of post.Product.Photos">
+        <img src="{{photo.ImageUrl}}">
+      </ion-slide>
+    </ion-slides>
+    <img />
+  </ion-card>
+  <ion-card-content>
+    <ion-icon text-right name="heart"></ion-icon>
+    <ion-icon text-right ios="ios-share" md="md-share"></ion-icon>
+  </ion-card-content>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col width-50>
+          <p>
+            <ion-icon name="people" item-left></ion-icon> Offers Made :{{post.Offers.length}}
+          </p>
+        </ion-col>
+        <ion-col width-50 text-right>
+          <p>
+            <ion-icon name="eye" item-left></ion-icon>Views: {{post.Views.length}}
+          </p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div>
+      <ion-segment [(ngModel)]="detailSegment">
+        <ion-segment-button value="description">
+          DESCRIPTIONS
+        </ion-segment-button>
+        <ion-segment-button value="specifications">
+          SPECIFICATIONS
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <div [ngSwitch]="detailSegment">
+      <ion-list *ngSwitchCase="'description'">
+        <ion-item>
+          <p wrap>{{post.Product.Description.Title}}</p>
+        </ion-item>
+        <ion-item>
+            Located At
+          <p item-right>{{post.Location.Locality}} , {{post.Location.City}}</p>
+        </ion-item>
+        <ion-item>
+            Posted On
+          <p item-right>{{post.PostedOn}}</p>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngSwitchCase="'specifications'">
+        <ion-item>
+          Condition
+          <p item-right>{{post.Product.Description.Defects}}</p>
+        </ion-item>
+        <ion-item>
+          Brand
+          <p item-right>{{post.Product.Description.Brand}}</p>
+        </ion-item>
+        <ion-item>
+          Model
+          <p item-right>{{post.Product.Description.Model}}</p>
+        </ion-item>
+        <ion-item>
+          Accesseroies
+          <p item-right>{{post.Product.Accesseroies}}</p>
+        </ion-item>
+        <ion-item>
+          Purchased On
+          <p item-right>{{post.Product.Description.PurchasedOn}}</p>
+        </ion-item>
+        <ion-item>
+          Invoice Available
+          <p item-right>{{post.Product.Description.IsBillAvaialbe}}</p>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-card-content>
+  <ion-card-content no-padding>
+    <ion-list-header>
+      Similar Posts
+    </ion-list-header>
+    <ion-scroll scrollX="true">
+      <ion-card *ngFor="let post of similarPosts">
+        <ion-item no-padding (click)="showProductDetails(post._id)">
+          <ion-thumbnail>
+            <img (click)="showDetails(post)" src="https://ionicframework.com/dist/preview-app/www/assets/img/card-madison.png">
+          </ion-thumbnail>
+          <h2 text-center>{{post.Title}}</h2>
+          <p text-center>{{post.Product.Description.Title}}</p>
+        </ion-item>
+      </ion-card>
+    </ion-scroll>
+  </ion-card-content>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment>
+      <ion-segment-button [disabled]="post.IsOffered" color="primary" (click)="goToOffersPage(post)">
+        Make Offer
+      </ion-segment-button>
+      <ion-segment-button color="secondary">
+        Chat
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

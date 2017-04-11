@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Edit Profile</ion-title>
+        <ion-buttons end>
+            <button buttons-end ion-button (click)="onSubmitForm()">
+                <ion-icon name="checkmark"></ion-icon>
+            </button>
+        </ion-buttons>       
+    </ion-navbar>
+</ion-header>
+<form [formGroup]="editProfileForm" #newform="ngForm">
+    <ion-card>
+        <ion-card-content>
+            <ion-card-title>
+                Basic Information
+            </ion-card-title>
+            <ion-item>
+                <ion-label floating>Full Name</ion-label>
+                <ion-input type="file" formControlName="FullName" name="fullName" [(ngModel)]="profile.FullName" required></ion-input>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            Contact Detail
+        </ion-card-header>
+        <ion-card-content>
+            <!-- Hello World -->
+        </ion-card-content>
+        <ion-list>
+            <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input type="email" formControlName="EmailId" name="emailId" [(ngModel)]="profile.Contact.EmailId" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Skype</ion-label>
+                <ion-input type="text" formControlName="SkypeId" [(ngModel)]="profile.Contact.SkypeId" name="skypeId"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Phone</ion-label>
+                <ion-input type="tel" formControlName="PhoneNumber" name="phoneNo" [(ngModel)]="profile.Contact.PhoneNumber" required></ion-input>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+</form>

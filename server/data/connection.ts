@@ -22,7 +22,7 @@ export class MongoDBConnection {
 
     private static connect(result: (error: Error, db: Db) => void) {
         var mongoClient = new MongoClient();
-        mongoClient.connect(localUrl, (error: Error, db: Db) => {
+        mongoClient.connect(remoteUrl, (error: Error, db: Db) => {
             this.db = db;
             this.isConnected = true;
 

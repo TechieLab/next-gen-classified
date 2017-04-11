@@ -6,8 +6,6 @@ import { LookupController, ILookupController } from '../controllers/lookupContro
 var self;
 
 export class LookupRoute {
-    lookupController: ILookupController;
-    service: ILookupService;
     app: Express;
 
     constructor(app: Express) {
@@ -21,11 +19,7 @@ export class LookupRoute {
             var service = new LookupService(repository);
             var lookupController = new LookupController(service);
 
-            lookupController.getEntities(req, res);
+            lookupController.getAll(req, res);
         });
-    }
-
-    setCollection() {
-
     }
 }

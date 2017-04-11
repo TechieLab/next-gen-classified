@@ -1,6 +1,8 @@
 import { Db, MongoClient} from 'mongodb';
+import logger = require('winston');
 
-const url: string = 'mongodb://localhost:27017/classifieddb';
+const remoteUrl: string = 'mongodb://52.187.133.250:27017/classifieddb';
+const localUrl: string = 'mongodb://localhost:27017/classifieddb';
 
 export class MongoDBConnection {
     private static isConnected: boolean = false;
@@ -20,11 +22,11 @@ export class MongoDBConnection {
 
     private static connect(result: (error: Error, db: Db) => void) {
         var mongoClient = new MongoClient();
-        mongoClient.connect(url, (error: Error, db: Db) => {
+        mongoClient.connect(remoteUrl, (error: Error, db: Db) => {
             this.db = db;
             this.isConnected = true;
 
-            console.log('Mongo connected.......');
+            logger.log('debug' , 'Mongo connected.......');
 
             return result(error, db);
         });

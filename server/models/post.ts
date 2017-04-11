@@ -1,23 +1,36 @@
-import {BaseEntity} from './baseEntity';
-import {ObjectID} from 'mongodb';
-import {Product} from './product';
+import { BaseEntity } from './baseEntity';
+import { Product } from './product';
+import { Location } from './location';
+import { Offer } from './offer';
 
-export class Post extends BaseEntity
-{    
-   public PostId : number;
-   public AdType : string;
-   public UserId: ObjectID;
-   public Title : string;
-   public Location : string;
-   public Product : Product;
+export class Post extends BaseEntity {
+    PostId: number;
+    AdType: string;
+    Title: string;
+    Category: string;
+    Location: Location;
+    Product: Product;
+    Views: Array<string>;
+    Offers: Array<Offer>;
+    LastViewed: Date;
+    LastOffered: Date;
+    UserId: string;
+    Likes: Array<string>;
 
-   constructor(){
-       super();
 
-       this.PostId = 0;
-       this.AdType = '';
-       this.UserId = new ObjectID();     
-       this.Title = '';
-       this.Product = new Product();
-   }
+    constructor() {
+        super();
+
+        this.PostId = 0;
+        this.AdType = '';
+        this.Title = '';
+        this.UserId = null;
+        this.Category = '';
+        this.Location = new Location();
+        this.Likes = new Array<string>();
+        this.Views = new Array<string>();
+        this.Offers = new Array<Offer>();
+        this.Product = new Product();
+
+    }
 }

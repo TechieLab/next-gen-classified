@@ -1,16 +1,14 @@
-import { ObjectID } from 'mongodb';
+import {ObjectID} from 'mongodb';
+
 export class BaseEntity {
     _id: ObjectID;
-    Status: string;
 
-    CreatedBy: ObjectID;
+    CreatedBy: string;
     CreatedOn: Date;
-    ModifiedBy: ObjectID;
+    ModifiedBy: string;
     ModifiedOn: Date;
 
-    constructor() {        
-        this.Status = 'inactive';
-
+    constructor() {       
         this.CreatedBy = null;
         this.CreatedOn = new Date();
         this.ModifiedBy = null;

@@ -1,7 +1,5 @@
-import {ObjectID} from 'mongodb';
-import {BaseEntity} from './baseEntity';
 
-export class IAddress extends BaseEntity
+export class Address
 {
     AddressLine1: string;
     AddressLine2: string;

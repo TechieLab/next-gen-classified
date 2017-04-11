@@ -1,108 +1,135 @@
 ﻿import { MongoDBConnection } from '../data/connection';
+import { ElasticSearchConnection } from '../data/ElasticSearchConnection';
 import { Db, Collection, ObjectID } from 'mongodb';
-var logger = require('winston');
+import logger = require('winston');
+var es = require('elasticsearch');
 
 //import Logger from '../Logger'; 
 //const logger = Logger('server');
 
 export interface IBaseRepository<TEntity> {
-    get(query: Object, callback: (err: Error, item: Array<TEntity>) => any);
-    getById(id: ObjectID, callback: (err: Error, item: TEntity) => any);
-    getCount(callback: (err: Error, item: number) => any);
+    get(query: any, callback: (err: Error, item: Array<TEntity>) => any);
+    getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any);
+    getById(id: string, callback: (err: Error, item: TEntity) => any);
+    getCount(query: any, callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
     bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any);
-    update(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    replace(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any);
-    delete(id: ObjectID, callback: (errr: Error, item: TEntity) => any);
+    update(id: string, data: TEntity, option: Object, callback: (errr: Error, item: TEntity) => any);
+    replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
+    delete(id: string, callback: (errr: Error, item: TEntity) => any);
 }
 
 export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 {
     db: Db;
+    client: any;
     collection: Collection;
+    collectionname: string;
 
     constructor(public collectionName: string) {
-        console.log("Collection name-----" + collectionName);
+        logger.debug("Collection name-----" + collectionName);
+        this.collectionname = collectionName;
 
         MongoDBConnection.getConnection((connection) => {
             this.db = connection;
             this.collection = this.db.collection(collectionName);
         });
+
+        this.client = new es.Client({
+            host: '127.0.0.1:9200',
+            log: 'error'
+        });
     }
 
-    public getCount(callback: (err: Error, item: number) => any) {
-        this.collection.count(function (err, item) {
+    public getCount(query: any, callback: (err: Error, item: number) => any) {
+        this.collection.count(query, function (err, item) {
+            if (err) {
+                logger.debug('error base getCount...', err);
+            }
+
             logger.debug('Gettng Count...' + item);
             callback(err, item);
         });
     }
 
-    public get(query: Object, callback: (err: Error, item: Array<TEntity>) => any) {
+    public get(query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         if (query) {
-            this.getByPage(query, query["sortKey"], query["sortOrder"], query["pageSize"], query["pageNbr"], callback);
+            this.getByPage(null, query, callback);
         } else {
-            this.getAll(callback);
+            this.getAll(null, callback);
         }
     }
 
-    public getById(id: ObjectID, callback: (err: Error, item: TEntity) => any) {
-        this.collection.findOne({ _id: id }, function (err, results) {
-            logger.debug('debug', 'reading get data..with id..' + id);
-            callback(err, results);
+    public getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
+        logger.debug('base repo getByUserId...' + userId, query);
+        if (query) {
+            this.getByPage(userId, query, callback);
+        } else {
+            this.getAll(userId, callback);
+        }
+    }
+
+    public getById(id: string, callback: (err: Error, item: TEntity) => any) {
+        logger.debug('debug', 'reading get data..with id..' + id);
+        this.collection.findOne({ _id: new ObjectID(id) }, (err, result) => {
+            if (err) {
+                logger.debug('error base getById...', err);
+            }
+            callback(err, result);
         });
     }
 
-    private getAll(callback: (err: Error, item: Array<TEntity>) => any) {
-        this.collection.find({}).toArray(function (err, item) {
-            logger.debug('debug', 'reading all data..');
+    private getAll(userId: string, callback: (err: Error, item: Array<TEntity>) => any) {
+        this.collection.find({ UserId: new ObjectID(userId) }).toArray((err, item) => {
+            if (err) {
+                logger.debug('error base getAll...', err);
+            }
+           
             callback(err, item);
         });
     }
 
-    private getByPage(query: Object, sortKey: string, sortOrder: string, pageSize: number, pageNbr: number, callback: (err: Error, item: Array<TEntity>) => any) {
+    private getByPage(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
+        let fields: Array<string> = this.getFields(query);
+        let sortObj = this.getSortBy(query);
+        let pageSize: number = query['pageSize'];
+        let pageNbr: number = query['page'];
 
-        var options;
-
-        if (sortKey && sortOrder) {
-            logger.debug('debug', 'reading many data..with query and sortkey, sortorder');
-            options = {
-                "sort": [sortKey, sortOrder]
-            };
-
-            this.collection.find(query, options).toArray((err, results) => {
-                callback(err, results);
-            });
-        } else if (sortKey) {
-            logger.debug('debug', 'reading many data..with query and sortkey');
-            options = {
-                "sort": sortKey
-            };
-            this.collection.find(query, options).toArray(callback);
-        } else {
-            logger.debug('debug', 'reading many data..with query');
-            console.log(query);
-            console.log(this.collectionName);
-            this.collection.find(query).toArray(callback);
+        if (userId) {
+            query.UserId = userId;
         }
+
+        delete query['sortKey'];
+        delete query['sortOrder'];
+        delete query['fields'];
+        delete query['pageSize'];
+        delete query['page'];
+
+        logger.debug('debug', 'reading many data..with query', query);
+
+        this.collection.find(query, fields, null, pageSize * pageNbr).sort(sortObj).toArray(callback);
     }
 
     public create(data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called create data..');
+        logger.debug('debug', 'called create data--------', data);
         if (!data) {
             callback(new Error('Empty'), null);
         }
 
-
-        this.collection.insert(data, function (err, res) {
+        this.collection.insert(data, (err, res) => {
             logger.debug('debug', 'inserting data..');
 
+            if (err) {
+                callback(err, null);
+            }
+
+            this.saveEntityElasticSearch(res.ops[0]);
             callback(err, res.ops[0]);
         });
     }
 
     public bulkCreate(data: Array<TEntity>, callback: (errr: Error, item: Array<TEntity>) => any) {
-        logger.debug('debug', 'called bulk data..');
-        console.log(data);
+        logger.debug('debug', 'called bulk data-------', data);
 
         if (!data) {
             callback(new Error("Empty data.."), null);
@@ -116,20 +143,22 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public update(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called update data..');
-        console.log(data);
-        this.collection.findOneAndUpdate({ _id: id }, data, (err, res) => {
-            logger.debug('debug', 'updated data with id------' + id);
+    public update(id: string, data: TEntity, options: Object, callback: (errr: Error, item: TEntity) => any) {
+        logger.debug('debug', 'called update data-----', data);
 
+        this.collection.findOneAndUpdate({ _id: id }, data, options, (err, res) => {
+            if (err) {
+                callback(err, null);
+            }
+
+            logger.debug('debug', 'updated data with id------' + id);
             callback(err, res.value);
         });
     }
 
-    public replace(id: ObjectID, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called update data..');
-        console.log(data);
-        this.collection.findOneAndReplace({ _id: id }, data, (err, res) => {
+    public replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any) {
+        logger.debug('debug', 'called update data--------', data);
+        this.collection.findOneAndReplace({ _id: new ObjectID(id) }, data, (err, res) => {
             logger.debug('debug', 'replaced data with id------' + id);
 
             callback(err, res.value);
@@ -137,13 +166,59 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
 
-    public delete(id: ObjectID, callback: (errr: Error, item: TEntity) => any) {
-        logger.debug('debug', 'called delele data..');
+    public delete(id: string, callback: (errr: Error, item: TEntity) => any) {
+        logger.debug('debug', 'called delele data---------', id);
 
         this.collection.findOneAndDelete({ _id: id }, (err, res) => {
             logger.debug('debug', 'deleleed data..');
 
             callback(err, res.value);
         });
+    }
+
+    /*************PRIVATE FUNCTIONS****************************** */
+
+    private getFields(query: any) {
+        let fields: Array<string>;
+
+        if (query['fields']) {
+            fields = query['fields'].split(',');
+        }
+
+        return fields;
+    }
+
+    private getSortBy(query: any) {
+        let sortObj: any = {};
+
+        if (query['sortKey'] == 'Price') {
+            sortObj = { 'Product.Description.Price': +query['sortOrder'] }
+        }
+
+        if (query['sortKey'] == 'ModifiedOn') {
+            sortObj = { "ModifiedOn": +query['sortOrder'] };
+        }
+
+        if (query['sortKey'] == 'Discount') {
+            sortObj = { 'Product.Description.Discount': +query['sortOrder'] };
+        }
+
+        console.log(sortObj);
+
+        return sortObj;
+    }
+
+    private saveEntityElasticSearch(data) {
+
+        let bulkBody = [];
+        bulkBody.push({
+            index: {
+                _index: this.collectionname,
+                _type: this.collectionname
+            }
+        });
+
+        bulkBody.push(data);
+        this.client.bulk({ body: bulkBody });
     }
 }

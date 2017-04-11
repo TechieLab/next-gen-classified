@@ -37,7 +37,7 @@ export class InitializeSampleDb
         logger.log('debug', 'verifying lookups from database..');
         //this.getSampleData();
 
-        repository.getCount(function (err, items)
+        repository.getCount({}, function (err, items)
         {           
 
             if (items> 0)
@@ -67,7 +67,7 @@ export class InitializeSampleDb
         logger.log('debug', 'verifying Users from database..');
         //this.getSampleData();
 
-        repository.getCount(function (err, item)
+        repository.getCount({}, function (err, item)
         {           
 
             if (item > 0)
@@ -96,7 +96,7 @@ export class InitializeSampleDb
         logger.log('debug', 'verifying profiles from database..');
         //this.getSampleData();
 
-        repository.getCount(function (err, items)
+        repository.getCount( {}, function (err, items)
         {           
 
             if (items> 0)

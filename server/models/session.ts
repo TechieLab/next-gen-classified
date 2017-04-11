@@ -1,5 +1,5 @@
 export class Session {
     LastLogon: Date;
-    Token: string;
+    AuthToken: string;
     TokenValidity: Date;
 }

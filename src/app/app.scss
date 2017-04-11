@@ -29,3 +29,15 @@ ion-scroll {
   }
 }
 
+.toolbar .segment-button{
+    background-color: dodgerblue;
+    color:#FFF;
+    opacity: 1;
+}
+
+.toolbar .segment-button:not(:last-child()){
+    border-right: 1px solid;
+}
+
+
+

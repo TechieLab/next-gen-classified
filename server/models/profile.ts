@@ -4,19 +4,18 @@ import {Contact} from './contact';
 import {Theme} from './theme';
 import {Media} from './media';
 
-import {ObjectID} from 'mongodb';
-
 export class Profile
 {
-     EmailId: string;
      FullName: string;
-     DisplayName: string;   
-     Signature : string;
+     DisplayName: string;
+     EmailId:string;   
      Address : Address;
      Contact: Contact;
      Theme: Theme;
      Language: string;   
-     Media : Media;
+     Media : Media;     
+     CreatedOn : Date;
+     Status : string;
 
      constructor(){
          this.FullName = '';
@@ -24,5 +23,6 @@ export class Profile
          this.Contact = new Contact();
          this.Theme = new Theme();
          this.Media = new Media();
+         this.CreatedOn = new Date();
      }
 }

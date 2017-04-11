@@ -8,7 +8,7 @@
       "dom",
       "es2015"
     ],
-    "types": ["reflect-metadata", "express", ""],
+    "types": ["reflect-metadata", "node", "express","elasticsearch"],
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -23,5 +23,7 @@
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false
-  }
+  },
+  "map": {
+   }
 }

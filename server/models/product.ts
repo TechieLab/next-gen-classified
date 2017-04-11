@@ -1,20 +1,18 @@
 import { BaseEntity } from './baseEntity';
-import { ObjectID } from 'mongodb';
 import {Description} from './description';
 import {Review} from './review';
+import {Media} from './media';
 
 export class Product extends BaseEntity {
     public Name: string;    
-    public Category: string; 
-    public Description : Description;
-    public Review : Review;
+    
+    public Description : Description;  
+    public Photos : Array<Media>;
 
     constructor() {
         super();
-
-        this.Name = '';        
-        this.Category = '';      
+        this.Name = '';
         this.Description = new Description();
-        this.Review = new Review();
+        this.Photos = new Array<Media>();
     }
 }

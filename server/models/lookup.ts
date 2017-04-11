@@ -1,8 +1,7 @@
-import {ObjectID} from 'mongodb';
 
 export class Lookup
 {
-     Id : ObjectID
+     Id : string
      Key : string;
      Value: string;
      Name: string;

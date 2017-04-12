@@ -80,8 +80,7 @@ export class UploadService {
         options.mimeType = "image/jpeg";
         options.chunkedMode = false;
         options.params = {
-            fileName: this.filename,
-            folder: 'profile'
+            fileName: this.filename
         }
         options.headers = {
             'Authorization': StorageService.getToken()

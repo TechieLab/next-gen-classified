@@ -6,8 +6,23 @@ import { IBaseApiRoute, BaseApiRoute } from './baseApiRoute';
 import { IPostingService, PostingService } from '../services/postingService';
 import { IPostingRepository, PostingRepository } from '../repository/postingRepository';
 import { PostingController, IPostingController } from '../controllers/postingController';
+let mkdirp = require("mkdirp");
 
-var upload = multer({ dest: './uploads/' });
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        let newDestination = './uploads/posts/' + req.params.id;
+        mkdirp.sync(newDestination);
+        cb(null, newDestination);
+    },
+    filename: function (req, file, cb) {
+        var timestamp = new Date().getTime().toString();
+        var ext = file.originalname.substr(file.originalname.lastIndexOf('.') + 1);
+        var filename = timestamp + '.' + ext;
+        cb(null, filename);
+    }
+});
+
+var fileUpload = multer({ storage: storage });
 
 var self;
 export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>{
@@ -35,7 +50,7 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
     }
 
     upload() {
-        this.app.post('/api/posts/:id/upload', function (req: Request, res: Response, next) {
+        this.app.post('/api/posts/:id/upload', fileUpload.single('file'), function (req: Request, res: Response, next) {
             // req.files is array of `photos` files
             // req.body will contain the text fields, if there were any
             self.setPostCollection();

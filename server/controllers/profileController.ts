@@ -56,8 +56,9 @@ export class ProfileController {
 
             if (user && req.file) {
                 var media = new Media();
-                media.Name = req.file.originalname;
-                media.ImageUrl = Settings.BackendHost + Settings.ImageRepository + req.file.originalname;
+                var fileName = this.extractFileName(req.file.originalname, req.params.id);
+                media.Name = fileName;
+                media.ImageUrl = Settings.BackendHost + Settings.ProfileImageRepository + fileName;
                 media.SizeInBytes = req.file.size;
                 user.Profile.Media = media;
                 self.userService.update(user._id, user, (err, result) => {
@@ -65,5 +66,11 @@ export class ProfileController {
                 });
             }
         });
+    }
+
+    private extractFileName(fileName: string, userId: string) {
+        var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
+
+        return userId + '.' + ext;
     }
 }

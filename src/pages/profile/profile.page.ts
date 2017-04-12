@@ -31,6 +31,7 @@ export class ProfilePage implements OnInit {
   imagePath: any;
   imageNewPath: any;
   filename: string;
+  clientId : string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public actionSheetCtrl: ActionSheetController, public events: Events,
@@ -48,11 +49,11 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    let clientId = StorageService.getItem('Client_Id')
-    this.getProfile(clientId);
+    this.clientId = StorageService.getItem('Client_Id')
+    this.getProfile();
 
     this.events.subscribe('photo-uploaded', () => {
-      this.getProfile(clientId);
+      this.getProfile();
     });
 
     this.events.subscribe('photo-removed', () => {
@@ -69,7 +70,7 @@ export class ProfilePage implements OnInit {
   }
 
   changePhoto() {
-    var url = Constants.ProfileApi + 'upload';
+    var url = Constants.ProfileApi + this.clientId  + '/upload';
     this.uploadService.openActionSheet(url);
   }
 
@@ -80,8 +81,10 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  getProfile(clientId : string) {
-    this.profileService.getById(clientId).subscribe((result) => {
+  getProfile() {
+    this.profile = new Profile();
+    
+    this.profileService.getById(this.clientId).subscribe((result) => {
       if (result) {
         this.profile = result;
       }

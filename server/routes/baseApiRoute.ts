@@ -47,7 +47,7 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         this.app = app;
         self = this;
 
-        apiRoutes.use(multerUpload);
+        //apiRoutes.use(multerUpload);
 
         apiRoutes.use(function (req: Request, res: Response, next) {
             var token = req.body.token || req.query.token || req.headers['authorization'];

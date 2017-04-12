@@ -52,8 +52,8 @@ export class PostingController extends BaseController<Post> implements IPostingC
             if (post && req.file) {
                 //for (var i = 0; i < req.files.length; i++) {
                 var media = new Media();
-                media.Name = req.file.originalname;
-                media.ImageUrl = Settings.BackendHost + Settings.ImageRepository + req.file.originalname;
+                media.Name = req.file.filename;
+                media.ImageUrl = Settings.BackendHost + Settings.PostImageRepository + post._id + '/' + req.file.filename;
                 media.SizeInBytes = req.file.size;
 
                 post.Product.Photos.push(media);

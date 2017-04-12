@@ -3,7 +3,7 @@ import { Express, Router, Request, Response } from 'express';
 import logger = require('winston');
 var path = require('path');
 
-export class IndexRoute {    
+export class IndexRoute {
 
     constructor(private app: Express) {
         this.app = app;
@@ -16,8 +16,12 @@ export class IndexRoute {
             return res.render('index.html');
         });
 
-        this.app.get('/images/:name', function (req, res) {
-            return res.sendFile(path.join(__dirname, '../../../uploads/' + req['userId'] + '/'   + req.params.name) );
+        this.app.get('/images/profiles/:name', function (req, res) {
+            return res.sendFile(path.join(__dirname, '../../../uploads/profiles/' + req.params.name));
+        });
+
+        this.app.get('/images/posts/:id/:name', function (req, res) {
+            return res.sendFile(path.join(__dirname, '../../../uploads/posts/' + req.params.id + '/' + req.params.name));
         });
     }
 }

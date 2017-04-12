@@ -74,7 +74,7 @@ export class AddEditPostPage implements OnInit {
       this.getLocation();
     }
 
-    this.events.subscribe('photo-uploaded', () => {
+    this.events.subscribe('photo-uploaded', () => {      
       this.getPost();
     });
 
@@ -84,6 +84,7 @@ export class AddEditPostPage implements OnInit {
   }
 
   getPost() {
+    this.post = new Post();
     this.postService.getById(this.postId).subscribe((response) => {
       if (response) {
         this.post = response;

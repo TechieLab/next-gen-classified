@@ -7,10 +7,11 @@ import { ILookupService, LookupService } from '../services/lookup.service';
     template: `     
      <ion-content> 
         <ion-list>
-            <button ion-item *ngFor="let item of sortByList" (click)="itemSelected(item)">
-                {{ item.name }}
-            </button>  
-        </ion-list>
+            <ion-item *ngFor="let item of sortByList" (click)="itemSelected(item)">
+                 {{ item.Name }}
+                <ion-icon item-right large *ngIf="item.Value == selectedSortBy.Value && item.Order == selectedSortBy.Order" name="checkmark"></ion-icon>
+            </ion-item>  
+        </ion-list>        
     </ion-content>
   `
 })
@@ -18,32 +19,37 @@ import { ILookupService, LookupService } from '../services/lookup.service';
 
 export class SortComponent implements OnInit {
     private sortByList: Array<any>;
+    private selectedSortBy :any;
+
 
     constructor(public viewCtrl: ViewController, public events: Events) {
-
+        this.selectedSortBy = {
+            Value : viewCtrl.getNavParams().get('sortByValue'),
+            Order : viewCtrl.getNavParams().get('sortByOrder')
+        };
     }
 
     ngOnInit() {
         this.sortByList = [{
-            name: 'High Price',
-            value: 'Price',
-            order: -1,
+            Name: 'High Price',
+            Value: 'Price',
+            Order: -1,
         }, {
-            name: 'Low Price',
-            value: 'Price',
-            order: 1
+            Name: 'Low Price',
+            Value: 'Price',
+            Order: 1
         }, {
-            name: 'Recent Post',
-            value: 'ModifiedOn',
-            order: -1,
+            Name: 'Recent Post',
+            Value: 'ModifiedOn',
+            Order: -1,
         }, {
-            name: 'Old Post',
-            value: 'ModifiedOn',
-            order: 1,
+            Name: 'Old Post',
+            Value: 'ModifiedOn',
+            Order: 1,
         }, {
-            name: 'Discount',
-            value: 'Discount',
-            order: -1,
+            Name: 'Discount',
+            Value: 'Discount',
+            Order: -1,
         }]
     }
 

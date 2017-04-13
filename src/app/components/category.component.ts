@@ -8,10 +8,10 @@ import { Lookup } from '../models/lookup';
     template: ` 
      <ion-content> 
         <ion-list>
-            <button ion-item *ngFor="let item of categories" (click)="itemSelected(item)">
-                {{ item.Name }}
-                <ion-icon end *ngIf="item._id == selectedCategory" name="checkmark"></ion-icon>
-            </button>              
+            <ion-item *ngFor="let item of categories" (click)="itemSelected(item)">
+                 {{ item.Name }}
+                <ion-icon item-right large *ngIf="item._id == selectedCategory._id" name="checkmark"></ion-icon>
+            </ion-item>                     
         </ion-list>
     </ion-content>
   `

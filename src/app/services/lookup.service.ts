@@ -21,17 +21,17 @@ export class LookupService extends BaseService<Lookup> implements ILookupService
     }
 
     getCategories() : Observable<Array<Lookup>>{       
-        this.params.set('key', 'category');
+        this.params.set('Key', 'category');
         return this.getByQuery(this.params);
     }
 
     getDefects() : Observable<Array<Lookup>> {       
-        this.params.set('key', 'defect');
+        this.params.set('Key', 'defect');
         return this.getByQuery(this.params);
     }
 
     getBrands() : Observable<Array<Lookup>>  {       
-        this.params.set('key', 'brand');
+        this.params.set('Key', 'brand');
         return this.getByQuery(this.params);
     }
 }

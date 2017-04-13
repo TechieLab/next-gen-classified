@@ -30,7 +30,7 @@ export class HomePage implements OnInit {
     private category: boolean;  
     private latestPosts: Array<Post>;    
     private viewType: string;
-    private sortBy: Object;
+    private sortBy: any;
     private pageSize: number = 25;
     private pageNumber: number = 1;
 
@@ -44,22 +44,17 @@ export class HomePage implements OnInit {
         this.category = true;
         this.selectedCategoryId = '';
         this.viewType = 'list';
+        this.sortBy = {
+            Value : '',
+            Order : 1
+        };
     }
 
-    ngOnInit() {
-        this.events.subscribe('category:selected', (res) => {
-            this.selectedCategoryId = res._id;
-            this.getLatestPostList();
-        });
-
+    ngOnInit() { 
         this.events.subscribe('user:changePassword', (res) => {
             this.presentToast('password changed Successfully');
         });
-
-        this.events.subscribe('sortBy:selected', (res) => {
-            this.getLatestPostList()
-        });
-
+        
         this.postService.getLogged().subscribe((logged: boolean) => {
             console.log('Welcome %s', logged);
         });
@@ -91,8 +86,8 @@ export class HomePage implements OnInit {
         }
 
         if (this.sortBy) {
-            params.set('sortKey', this.sortBy['value']);
-            params.set('sortOrder', this.sortBy['order']);
+            params.set('sortKey', this.sortBy['Value']);
+            params.set('sortOrder', this.sortBy['Order']);
         }
 
         if (this.pageSize) {
@@ -136,7 +131,7 @@ export class HomePage implements OnInit {
     }
 
     openSortingMenu() {
-        let modal = this.modalCtrl.create(SortComponent, { sortBy: this.sortBy }, { enableBackdropDismiss: true });
+        let modal = this.modalCtrl.create(SortComponent, { sortByValue: this.sortBy.Value, sortByOrder : this.sortBy.Order  }, { enableBackdropDismiss: true });
         modal.onDidDismiss(data => {
             this.sortBy = data;
             this.getLatestPostList();

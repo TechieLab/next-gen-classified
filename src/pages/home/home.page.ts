@@ -31,7 +31,7 @@ export class HomePage implements OnInit {
     private latestPosts: Array<Post>;    
     private viewType: string;
     private sortBy: Object;
-    private pageSize: number = 1;
+    private pageSize: number = 25;
     private pageNumber: number = 1;
 
     constructor(public navCtrl: NavController,

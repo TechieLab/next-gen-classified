@@ -1,45 +1,49 @@
-import { Component, Output, Inject } from '@angular/core';
-import { Events, NavController } from 'ionic-angular';
+import { Component, OnInit, Output, Inject } from '@angular/core';
+import { Events, NavController, ViewController } from 'ionic-angular';
 import { ILookupService, LookupService } from '../services/lookup.service';
-import {Lookup} from '../models/lookup';
+import { Lookup } from '../models/lookup';
 
 @Component({
     selector: 'category-components',
     template: ` 
-     <ion-header>
-        <ion-navbar>
-        <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-        </ion-navbar>
-     </ion-header>
      <ion-content> 
         <ion-list>
             <button ion-item *ngFor="let item of categories" (click)="itemSelected(item)">
-                {{ item.name }}
-            </button>  
+                {{ item.Name }}
+                <ion-icon end *ngIf="item._id == selectedCategory" name="checkmark"></ion-icon>
+            </button>              
         </ion-list>
     </ion-content>
   `
 })
 
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
     private categories: Array<Lookup>;
+    private selectedCategory: Lookup;
 
-    constructor(public navCtrl: NavController, public events: Events,
-        @Inject(LookupService) public lookupService: ILookupService, ) {        
+    constructor(public navCtrl: NavController,
+        public viewCtrl: ViewController,
+        public events: Events,
+        @Inject(LookupService) public lookupService: ILookupService, ) {
+        this.selectedCategory = new Lookup();
+        this.selectedCategory._id = viewCtrl.getNavParams().get('selectedCategory');
+    }
+
+    ngOnInit() {
         this.getCategoryData();
+        this.events.subscribe('close:category', () => {
+            this.viewCtrl.dismiss();
+        });
     }
 
     itemSelected(value: Lookup) {
-        this.events.publish('category:selected', value);
-        this.navCtrl.pop();
+        this.viewCtrl.dismiss(value);
     }
 
     getCategoryData() {
         this.lookupService.getCategories().subscribe((response) => {
             if (response) {
-                this.categories = response
+                this.categories = response;
             }
         });
     }

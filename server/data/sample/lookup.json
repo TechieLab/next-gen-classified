@@ -1,94 +1,93 @@
 [
     {
         "_id":"507f191e910c19729de860ea",
-        "key":"category",
-        "value": "mobile",
-        "name": "Mobile",
-        "description" : ""
+        "Key":"category",
+        "Value": "mobile",
+        "Name": "Mobile",
+        "Description" : ""
     },
     {
         "_id":"507f191f810c19729de860ea",
-        "key":"category",
-        "value": "petCare",
-        "name": "Pet Care",
-        "description" : ""
+        "Key":"category",
+        "Name": "Pet Care",
+        "Description" : ""
     },{
         "_id":"507c191e810c19729de860ea",
-        "key":"category",
-        "value": "home",
-        "name": "Home",
-        "description" : ""
+        "Key":"category",
+        "Value": "home",
+        "Name": "Home",
+        "Description" : ""
     },{
         "_id":"507f191d810c19729de860ea",
-        "key":"category",
-        "value": "automobile",
-        "name": "AutoMobile",
-        "description" : ""
+        "Key":"category",
+        "Value": "automobile",
+        "Name": "AutoMobile",
+        "Description" : ""
     },{
         "_id":"502f1931814c19729de860ea",
-        "key":"category",
-        "value": "education",
-        "name": "Education",
-        "description" : ""
+        "Key":"category",
+        "Value": "education",
+        "Name": "Education",
+        "Description" : ""
     },{
         "_id":"502f1931814c19829dec60ea",
-        "key":"category",
-        "value": "fashion",
-        "name": "Fashion",
-        "description" : ""
+        "Key":"category",
+        "Value": "fashion",
+        "Name": "Fashion",
+        "Description" : ""
     },{
         "_id":"502f1931814c19e29dec60ea",
-        "key":"category",
-        "value": "furniture",
-        "name": "Furniture",
-        "description" : ""
+        "Key":"category",
+        "Value": "furniture",
+        "Name": "Furniture",
+        "Description" : ""
     },{
         "_id":"501f191e310c19729de860ea",
-        "key":"brand",
-        "value": "apple",
-        "name": "Apple",
-        "description" : ""
+        "Key":"brand",
+        "Value": "apple",
+        "Name": "Apple",
+        "Description" : ""
     },{
         "_id":"501f391e310c19729de860ea",
-        "key":"brand",
-        "value": "samsung",
-        "name": "Samsung",
-        "description" : ""
+        "Key":"brand",
+        "Value": "samsung",
+        "Name": "Samsung",
+        "Description" : ""
     },{
         "_id":"501f391e330c19729de860ea",
-        "key":"brand",
-        "value": "lg",
-        "name": "LG",
-        "description" : ""
+        "Key":"brand",
+        "Value": "lg",
+        "Name": "LG",
+        "Description" : ""
     },{
         "_id":"501f391e310c14729de360ea",
-        "key":"brand",
-        "value": "lenovo",
-        "name": "Lenovo",
-        "description" : ""
+        "Key":"brand",
+        "Value": "lenovo",
+        "Name": "Lenovo",
+        "Description" : ""
     },{
         "_id":"501f191e814c19729de860ea",
-        "key":"defect",
-        "value": "brokenScreen",
-        "name": "Broken Screen",
-        "description" : ""
+        "Key":"defect",
+        "Value": "brokenScreen",
+        "Name": "Broken Screen",
+        "Description" : ""
     },{
         "_id":"502f191e814c19729de860ea",
-        "key":"defect",
-        "value": "nodefect",
-        "name": "No Defect",
-        "description" : ""
+        "Key":"defect",
+        "Value": "nodefect",
+        "Name": "No Defect",
+        "Description" : ""
     },{
         "_id":"502f1912814c19729de860ea",
-        "key":"defect",
-        "value": "keyPadDamaged",
-        "name": "KeyPad Damaged",
-        "description" : ""
+        "Key":"defect",
+        "Value": "KeyPadDamaged",
+        "Name": "KeyPad Damaged",
+        "Description" : ""
     },{
         "_id":"502f1912814c29729de860ea",
-        "key":"defect",
-        "value": "motorProblem",
-        "name": "MotorProblem",
-        "description" : ""
+        "Key":"defect",
+        "Value": "motorProblem",
+        "Name": "MotorProblem",
+        "Description" : ""
     }
 ]

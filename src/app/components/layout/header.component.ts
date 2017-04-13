@@ -10,23 +10,23 @@ import { MyFavtPostingPage } from '../../../pages/myFavourite/myFavt.page';
 import { AuthGuard, IAuthGuard } from '../../services/guard.service';
 import { AccountService, IAccountService } from '../../../pages/account/account.service';
 import { IPostService, PostService } from '../../../pages/post/post.service';
-
+import { Lookup } from '../../models/lookup';
 @Component({
     selector: 'header-component',
     templateUrl: 'header.html',
     entryComponents: [CategoryComponent, SearchPage, NotificationPage],
-    providers: [ExternalService,AuthGuard,AccountService]
+    providers: [ExternalService, AuthGuard, AccountService]
 })
 
 export class HeaderComponent {
     private categories: Array<string>;
-    private selectedCategory: string;
+    private selectedCategory: Lookup;
     private ads: Array<any>;
     private items: Array<any>;
     private city: String;
     private isUserAuthenticated: boolean = false;
-    private FavouritePostCount:number;
-    private updatedCount:number;
+    private FavouritePostCount: number;
+    private updatedCount: number;
 
     constructor(public navCtrl: NavController,
         public modalCtrl: ModalController,
@@ -35,23 +35,20 @@ export class HeaderComponent {
         @Inject(PostService) public postService: IPostService,
         @Inject(AuthGuard) public authGuard: IAuthGuard,
         @Inject(AccountService) public accountService: IAccountService) {
-        this.selectedCategory = 'Select Category';
-        //this.category = new CategoryComponent();
+        this.selectedCategory = new Lookup();
+        this.selectedCategory.Name = 'Select Category';
     }
 
     ngOnInit() {
         this.getFavouritePostsCount();
         this.isUserAuthenticated = this.authGuard.canActivate();
-
         this.events.subscribe('favtpost:count', (res) => {
-
-            this.FavouritePostCount = res.post.length; 
+            this.FavouritePostCount = res.post.length;
         });
+    }
 
-    }  
-
-    getFavouritePostsCount(){
-         this.postService.getFavorite().subscribe((response) => {
+    getFavouritePostsCount() {
+        this.postService.getFavorite().subscribe((response) => {
             this.FavouritePostCount = response.length;
         });
     }
@@ -67,12 +64,18 @@ export class HeaderComponent {
         this.navCtrl.setRoot(SearchPage, { category: 'POST FOR FREE' });
     }
 
-     gotoFavouritePage() {
-       this.navCtrl.push(MyFavtPostingPage); 
+    gotoFavouritePage() {
+        this.navCtrl.push(MyFavtPostingPage);
     }
 
     onSelectCategory() {
-        this.navCtrl.push(CategoryComponent);
+        this.events.publish('close:category');
+        let modal = this.modalCtrl.create(CategoryComponent, { selectedCategory: this.selectedCategory._id }, { enableBackdropDismiss: true });
+        modal.onDidDismiss(data => {
+            this.selectedCategory = data;
+            this.events.publish('category:selected', data);
+        });
+        modal.present();
     }
 
     onUpdateCategory(item) {

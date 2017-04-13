@@ -4,7 +4,7 @@
         </button>
 
     <button clear ion-button (click)="onSelectCategory()">
-         {{selectedCategory}} &nbsp; <ion-icon name="arrow-down" item-right></ion-icon>        
+         {{selectedCategory.Name}} &nbsp; <ion-icon name="arrow-down" item-right></ion-icon>        
   </button>
 <ion-buttons end>
     <button *ngIf="isUserAuthenticated" ion-button (click)="gotoFavouritePage()">

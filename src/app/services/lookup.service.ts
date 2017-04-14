@@ -18,6 +18,7 @@ export class LookupService extends BaseService<Lookup> implements ILookupService
     constructor(public http: Http){
         super(http, "lookups");
         this.params = new URLSearchParams();
+        this.params.set('UserId', '');
     }
 
     getCategories() : Observable<Array<Lookup>>{       

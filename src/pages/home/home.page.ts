@@ -14,7 +14,6 @@ import {
 import { Geolocation } from 'ionic-native';
 import { SortComponent } from '../../app/components/sort.component';
 import { CatalogPage } from '../catalog/catalog.page';
-import { ProductPage } from '../product/product.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
 import { IPostService, PostService } from '../post/post.service';
 import { Post } from '../../app/models/post';
@@ -25,10 +24,10 @@ import { Post } from '../../app/models/post';
     entryComponents: [SortComponent]
 })
 
-export class HomePage implements OnInit {  
+export class HomePage implements OnInit {
     private selectedCategoryId: string;
-    private category: boolean;  
-    private latestPosts: Array<Post>;    
+    private category: boolean;
+    private latestPosts: Array<Post>;
     private viewType: string;
     private sortBy: any;
     private pageSize: number = 25;
@@ -45,16 +44,21 @@ export class HomePage implements OnInit {
         this.selectedCategoryId = '';
         this.viewType = 'list';
         this.sortBy = {
-            Value : '',
-            Order : 1
+            Value: '',
+            Order: 1
         };
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.events.subscribe('user:changePassword', (res) => {
             this.presentToast('password changed Successfully');
         });
-        
+
+        this.events.subscribe('category:selected', (res) => {
+            this.selectedCategoryId = res._id;
+            this.getLatestPostList();
+        });
+
         this.postService.getLogged().subscribe((logged: boolean) => {
             console.log('Welcome %s', logged);
         });
@@ -65,7 +69,6 @@ export class HomePage implements OnInit {
     }
 
     getLatestPostList() {
-
         let loader = this.loadingCtrl.create({
             content: "Loading Posts..."
         });
@@ -80,6 +83,7 @@ export class HomePage implements OnInit {
 
     getPostData(): Promise<any> {
         var params = new URLSearchParams();;
+        params.set('UserId', '');
 
         if (this.selectedCategoryId) {
             params.set('Category', this.selectedCategoryId);
@@ -99,23 +103,23 @@ export class HomePage implements OnInit {
         }
 
         return new Promise(resolve => {
-            this.postService.getAllByQuery(params).subscribe((res) => {              
+            this.postService.getByQuery(params).subscribe((res) => {
                 resolve(res);
             });
         });
     }
 
-    doInfinite(infiniteScroll) {     
+    doInfinite(infiniteScroll) {
         // increase pagenumber to get next set of records.  
         this.pageNumber += 1;
 
         setTimeout(() => {
             this.getPostData().then((data) => {
                 if (data.length == this.latestPosts.length) {
-                    infiniteScroll.enable(false); 
+                    infiniteScroll.enable(false);
                 }
                 this.latestPosts = data;
-                infiniteScroll.complete();                
+                infiniteScroll.complete();
             });
         }, 500);
     }
@@ -131,7 +135,7 @@ export class HomePage implements OnInit {
     }
 
     openSortingMenu() {
-        let modal = this.modalCtrl.create(SortComponent, { sortByValue: this.sortBy.Value, sortByOrder : this.sortBy.Order  }, { enableBackdropDismiss: true });
+        let modal = this.modalCtrl.create(SortComponent, { sortByValue: this.sortBy.Value, sortByOrder: this.sortBy.Order }, { enableBackdropDismiss: true });
         modal.onDidDismiss(data => {
             this.sortBy = data;
             this.getLatestPostList();

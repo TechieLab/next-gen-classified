@@ -9,7 +9,6 @@ var es = require('elasticsearch');
 
 export interface IBaseRepository<TEntity> {
     get(query: any, callback: (err: Error, item: Array<TEntity>) => any);
-    getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any);
     getById(id: string, callback: (err: Error, item: TEntity) => any);
     getCount(query: any, callback: (err: Error, item: number) => any);
     create(data: TEntity, callback: (errr: Error, item: TEntity) => any);
@@ -52,23 +51,6 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public get(query: any, callback: (err: Error, item: Array<TEntity>) => any) {
-        if (query) {
-            this.getByPage(null, query, callback);
-        } else {
-            this.getAll(null, callback);
-        }
-    }
-
-    public getByUserId(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
-        logger.debug('base repo getByUserId...' + userId, query);
-        if (query) {
-            this.getByPage(userId, query, callback);
-        } else {
-            this.getAll(userId, callback);
-        }
-    }
-
     public getById(id: string, callback: (err: Error, item: TEntity) => any) {
         logger.debug('debug', 'reading get data..with id..' + id);
         this.collection.findOne({ _id: new ObjectID(id) }, (err, result) => {
@@ -79,25 +61,11 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    private getAll(userId: string, callback: (err: Error, item: Array<TEntity>) => any) {
-        this.collection.find({ UserId: new ObjectID(userId) }).toArray((err, item) => {
-            if (err) {
-                logger.debug('error base getAll...', err);
-            }
-           
-            callback(err, item);
-        });
-    }
-
-    private getByPage(userId: string, query: any, callback: (err: Error, item: Array<TEntity>) => any) {
+    public get(query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         let fields: Array<string> = this.getFields(query);
         let sortObj = this.getSortBy(query);
         let pageSize: number = query['pageSize'];
-        let pageNbr: number = query['page'];
-
-        if (userId) {
-            query.UserId = userId;
-        }
+        let pageNbr: number = query['page'];      
 
         delete query['sortKey'];
         delete query['sortOrder'];
@@ -146,7 +114,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     public update(id: string, data: TEntity, options: Object, callback: (errr: Error, item: TEntity) => any) {
         logger.debug('debug', 'called update data-----', data);
 
-        this.collection.findOneAndUpdate({ _id: new ObjectID(id)}, data, options, (err, res) => {
+        this.collection.findOneAndUpdate({ _id: new ObjectID(id) }, data, options, (err, res) => {
             if (err) {
                 callback(err, null);
             }

@@ -76,7 +76,7 @@ export class PostDetailsPage implements OnInit {
     var params = new URLSearchParams();
     params.set('Category', this.post.Category);
 
-    this.postService.getAllByQuery(params).subscribe((response) => {
+    this.postService.getByQuery(params).subscribe((response) => {
       var items = new Array<Post>();
       if (response) {
         response.forEach(element => {

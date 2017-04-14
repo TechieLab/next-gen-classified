@@ -3,8 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowJs": true,
+    "experimentalDecorators": true,    
     "lib": [
       "dom",
       "es2015"

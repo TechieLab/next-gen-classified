@@ -7,7 +7,6 @@ export interface IBaseController<TEntity> {
     create(req: Request, res: Response);
     get(req: Request, res: Response);
     getCount(req: Request, res: Response);
-    getAll(req: Request, res: Response);
     getById(req: Request, res: Response);
     update(req: Request, res: Response);
     delete(req: Request, res: Response);
@@ -31,7 +30,7 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
             }
 
             this.result = {
-                Message: ' created',
+                Message: 'Item Created',
                 Success: true,
                 Content: item
             };
@@ -40,11 +39,17 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         });
     }
 
-    public get(req: Request, res: Response) {
+    public get(req: Request, res: Response) {        
 
-        logger.log('debug', 'base controller get------');
+        if (req.query.UserId == '') {
+            delete req.query["UserId"];
+        } else {
+            req.query.UserId = req['userId'];
+        }
 
-        this.baseService.getByUserId(req['userId'], req.query, (err, item) => {
+        logger.debug('base controller get userid------', req.query);
+
+        this.baseService.get(req.query, (err, item) => {
             if (err) {
                 return res.json(err);
             }
@@ -56,18 +61,6 @@ export class BaseController<TEntity> implements IBaseController<TEntity> {
         logger.log('debug', 'base controller getCount------');
 
         this.baseService.getCount({ UserId: req['userId'] }, (err, item) => {
-            if (err) {
-                return res.json(err);
-            }
-
-            return res.json(item);
-        });
-    }
-
-    public getAll(req: Request, res: Response) {
-        logger.log('debug', 'base controller getAll------');
-
-        this.baseService.get(req.query, (err, item) => {
             if (err) {
                 return res.json(err);
             }

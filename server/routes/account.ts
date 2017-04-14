@@ -17,7 +17,6 @@ export class AccountRoute {
         this.initializeRoutes();
     }
 
-
     setCollection() {
         var repo = new UserRepository();
         this.accountService = new AccountService(repo);
@@ -32,7 +31,6 @@ export class AccountRoute {
         this.forgotPassword();
         this.login();
         this.logout();
-
     }
 
     register() {
@@ -71,9 +69,7 @@ export class AccountRoute {
             logger.debug("/pi/account/forgotpassword.....");
             self.setCollection();
         });
-    }
-
-    
+    }    
 
     login() {
         this.app.post('/api/account/login', (req: Request, res: Response) => {

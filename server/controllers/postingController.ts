@@ -9,6 +9,7 @@ import { Media } from '../models/media';
 import { Settings } from '../config/settings'
 
 export interface IPostingController extends IBaseController<Post> {
+    get(req: Request, res: Response)
     create(req: Request, res: Response);
     upload(req: any, res: Response);
     addFavorite(req: Request, res: Response);
@@ -21,7 +22,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
 
     constructor(public postingService: IPostingService) {
         super(postingService);
-    }
+    }    
 
     public create(req: Request, res: Response) {
         var data = req.body;
@@ -120,7 +121,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
     }
 
     public getFavorite(req: Request, res: Response) {
-        logger.log('debug', 'posting base controller getAll------');
+        logger.log('debug', 'posting controller getFavorite------');
 
         this.postingService.get({ Likes: { $gt: [] } }, (err, post) => {
             if (err) logger.log('debug', 'get err---', err);

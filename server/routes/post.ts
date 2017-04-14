@@ -35,10 +35,23 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
         super(app, 'posts');
         self = this;
 
+        this.get();
         this.post();
         this.addFavorite();
         this.getFavorite();
         this.upload();
+    }
+
+    get() {
+        this.app.get('/api/' + this.apiName, (req: Request, res: Response) => {
+            self.setPostCollection();
+            logger.debug("route posting get----" + this.apiName);
+            if (req.query.favorite) {
+                self.postingController.getFavorite(req, res);
+            } else {
+                self.postingController.get(req, res);
+            }
+        });
     }
 
     post() {
@@ -69,8 +82,8 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
         });
     }
 
-    getFavorite(){
-        this.app.get('/api/all-posts/favorite', function (req: Request, res: Response, next) {
+    getFavorite() {
+        this.app.get('/api/posts/favorite', function (req: Request, res: Response, next) {
             // req.files is array of `photos` files
             // req.body will contain the text fields, if there were any
             self.setPostCollection();

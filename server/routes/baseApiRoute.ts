@@ -80,7 +80,6 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
         app.use(apiRoutes);
 
         this.get();
-        this.getAll();
         this.getById();
         this.post();
         this.put();
@@ -111,14 +110,6 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             self.setCollection(this.apiName);
             logger.debug("route name get----" + this.apiName);
             self.baseController.get(req, res);
-        });
-    }
-
-    getAll() {
-        this.app.get('/api/all-' + this.apiName, (req: Request, res: Response) => {
-            self.setCollection(this.apiName);
-            logger.debug("route name getall----" + this.apiName);
-            self.baseController.getAll(req, res);
         });
     }
 
@@ -153,5 +144,4 @@ export class BaseApiRoute<TEntity> implements IBaseApiRoute<TEntity>
             self.baseController.delete(req, res);
         });
     }
-
 }

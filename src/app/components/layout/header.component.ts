@@ -40,7 +40,7 @@ export class HeaderComponent {
     }
 
     ngOnInit() {
-        this.getFavouritePostsCount();
+       // this.getFavouritePostsCount();
         this.isUserAuthenticated = this.authGuard.canActivate();
         this.events.subscribe('favtpost:count', (res) => {
             this.FavouritePostCount = res.post.length;

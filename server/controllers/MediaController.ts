@@ -1,4 +1,3 @@
-import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
 import { Media } from '../models/media';
 

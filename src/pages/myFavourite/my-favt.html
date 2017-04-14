@@ -14,16 +14,16 @@
 <ion-content no-padding>
   <ion-list *ngIf="myFavtsPostData.length">
     <ion-item-divider color="light">
-      Favourite Postings   
+      Favourite Postings
     </ion-item-divider>
-     <ion-buttons end>
-        <button buttons-end ion-button clear large (click)="viewType = 'list'">
+    <ion-buttons end>
+      <button buttons-end ion-button clear large (click)="viewType = 'list'">
                 <ion-icon name="list"></ion-icon>
             </button>
-        <button buttons-end ion-button clear large (click)="viewType = 'grid'">
+      <button buttons-end ion-button clear large (click)="viewType = 'grid'">
                   <ion-icon name="grid"></ion-icon>
             </button>
-      </ion-buttons>
+    </ion-buttons>
     <ion-item>
       <catalog-page [posts]="myFavtsPostData" [viewType]="viewType"></catalog-page>
     </ion-item>
@@ -33,7 +33,6 @@
     <ion-row>
       <ion-col>
         <div class="slide-zoom">
-          <img class="slide-image" src="https://ionicframework.com/dist/preview-app/www/assets/img/ica-slidebox-img-2.png" />
           <h2 class="slide-title">OMG Your shortlist is empty.</h2>
           <p>Add items to your wish list by going through our awesome range of products.</p>
         </div>

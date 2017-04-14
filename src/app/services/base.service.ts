@@ -10,11 +10,9 @@ import { StorageService } from './storage.service';
 
 export interface IBaseService<TEntity> {
     get(): Observable<Array<TEntity>>;
-    customGet(url: String): Observable<Array<TEntity>>;
-    getAll(): Observable<Array<TEntity>>;
+    customGet(url: String): Observable<Array<TEntity>>;   
     getById(id: string): Observable<TEntity>;
-    getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
-    getAllByQuery(params: URLSearchParams): Observable<Array<TEntity>>;
+    getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;  
     post(entity: TEntity): Observable<Result>;
     put(id: string, entity: TEntity): Observable<Result>;
     del(id: string): Observable<Result>
@@ -39,19 +37,10 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
     }
 
     customGet(url: String) {
+        this.setAuthHeader();
         let apiUrl = Constants.BaseApi + url;
         return this.http.get(apiUrl, this.options).map(this.extractData).catch(this.handleError);
-    }
-
-    // this method used to get all records with without userId
-    getAll(): Observable<Array<TEntity>> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        this.options = new RequestOptions({
-            headers: headers
-        });
-        let url = Constants.BaseApi + '/api/all-' + this.entityName;
-        return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
-    }
+    }   
 
     getById(id: string): Observable<TEntity> {
         let url = Constants.BaseApi + '/api/' + this.entityName + '/' + id;
@@ -64,14 +53,7 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         let url = Constants.BaseApi + '/api/' + this.entityName;
         this.options.search = params;
         return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
-    }
-
-    getAllByQuery(params: URLSearchParams): Observable<Array<TEntity>> {
-        let url = Constants.BaseApi + '/api/all-' + this.entityName;
-        this.setHeader();
-        this.options.search = params;
-        return this.http.get(url, this.options).map(this.extractData).catch(this.handleError);
-    }
+    }   
 
     post(entity: TEntity): Observable<Result> {
         let body = JSON.stringify(entity);

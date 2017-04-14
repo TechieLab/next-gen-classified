@@ -9,7 +9,7 @@ import { Constants } from '../../app/common/constants';
 export interface IPostService extends IBaseService<Post> {
     addRemoveFavorite(postId: string, remove: boolean);
     getFavorite();
-    setLogged(logged:boolean);
+    setLogged(logged: boolean);
     getLogged();
 }
 
@@ -17,23 +17,25 @@ export interface IPostService extends IBaseService<Post> {
 export class PostService extends BaseService<Post> implements IPostService {
 
     private logged: boolean;
+    private params: URLSearchParams;
     private subject: Subject<boolean> = new Subject<boolean>();
 
     constructor(public http: Http) {
         super(http, 'posts');
+        this.params = new URLSearchParams();
     }
 
     getFavorite() {
-        var url = '/api/all-posts/favorite';     
-        return this.customGet(url);
+        this.params.set('favorite', 'true');
+        return this.getByQuery(this.params);
     }
 
     addRemoveFavorite(postId: string, remove: boolean) {
-        var url = '/api/posts/'+ postId + '/favorite';
-        url += '?remove=' + remove;     
+        var url = '/api/posts/' + postId + '/favorite';
+        url += '?remove=' + remove;
         return this.customGet(url);
     }
-    
+
     setLogged(logged: boolean): void {
         debugger;
         this.logged = logged;

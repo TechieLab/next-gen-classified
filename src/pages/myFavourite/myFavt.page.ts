@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject,EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, Inject, EventEmitter, Input, Output } from '@angular/core';
 import { NavController, NavParams, ToastController, Events } from 'ionic-angular';
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { Observable } from 'rxjs';
@@ -39,7 +39,7 @@ export class MyFavtPostingPage implements OnInit {
         // If we navigated to this page, we will have an item available as a nav param
 
         //this.navCtrl.pop();
-        this.viewType ='list';
+        this.viewType = 'list';
         this.params = new URLSearchParams();
     }
 
@@ -49,16 +49,15 @@ export class MyFavtPostingPage implements OnInit {
             this.navCtrl.setRoot(LoginPage);
         } else {
             this.getMyFavtPostData();
-            
+
         }
     }
 
-    getMyFavtPostData() {
-         this.postService.getFavorite().subscribe((result) => {
+    getMyFavtPostData() {        
+        this.postService.getFavorite().subscribe((result) => {
             this.myFavtsPostData = result;
-         });
+        });
     }
-
 
     gotoAddPostingsPage() {
         this.navCtrl.push(AddEditPostPage);

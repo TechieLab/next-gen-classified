@@ -40,7 +40,7 @@ export class HeaderComponent {
     }
 
     ngOnInit() {
-       // this.getFavouritePostsCount();
+        // this.getFavouritePostsCount();
         this.isUserAuthenticated = this.authGuard.canActivate();
         this.events.subscribe('favtpost:count', (res) => {
             this.FavouritePostCount = res.post.length;
@@ -72,7 +72,12 @@ export class HeaderComponent {
         this.events.publish('close:category');
         let modal = this.modalCtrl.create(CategoryComponent, { selectedCategory: this.selectedCategory._id }, { enableBackdropDismiss: true });
         modal.onDidDismiss(data => {
-            this.selectedCategory = data;
+            if (data) {
+                this.selectedCategory = data;
+            } else {
+                this.selectedCategory = new Lookup();
+                this.selectedCategory.Name = 'Select Category';
+            }
             this.events.publish('category:selected', data);
         });
         modal.present();

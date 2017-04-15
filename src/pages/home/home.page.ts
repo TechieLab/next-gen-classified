@@ -55,8 +55,10 @@ export class HomePage implements OnInit {
         });
 
         this.events.subscribe('category:selected', (res) => {
-            this.selectedCategoryId = res._id;
-            this.getLatestPostList();
+            if (res) {
+                this.selectedCategoryId = res._id;
+                this.getLatestPostList();
+            }
         });
 
         this.postService.getLogged().subscribe((logged: boolean) => {

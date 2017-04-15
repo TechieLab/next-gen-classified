@@ -1,12 +1,12 @@
 <ion-navbar>
-    <button ion-button menuToggle>
+  <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
 
-    <button clear ion-button (click)="onSelectCategory()">
+  <button clear ion-button (click)="onSelectCategory()">
          {{selectedCategory.Name}} &nbsp; <ion-icon name="arrow-down" item-right></ion-icon>        
   </button>
-<ion-buttons end>
+  <ion-buttons end>
     <button *ngIf="isUserAuthenticated" ion-button (click)="gotoFavouritePage()">
           <ion-icon name="heart-outline"></ion-icon>
           <ion-badge color="primary">{{FavouritePostCount}}</ion-badge>
@@ -17,5 +17,5 @@
     <button ion-button (click)="gotoNotificationPage()">
                  <ion-icon name="notifications"></ion-icon>
             </button>
-</ion-buttons>
+  </ion-buttons>
 </ion-navbar>

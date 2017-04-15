@@ -9,9 +9,12 @@ import { MyFavtPostingPage } from '../../pages/myFavourite/myFavt.page';
 import { FiltersPage } from '../../pages/filters/filters.page';
 import { FeedbackPage } from '../../pages/feedback/feedback.page';
 import { HelpPage } from '../../pages/help/help.page';
+import { AboutUs } from '../../pages/aboutUs/aboutUs.page';
 
 export const Pages = [
+    AboutUs,
     HomePage,
+    AdminPage,
     WelcomePage,
     SettingsPage,
     NotificationPage,
@@ -31,10 +34,9 @@ export const EntryComponents = [
 
 export const appPages = [
     { title: 'Home', component: HomePage, name: "home", seq: 1 },
-    { title: 'About', component: HomePage, name: "book", seq: 7 },
+    { title: 'About', component: AboutUs, name: "people", seq: 7 },
     { title: 'Feedback', component: FeedbackPage, name: "paper", seq: 6 },
     { title: 'Help', component: HelpPage, name: "help-circle", seq: 8 }
-
 ];
 
 export const authPages = [

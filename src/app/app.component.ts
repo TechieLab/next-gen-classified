@@ -29,14 +29,14 @@ import { Profile } from '../app/models/profile';
     LoginPage,
     SearchPage
   ],
-  providers: [AuthGuard,SettingsService]
+  providers: [AuthGuard, SettingsService]
 })
 
 export class MyApp implements OnInit {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
-  chosenTheme:any;
+  chosenTheme: any;
   pages: Array<{ title: string, component: any, name: any, seq: number }>;
   private isUserAuthenticated: boolean = false;
   private currentUserName: string;
@@ -56,7 +56,7 @@ export class MyApp implements OnInit {
 
     // set our app's pages
     this.pages = appPages;
-    
+
     //default theme
     this._settings.getTheme().subscribe(val => this.chosenTheme = val);
 
@@ -130,6 +130,12 @@ export class MyApp implements OnInit {
     } else {
       this.rootPage = WelcomePage;
     }
+
+    this.pages.sort((a, b) => {
+      if (a.seq < b.seq) return -1;
+      else if (a.seq > b.seq) return 1;
+      else return 0;
+    });
 
     this.events.subscribe('user:login', (res) => {
       this.isUserAuthenticated = this.authGuard.canActivate();

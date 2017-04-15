@@ -8,7 +8,7 @@ import { Lookup } from '../models/lookup';
     template: ` 
      <ion-content> 
         <ion-list>
-            <ion-item *ngFor="let item of categories" (click)="itemSelected(item)">
+            <ion-item  *ngFor="let item of categories" (click)="itemSelected(item)">
                  {{ item.Name }}
                 <ion-icon item-right large *ngIf="item._id == selectedCategory._id" name="checkmark"></ion-icon>
             </ion-item>                     
@@ -25,6 +25,7 @@ export class CategoryComponent implements OnInit {
         public viewCtrl: ViewController,
         public events: Events,
         @Inject(LookupService) public lookupService: ILookupService, ) {
+        this.categories = new Array<Lookup>();
         this.selectedCategory = new Lookup();
         this.selectedCategory._id = viewCtrl.getNavParams().get('selectedCategory');
     }
@@ -43,7 +44,8 @@ export class CategoryComponent implements OnInit {
     getCategoryData() {
         this.lookupService.getCategories().subscribe((response) => {
             if (response) {
-                this.categories = response;
+                this.categories[0] = new Lookup();
+                this.categories = this.categories.concat(response);
             }
         });
     }

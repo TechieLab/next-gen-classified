@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-    <ion-title>Search</ion-title>
+    <ion-searchbar animated="true" debounce="500" placeholder="Search Posts using Title, Description" autocomplete="on" [formControl]="search"></ion-searchbar>
     <ion-buttons end>
       <button buttons-end ion-button (click)="gotoFiltersPage()">
             <ion-icon name="funnel"></ion-icon>
@@ -12,6 +12,5 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-  <ion-searchbar padding [formControl]="search"></ion-searchbar>
   <catalog-page [posts]="searchResults"></catalog-page>
 </ion-content>

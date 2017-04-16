@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/toPromise';
 import { Component, OnInit, Inject, NgZone } from '@angular/core';
-import { ModalController, NavController, NavParams } from 'ionic-angular';
+import { ModalController, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { Client } from 'elasticsearch';
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { FormControl } from '@angular/forms';
@@ -27,6 +27,7 @@ export class SearchPage implements OnInit {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
+    private loadingCtrl: LoadingController,
     private _ngZone: NgZone,
     @Inject(SearchService) public searchService: ISearchService,
   ) {
@@ -40,11 +41,19 @@ export class SearchPage implements OnInit {
   }
 
   ngOnInit() {
+
     this.search.valueChanges.subscribe(term => {
+      let loader = this.loadingCtrl.create({
+        content: "Loading Posts..."
+      });
+      loader.present();
+
       this.params.set('searchText', term);
       this.params.set('elastic', 'false');
+      
       this.searchService.getByQuery(this.params).subscribe((res) => {
         this.searchResults = res;
+        loader.dismiss();
       });
     });
   }

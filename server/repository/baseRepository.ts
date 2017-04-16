@@ -16,6 +16,10 @@ export interface IBaseRepository<TEntity> {
     update(id: string, data: TEntity, option: Object, callback: (errr: Error, item: TEntity) => any);
     replace(id: string, data: TEntity, callback: (errr: Error, item: TEntity) => any);
     delete(id: string, callback: (errr: Error, item: TEntity) => any);
+
+    checkIndexes(indexes: Array<string>, callback: (err: Error, item: boolean) => any);
+    createIndexes(indexes: Array<Object>, callback: (err: Error, item: boolean) => any);
+    dropIndex(index: string, callback: (err: Error, item: boolean) => any);
 }
 
 export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
@@ -40,32 +44,32 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         });
     }
 
-    public getCount(query: any, callback: (err: Error, item: number) => any) {
-        this.collection.count(query, function (err, item) {
-            if (err) {
-                logger.debug('error base getCount...', err);
-            }
+    public checkIndexes(indexes: Array<string>, callback: (err: Error, item: boolean) => any) {
+        this.collection.indexExists(indexes, callback);
+    }
 
-            logger.debug('Gettng Count...' + item);
-            callback(err, item);
-        });
+    public dropIndex(index: string, callback: (err: Error, item: boolean) => any) {
+        this.collection.dropIndex(index, callback);
+    }
+
+    public createIndexes(indexes: Array<Object>, callback: (err: Error, item: boolean) => any) {
+        this.collection.createIndexes(indexes, callback);
+    }
+
+    public getCount(query: any, callback: (err: Error, item: number) => any) {
+        this.collection.count(query, callback);
     }
 
     public getById(id: string, callback: (err: Error, item: TEntity) => any) {
         logger.debug('debug', 'reading get data..with id..' + id);
-        this.collection.findOne({ _id: new ObjectID(id) }, (err, result) => {
-            if (err) {
-                logger.debug('error base getById...', err);
-            }
-            callback(err, result);
-        });
+        this.collection.findOne({ _id: new ObjectID(id) }, callback);
     }
 
     public get(query: any, callback: (err: Error, item: Array<TEntity>) => any) {
         let fields: Array<string> = this.getFields(query);
         let sortObj = this.getSortBy(query);
         let pageSize: number = query['pageSize'];
-        let pageNbr: number = query['page'];      
+        let pageNbr: number = query['page'];
 
         delete query['sortKey'];
         delete query['sortOrder'];

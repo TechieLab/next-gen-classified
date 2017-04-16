@@ -40,6 +40,7 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
         this.addFavorite();
         this.getFavorite();
         this.upload();
+        this.search();
     }
 
     get() {
@@ -91,6 +92,14 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
             self.postingController.getFavorite(req, res);
         });
     }
+
+    search() {
+        this.app.get('/api/search', (req: Request, res: Response) => {
+            logger.debug("route search----");
+            self.setPostCollection();
+            this.postingController.search(req, res);
+        });
+    } 
 
     private setPostCollection() {
         this.repository = new PostingRepository()

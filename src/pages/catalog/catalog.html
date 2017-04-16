@@ -1,50 +1,55 @@
-<ion-grid *ngIf="viewType == 'grid'">
-  <ion-row wrap>
-    <ion-col width-50 no-padding *ngFor="let post of postsResult; let i = index">
-      <ion-item>
-        <div (click)="showProductDetails(post._id)">
-          <ion-thumbnail item-bottom padding-bottom *ngIf="post.Product.Photos.length">
-            <img src="{{post.Product.Photos[0].ImageUrl}}">
-          </ion-thumbnail>
-          <ion-thumbnail item-left *ngIf="!post.Product.Photos.length">
-            <img src="/assets/gallery.jpg">
-          </ion-thumbnail>
-          <h2>{{post.Title}}</h2>
-          <p>{{post.Product.Description.Title}}</p>
-          <p>Location: {{post.Location.Locality}}</p>
-          <p>Price:{{post.Product.Description.Price}} </p>
-        </div>
-        <div item-right (click)="favouritePost(i,post)">
-          <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
-          <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
-        </div>
-        <button ion-button (click)="goToOffersPage()">
+<div *ngIf="posts.length">
+  <ion-grid *ngIf="viewType == 'grid'">
+    <ion-row wrap>
+      <ion-col width-50 no-padding *ngFor="let post of postsResult; let i = index">
+        <ion-item>
+          <div (click)="showProductDetails(post._id)">
+            <ion-thumbnail item-bottom padding-bottom *ngIf="post.Product.Photos.length">
+              <img src="{{post.Product.Photos[0].ImageUrl}}">
+            </ion-thumbnail>
+            <ion-thumbnail item-left *ngIf="!post.Product.Photos.length">
+              <img src="/assets/gallery.jpg">
+            </ion-thumbnail>
+            <h2>{{post.Title}}</h2>
+            <p>{{post.Product.Description.Title}}</p>
+            <p>Location: {{post.Location.Locality}}</p>
+            <p>Price:{{post.Product.Description.Price}} </p>
+          </div>
+          <div item-right (click)="favouritePost(i,post)">
+            <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
+            <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
+          </div>
+          <button ion-button (click)="goToOffersPage()">
             Offer
         </button>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-</ion-grid>
-<ion-list *ngIf="viewType == 'list'">
-  <ion-item *ngFor="let post of postsResult;let i = index" no-padding>
-    <ion-thumbnail item-left *ngIf="post.Product.Photos.length">
-      <img src="{{post.Product.Photos[0].ImageUrl}}">
-    </ion-thumbnail>
-    <ion-thumbnail item-left *ngIf="!post.Product.Photos.length">
-      <img src="/assets/gallery.jpg">
-    </ion-thumbnail>
-    <div (click)="showProductDetails(post._id)">
-      <h2>{{post.Title}}</h2>
-      <p>{{post.Product.Description.Title}}</p>
-      <p>Location: {{post.Location.City}}</p>
-      <p>Price:{{post.Product.Description.Price}} </p>
-    </div>
-    <div item-right (click)="favouritePost(i,post)">
-      <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
-      <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
-    </div>
-    <button [disabled]="post.IsOffered" *ngIf="clientId != post.UserId" ion-button item-right (click)="goToOffersPage(post)">
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngIf="viewType == 'list'">
+    <ion-item *ngFor="let post of postsResult;let i = index" no-padding>
+      <ion-thumbnail item-left *ngIf="post.Product.Photos.length">
+        <img src="{{post.Product.Photos[0].ImageUrl}}">
+      </ion-thumbnail>
+      <ion-thumbnail item-left *ngIf="!post.Product.Photos.length">
+        <img src="/assets/gallery.jpg">
+      </ion-thumbnail>
+      <div (click)="showProductDetails(post._id)">
+        <h2>{{post.Title}}</h2>
+        <p>{{post.Product.Description.Title}}</p>
+        <p>Location: {{post.Location.City}}</p>
+        <p>Price:{{post.Product.Description.Price}} </p>
+      </div>
+      <div item-right (click)="favouritePost(i,post)">
+        <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
+        <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
+      </div>
+      <button [disabled]="post.IsOffered" *ngIf="clientId != post.UserId" ion-button item-right (click)="goToOffersPage(post)">
             Offer
     </button>
-  </ion-item>
-</ion-list>
+    </ion-item>
+  </ion-list>
+</div>
+<div *ngIf="!posts.length">
+ <p padding> No Record Found. </p>
+</div>

@@ -6,21 +6,12 @@
     <ion-title>Search</ion-title>
     <ion-buttons end>
       <button buttons-end ion-button (click)="gotoFiltersPage()">
-                  <ion-icon name="funnel"></ion-icon>
-            </button>
+            <ion-icon name="funnel"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content no-padding>
   <ion-searchbar padding [formControl]="search"></ion-searchbar>
-  <!--<ion-list padding *ngIf="items.length"> 
-    <ion-item *ngFor="let item of items" (click)="gotoCatalogPage(item)">
-      <ion-avatar item-left>
-        <ion-icon name="search"></ion-icon>
-      </ion-avatar>
-      <h2>{{item._source.Title}}</h2>
-      <p>{{item._source.Product.Category}}</p>
-    </ion-item>
-  </ion-list>-->
- <catalog-page [posts]="searchResults"></catalog-page>
+  <catalog-page [posts]="searchResults"></catalog-page>
 </ion-content>

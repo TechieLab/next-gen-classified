@@ -47,6 +47,7 @@ export class HomePage implements OnInit {
             Value: '',
             Order: 1
         };
+        this.latestPosts = new Array<Post>();
     }
 
     ngOnInit() {

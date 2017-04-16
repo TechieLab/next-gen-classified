@@ -10,12 +10,13 @@ import {CatalogPage} from '../catalog/catalog.page';
 import {CatalogModule} from '../catalog/catalog.module';
 import {SearchPage} from '../search/search.page';
 import { ExternalService } from '../../app/services/external.service';
+import {SearchService} from './search.service';
 
 @NgModule({
     declarations:[SearchPage],    
     exports:[SearchPage],
     imports:[IonicModule, FormsModule, ReactiveFormsModule, CatalogModule],
-    providers:[ExternalService],
+    providers:[ExternalService, SearchService],
     entryComponents: [FiltersPage,CatalogPage]
 })
 

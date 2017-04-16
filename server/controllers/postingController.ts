@@ -1,4 +1,5 @@
 import logger = require('winston');
+import http = require('http');
 import { ObjectID } from 'mongodb';
 import { Express, Request, Response } from "express";
 import { IBaseController, BaseController } from './baseController';
@@ -14,22 +15,28 @@ export interface IPostingController extends IBaseController<Post> {
     upload(req: any, res: Response);
     addFavorite(req: Request, res: Response);
     getFavorite(req: Request, res: Response);
+    search(req: Request, res: Response);
 }
 var self;
 export class PostingController extends BaseController<Post> implements IPostingController {
 
     public result: Result;
+    private options: any;
 
     constructor(public postingService: IPostingService) {
         super(postingService);
-    }    
+        this.options = {
+            host: 'http://localhost:9200',
+            path: '/search'
+        };
+    }
 
     public create(req: Request, res: Response) {
         var data = req.body;
         var post = new Post();
 
         post = <Post>data;
-        post.UserId = req['userId'];       
+        post.UserId = req['userId'];
 
         logger.log('debug', 'PostingController creating post ----', post);
 
@@ -136,20 +143,47 @@ export class PostingController extends BaseController<Post> implements IPostingC
         });
     }
 
+    search(req: Request, res: Response) {
+        console.log(req.query.elastic);
+         console.log(req.query.searchText);
+        if (req.query.elastic && req.query.elastic == true) {
+            http.request(this.options, this.callback).end();
+        } else {
+            //if (this.initializeIndex()) {
+                var searchCriteria = { "$text" : { "$search": req.query.searchText } };
+                this.postingService.get(searchCriteria, (err, data) => {
+                    return res.json(data);
+                });
+            //}
+        }
+    }
 
-    //  get(req : any , res : any){
+    private callback = function (response) {
+        var str = '';
 
-    //     req.query.UserId = <ObjectID>(req['userId']);
-    //     req.query.Title = new RegExp('^' + req.query.Title);
+        //another chunk of data has been recieved, so append it to `str`
+        response.on('data', function (chunk) {
+            str += chunk;
+        });
 
-    //     logger.log('debug', 'postings controller get');
+        //the whole response has been recieved, so we just print it out here
+        response.on('end', function () {
+            console.log(str);
+        });
+    }
 
-    //     this.postingService.get(req.query, (err, item) => {
-    //         if (err) logger.log('debug', 'get err---', err);
+    private initializeIndex() {
+        return this.postingService.checkIndexes(['Title', 'Product.Description.Title'], (err, response) => {
+            if (err) logger.debug('error checkIndexes', err);
 
-    //         return res.json(item);
-    //     });
-    //  }
+            if (!response) {
+                this.postingService.createIndexes([{"Title" : 'text'} , {"Product.Description.Title" : "text"}], (error, result) => {
+                    if (error) logger.debug('error creating index', error);
 
+                    return result;
+                });
+            }
+        })
+    }
 
 }

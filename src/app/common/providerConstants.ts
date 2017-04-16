@@ -6,7 +6,6 @@ import { UploadService } from '../services/upload.service';
 import { AuthGuard } from '../services/guard.service';
 import { ExternalService } from '../services/external.service';
 import { OfferService } from '../../pages/offers/offer.service';
-
 //import { ElasticSearchService } from '../services/elasticsearch.service';
 
 export const AppProviders = [

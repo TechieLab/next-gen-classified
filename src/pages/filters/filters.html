@@ -10,20 +10,22 @@
 </ion-header>
 <ion-content padding>
     <form (ngSubmit)="filterForm()" #filterForm="ngForm">
-        <ion-item>
+        <!--<ion-item>
             <ion-label floating>Keyword</ion-label>
             <ion-input type="file" [(ngModel)]="filters.Keyword" name="keyword"></ion-input>
-        </ion-item>
+        </ion-item>-->
         <ion-item>
             <ion-label floating>Choose a category</ion-label>
-            <ion-select [(ngModel)]="gaming" name="category" [(ngModel)]="filters.Category" >
-                <ion-option value="{{cat.value}}" *ngFor="let cat of categories">{{cat.name}}</ion-option>
+            <ion-select name="category" [(ngModel)]="filters.Category" >
+                <ion-option value="{{cat.Value}}" *ngFor="let cat of categories">{{cat.Name}}</ion-option>
             </ion-select>
         </ion-item>
-        <ion-item>
+        <!--<ion-item>
             <ion-label floating>Choose a Sub Category</ion-label>
-            <ion-input type="text" [(ngModel)]="filters.SubCategory" name="subCategory"></ion-input>
-        </ion-item>
+            <ion-select name="category" [(ngModel)]="filters.SubCategory" >
+                <ion-option value="{{cat.Value}}" *ngFor="let cat of subCategories">{{cat.Name}}</ion-option>
+            </ion-select>
+        </ion-item>-->
         <ion-grid>
             <ion-row>
                 <ion-col>
@@ -56,6 +58,6 @@
 </ion-content>
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">
-        <button ion-button block type="submit">Apply</button>
+        <button ion-button block (click)="applyFilters()">Apply</button>
     </ion-toolbar>
 </ion-footer>

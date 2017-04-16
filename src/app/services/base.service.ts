@@ -14,6 +14,7 @@ export interface IBaseService<TEntity> {
     getById(id: string): Observable<TEntity>;
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;  
     post(entity: TEntity): Observable<Result>;
+    customPost(entity: TEntity, params: URLSearchParams): Observable<Result>;
     put(id: string, entity: TEntity): Observable<Result>;
     del(id: string): Observable<Result>
 }
@@ -59,6 +60,16 @@ export class BaseService<TEntity> implements IBaseService<TEntity> {
         let body = JSON.stringify(entity);
         this.setAuthHeader();
         let url = Constants.BaseApi + '/api/' + this.entityName;
+        return this.http.post(url, body, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    customPost(entity: any, params: URLSearchParams ): Observable<Result> {
+        let body = JSON.stringify(entity);
+        this.setAuthHeader();
+        let url = Constants.BaseApi + '/api/' + this.entityName;
+        this.options.search = params;
         return this.http.post(url, body, this.options)
             .map(this.extractData)
             .catch(this.handleError);

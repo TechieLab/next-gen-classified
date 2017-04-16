@@ -94,7 +94,7 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
     }
 
     search() {
-        this.app.get('/api/search', (req: Request, res: Response) => {
+        this.app.post('/api/search', (req: Request, res: Response) => {
             logger.debug("route search----");
             self.setPostCollection();
             this.postingController.search(req, res);

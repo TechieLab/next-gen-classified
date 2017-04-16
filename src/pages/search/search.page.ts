@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/toPromise';
 import { Component, OnInit, Inject, NgZone } from '@angular/core';
-import { ModalController, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { ModalController, LoadingController, NavController, NavParams, Events } from 'ionic-angular';
 import { Client } from 'elasticsearch';
 import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { FormControl } from '@angular/forms';
@@ -22,18 +22,21 @@ import { SearchService, ISearchService } from './search.service';
 export class SearchPage implements OnInit {
   search: FormControl;
   params: URLSearchParams;
+  searchFilters: any;
   searchResults: Array<Post>;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
+    public events: Events,
     private _ngZone: NgZone,
     @Inject(SearchService) public searchService: ISearchService,
   ) {
     this.search = new FormControl();
     this.params = new URLSearchParams();
     this.searchResults = new Array<Post>();
+    this.searchFilters = {};
   }
 
   gotoFiltersPage() {
@@ -41,6 +44,10 @@ export class SearchPage implements OnInit {
   }
 
   ngOnInit() {
+
+    this.events.subscribe('search:filters', (filters) => {
+      this.searchFilters = filters;
+    });
 
     this.search.valueChanges.subscribe(term => {
       let loader = this.loadingCtrl.create({
@@ -50,9 +57,11 @@ export class SearchPage implements OnInit {
 
       this.params.set('searchText', term);
       this.params.set('elastic', 'false');
-      
-      this.searchService.getByQuery(this.params).subscribe((res) => {
-        this.searchResults = res;
+
+      this.searchService.customPost(this.searchFilters, this.params).subscribe((res) => {
+        if (res && res.Content) {
+           this.searchResults = res.Content;
+        }
         loader.dismiss();
       });
     });

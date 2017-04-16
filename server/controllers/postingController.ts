@@ -144,16 +144,40 @@ export class PostingController extends BaseController<Post> implements IPostingC
     }
 
     search(req: Request, res: Response) {
-        console.log(req.query.elastic);
-         console.log(req.query.searchText);
+        console.log(req.body);
+        console.log(req.query.searchText);
         if (req.query.elastic && req.query.elastic == true) {
             http.request(this.options, this.callback).end();
         } else {
             //if (this.initializeIndex()) {
-                var searchCriteria = { "$text" : { "$search": req.query.searchText } };
-                this.postingService.get(searchCriteria, (err, data) => {
-                    return res.json(data);
-                });
+            var searchCriteria = {
+                "$text": {
+                    "$search": req.query.searchText
+                }
+            };
+
+            if (req.body.Category) {
+                searchCriteria["Category"] = req.body.Category;
+            }
+
+            if (req.body.MinPrice) {
+                searchCriteria["Product.Description.Price"] = {
+                    $gte: +req.body.MinPrice
+                };
+            }
+
+            if (req.body.MaxPrice) {
+                searchCriteria["Product.Description.Price"] = {
+                    $lte: +req.body.MaxPrice
+                };
+            }
+
+            console.log("searchCriteria.........");
+            console.log(searchCriteria);
+
+            this.postingService.get(searchCriteria, (err, data) => {
+                return res.json({ Content : data});
+            });
             //}
         }
     }
@@ -177,7 +201,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
             if (err) logger.debug('error checkIndexes', err);
 
             if (!response) {
-                this.postingService.createIndexes([{"Title" : 'text'} , {"Product.Description.Title" : "text"}], (error, result) => {
+                this.postingService.createIndexes([{ "Title": 'text' }, { "Product.Description.Title": "text" }], (error, result) => {
                     if (error) logger.debug('error creating index', error);
 
                     return result;

@@ -1,5 +1,5 @@
-import { Component, OnInit, ElementRef , Inject} from '@angular/core';
-import { NavController, MenuController, ViewController, NavParams } from 'ionic-angular';
+import { Component, OnInit, ElementRef, Inject } from '@angular/core';
+import { NavController, MenuController, ViewController, NavParams, Events } from 'ionic-angular';
 import { Filters } from '../../app/models/filters';
 import { Lookup } from '../../app/models/lookup';
 import { ILookupService, LookupService } from '../../app/services/lookup.service';
@@ -14,13 +14,14 @@ export class FiltersPage implements OnInit {
     private selectedCategory: string;
     private filters: Filters;
     private rootPage: this;
-    private categories : Array<Lookup>
+    private categories: Array<Lookup>
 
     constructor(public viewCtrl: ViewController,
         public navCtrl: NavController,
         public menu: MenuController,
         public navParams: NavParams,
-        @Inject(LookupService) public lookupService : ILookupService) {
+        public events: Events,
+        @Inject(LookupService) public lookupService: ILookupService) {
         this.selectedCategory = navParams.get('category');
 
     }
@@ -31,7 +32,7 @@ export class FiltersPage implements OnInit {
         this.getCategoryData();
     }
 
-    getCategoryData(){
+    getCategoryData() {
         this.lookupService.getCategories().subscribe((response) => {
             this.categories = response
         })
@@ -40,5 +41,10 @@ export class FiltersPage implements OnInit {
 
     clearFilters() {
         this.filters = <Filters>{};
+    }
+
+    applyFilters() {
+        this.events.publish('search:filters', this.filters);
+        this.navCtrl.pop();
     }
 }

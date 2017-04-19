@@ -14,7 +14,7 @@ export interface IBaseService<TEntity> {
     getById(id: string): Observable<TEntity>;
     getByQuery(params: URLSearchParams): Observable<Array<TEntity>>;  
     post(entity: TEntity): Observable<Result>;
-    customPost(entity: TEntity, params: URLSearchParams): Observable<Result>;
+    customPost(entity: any, params: URLSearchParams): Observable<Result>;
     put(id: string, entity: TEntity): Observable<Result>;
     del(id: string): Observable<Result>
 }

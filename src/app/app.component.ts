@@ -60,10 +60,7 @@ export class MyApp implements OnInit {
     //default theme
     this._settings.getTheme().subscribe(val => this.chosenTheme = val);
 
-    this.profile = new Profile();
-
-    this.getUserContext();
-    this.getProfile();
+    this.profile = new Profile();  
   }
 
   initializeApp() {
@@ -97,12 +94,8 @@ export class MyApp implements OnInit {
     }
   }
 
-  getUserContext() {
-    this.isUserAuthenticated = false;
-  }
-
   getProfile() {
-    let clientId = StorageService.getItem('Client_Id')
+    let clientId = StorageService.getItem('Client_Id');
     this.profileService.getById(clientId).subscribe((result) => {
       if (result) {
         this.profile = result;
@@ -127,6 +120,7 @@ export class MyApp implements OnInit {
     if (this.isUserAuthenticated) {
       this.rootPage = HomePage;
       this.pages = this.pages.concat(authPages);
+      this.getProfile();
     } else {
       this.rootPage = WelcomePage;
     }

@@ -33,7 +33,7 @@ export class AddEditPostPage implements OnInit {
 
   public newPostForm = this.builder.group({
     Title: ["", Validators.required],
-    Price: ["", Validators.required],
+    Price: [0, Validators.required],
     Location: [Location, Validators.required],
     Description: ["", Validators.required],
     Category: ["", Validators.required],

@@ -1,63 +1,54 @@
-<ion-header>
-    <ion-navbar>
-        <ion-title>Refine Search</ion-title>
-        <ion-buttons end>
-            <button buttons-end ion-button clear color="primary" (click)="clearFilters()">
-                 Clear Filters
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
 <ion-content padding>
-    <form (ngSubmit)="filterForm()" #filterForm="ngForm">
-        <!--<ion-item>
+  <form (ngSubmit)="filterForm()" #filterForm="ngForm">
+    <!--<ion-item>
             <ion-label floating>Keyword</ion-label>
             <ion-input type="file" [(ngModel)]="filters.Keyword" name="keyword"></ion-input>
         </ion-item>-->
-        <ion-item>
-            <ion-label floating>Choose a category</ion-label>
-            <ion-select name="category" [(ngModel)]="filters.Category" >
-                <ion-option value="{{cat.Value}}" *ngFor="let cat of categories">{{cat.Name}}</ion-option>
-            </ion-select>
-        </ion-item>
-        <!--<ion-item>
+    <ion-item>
+      <ion-label floating>Choose a category</ion-label>
+      <ion-select name="category" [(ngModel)]="filters.Category">
+        <ion-option value="{{cat._id}}" *ngFor="let cat of categories">{{cat.Name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <!--<ion-item>
             <ion-label floating>Choose a Sub Category</ion-label>
             <ion-select name="category" [(ngModel)]="filters.SubCategory" >
                 <ion-option value="{{cat.Value}}" *ngFor="let cat of subCategories">{{cat.Name}}</ion-option>
             </ion-select>
         </ion-item>-->
-        <ion-grid>
-            <ion-row>
-                <ion-col>
-                    <ion-item>
-                        <ion-label floating>Min Price</ion-label>
-                        <ion-input type="text" [(ngModel)]="filters.MinPrice" name="minPrice"></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-item>
-                        <ion-label floating>Max Price</ion-label>
-                        <ion-input type="text" [(ngModel)]="filters.MaxPrice" name="maxPrice"></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-        <!--<ion-item>          
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Min Price</ion-label>
+            <ion-input type="number" [(ngModel)]="filters.MinPrice" name="minPrice"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Max Price</ion-label>
+            <ion-input type="number" [(ngModel)]="filters.MaxPrice" name="maxPrice"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!--<ion-item>          
             <ion-range name="priceRange" dualKnobs="true" [(ngModel)]="filters.PriceRange" min="0" max="10000" step="1000" pin="true"
                 snaps="true">
                 <ion-label range-left>0</ion-label>
                 <ion-label range-right>10000</ion-label>
             </ion-range>
         </ion-item>-->
-        <ion-item>
-            <ion-label floating>Location</ion-label>
-            <ion-input type="file" [(ngModel)]="filters.Location" name="location"></ion-input>
-        </ion-item>
+    <ion-item>
+      <ion-label floating>Location</ion-label>
+      <ion-input type="file" [(ngModel)]="filters.Location" name="location"></ion-input>
+    </ion-item>
 
-    </form>
+  </form>
+  <ion-toolbar position="bottom">
+    <button ion-button color="primary" (click)="applyFilters()">Apply</button>
+    <button ion-button color="default" (click)="clearFilters()">
+                 Reset
+    </button>
+  </ion-toolbar>
 </ion-content>
-<ion-footer no-shadow>
-    <ion-toolbar position="bottom">
-        <button ion-button block (click)="applyFilters()">Apply</button>
-    </ion-toolbar>
-</ion-footer>

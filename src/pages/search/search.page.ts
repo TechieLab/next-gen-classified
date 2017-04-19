@@ -11,6 +11,7 @@ import { IPostService, PostService } from '../post/post.service';
 import { Post } from '../../app/models/post';
 import { ElasticSearchService } from '../../app/services/elasticsearch.service';
 import { SearchService, ISearchService } from './search.service';
+import {Filters} from '../../app/models/filters';
 
 @Component({
   selector: 'search-page',
@@ -22,7 +23,8 @@ import { SearchService, ISearchService } from './search.service';
 export class SearchPage implements OnInit {
   search: FormControl;
   params: URLSearchParams;
-  searchFilters: any;
+  searchText: string;
+  searchFilters: Filters;
   searchResults: Array<Post>;
 
   constructor(public navCtrl: NavController,
@@ -33,37 +35,44 @@ export class SearchPage implements OnInit {
     private _ngZone: NgZone,
     @Inject(SearchService) public searchService: ISearchService,
   ) {
+    this.searchText = '';
     this.search = new FormControl();
     this.params = new URLSearchParams();
     this.searchResults = new Array<Post>();
-    this.searchFilters = {};
+    this.searchFilters = new Filters();
   }
 
   gotoFiltersPage() {
-    this.navCtrl.push(FiltersPage, { userId: 8675309 });
+    let modal = this.modalCtrl.create(FiltersPage, {filters : this.searchFilters});
+    modal.onDidDismiss(data => {
+      this.searchFilters = data;
+      this.submitSearch();
+    });
+    modal.present();
   }
 
-  ngOnInit() {
+  ngOnInit() {  
+    this.search.valueChanges.subscribe(term => {
+      this.searchText = term;
+      this.submitSearch();
+    });
+  }
 
-    this.events.subscribe('search:filters', (filters) => {
-      this.searchFilters = filters;
+  submitSearch() {
+    let loader = this.loadingCtrl.create({
+      content: "Loading Posts..."
     });
 
-    this.search.valueChanges.subscribe(term => {
-      let loader = this.loadingCtrl.create({
-        content: "Loading Posts..."
-      });
-      loader.present();
+    loader.present();
 
-      this.params.set('searchText', term);
-      this.params.set('elastic', 'false');
+    this.params.set('searchText', this.searchText);
+    this.params.set('elastic', 'false');
 
-      this.searchService.customPost(this.searchFilters, this.params).subscribe((res) => {
-        if (res && res.Content) {
-           this.searchResults = res.Content;
-        }
-        loader.dismiss();
-      });
+    this.searchService.customPost(this.searchFilters, this.params).subscribe((res) => {
+      if (res && res.Content) {
+        this.searchResults = res.Content;
+      }
+      loader.dismiss();
     });
   }
 

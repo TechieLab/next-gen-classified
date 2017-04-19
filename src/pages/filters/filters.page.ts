@@ -22,29 +22,27 @@ export class FiltersPage implements OnInit {
         public navParams: NavParams,
         public events: Events,
         @Inject(LookupService) public lookupService: ILookupService) {
-        this.selectedCategory = navParams.get('category');
-
+        this.filters = new Filters();
+        this.categories = new Array<Lookup>();
+        this.filters = viewCtrl.getNavParams().get('filters');
     }
 
     ngOnInit() {
-        this.filters = <Filters>{};
-
         this.getCategoryData();
     }
 
     getCategoryData() {
         this.lookupService.getCategories().subscribe((response) => {
-            this.categories = response
-        })
-
+            this.categories[0] = new Lookup();
+            this.categories = this.categories.concat(response);
+        });
     }
 
     clearFilters() {
-        this.filters = <Filters>{};
+        this.filters = new Filters();
     }
 
     applyFilters() {
-        this.events.publish('search:filters', this.filters);
-        this.navCtrl.pop();
+        this.viewCtrl.dismiss(this.filters);
     }
 }

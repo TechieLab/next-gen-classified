@@ -7,7 +7,7 @@ export class Description
     public Features: Array<string>;
     public IsBillAvaialbe: boolean;
     public PurchasedOn: Date;   
-    public Price: string;
+    public Price: number;
     public Brand : string;
     public Model : string;
 
@@ -18,7 +18,7 @@ export class Description
         this.Features = [];
         this.IsBillAvaialbe = false;
         this.PurchasedOn = new Date();       
-        this.Price = '';    
+        this.Price = 0;    
         this.Brand = '';
         this.Model = '';  
     }

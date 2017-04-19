@@ -61,8 +61,19 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public getById(id: string, callback: (err: Error, item: TEntity) => any) {
-        logger.debug('debug', 'reading get data..with id..' + id);
-        this.collection.findOne({ _id: new ObjectID(id) }, callback);
+        if(id == undefined || id == ''){
+            callback(new Error('value of id is null or Empty'), null);
+        }
+        logger.debug('reading get data..with id......' + id);
+        this.collection.findOne({ _id: new ObjectID(id)}, (err, res) => {
+            if(err){
+                callback(err, null);
+            }
+
+            logger.debug('base getById...', res);
+
+            callback(err, res);
+        });
     }
 
     public get(query: any, callback: (err: Error, item: Array<TEntity>) => any) {
@@ -77,7 +88,8 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         delete query['pageSize'];
         delete query['page'];
 
-        logger.debug('debug', 'reading many data..with query', query);
+        logger.debug('reading many data..with query....');
+        console.log(query);
 
         this.collection.find(query, fields, null, pageSize * pageNbr).sort(sortObj).toArray(callback);
     }

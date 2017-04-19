@@ -20,6 +20,7 @@ export class ProfileController {
     }
 
     getProfile(req: Request, res: Response) {
+        logger.debug('getting profile... ' + req.params.id);
         this.userService.getById(req.params.id, (err, user) => {
             if (err) {
                 return res.json(err);
@@ -29,6 +30,8 @@ export class ProfileController {
                 user.Profile.EmailId = user.EmailId;
                 return res.json(user.Profile);
             }
+
+            return res.json({ Message : 'User not found.'});
         });
     }
 

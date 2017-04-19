@@ -144,39 +144,46 @@ export class PostingController extends BaseController<Post> implements IPostingC
     }
 
     search(req: Request, res: Response) {
+        let minPrice: number = 0,
+            maxPrice: number = 100000000,
+            searchCriteria = {};
+
         console.log(req.body);
         console.log(req.query.searchText);
         if (req.query.elastic && req.query.elastic == true) {
             http.request(this.options, this.callback).end();
         } else {
             //if (this.initializeIndex()) {
-            var searchCriteria = {
-                "$text": {
-                    "$search": req.query.searchText
-                }
-            };
-
-            if (req.body.Category) {
-                searchCriteria["Category"] = req.body.Category;
-            }
-
             if (req.body.MinPrice) {
-                searchCriteria["Product.Description.Price"] = {
-                    $gte: +req.body.MinPrice
-                };
+                minPrice = +req.body.MinPrice;
+                searchCriteria["Product.Description.Price"] = { "$gt": minPrice };
             }
 
             if (req.body.MaxPrice) {
-                searchCriteria["Product.Description.Price"] = {
-                    $lte: +req.body.MaxPrice
-                };
+                maxPrice = +req.body.MaxPrice;
+                searchCriteria["Product.Description.Price"] = { "$lt": maxPrice }
+            }
+
+            if (req.body.MinPrice && req.body.MaxPrice) {
+                searchCriteria["Product.Description.Price"] = { "$gt": minPrice, "$lt": maxPrice };
+            }
+
+            if (req.query.searchText) {
+                searchCriteria["$text"] = {
+                    "$search": req.query.searchText,
+                    "$caseSensitive": false
+                }
+            }
+
+            if (req.body.Category) {
+                searchCriteria["Category"] = req.body.Category;
             }
 
             console.log("searchCriteria.........");
             console.log(searchCriteria);
 
             this.postingService.get(searchCriteria, (err, data) => {
-                return res.json({ Content : data});
+                return res.json({ Content: data });
             });
             //}
         }

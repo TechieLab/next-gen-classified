@@ -11,7 +11,7 @@ import { IPostService, PostService } from '../post/post.service';
 import { Post } from '../../app/models/post';
 import { ElasticSearchService } from '../../app/services/elasticsearch.service';
 import { SearchService, ISearchService } from './search.service';
-import {Filters} from '../../app/models/filters';
+import { Filters } from '../../app/models/filters';
 
 @Component({
   selector: 'search-page',
@@ -26,6 +26,8 @@ export class SearchPage implements OnInit {
   searchText: string;
   searchFilters: Filters;
   searchResults: Array<Post>;
+  private pageSize: number = 25;
+  private pageNumber: number = 1;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,13 +39,12 @@ export class SearchPage implements OnInit {
   ) {
     this.searchText = '';
     this.search = new FormControl();
-    this.params = new URLSearchParams();
     this.searchResults = new Array<Post>();
     this.searchFilters = new Filters();
   }
 
   gotoFiltersPage() {
-    let modal = this.modalCtrl.create(FiltersPage, {filters : this.searchFilters});
+    let modal = this.modalCtrl.create(FiltersPage, { filters: this.searchFilters });
     modal.onDidDismiss(data => {
       this.searchFilters = data;
       this.submitSearch();
@@ -51,7 +52,7 @@ export class SearchPage implements OnInit {
     modal.present();
   }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.search.valueChanges.subscribe(term => {
       this.searchText = term;
       this.submitSearch();
@@ -59,16 +60,25 @@ export class SearchPage implements OnInit {
   }
 
   submitSearch() {
+    let params = new URLSearchParams();
     let loader = this.loadingCtrl.create({
       content: "Loading Posts..."
     });
 
     loader.present();
 
-    this.params.set('searchText', this.searchText);
-    this.params.set('elastic', 'false');
+    params.set('searchText', this.searchText);
+    params.set('elastic', 'false');
 
-    this.searchService.customPost(this.searchFilters, this.params).subscribe((res) => {
+    if (this.pageSize) {
+      params.set('pageSize', this.pageSize.toString());
+    }
+
+    if (this.pageNumber) {
+      params.set('page', this.pageNumber.toString());
+    }
+
+    this.searchService.customPost(this.searchFilters, params).subscribe((res) => {
       if (res && res.Content) {
         this.searchResults = res.Content;
       }

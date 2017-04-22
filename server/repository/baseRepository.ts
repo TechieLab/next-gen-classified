@@ -8,6 +8,7 @@ var es = require('elasticsearch');
 //const logger = Logger('server');
 
 export interface IBaseRepository<TEntity> {
+    aggregate(query: any, aggregate: any[], callback: (err: Error, item: Array<TEntity>) => any);
     get(query: any, callback: (err: Error, item: Array<TEntity>) => any);
     getById(id: string, callback: (err: Error, item: TEntity) => any);
     getCount(query: any, callback: (err: Error, item: number) => any);
@@ -61,12 +62,12 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     public getById(id: string, callback: (err: Error, item: TEntity) => any) {
-        if(id == undefined || id == ''){
+        if (id == undefined || id == '') {
             callback(new Error('value of id is null or Empty'), null);
         }
         logger.debug('reading get data..with id......' + id);
-        this.collection.findOne({ _id: new ObjectID(id)}, (err, res) => {
-            if(err){
+        this.collection.findOne({ _id: new ObjectID(id) }, (err, res) => {
+            if (err) {
                 callback(err, null);
             }
 
@@ -92,6 +93,42 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         console.log(query);
 
         this.collection.find(query, fields, null, pageSize * pageNbr).sort(sortObj).toArray(callback);
+    }
+
+    public aggregate(query: any, aggregate: any[], callback: (err: Error, item: Array<TEntity>) => any) {
+        let aggregationArray = [];
+        let fields: Array<string> = this.getFields(query);
+        let sortObj = this.getSortBy(query);
+        let pageSize: number = query['pageSize'];
+        let pageNbr: number = query['page'];
+        let searchCriteria: any = query['$text'];
+
+        delete query['sortKey'];
+        delete query['sortOrder'];
+        delete query['fields'];
+        delete query['pageSize'];
+        delete query['page'];
+
+        logger.debug('reading many data..with aggregate....');
+      
+
+        if (query) {
+            aggregationArray.push({
+                $match: query
+            });
+        }
+
+        if (pageSize && pageNbr) {
+            aggregationArray.push({
+                $limit: pageSize * pageNbr
+            });
+        }        
+
+        aggregationArray = aggregationArray.concat(aggregate);
+
+        console.log(aggregationArray);
+
+        this.collection.aggregate(aggregationArray).toArray(callback);
     }
 
     public create(data: TEntity, callback: (errr: Error, item: TEntity) => any) {

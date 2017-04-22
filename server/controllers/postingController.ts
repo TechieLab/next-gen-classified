@@ -175,6 +175,14 @@ export class PostingController extends BaseController<Post> implements IPostingC
                 }
             }
 
+            if(req.query.pageSize){
+                searchCriteria["pageSize"] = req.query.pageSize
+            }
+
+            if(req.query.page){
+                searchCriteria["page"] = req.query.page
+            }
+
             if (req.body.Category) {
                 searchCriteria["Category"] = req.body.Category;
             }

@@ -33,7 +33,7 @@ export class PostingRepository extends BaseRepository<Post> implements IPostingR
             }
         }, {
             $unwind: "$Product.Description.Brand"
-        },{
+        }, {
             $lookup: {
                 from: "lookups",
                 localField: "Product.Defects",

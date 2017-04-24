@@ -1,6 +1,7 @@
 import { Component, Output, Inject, OnInit } from '@angular/core';
 import { Events, ViewController } from 'ionic-angular';
 import { ILookupService, LookupService } from '../services/lookup.service';
+import {Constants} from '../common/constants';
 
 @Component({
     selector: 'sort-component',
@@ -30,27 +31,7 @@ export class SortComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.sortByList = [{
-            Name: 'High Price',
-            Value: 'Price',
-            Order: -1,
-        }, {
-            Name: 'Low Price',
-            Value: 'Price',
-            Order: 1
-        }, {
-            Name: 'Recent Post',
-            Value: 'ModifiedOn',
-            Order: -1,
-        }, {
-            Name: 'Old Post',
-            Value: 'ModifiedOn',
-            Order: 1,
-        }, {
-            Name: 'Discount',
-            Value: 'Discount',
-            Order: -1,
-        }]
+        this.sortByList = Constants.SortBy
     }
 
     itemSelected(value: any) {

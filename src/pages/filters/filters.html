@@ -1,9 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Refine Search</ion-title>
+    <ion-buttons end>
+      <button buttons-end ion-button clear color="primary" (click)="clearFilters()">
+                 Clear
+            </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 <ion-content padding>
   <form (ngSubmit)="filterForm()" #filterForm="ngForm">
-    <!--<ion-item>
-            <ion-label floating>Keyword</ion-label>
-            <ion-input type="file" [(ngModel)]="filters.Keyword" name="keyword"></ion-input>
-        </ion-item>-->
+    <ion-item>
+      <ion-label floating>Keyword</ion-label>
+      <ion-input type="text" [(ngModel)]="filters.Keyword" name="keyword"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Sort By</ion-label>
+      <ion-select name="sortBy" [(ngModel)]="filters.SortBy">
+        <ion-option [value]="sort" *ngFor="let sort of sortByList">{{sort.Name}}</ion-option>
+      </ion-select>
+    </ion-item>
     <ion-item>
       <ion-label floating>Choose a category</ion-label>
       <ion-select name="category" [(ngModel)]="filters.Category">
@@ -43,12 +59,8 @@
       <ion-label floating>Location</ion-label>
       <ion-input type="file" [(ngModel)]="filters.Location" name="location"></ion-input>
     </ion-item>
-
   </form>
   <ion-toolbar position="bottom">
-    <button ion-button color="primary" (click)="applyFilters()">Apply</button>
-    <button ion-button color="default" (click)="clearFilters()">
-                 Reset
-    </button>
+    <button ion-button block color="primary" (click)="applyFilters()">Apply</button>
   </ion-toolbar>
 </ion-content>

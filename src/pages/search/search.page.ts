@@ -43,20 +43,24 @@ export class SearchPage implements OnInit {
     this.searchFilters = new Filters();
   }
 
-  gotoFiltersPage() {
-    let modal = this.modalCtrl.create(FiltersPage, { filters: this.searchFilters });
-    modal.onDidDismiss(data => {
-      this.searchFilters = data;
-      this.submitSearch();
-    });
-    modal.present();
-  }
 
   ngOnInit() {
     this.search.valueChanges.subscribe(term => {
       this.searchText = term;
+      this.searchFilters.Keyword = term;
       this.submitSearch();
     });
+  }
+
+  gotoFiltersPage() {
+    let modal = this.modalCtrl.create(FiltersPage, { filters: this.searchFilters });
+    modal.onDidDismiss(data => {
+      this.searchFilters = data;
+      this.searchText = data.Keyword;
+
+      this.submitSearch();
+    });
+    modal.present();
   }
 
   submitSearch() {
@@ -65,7 +69,7 @@ export class SearchPage implements OnInit {
       content: "Loading Posts..."
     });
 
-    loader.present();
+    loader.present();    
 
     params.set('searchText', this.searchText);
     params.set('elastic', 'false');

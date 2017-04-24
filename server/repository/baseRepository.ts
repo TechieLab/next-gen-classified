@@ -122,7 +122,13 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
             aggregationArray.push({
                 $limit: pageSize * pageNbr
             });
-        }        
+        }   
+
+        if(sortObj){
+            aggregationArray.push({
+                $sort: sortObj
+            });
+        }     
 
         aggregationArray = aggregationArray.concat(aggregate);
 
@@ -210,7 +216,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
     }
 
     private getSortBy(query: any) {
-        let sortObj: any = {};
+        let sortObj: any = null;
 
         if (query['sortKey'] == 'Price') {
             sortObj = { 'Product.Description.Price': +query['sortOrder'] }
@@ -222,9 +228,7 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
 
         if (query['sortKey'] == 'Discount') {
             sortObj = { 'Product.Description.Discount': +query['sortOrder'] };
-        }
-
-        console.log(sortObj);
+        }     
 
         return sortObj;
     }

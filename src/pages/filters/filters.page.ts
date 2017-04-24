@@ -3,6 +3,7 @@ import { NavController, MenuController, ViewController, NavParams, Events } from
 import { Filters } from '../../app/models/filters';
 import { Lookup } from '../../app/models/lookup';
 import { ILookupService, LookupService } from '../../app/services/lookup.service';
+import {Constants} from '../../app/common/constants';
 
 @Component({
     selector: 'filters-page',
@@ -15,6 +16,7 @@ export class FiltersPage implements OnInit {
     private filters: Filters;
     private rootPage: this;
     private categories: Array<Lookup>
+    private sortByList : any;
 
     constructor(public viewCtrl: ViewController,
         public navCtrl: NavController,
@@ -29,6 +31,8 @@ export class FiltersPage implements OnInit {
 
     ngOnInit() {
         this.getCategoryData();
+
+        this.sortByList = Constants.SortBy
     }
 
     getCategoryData() {

@@ -11,4 +11,26 @@ export class Constants {
   public static AccountApi: string = Constants.BaseApi + '/api/account/';
   public static ProfileApi: string = Constants.BaseApi + '/api/profiles/';
 
+  public static SortBy: any = [{
+    Name: 'High Price',
+    Value: 'Price',
+    Order: -1,
+  }, {
+    Name: 'Low Price',
+    Value: 'Price',
+    Order: 1
+  }, {
+    Name: 'Recent Post',
+    Value: 'ModifiedOn',
+    Order: -1,
+  }, {
+    Name: 'Old Post',
+    Value: 'ModifiedOn',
+    Order: 1,
+  }, {
+    Name: 'Discount',
+    Value: 'Discount',
+    Order: -1,
+  }];
+
 }

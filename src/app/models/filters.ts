@@ -1,8 +1,7 @@
 export class Filters {
-     keyword: string;
+     Keyword: string;
      Category: string;
-     SubCategory: string;
-     PriceRange: any;
+     SortBy: any;
      MinPrice: number;
      MaxPrice: number;
      Location: string;

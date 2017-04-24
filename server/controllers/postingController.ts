@@ -147,13 +147,15 @@ export class PostingController extends BaseController<Post> implements IPostingC
         let minPrice: number = 0,
             maxPrice: number = 100000000,
             searchCriteria = {};
-
-        console.log(req.body);
-        console.log(req.query.searchText);
+       
         if (req.query.elastic && req.query.elastic == true) {
             http.request(this.options, this.callback).end();
         } else {
-            //if (this.initializeIndex()) {
+
+            if(req.body.Keyword){
+                req.query.searchText = req.body.Keyword;
+            }
+
             if (req.body.MinPrice) {
                 minPrice = +req.body.MinPrice;
                 searchCriteria["Product.Description.Price"] = { "$gt": minPrice };
@@ -186,6 +188,17 @@ export class PostingController extends BaseController<Post> implements IPostingC
             if (req.body.Category) {
                 searchCriteria["Category"] = req.body.Category;
             }
+
+            if(req.body.Location){
+                 searchCriteria["Location.City"] = req.body.Location
+            }
+
+            if(req.body.SortBy){
+                searchCriteria["sortKey"] = req.body.SortBy.Value;
+                searchCriteria["sortOrder"] = req.body.SortBy.Order;
+            }
+
+           
 
             console.log("searchCriteria.........");
             console.log(searchCriteria);

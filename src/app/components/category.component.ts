@@ -4,7 +4,7 @@ import { ILookupService, LookupService } from '../services/lookup.service';
 import { Lookup } from '../models/lookup';
 
 @Component({
-    selector: 'category-components',
+    selector: 'category-component',
     template: ` 
      <ion-content> 
         <ion-list>

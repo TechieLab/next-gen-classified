@@ -1,7 +1,7 @@
 import { Db, MongoClient} from 'mongodb';
 import logger = require('winston');
 
-const remoteUrl: string = 'mongodb://52.187.133.250:27017/classifieddb';
+const remoteUrl: string = 'mongodb://52.187.74.91:27017/classifieddb';
 const localUrl: string = 'mongodb://localhost:27017/classifieddb';
 
 export class MongoDBConnection {
@@ -22,7 +22,7 @@ export class MongoDBConnection {
 
     private static connect(result: (error: Error, db: Db) => void) {
         var mongoClient = new MongoClient();
-        mongoClient.connect(localUrl, (error: Error, db: Db) => {
+        mongoClient.connect(remoteUrl, (error: Error, db: Db) => {
             this.db = db;
             this.isConnected = true;
 

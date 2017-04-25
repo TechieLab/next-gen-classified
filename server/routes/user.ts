@@ -14,6 +14,15 @@ export class UserRoute extends BaseApiRoute<User> implements IBaseApiRoute<User>
         super(app, 'users');
 
         self = this;
+
+        this.chat();
+    }
+
+    chat(){
+        this.app.get('/api/users/:id/chat-history', (req: Request, res: Response) => {
+            self.setUserCollection()();
+            self.controller.getChatHistory(req,res);
+        });
     }
   
     setUserCollection() {

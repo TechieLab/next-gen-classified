@@ -18,7 +18,8 @@
       <ion-input type="text" formControlName="Comments" name="Comments" [(ngModel)]="offer.Comments"></ion-input>
     </ion-item>
     <div padding>
-      <button ion-button color="primary" block [disabled]="!newform.form.valid">Make an Offer</button>
+      <button ion-button color="primary" [disabled]="!newform.form.valid">Make an Offer</button>
+      <button ion-button color="primary" (click)="openChat()">Chat</button>
     </div>
   </form>
 </ion-content>

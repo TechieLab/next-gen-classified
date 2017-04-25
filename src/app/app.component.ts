@@ -29,6 +29,7 @@ import { Profile } from '../app/models/profile';
     LoginPage,
     SearchPage
   ],
+  //styleUrls: ['app.scss'],
   providers: [AuthGuard, SettingsService]
 })
 

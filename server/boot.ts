@@ -7,6 +7,7 @@ import bodyParser = require('body-parser');
 import http = require('http');
 import swig = require('swig');
 import { MongoDBConnection } from './data/connection';
+import {SocketConnection} from './data/socketConnection';
 import { ElasticSearchConnection } from './data/ElasticSearchConnection';
 import { IndexRoute } from './routes/index';
 import { IndexApiRoute } from './routes/indexApi';
@@ -14,12 +15,12 @@ import { InitializeSampleDb } from './data/initializeDb';
 import Logger from './Logger';
 
 const logger = Logger('server');
-
 var fs = require('fs-extra');
 var cors = require('cors');
 var app = express();
 
 app.set('port', process.env.PORT || '3000');
+
 swig.setDefaults({ cache: false });
 
 // uncomment after placing your favicon in /public
@@ -49,7 +50,10 @@ logger.info('Application Started....');
 new IndexRoute(app);
 new IndexApiRoute(app);
 
-http.createServer(app).listen(app.get('port'), function () {
+
+var server = http.createServer(app);
+
+server.listen(app.get('port'), function () {
 
     fs.mkdirs(path.join(__dirname, '/config'));
     fs.mkdirs(path.join(__dirname, '/views'));
@@ -64,6 +68,8 @@ http.createServer(app).listen(app.get('port'), function () {
 
             logger.debug("db connected......");
         });
+
+        SocketConnection.setup(server);
         // database verification.
 
         // ElasticSearchConnection.getConnection((connection) => {

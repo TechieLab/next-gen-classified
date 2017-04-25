@@ -1,5 +1,4 @@
 import { Db, ObjectID } from 'mongodb';
-import { injectable } from 'inversify';
 import { MongoDBConnection } from './connection';
 
 export class MongoDBClient {

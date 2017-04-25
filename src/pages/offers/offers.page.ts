@@ -5,6 +5,7 @@ import { StorageService } from '../../app/services/storage.service';
 import { Offer } from '../../app/models/offer';
 import { IOfferService, OfferService } from './offer.service';
 import { HomePage } from '../../pages/home/home.page';
+import{ChatPage} from '../../pages/chat/chat.page';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class OfferPage {
     this.offer = new Offer();
     this.listingPrice = navParams.get('price');
     this.offer.PostId = navParams.get('_id');
-
+    this.offer.UserId = navParams.get('userId');
   }
 
   onSubmitForm() {
@@ -36,6 +37,10 @@ export class OfferPage {
         this.navCtrl.setRoot(HomePage);
       }
     });
+  }
+
+  openChat(){
+    this.navCtrl.push(ChatPage, { receiverId : this.offer.UserId});
   }
 
   private presentToast(text) {

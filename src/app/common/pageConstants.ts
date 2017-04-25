@@ -23,7 +23,7 @@ export const Pages = [
     MyFavtPostingPage,
     FiltersPage,
     FeedbackPage,
-    HelpPage,
+    HelpPage
 ];
 
 export const EntryComponents = [

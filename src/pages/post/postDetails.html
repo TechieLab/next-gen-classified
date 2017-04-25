@@ -21,8 +21,10 @@
     <img />
   </ion-card>
   <ion-card-content>
-    <ion-icon text-right name="heart"></ion-icon>
-    <ion-icon text-right ios="ios-share" md="md-share"></ion-icon>
+    <div item-right (click)="favouritePost(i,post)">
+      <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
+      <ion-icon *ngIf="post.IsFav" name="heart"></ion-icon>
+    </div>
   </ion-card-content>
   <ion-card-content>
     <ion-grid>
@@ -55,22 +57,27 @@
           <p wrap>{{post.Product.Description.Title}}</p>
         </ion-item>
         <ion-item>
-            Located At
+          Located At
           <p item-right>{{post.Location.Locality}} , {{post.Location.City}}</p>
         </ion-item>
         <ion-item>
-            Posted On
-          <p item-right>{{post.PostedOn}}</p>
+          Posted On
+          <p item-right>{{post.PostedOn | date:'MM/dd/yyyy'}}</p>
         </ion-item>
       </ion-list>
       <ion-list *ngSwitchCase="'specifications'">
         <ion-item>
           Condition
-          <p item-right>{{post.Product.Description.Defects}}</p>
+          <p item-right *ngIf="post.Product.Description.IsNew">New</p>
+          <p item-right *ngIf="post.Product.Description.IsUsed">Used</p>
+        </ion-item>
+        <ion-item>
+          Defects
+          <p item-right>{{post.Product.Defects[0].Name}}</p>
         </ion-item>
         <ion-item>
           Brand
-          <p item-right>{{post.Product.Description.Brand}}</p>
+          <p item-right>{{post.Product.Description.Brand.Name}}</p>
         </ion-item>
         <ion-item>
           Model
@@ -82,7 +89,7 @@
         </ion-item>
         <ion-item>
           Purchased On
-          <p item-right>{{post.Product.Description.PurchasedOn}}</p>
+          <p item-right>{{post.Product.Description.PurchasedOn | date:'MM/dd/yyyy'}}</p>
         </ion-item>
         <ion-item>
           Invoice Available

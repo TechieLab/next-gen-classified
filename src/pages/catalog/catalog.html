@@ -14,6 +14,7 @@
             <p>{{post.Product.Description.Title}}</p>
             <p>Location: {{post.Location.Locality}}</p>
             <p>Price:{{post.Product.Description.Price}} </p>
+            <p>Posted On: {{post.PostedOn | date:'MM/dd/yyyy'}}</p>
           </div>
           <div item-right (click)="favouritePost(i,post)">
             <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>
@@ -39,6 +40,7 @@
         <p>{{post.Product.Description.Title}}</p>
         <p>Location: {{post.Location.City}}</p>
         <p>Price:{{post.Product.Description.Price}} </p>
+        <p>Posted On: {{post.PostedOn | date:'MM/dd/yyyy'}}</p>
       </div>
       <div item-right (click)="favouritePost(i,post)">
         <ion-icon *ngIf="!post.IsFav" name="heart-outline"></ion-icon>

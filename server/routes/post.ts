@@ -36,6 +36,7 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
         self = this;
 
         this.get();
+        this.getById();
         this.post();
         this.addFavorite();
         this.getFavorite();
@@ -43,8 +44,17 @@ export class PostRoute extends BaseApiRoute<Post> implements IBaseApiRoute<Post>
         this.search();
     }
 
+    getById() {
+        this.app.get('/api/posts/:id', (req: Request, res: Response) => {
+            self.setPostCollection();
+            logger.debug("route posting getById----" + req.params.id);
+
+            self.postingController.getById(req, res);
+        });
+    }
+
     get() {
-        this.app.get('/api/' + this.apiName, (req: Request, res: Response) => {
+        this.app.get('/api/posts', (req: Request, res: Response) => {
             self.setPostCollection();
             logger.debug("route posting get----" + this.apiName);
             if (req.query.favorite) {

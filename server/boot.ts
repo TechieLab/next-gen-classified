@@ -66,10 +66,10 @@ http.createServer(app).listen(app.get('port'), function () {
         });
         // database verification.
 
-        ElasticSearchConnection.getConnection((connection) => {
-            this.db = connection;
-            logger.debug("elastic  connected......");
-        });
+        // ElasticSearchConnection.getConnection((connection) => {
+        //     this.db = connection;
+        //     logger.debug("elastic  connected......");
+        // });
     });
 
     fs.copy(path.join(__dirname + '/../../server/views'), path.join(__dirname, '/views'), (err) => {

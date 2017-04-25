@@ -1,3 +1,4 @@
+import {Lookup} from './lookup';
 export class Description
 {   
     public Title : string;
@@ -8,8 +9,8 @@ export class Description
     public IsBillAvaialbe: boolean;
     public PurchasedOn: Date;   
     public Price: number;
-    public Brand : string;
-    public Model : string;
+    public Brand : Lookup;
+    public Model : any;
 
     constructor(){
         this.Title = '';
@@ -19,7 +20,7 @@ export class Description
         this.IsBillAvaialbe = false;
         this.PurchasedOn = new Date();       
         this.Price = 0;    
-        this.Brand = '';
+        this.Brand = new Lookup();
         this.Model = '';  
     }
 }

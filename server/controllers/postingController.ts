@@ -196,9 +196,7 @@ export class PostingController extends BaseController<Post> implements IPostingC
             if(req.body.SortBy){
                 searchCriteria["sortKey"] = req.body.SortBy.Value;
                 searchCriteria["sortOrder"] = req.body.SortBy.Order;
-            }
-
-           
+            }           
 
             console.log("searchCriteria.........");
             console.log(searchCriteria);

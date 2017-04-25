@@ -1,11 +1,12 @@
 import { Product } from './product';
 import {Location} from './location';
 import {Offer} from './offer';
+import {Lookup} from './lookup';
 
 export class Post {
     _id: string;
     Title: string;
-    Category: string;
+    Category: Lookup;
     Location: Location;
     Product: Product;
     Views: Array<string>;
@@ -20,7 +21,7 @@ export class Post {
 
     constructor() {
         this.Title = '';
-        this.Category = '';
+        this.Category = new Lookup();
         this.Location = new Location();
         this.PostedOn = new Date();
         this.Likes = new Array<string>();

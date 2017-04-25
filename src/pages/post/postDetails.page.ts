@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
-import { NavController, NavParams } from 'ionic-angular';
+import { Events, ToastController, NavController, NavParams } from 'ionic-angular';
 import { NotificationPage } from '../notification/notification.page';
 import { AddEditPostPage } from '../post/addEditPost.page';
 import { OfferPage } from '../offers/offers.page';
@@ -11,6 +11,7 @@ import { Product } from '../../app/models/product';
 import { Media } from '../../app/models/media';
 import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';
 import { StorageService } from '../../app/services/storage.service';
+import { Result } from '../../app/models/result';
 
 @Component({
   selector: 'post-details-page',
@@ -24,12 +25,13 @@ export class PostDetailsPage implements OnInit {
   similarPosts: Array<Post>;
   detailSegment: string;
   isUserAuthenticated: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
+    public toastCtrl: ToastController,
     @Inject(PostService) public postService: IPostService,
     @Inject(AuthGuard) public authGuard: IAuthGuard
   ) {
     // If we navigated to this page, we will have an item available as a nav param    
-    this.editPermission =  navParams.get('editPermission');
+    this.editPermission = navParams.get('editPermission');
     this.postId = navParams.get('_id');
     this.post = new Post();
     this.similarPosts = new Array<Post>();
@@ -74,7 +76,7 @@ export class PostDetailsPage implements OnInit {
 
   getSimilarPosts() {
     var params = new URLSearchParams();
-    params.set('Category', this.post.Category);
+    params.set('Category', this.post.Category._id);
 
     this.postService.getByQuery(params).subscribe((response) => {
       var items = new Array<Post>();
@@ -93,6 +95,24 @@ export class PostDetailsPage implements OnInit {
     });
   }
 
+  favouritePost() {
+    if (this.isUserAuthenticated) {
+      this.postService.addRemoveFavorite(this.post._id, this.post.IsFav).subscribe((response: Result) => {
+        if (response.Success && response.Content.IsFav) {
+          this.post.IsFav = true;
+          this.events.publish('favtpost:count', { post: this.post });
+          this.presentToast('Added to shortlist');
+        } else {
+          this.post.IsFav = false;
+          this.events.publish('favtpost:count', { post: this.post });
+          this.presentToast('Remove from shortlist');
+        }
+      });
+    } else {
+      this.navCtrl.push(LoginPage);
+    }
+  }
+
   showDetails(post: Post) {
     this.post = post;
   }
@@ -104,7 +124,7 @@ export class PostDetailsPage implements OnInit {
       this.navCtrl.push(LoginPage);
     }
   }
-  
+
   gotoNotificationPage() {
     this.navCtrl.push(NotificationPage);
   }
@@ -112,5 +132,13 @@ export class PostDetailsPage implements OnInit {
   showProductDetails(itemId: string) {
     this.postId = itemId;
     this.getPost();
+  }
+   private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 }

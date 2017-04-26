@@ -4,13 +4,14 @@ import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import {ChatService} from './chat.service';
 import {ChatPage} from './chat.page';
+import {ChatWindow} from './chat.window';
 
 @NgModule({
-    declarations:[ChatPage],    
+    declarations:[ChatPage, ChatWindow],    
     exports:[ChatPage],
     imports:[IonicModule],
     providers:[ChatService],
-    entryComponents: [ChatPage]
+    entryComponents: [ChatPage, ChatWindow]
 })
 
 export class ChatModule{}

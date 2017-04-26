@@ -1,6 +1,6 @@
 
 import { Chat } from '../models/chat';
-import { IActivityRepository } from '../repository/activityRepository';
+import { IChatRepository } from '../repository/chatRepository';
 import logger = require('winston');
 import { IBaseService, BaseService } from '../services/baseService';
 

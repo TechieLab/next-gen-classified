@@ -1,17 +1,32 @@
+import {Http} from '@angular/http';
+import {Injectable} from '@angular/core';
+
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 import {Message} from '../../app/models/message';
-import {StorageService} from '../../app/services/storage.service';
+import {Chat} from '../../app/models/chat';
 
-export class ChatService {
+import {StorageService} from '../../app/services/storage.service';
+import { IBaseService, BaseService } from '../../app/services/base.service';
+export interface IChatService extends IBaseService<Chat> {
+
+}
+@Injectable()
+export class ChatService extends BaseService<Chat> implements IChatService {
     // Our localhost address that we set in our server code
-    private url = 'http://localhost:3000';
-    private socket;
+    private host = 'http://localhost:3000';
+    private socket: SocketIOClient.Socket;
     private message : Message;
 
-    constructor(){
-        
+    constructor(http:Http){
+        super(http, "chats");
+
+        this.socket = io(this.host);
+    }
+
+    joinChat(){
+        this.socket.emit('join', {userId: StorageService.getItem('Client_Id')});
     }
 
     sendMessage(text: string, receiverId : string) {
@@ -20,18 +35,20 @@ export class ChatService {
         this.message.FromUserId = StorageService.getItem('Client_Id');
         this.message.ToUserId = receiverId;
         // Make sure the "add-message" is written here because this is referenced in on() in our server
-        this.socket.emit('add-message', this.message);
+        //this.socket.emit('add-message', this.message);
+        this.socket.send(StorageService.getItem('Client_Id')).emit( 'new_msg-sent', this.message);
     }
 
     getMessages() {
-        let observable = new Observable<Array<Message>>(observer => {
-            this.socket = io(this.url);
-            this.socket.on('message', (data : Array<Message>) => {
+        let observable = new Observable<Array<Message>>(observer => {     
+
+            this.socket.on('message-received', (data : Array<Message>) => {
                 observer.next(data);
             });
-            return (data : Array<Message>) => {
-                this.socket.disconnect();
-            };
+            // });
+            // return (data : Array<Message>) => {
+            //     this.socket.disconnect();
+            // };
         });
         return observable;
     }

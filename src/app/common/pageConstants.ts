@@ -10,6 +10,7 @@ import { FiltersPage } from '../../pages/filters/filters.page';
 import { FeedbackPage } from '../../pages/feedback/feedback.page';
 import { HelpPage } from '../../pages/help/help.page';
 import { AboutUs } from '../../pages/aboutUs/aboutUs.page';
+import {ChatPage} from '../../pages/chat/chat.page';
 
 export const Pages = [
     AboutUs,
@@ -43,5 +44,6 @@ export const authPages = [
     { title: 'Admin', component: AdminPage, name: "person", seq: 2 },
     { title: 'My Postings', component: MyPostingsPage, name: "paper", seq: 3 },
     { title: 'Favourites', component: MyFavtPostingPage, name: "star", seq: 4 },
-    { title: 'Settings', component: SettingsPage, name: "settings", seq: 5 }
+    { title: 'Settings', component: SettingsPage, name: "settings", seq: 5 },
+    { title: 'Chats', component: ChatPage, name: "settings", seq: 9 }
 ];

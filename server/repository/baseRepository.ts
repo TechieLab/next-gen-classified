@@ -65,13 +65,13 @@ export class BaseRepository<TEntity> implements IBaseRepository<TEntity>
         if (id == undefined || id == '') {
             callback(new Error('value of id is null or Empty'), null);
         }
-        logger.debug('reading get data..with id......' + id);
+        
         this.collection.findOne({ _id: new ObjectID(id) }, (err, res) => {
             if (err) {
                 callback(err, null);
-            }
+            }   
 
-            logger.debug('base getById...', res);
+            logger.debug('reading get data..with id......' + id);       
 
             callback(err, res);
         });

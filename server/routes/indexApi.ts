@@ -7,6 +7,8 @@ import {AccountRoute} from './account'
 import {PostRoute} from './post';
 import {OfferRoute} from './offer';
 import {ProfileRoute} from './profile';
+import {ChatRoute} from './chat';
+
 export class IndexApiRoute
 { 
     constructor(private app : Express)
@@ -17,6 +19,7 @@ export class IndexApiRoute
         new PostRoute(app);
         new ProfileRoute(app);
         new OfferRoute(app);
+        new ChatRoute(app);
     }  
 }
 

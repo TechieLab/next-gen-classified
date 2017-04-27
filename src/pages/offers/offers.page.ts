@@ -1,18 +1,19 @@
 import { Component, Inject } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '../../app/services/storage.service';
 import { Offer } from '../../app/models/offer';
 import { IOfferService, OfferService } from './offer.service';
 import { HomePage } from '../../pages/home/home.page';
-import{ChatPage} from '../../pages/chat/chat.page';
-
+import { ChatPage } from '../../pages/chat/chat.page';
+import { ChatWindow } from '../../pages/chat/chat.window';
 
 @Component({
   selector: 'offer-page',
   templateUrl: 'offers.html',
   entryComponents: []
 })
+
 export class OfferPage {
   listingPrice: string;
   offer: Offer;
@@ -22,7 +23,10 @@ export class OfferPage {
     Comments: [""]
   });
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public builder: FormBuilder,
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public builder: FormBuilder,
+    public modalCtrl: ModalController,
     @Inject(OfferService) public offerService: IOfferService, public toastCtrl: ToastController) {
     this.offer = new Offer();
     this.listingPrice = navParams.get('price');
@@ -39,8 +43,12 @@ export class OfferPage {
     });
   }
 
-  openChat(){
-    this.navCtrl.push(ChatPage, { receiverId : this.offer.UserId});
+  openChat() {
+    let modal = this.modalCtrl.create(ChatWindow, { receiverId: this.offer.UserId });
+    modal.onDidDismiss(data => {
+
+    });
+    modal.present();
   }
 
   private presentToast(text) {

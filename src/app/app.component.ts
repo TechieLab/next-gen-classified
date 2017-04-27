@@ -1,5 +1,5 @@
 import { Component, ViewChild, Inject, OnInit } from '@angular/core';
-import { Events, Platform, MenuController, Nav } from 'ionic-angular';
+import { Events, Platform, MenuController, Nav, ToastController, ModalController } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { OrderBy } from '../app/pipes/orderBy';
@@ -20,6 +20,8 @@ import { StorageService } from '../app/services/storage.service';
 import { SettingsService } from '../pages/settings/settings.service';
 import { ProfileService, IProfileService } from '../pages/profile/profile.service';
 import { Profile } from '../app/models/profile';
+import { ChatService, IChatService } from '../pages/chat/chat.service';
+import { ChatWindow } from '../pages/chat/chat.window';
 
 @Component({
   templateUrl: 'app.html',
@@ -48,9 +50,12 @@ export class MyApp implements OnInit {
     public menu: MenuController,
     public events: Events,
     private _settings: SettingsService,
+    private toastCtrl: ToastController,
+    private modalCtrl : ModalController,
     @Inject(AuthGuard) public authGuard: IAuthGuard,
     @Inject(AccountService) public accountService: IAccountService,
-    @Inject(ProfileService) public profileService: IProfileService
+    @Inject(ProfileService) public profileService: IProfileService,
+    @Inject(ChatService) public chatService: IChatService
   ) {
 
     this.initializeApp();
@@ -61,7 +66,7 @@ export class MyApp implements OnInit {
     //default theme
     this._settings.getTheme().subscribe(val => this.chosenTheme = val);
 
-    this.profile = new Profile();  
+    this.profile = new Profile();
   }
 
   initializeApp() {
@@ -140,5 +145,32 @@ export class MyApp implements OnInit {
         this.pages = this.pages.concat(authPages);
       }
     });
+
+    this.chatService.getMessages().subscribe(data => {
+      this.presentToast('Chat');
+    });
+  }
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      showCloseButton : true,
+      closeButtonText:'Chat',
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      this.openChatWindow();
+    });
+
+    toast.present();
+  }
+
+  private openChatWindow() {
+    let modal = this.modalCtrl.create(ChatWindow, { receiverId:''});
+    modal.onDidDismiss(data => {
+
+    });
+    modal.present();
   }
 }

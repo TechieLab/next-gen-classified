@@ -2,7 +2,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { JsonpModule } from '@angular/http';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, Platform } from 'ionic-angular';
+
 import { MyApp } from './app.component';
 import { Constants } from './common/constants';
 import { AppModules } from './common/moduleConstants';
@@ -24,7 +25,7 @@ import { Pipes } from './common/pipeConstants';
     CommonModule,
     JsonpModule,
 
-    AppModules,
+    AppModules,   
 
     IonicModule.forRoot(MyApp, {
       iconMode: 'ios',
@@ -38,8 +39,8 @@ import { Pipes } from './common/pipeConstants';
   entryComponents: [
     MyApp, Components
   ],
-  providers: [
-    AppProviders,
+  providers: [    
+    AppProviders,     
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

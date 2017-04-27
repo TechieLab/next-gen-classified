@@ -4,5 +4,6 @@ export class Message{
      ReceivedOn : Date;
      ReadOn : Date;
      FromUserId : string;
+     ToUserId : string;
      Status : boolean;
 }

@@ -1,5 +1,7 @@
 var io = require('socket.io');
-import {Message} from '../models/message';
+var clients = [];
+
+import { Message } from '../models/message';
 
 export class SocketConnection {
     public static setup(server) {
@@ -7,20 +9,25 @@ export class SocketConnection {
 
         io.on('connection', (socket) => {
             console.log('The user is connected');
-
-            socket.on('disconnect', function () {
-                console.log('The user is disconnected');
-            });
-
+            clients.push(socket);
+            
             socket.on('join', function (data) {
                 console.log('The user is join');
                 console.log(data);
-                socket.join(data.userId); // We are using room of socket io
+                socket.join(data.UserId); // We are using room of socket io
             });
 
             socket.on('new_msg-sent', (message: Message) => {
                 console.log(message);
-                io.emit('message-received', message);
+                socket.emit('message-received', message);
+            });
+
+            socket.on('disconnect', function () {
+                var index = clients.indexOf(socket);
+                if (index != -1) {
+                    clients.splice(index, 1);
+                    console.info('Client gone (id=' + socket.id + ').');
+                }
             });
         });
 

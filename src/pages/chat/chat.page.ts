@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component,Inject, OnInit, OnDestroy } from '@angular/core';
 import { NavController,ModalController, NavParams, ToastController, Events } from 'ionic-angular';
-import { ChatService } from './chat.service';
+import { ChatService , IChatService} from './chat.service';
 import { Message } from '../../app/models/message';
 import { Chat } from '../../app/models/chat';
 import {ChatWindow} from './chat.window';
@@ -16,8 +16,9 @@ export class ChatPage implements OnInit, OnDestroy {
     chats: Array<Chat>;
 
     constructor(public navCtrl: NavController,
-        public navParams: NavParams, public modalCtrl: ModalController,
-        public chatService: ChatService) {
+        public navParams: NavParams, 
+        public modalCtrl: ModalController,
+        @Inject(ChatService) public chatService: IChatService) {
 
     }
 

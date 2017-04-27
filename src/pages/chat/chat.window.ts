@@ -44,7 +44,7 @@
 // }
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController, NavParams, ToastController, Events } from 'ionic-angular';
+import { NavController, ViewController, NavParams, ToastController, Events } from 'ionic-angular';
 import { ChatService } from './chat.service';
 import { Message } from '../../app/models/message';
 
@@ -56,21 +56,21 @@ import { Message } from '../../app/models/message';
 })
 
 export class ChatWindow implements OnInit, OnDestroy {
-    messages: Array<Message>;
+    messages: Array<string>;
     connection: any;
     message: string;
     receiverId: string;
     isChatInitiated: boolean;
 
     constructor(public navCtrl: NavController,
-        public navParams: NavParams,
+        public navParams: NavParams, public viewCtrl: ViewController,
         public chatService: ChatService) {
 
         this.isChatInitiated = false;
         this.message = 'Say hello!';
-        this.messages = new Array<Message>();
-        // this.messages.push(<Message>{});
-        this.receiverId = navParams.get('receiverId');
+        this.messages = new Array<string>();
+        // this.messages.push(<Message>{});      
+        this.receiverId = viewCtrl.getNavParams().get('receiverId');
     }
 
     sendMessage() {
@@ -79,12 +79,17 @@ export class ChatWindow implements OnInit, OnDestroy {
         }
         this.chatService.sendMessage(this.message, this.receiverId);
 
-        this.message = '';
+
+    }
+
+    cancelChat() {
+        this.viewCtrl.dismiss();
     }
 
     ngOnInit() {
         this.connection = this.chatService.getMessages().subscribe(data => {
-            this.messages = data;
+            this.messages.push(this.message);
+            this.message = '';
         });
     }
 

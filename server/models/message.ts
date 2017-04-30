@@ -6,4 +6,5 @@ export class Message{
      FromUserId : string;
      ToUserId : string;
      Status : boolean;
+     Room: string;
 }

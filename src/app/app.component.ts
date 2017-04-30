@@ -51,7 +51,7 @@ export class MyApp implements OnInit {
     public events: Events,
     private _settings: SettingsService,
     private toastCtrl: ToastController,
-    private modalCtrl : ModalController,
+    private modalCtrl: ModalController,
     @Inject(AuthGuard) public authGuard: IAuthGuard,
     @Inject(AccountService) public accountService: IAccountService,
     @Inject(ProfileService) public profileService: IProfileService,
@@ -146,29 +146,33 @@ export class MyApp implements OnInit {
       }
     });
 
-    this.chatService.getMessages().subscribe(data => {
-      this.presentToast('Chat');
+    this.events.subscribe('user_joined', (data) => {
+      let clientId = StorageService.getItem('Client_Id');
+
+      if (data.GuestUserId == clientId) {
+        this.presentToast(data);
+      }
     });
   }
 
-  private presentToast(text) {
+  private presentToast(data) {
     let toast = this.toastCtrl.create({
-      message: text,
-      showCloseButton : true,
-      closeButtonText:'Chat',
+      message: '',
+      showCloseButton: true,
+      closeButtonText: 'Chat',
       position: 'top'
     });
 
     toast.onDidDismiss(() => {
-      this.openChatWindow();
+      this.openChatWindow(data);
     });
 
     toast.present();
   }
 
-  private openChatWindow() {
-    let modal = this.modalCtrl.create(ChatWindow, { receiverId:''});
-    modal.onDidDismiss(data => {
+  private openChatWindow(data) {
+    let modal = this.modalCtrl.create(ChatWindow, data);
+    modal.onDidDismiss(res => {
 
     });
     modal.present();

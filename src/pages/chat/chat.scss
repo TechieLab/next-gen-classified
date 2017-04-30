@@ -1,0 +1,21 @@
+.chat {
+  .sender {
+    text-align: left;
+    background-color: #e33fCC;
+  }
+  .receiver {
+    text-align: right;
+    background-color: #dcfbf9;
+    width: 60%;
+    margin: 2px 0px;
+    margin-left: 38%;
+    border-radius: 8px;
+  }
+  .list-md .item-block .item-inner {
+    border-bottom: none;
+  }
+  .time-stamp {
+    font-size: 12px;
+    color: #8e8989;
+  }
+}

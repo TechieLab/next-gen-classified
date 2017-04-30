@@ -4,18 +4,21 @@
     <ion-buttons end>
       <button ion-button large (click)="cancelChat()">
           <ion-icon name="close"></ion-icon>
-    </button>      
+    </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content class="chat">
   <ion-list>
-    <ion-item *ngFor="let message of messages">{{message}}</ion-item>
+    <ion-item *ngFor="let message of messages"
+     [ngClass]="{'sender' : userId == message.FromUserId, 'receiver' :  userId == message.ToUserId}">
+      <div> {{message.Content}}  </div>
+      <div class="time-stamp"> {{message.TimeStamp | date : 'shortTime'}}</div>
+    </ion-item>
   </ion-list>
 </ion-content>
 <ion-footer>
-  <ion-input>
-    <input type="text" [(ngModel)]="message" placeholder="Enter Message..." />
+  <ion-input type="text" [(ngModel)]="message" placeholder="Enter Message..." (keydown)="onKeyDown($event)">
   </ion-input>
   <ion-buttons end>
     <button buttons-end ion-button color="primary" (click)="sendMessage()">

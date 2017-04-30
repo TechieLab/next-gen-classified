@@ -7,4 +7,10 @@ export class Chat extends BaseEntity
      Messages : Array<Message>;
      IsOnline: boolean;
      UserId: string;
+
+     constructor(){
+         super();
+
+         this.Messages = new Array<Message>();
+     }
 }

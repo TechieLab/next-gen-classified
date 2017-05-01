@@ -1,18 +1,12 @@
-import { Component, OnInit, Inject, EventEmitter, Input, Output } from '@angular/core';
-import { NavController, NavParams, ToastController, Events } from 'ionic-angular';
-import { Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
+import { Component, OnInit, Inject, EventEmitter, Input, Output ,
+    NavController, NavParams, ToastController, Events ,
+     Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp } from '../common/index';
+
 import { Observable } from 'rxjs';
-import { PostDetailsPage } from '../post/postDetails.page';
-import { AddEditPostPage } from '../post/addEditPost.page';
-import { HomePage } from '../home/home.page'
-
-import { LoginPage } from '../account/login.page';
-import { Post } from '../../app/models/post';
-import { Result } from '../../app/models/result';
+import { PostDetailsPage, AddEditPostPage ,HomePage,LoginPage } from '../index'
+import { Post, Result} from '../../app/models/index';
 import { IPostService, PostService } from '../post/post.service';
-import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';
-import { StorageService } from '../../app/services/storage.service';
-
+import { AuthGuard, IAuthGuard , StorageService } from '../../app/services/index';
 
 @Component({
     selector: 'my-favts-page',

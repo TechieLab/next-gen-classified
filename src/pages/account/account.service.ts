@@ -1,19 +1,20 @@
 
-import { Injectable, Optional } from '@angular/core';
-import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
+import {
+    Injectable, Optional,
+    Http, Headers, Response, RequestOptions, URLSearchParams
+} from '../common/index';
+
 import { Observable } from 'rxjs/Observable';
-import { ChangePassword } from '../../app/models/login';
-import { User } from '../../app/models/user';
+import { ChangePassword, Login, SignUp, User } from '../../app/models/index';
 import { StorageService } from '../../app/services/storage.service';
 import { Constants } from '../../app/common/constants';
-import { Login, SignUp } from '../../app/models/login';
 
 export interface IAccountService {
     register(data: SignUp);
     login(data: Login);
     logout();
     forgotPassword();
-    changePassword(data:ChangePassword);
+    changePassword(data: ChangePassword);
 }
 
 @Injectable()
@@ -37,7 +38,7 @@ export class AccountService implements IAccountService {
         user.UserName = data.UserName;
         user.EmailId = data.EmailId;
         user.Profile.FullName = data.FullName;
-        user.Profile.Contact.EmailId = data.EmailId;      
+        user.Profile.Contact.EmailId = data.EmailId;
 
         return this.http.post(this.url + 'signup', user, this.options)
             .map(this.extractData).catch(this.handleError);
@@ -61,15 +62,15 @@ export class AccountService implements IAccountService {
 
     forgotPassword() { }
 
-    changePassword(data:ChangePassword) { 
+    changePassword(data: ChangePassword) {
         // clear token remove user from local storage to log user out
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': StorageService.getToken() });
         this.options = new RequestOptions({
             headers: headers
         });
-        return this.http.post(this.url + 'changepassword',data,this.options)
+        return this.http.post(this.url + 'changepassword', data, this.options)
             .map(this.extractData).catch(this.handleError);
-     }
+    }
 
     generateAuthToken() { }
 

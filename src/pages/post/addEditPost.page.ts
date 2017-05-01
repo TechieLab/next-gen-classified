@@ -1,18 +1,17 @@
-import { Component, OnInit, ElementRef, Inject } from '@angular/core';
-import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ElementRef, Inject ,
+  NgForm, FormBuilder, FormControl, FormGroup, Validators ,
+   Events, NavController, NavParams, ToastController } from '../common/index';
 
-import { Events, NavController, NavParams, ToastController } from 'ionic-angular';
-import { ILookupService, LookupService } from '../../app/services/lookup.service';
-import { Lookup } from '../../app/models/lookup';
-import { Post } from '../../app/models/post';
-import { Media } from '../../app/models/media';
-import { Location } from '../../app/models/location';
+import { Lookup, Post, Media, Location } from '../../app/models/index';
 import { Constants } from '../../app/common/constants';
 import { IPostService, PostService } from './post.service';
-import { IUploadService, UploadService } from '../../app/services/upload.service';
-import { ExternalService } from '../../app/services/external.service';
-import { MyPostingsPage } from '../myPostings/myPostings.page';
-import { PostDetailsPage } from './postDetails.page';
+
+import {
+  ILookupService, LookupService,
+  IUploadService, UploadService, ExternalService
+} from '../../app/services/index';
+
+import { MyPostingsPage, PostDetailsPage } from '../index';
 
 @Component({
   selector: 'post-ad',
@@ -74,7 +73,7 @@ export class AddEditPostPage implements OnInit {
       this.getLocation();
     }
 
-    this.events.subscribe('photo-uploaded', () => {      
+    this.events.subscribe('photo-uploaded', () => {
       this.getPost();
     });
 

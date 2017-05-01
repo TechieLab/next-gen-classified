@@ -1,9 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { FormsModule } from '@angular/forms';
-import {ChangePasswordPage} from '../account/change-password.page';
-import {ProfilePage} from './profile.page';
-import {EditProfilePage} from './editProfile.page';
+import {ChangePasswordPage,ProfilePage,EditProfilePage} from '../index';
 import { ProfileService, IProfileService } from './profile.service';
 
 @NgModule({

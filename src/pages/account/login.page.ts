@@ -1,19 +1,16 @@
-import { Component, ElementRef, OnInit, Inject } from '@angular/core';
-import {Events, NavController, NavParams, ToastController } from 'ionic-angular';
-import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+
+import {
+    Component, FormBuilder, Inject, OnInit, Validators,
+    NavController, NavParams, ToastController, Events
+} from '../common/index';
+
 import { Facebook, NativeStorage } from 'ionic-native';
 
-//import { AccountService } from '../../app/services/account.service';
-import { Router } from '@angular/router';
-
-import { HomePage } from '../home/home.page';
-import { RegisterPage } from '../account/register.page';
+import { HomePage } from '../index';
+import { RegisterPage} from './index';
 import { AccountService, IAccountService } from './account.service';
-import { UserService, IUserService } from '../../app/services/user.service';
-import { StorageService } from '../../app/services/storage.service';
-import { Login } from '../../app/models/login';
-import { User } from '../../app/models/user';
+import { UserService, IUserService, StorageService } from '../../app/services/index';
+import { Login, User } from '../../app/models/index';
 
 @Component({
     selector: 'login-page',
@@ -106,8 +103,8 @@ export class LoginPage implements OnInit {
                     })
             }, function (error) {
                 console.log(error);
-                alert(error);    
-        });
+                alert(error);
+            });
 
     }
 

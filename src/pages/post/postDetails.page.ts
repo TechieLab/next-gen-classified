@@ -1,17 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { Events, ToastController, NavController, NavParams } from 'ionic-angular';
-import { NotificationPage } from '../notification/notification.page';
-import { AddEditPostPage } from '../post/addEditPost.page';
-import { OfferPage } from '../offers/offers.page';
-import { LoginPage } from '../account/login.page';
+import { Component, Inject, OnInit ,URLSearchParams,
+  Events, ToastController, NavController, NavParams } from '../common/index';
+
+import { NotificationPage, AddEditPostPage , OfferPage , LoginPage } from '../index';
 import { PostService, IPostService } from './post.service';
-import { Post } from '../../app/models/post';
-import { Product } from '../../app/models/product';
-import { Media } from '../../app/models/media';
-import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';
-import { StorageService } from '../../app/services/storage.service';
-import { Result } from '../../app/models/result';
+import { Post,Product ,Media ,Result} from '../../app/models/index';
+import { AuthGuard, IAuthGuard , StorageService } from '../../app/services/index';
 
 @Component({
   selector: 'post-details-page',

@@ -1,8 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { NavController, AlertController, NavParams } from 'ionic-angular';
-import { PostDetailsPage } from '../post/postDetails.page';
-import { AddEditPostPage } from '../post/addEditPost.page';
-import { LoginPage } from '../account/login.page';
+import { Component, OnInit, Inject, NavController, AlertController, NavParams } from '../common/index';
+import { PostDetailsPage, AddEditPostPage, LoginPage } from '../index';
 import { Post } from '../../app/models/post';
 import { IPostService, PostService } from '../post/post.service';
 import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';

@@ -8,7 +8,6 @@ import { Message } from '../models/message';
 import {Chat} from '../models/chat';
 
 export class SocketConnection {
-
     
     public static setup(server) {
         io = io.listen(server);

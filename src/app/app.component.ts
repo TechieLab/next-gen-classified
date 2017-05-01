@@ -146,13 +146,21 @@ export class MyApp implements OnInit {
       }
     });
 
-    this.events.subscribe('user_joined', (data) => {
+    // this.events.subscribe('user_joined', (data) => {
+    //   let clientId = StorageService.getItem('Client_Id');
+
+    //   if (data.GuestUserId == clientId) {
+    //     this.openChatWindow(data);
+    //   }
+    // });
+
+    this.chatService.userAdded().subscribe((data) => {
       let clientId = StorageService.getItem('Client_Id');
 
       if (data.GuestUserId == clientId) {
-        this.presentToast(data);
+        this.openChatWindow(data);
       }
-    });
+    })
   }
 
   private presentToast(data) {

@@ -12,7 +12,7 @@ import { Constants } from '../../app/common/constants';
 import { StorageService } from '../../app/services/storage.service';
 import { IBaseService, BaseService } from '../../app/services/base.service';
 export interface IChatService extends IBaseService<Chat> {
-    sendMessage(room, text: string, receiverId: string);  
+    sendMessage(room, text: string, receiverId: string);
     createRoom(guestUserId);
     joinRoom(data);
     updateChat();
@@ -24,7 +24,7 @@ export class ChatService extends BaseService<Chat> implements IChatService {
     private host = Constants.BaseApi;
     private socket: SocketIOClient.Socket;
     private message: Message;
-    private socketData : any;
+    private socketData: any;
 
     constructor(http: Http, public events: Events) {
         super(http, "chats");
@@ -37,13 +37,12 @@ export class ChatService extends BaseService<Chat> implements IChatService {
             this.socket.emit('new_user', data);
         });
 
-        this.socket.on('user_joined', (data) => {
+        // this.socket.on('user_joined', (data) => {
+        //     this.socketData = data;
+        //     this.events.publish('user_joined', data);
+        // });
+        this.userAdded().subscribe((data) =>{
             this.socketData = data;
-            this.events.publish('user_joined', data);
-        });
-
-        this.socket.on('message_created', (data) => {
-           this.events.publish('message_created', data);
         });
     }
 
@@ -57,7 +56,7 @@ export class ChatService extends BaseService<Chat> implements IChatService {
 
     sendMessage(room: string, text: string, receiverId: string) {
 
-        if(this.socketData){
+        if (this.socketData) {
             room = this.socketData.Room;
         }
 
@@ -81,9 +80,9 @@ export class ChatService extends BaseService<Chat> implements IChatService {
         return observable;
     }
 
-    userAdded() {
+    userAdded() {   
         let observable = new Observable<any>(observer => {
-            this.socket.on('user_joined', (data) => {
+            this.socket.on('user_joined', (data) => {                
                 observer.next(data);
             });
         });

@@ -1,30 +1,25 @@
 import 'rxjs/add/operator/toPromise';
+import { Component, OnInit, Inject, NgZone ,
+    ModalController, LoadingController, NavController, NavParams, Events ,
+     Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp ,
+      FormControl } from '../common/index';
 import { Subject, Observable } from 'rxjs';
-import { Component, OnInit, Inject, NgZone,
-   ModalController, LoadingController, NavController, NavParams, Events ,
-    Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp , FormControl
-   } from '../common/index';
-
-import { Client } from 'elasticsearch';
-import { FiltersPage, CatalogPage } from '../index';
-import { IPostService, PostService } from '../post/post.service';
-import { Post , Filters} from '../../app/models/index';
-import { ElasticSearchService } from '../../app/services/elasticsearch.service';
-import { SearchService, ISearchService } from './search.service';
+import { RentalService, IRentalService } from './rental.service';
+import { Filters, Rental } from '../../app/models/index';
 
 @Component({
-  selector: 'search-page',
-  templateUrl: 'search.html',
-  entryComponents: [CatalogPage],
-  providers: [PostService, SearchService, ElasticSearchService]
+  selector: 'rental-page',
+  templateUrl: 'rental.html',
+  entryComponents: [],
+  providers: [RentalService]
 })
 
-export class SearchPage implements OnInit {
+export class RentalPage implements OnInit {
   search: FormControl;
   params: URLSearchParams;
   searchText: string;
   searchFilters: Filters;
-  searchResults: Array<Post>;
+  searchResults: Array<Rental>;
   private pageSize: number = 25;
   private pageNumber: number = 1;
 
@@ -34,11 +29,11 @@ export class SearchPage implements OnInit {
     private loadingCtrl: LoadingController,
     public events: Events,
     private _ngZone: NgZone,
-    @Inject(SearchService) public searchService: ISearchService,
+    @Inject(RentalService) public rentalService: IRentalService,
   ) {
     this.searchText = '';
     this.search = new FormControl();
-    this.searchResults = new Array<Post>();
+    this.searchResults = new Array<Rental>();
     this.searchFilters = new Filters();
   }
 
@@ -49,18 +44,7 @@ export class SearchPage implements OnInit {
       this.searchFilters.Keyword = term;
       this.submitSearch();
     });
-  }
-
-  gotoFiltersPage() {
-    let modal = this.modalCtrl.create(FiltersPage, { filters: this.searchFilters });
-    modal.onDidDismiss(data => {
-      this.searchFilters = data;
-      this.searchText = data.Keyword;
-
-      this.submitSearch();
-    });
-    modal.present();
-  }
+  }  
 
   submitSearch() {
     let params = new URLSearchParams();
@@ -81,7 +65,7 @@ export class SearchPage implements OnInit {
       params.set('page', this.pageNumber.toString());
     }
 
-    this.searchService.customPost(this.searchFilters, params).subscribe((res) => {
+    this.rentalService.customPost(this.searchFilters, params).subscribe((res) => {
       if (res && res.Content) {
         this.searchResults = res.Content;
       }

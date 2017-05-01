@@ -1,19 +1,11 @@
-import { HomePage } from '../../pages/home/home.page';
-import { WelcomePage } from '../../pages/welcome/welcome.page';
-import { SettingsPage } from '../../pages/settings/settings.page';
-import { NotificationPage } from '../../pages/notification/notification.page';
-import { AdminPage } from '../../pages/admin/admin.page';
-import { MyPostingsPage } from '../../pages/myPostings/myPostings.page';
-import { OfferPage } from '../../pages/offers/offers.page';
-import { MyFavtPostingPage } from '../../pages/myFavourite/myFavt.page';
-import { FiltersPage } from '../../pages/filters/filters.page';
-import { FeedbackPage } from '../../pages/feedback/feedback.page';
-import { HelpPage } from '../../pages/help/help.page';
-import { AboutUs } from '../../pages/aboutUs/aboutUs.page';
-import {ChatPage} from '../../pages/chat/chat.page';
+import {
+    HomePage, WelcomePage, SettingsPage, NotificationPage, AdminPage,
+    MyPostingsPage, OfferPage, MyFavtPostingPage,
+     FiltersPage, FeedbackPage, HelpPage, AboutUsPage, ChatPage
+} from '../../pages/index';
 
 export const Pages = [
-    AboutUs,
+    AboutUsPage,
     HomePage,
     AdminPage,
     WelcomePage,
@@ -35,7 +27,7 @@ export const EntryComponents = [
 
 export const appPages = [
     { title: 'Home', component: HomePage, name: "home", seq: 1 },
-    { title: 'About', component: AboutUs, name: "people", seq: 7 },
+    { title: 'About', component: AboutUsPage, name: "people", seq: 7 },
     { title: 'Feedback', component: FeedbackPage, name: "paper", seq: 6 },
     { title: 'Help', component: HelpPage, name: "help-circle", seq: 8 }
 ];

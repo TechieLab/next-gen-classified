@@ -1,14 +1,11 @@
 import { Subscriber, Observable } from 'rxjs';
-import { Component, OnInit, Inject, Input, OnChanges } from '@angular/core';
-import { Events, NavController, NavParams, ToastController } from 'ionic-angular';
-import { PostDetailsPage } from '../post/postDetails.page';
-import { LoginPage } from '../account/login.page';
-import { OfferPage } from '../offers/offers.page';
-import { Post } from '../../app/models/post';
-import { Result } from '../../app/models/result';
+import { Component, OnInit, Inject, Input, OnChanges,
+  Events, NavController, NavParams, ToastController } from '../common/index';
+  
+import { PostDetailsPage,LoginPage, OfferPage } from '../index';
+import { Post , Result } from '../../app/models/index';
 import { IPostService, PostService } from '../post/post.service';
-import { AuthGuard, IAuthGuard } from '../../app/services/guard.service';
-import { StorageService } from '../../app/services/storage.service';
+import { AuthGuard, IAuthGuard , StorageService } from '../../app/services/index';
 
 @Component({
   selector: 'catalog-page',

@@ -1,20 +1,16 @@
-import { Component, Inject, OnInit, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs';
-
-import {
+import { Component, Inject, OnInit, ElementRef, AfterViewInit, ViewChild , URLSearchParams,
     Events,
     NavController,
     NavParams,
     ToastController,
     LoadingController,
     ModalController
-} from 'ionic-angular';
+} from '../common/index';
 
 import { Geolocation } from 'ionic-native';
 import { SortComponent } from '../../app/components/sort.component';
-import { CatalogPage } from '../catalog/catalog.page';
-import { AddEditPostPage } from '../post/addEditPost.page';
+import { CatalogPage, AddEditPostPage } from '../index';
 import { IPostService, PostService } from '../post/post.service';
 import { Post } from '../../app/models/post';
 

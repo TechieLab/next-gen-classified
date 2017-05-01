@@ -1,12 +1,11 @@
-import { Component, Inject } from '@angular/core';
-import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
-import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject , 
+  NavController, NavParams, ToastController, ModalController , 
+  NgForm, FormBuilder, FormControl, FormGroup, Validators } from '../common/index';
+
 import { StorageService } from '../../app/services/storage.service';
 import { Offer } from '../../app/models/offer';
 import { IOfferService, OfferService } from './offer.service';
-import { HomePage } from '../../pages/home/home.page';
-import { ChatPage } from '../../pages/chat/chat.page';
-import { ChatWindow } from '../../pages/chat/chat.window';
+import { HomePage , ChatPage, ChatWindow } from '../index';
 
 @Component({
   selector: 'offer-page',

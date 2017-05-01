@@ -1,8 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Events , NavController, NavParams, ToastController } from 'ionic-angular';
+
+import {Component,FormBuilder,Inject, Validators,
+    NavController,NavParams,ToastController,Events } from '../common/index';
+
 import { HomePage } from '../home/home.page';
-import { User } from '../../app/models/user';
+import { User } from '../../app/models/index';
 import { AccountService, IAccountService } from './account.service';
 
 @Component({

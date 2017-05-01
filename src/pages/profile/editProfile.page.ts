@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { NgForm, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, Inject, OnInit ,
+   NgForm, FormBuilder, FormControl, FormGroup, Validators ,
+   NavController, NavParams } from '../common/index';
 import { Profile } from '../../app/models/profile';
 import { ProfilePage } from './profile.page';
 import { ProfileService, IProfileService } from './profile.service';

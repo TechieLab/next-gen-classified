@@ -1,7 +1,7 @@
 import {
     HomePage, WelcomePage, SettingsPage, NotificationPage, AdminPage,
-    MyPostingsPage, OfferPage, MyFavtPostingPage,
-     FiltersPage, FeedbackPage, HelpPage, AboutUsPage, ChatPage
+    MyPostingsPage, OfferPage, MyFavtPostingPage, RentalPage,
+    FiltersPage, FeedbackPage, HelpPage, AboutUsPage, ChatPage
 } from '../../pages/index';
 
 export const Pages = [
@@ -37,5 +37,6 @@ export const authPages = [
     { title: 'My Postings', component: MyPostingsPage, name: "paper", seq: 3 },
     { title: 'Favourites', component: MyFavtPostingPage, name: "star", seq: 4 },
     { title: 'Settings', component: SettingsPage, name: "settings", seq: 5 },
-    { title: 'Chats', component: ChatPage, name: "settings", seq: 9 }
+    { title: 'Chats', component: ChatPage, name: "settings", seq: 9 },
+    { title: 'Rentals', component: RentalPage, name: "settings", seq: 9 },
 ];

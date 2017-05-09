@@ -4,6 +4,7 @@ import {ProfileModule} from '../../pages/profile/profile.module';
 import {SearchModule} from '../../pages/search/search.module';
 import {CatalogModule} from '../../pages/catalog/catalog.module';
 import {ChatModule} from '../../pages/chat/chat.module';
+import {RentalModule} from '../../pages/rentals/rental.module';
 
 export const AppModules = [
    AccountModule,
@@ -11,5 +12,6 @@ export const AppModules = [
    PostModule,
    ProfileModule,
    CatalogModule,
-   ChatModule
+   ChatModule,
+   RentalModule
 ];

@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-searchbar animated="true" debounce="500" [(ngModel)]="searchText" placeholder="Search item for Rent"
+      autocomplete="on" [formControl]="search">
+    </ion-searchbar>
+    <ion-buttons end>
+      <button buttons-end ion-button (click)="gotoFiltersPage()">
+            <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content no-padding>
+ <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="200px">
+    <ion-infinite-scroll-content  loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-fab right bottom>
+    <button ion-fab color="danger" (click)="gotoPostingAdPage()">
+            <span class="button-inner">
+              Post Ad
+          </span>
+     </button>
+  </ion-fab>
+</ion-content>

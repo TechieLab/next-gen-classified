@@ -1,0 +1,26 @@
+export { AboutUsPage } from './aboutUs/aboutUs.page';
+export { LoginPage } from './account/login.page';
+export { RegisterPage } from './account/register.page';
+export {ChangePasswordPage} from './account/change-password.page';
+export { AdminPage  } from './admin/admin.page';
+export { CatalogPage } from './catalog/catalog.page';
+
+export { ChatWindow } from './chat/chat.window';
+export { ChatPage } from './chat/chat.page';
+export { FeedbackPage } from './feedback/feedback.page';
+export { FiltersPage } from './filters/filters.page';
+export { HelpPage } from './help/help.page';
+export { HomePage } from './home/home.page';
+export { MediaPage } from './media/media.page';
+export { MyFavtPostingPage } from './myFavourite/myFavt.page';
+export { MyPostingsPage } from './myPostings/myPostings.page';
+export { NotificationPage } from './notification/notification.page';
+export { PostDetailsPage } from './post/postDetails.page';
+export { AddEditPostPage } from './post/addEditPost.page';
+export { ProfilePage } from './profile/profile.page';
+export { OfferPage } from './offers/offers.page';
+export { EditProfilePage } from './profile/editProfile.page';
+export { RentalPage } from './rentals/rental.page';
+export { SearchPage } from './search/search.page';
+export { SettingsPage } from './settings/settings.page';
+export { WelcomePage } from './welcome/welcome.page';

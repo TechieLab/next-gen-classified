@@ -4,20 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import {FiltersPage}   from '../filters/filters.page';
-import {CatalogPage} from '../catalog/catalog.page';
-import {CatalogModule} from '../catalog/catalog.module';
-import {SearchPage} from '../search/search.page';
-import { ExternalService } from '../../app/services/external.service';
 import {RentalService} from './rental.service';
+import {RentalPage} from './rental.page';
 
 @NgModule({
-    declarations:[SearchPage],    
-    exports:[SearchPage],
-    imports:[IonicModule, FormsModule, ReactiveFormsModule, CatalogModule],
-    providers:[ExternalService, RentalService],
-    entryComponents: [FiltersPage,CatalogPage]
+    declarations:[RentalPage],    
+    exports:[RentalPage],
+    imports:[IonicModule, FormsModule, ReactiveFormsModule],
+    providers:[RentalService],
+    entryComponents: [RentalPage]
 })
 
-export class SearchModule{}
+export class RentalModule{}

@@ -3,6 +3,7 @@ import { Component, OnInit, Inject, NgZone ,
     ModalController, LoadingController, NavController, NavParams, Events ,
      Http, Headers, Response, RequestOptions, URLSearchParams, Jsonp ,
       FormControl } from '../common/index';
+      
 import { Subject, Observable } from 'rxjs';
 import { RentalService, IRentalService } from './rental.service';
 import { Filters, Rental } from '../../app/models/index';
@@ -36,7 +37,6 @@ export class RentalPage implements OnInit {
     this.searchResults = new Array<Rental>();
     this.searchFilters = new Filters();
   }
-
 
   ngOnInit() {
     this.search.valueChanges.subscribe(term => {
